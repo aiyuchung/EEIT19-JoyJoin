@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+form.fselect{
+    width:200px;
+
+}
+fieldset{
+    border:4px ridge blueviolet;
+
+}
+legend{
+    font-size:20px;
+}
+p{
+    padding:0;
+    background-color: transparent;
+    color:black;
+
+}
+div{
+    position: relative;
+}
+div.view{
+    width:1020px;
+    margin:0 auto;
+    
+}
+div.list{
+    width:780px;
+    height:600px;
+    border:10px groove greenyellow;
+    float:right;
+    margin-top: 10px;
+}
+.back{
+    display:block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background-repeat:no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition:background ease 1s;
+    opacity:0.5;
+}
+.red{
+    background-color: red;
+    color:white;
+}
+.green{
+    background-color: green;
+    color:white;
+}
