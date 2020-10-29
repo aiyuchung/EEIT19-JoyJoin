@@ -57,7 +57,15 @@ public class ActivityBean implements java.io.Serializable {
 	private Blob activityPic;
 	private String activityStatus;
 	private Integer leftDays;
+	private Integer joinedNum;
+	
 
+	public Integer getJoinedNum() {
+		return joinedNum;
+	}
+	public void setJoinedNum(Integer joinedNum) {
+		this.joinedNum = joinedNum;
+	}
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="userId") 	
     private CustomerBean customerBean;
