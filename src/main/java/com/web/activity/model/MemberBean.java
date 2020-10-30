@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Blob;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,34 +22,38 @@ public class MemberBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer memberNo;
-	private String account;
-	private String password;
-	private String gender;
-	private String mail;
-	private Blob picture;
-	private String fullName;
-	private String nickname;
-	private String birthYear;
-	private String birthMonth;
-	private String starSign;
-	private String bloodType;
-	private String country;
+	private Integer memberNo;			//會員編號,PK自增,不顯示
+	@Column(nullable = false, updatable = false)
+	private String account;					//帳號,快速註冊,不得UPDATE
+	@Column(nullable = false)
+	private String password;				//密碼,快速註冊
+	private String gender;					//性別
+	@Column(nullable = false, updatable = false)
+	private String mail;						//信箱,快速註冊,不得UPDATE
+	private Blob picture;						//頭像
+	private String fullName;				//姓名
+	@Column(nullable = false)
+	private String nickname;				//暱稱,快速註冊
+	private String birthYear;				//出生年份
+	private String birthMonth;			//出生月份
+	private String starSign;				//星座
+	private String bloodType;				//血型
+	private String country;					//居住縣市
 	@Transient
-	private String addrArea;
-	private String address;
-	private String hobby;
-	private String education;
-	private String school;
-	private String company;
-	private String job;
-	private String income;
-	private String signature;
-	private String introduction;
+	private String addrArea;				//居住區域,由縣市判斷
+	private String address;					//居住地址
+	private String hobby;					//興趣
+	private String education;				//學歷
+	private String school;					//學校
+	private String company;				//公司
+	private String job;						//職業
+	private String income;					//收入情形
+	private String signature;				//自定義簽名
+	private String introduction;			//自我介紹
 
 	@JsonIgnoreProperties("member")
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "account", insertable = false, updatable = false)
+	@JoinColumn(name = "roleNo")		//FK為RoleBean的roleNo
 	private RoleBean rolebean;
 
 	public MemberBean() {
