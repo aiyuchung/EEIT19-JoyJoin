@@ -10,7 +10,7 @@ import com.web.activity.model.ActivityTypeBean;
 
 public interface ActivityService {
 	List<ActivityBean> selectAllActivities();
-	
+
 	List<ActivityBean> selectLatest();
 	
 	List<ActivityTypeBean> showAllTypes();
