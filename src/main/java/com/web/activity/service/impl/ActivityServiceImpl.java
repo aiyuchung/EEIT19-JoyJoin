@@ -1,7 +1,6 @@
 package com.web.activity.service.impl;
 
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -127,34 +126,25 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
+	public List<ActivityClassBean> selectAllClasses() {
+		List<ActivityClassBean> list = dao.selectAllClasses();
+//		Map<String, String> eachClass = new HashMap<>();
+//		for (ActivityClassBean bean: list) {
+//			eachClass.put(bean.getActivityClass(),bean.getActivityTypeBean().getActivityType());
+//		}
+		return list;
+	}
+	
+
+	@Override
 	public List<ActivityClassBean> findCategories(String activityType) {
 		return dao.findCategories(activityType);
 	}
 
+	@Override
+	public List<ActivityBean> checkedClasses(List<String> activityClass) {
+		return dao.checkedClasses(activityClass);
+	}
+
 	
-	@Override
-	public void udpateTrip(String[] UpdateOne) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public ActivityBean selectOneTrip(String tripNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void insertTrip(String[] InsertOne) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteTrip(String tripNo) {
-		// TODO Auto-generated method stub
-
-	}
-	
-
 }

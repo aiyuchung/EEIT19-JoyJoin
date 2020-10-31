@@ -1,6 +1,7 @@
 package com.web.activity.dao.impl;
 
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ActivityDaoImpl implements ActivityDao {
 	@Override
 	public List<ActivityBean> selectAllActivities() {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ActivityBean";
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ";
 		List<ActivityBean> activities = session.createQuery(hql).getResultList();
 		return activities;
 	}
@@ -78,31 +79,42 @@ public class ActivityDaoImpl implements ActivityDao {
 		List<ActivityClassBean> classes = session.createQuery(hql).setParameter("activityType",activityType).getResultList();
 		return classes;
 	}
-	
-	
-	@Override
-	public void udpateTrip(String[] UpdateOne) {
-		// TODO Auto-generated method stub
 
+	@Override
+	public List<ActivityClassBean> selectAllClasses() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityClassBean";
+		List<ActivityClassBean> allClasses = session.createQuery(hql).getResultList();
+		return allClasses;
 	}
 
 	@Override
-	public ActivityBean selectOneTrip(String tripNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ActivityBean> checkedClasses(List<String> activityClass) {
+		Session session = factory.getCurrentSession();
+		List<ActivityBean> list = new ArrayList<ActivityBean>();
+		String hql = "FROM ActivityBean WHERE " ;
+		String classes ="";
+		if (activityClass == null) {
+			classes += "activityStatus = 'active'";
+			System.out.println("if (activityClass == null for string =============================> "+classes);
+		}else {
+			for (int i = 0; i < activityClass.size(); i++) {
+				if (i == 0) {
+					classes += "activityClass = '"+ activityClass.get(0) +"'";
+//					System.out.println("first for string : "+classes);
+				}else {
+					classes += " OR activityClass = '"+ activityClass.get(i) +"'";
+				}
+			}
+		}
+		
+		hql += classes;
+		System.out.println("final for string =============================> "+classes);
+		list = session.createQuery(hql).getResultList();	
+		
+		return list;
 	}
 
-	@Override
-	public void insertTrip(String[] InsertOne) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteTrip(String tripNo) {
-		// TODO Auto-generated method stub
-
-	}
 
 	
 

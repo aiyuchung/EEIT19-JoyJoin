@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,27 +29,32 @@ public class ActivitiesController {
 		List<ActivityTypeBean> types = service.showAllTypes();
 		List<ActivityBean> finalOnes = service.selectFinal();
 		List<String> recentOnes = service.selectRecentMonths();
+		List<ActivityClassBean> categoryList = service.selectAllClasses();
 		model.addAttribute("activities",list);
 		model.addAttribute("latestOnes",latest);
 		model.addAttribute("allTypes",types);
 		model.addAttribute("finalOnes",finalOnes);
 		model.addAttribute("recentOnes",recentOnes);
+		model.addAttribute("categoryList",categoryList);
 		return "ShowActivities";
 	}
 	
-	@GetMapping("")
+	@GetMapping("/ajax_classes")
 	public @ResponseBody List<ActivityClassBean> findCategories(Model model,
 			@RequestParam(value="ActivityType") String activityType) {
 		List<ActivityClassBean> classes = service.findCategories(activityType);
-		
 		return classes;
 	}
 	
-	@ModelAttribute("categoryList")
-	public List<ActivityClassBean> getCategoryList(String activityType){
-		return service.findCategories(activityType);
+	@PostMapping("/ajax_checkedClass")
+	public @ResponseBody List<ActivityBean> checkedClasses(Model model,
+			@RequestBody List<String> activityClass) {
+//		System.out.println("controller recepted:" + activityClass);
+		List<ActivityBean> checkedActivities = service.checkedClasses(activityClass);
+//		System.out.println("dao's list =====================================" +checkedActivities);
+		return checkedActivities;
 	}
-	
+
 	
 	
 	

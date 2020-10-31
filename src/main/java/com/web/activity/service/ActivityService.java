@@ -23,16 +23,10 @@ public interface ActivityService {
 	
 	List<ActivityClassBean> findCategories(String activityType);
 	
-	
-	
-	
-	
-	void udpateTrip(String[] UpdateOne);
-	
-	ActivityBean selectOneTrip(String tripNo);
-	
-	void insertTrip(String[] InsertOne) ;
-	
+	List<ActivityClassBean> selectAllClasses();
 
-	void deleteTrip(String tripNo);
+	List<ActivityBean> checkedClasses(List<String> activityClass);
+	
+	
+	
 }

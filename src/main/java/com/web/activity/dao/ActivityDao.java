@@ -23,17 +23,10 @@ public interface ActivityDao {
 	
 	List<ActivityClassBean> findCategories(String activityType);
 	
+	List<ActivityClassBean> selectAllClasses();
 	
+	List<ActivityBean> checkedClasses(List<String> activityClass);
 	
-	
-	void udpateTrip(String[] UpdateOne);
-	
-	ActivityBean selectOneTrip(String tripNo);
-	
-	void insertTrip(String[] InsertOne) ;
-	
-	
-	void deleteTrip(String tripNo);
 	
 	
 }
