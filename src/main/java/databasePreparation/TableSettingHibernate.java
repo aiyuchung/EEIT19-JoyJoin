@@ -8,7 +8,6 @@ package databasePreparation;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,6 +19,7 @@ import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.CustomerBean;
+import com.web.activity.model.ProvinceBean;
 
 
 public class TableSettingHibernate {
@@ -112,6 +112,28 @@ public class TableSettingHibernate {
 			// 3. Member表格
 			// 由"data/Input.txt"逐筆讀入Member表格內的初始資料，
 			// 然後依序新增到Member表格中
+			try (
+					FileInputStream fis = new FileInputStream("data/Province.csv");
+					InputStreamReader isr0 = new InputStreamReader(fis, "UTF-8");
+					BufferedReader br = new BufferedReader(isr0);
+				) {
+					while ((line = br.readLine()) != null) {
+						
+						String[] sa = line.split(",");
+						ProvinceBean bean = new ProvinceBean();
+						bean.setProvId(Integer.parseInt(sa[0].trim()));
+						bean.setProv(sa[1]);
+						bean.setLocation(sa[2]);
+						session.save(bean);
+						count++;
+					}
+			session.flush();
+			System.out.println("Member表格資料新增成功");
+			
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 			try (
 				FileInputStream fis = new FileInputStream("data/client.csv");
 				InputStreamReader isr0 = new InputStreamReader(fis, "UTF-8");
@@ -262,10 +284,14 @@ public class TableSettingHibernate {
 						}
 						tb.setLeftDays(Integer.parseInt(token[18]));
 						
-						// book.setCompanyId(Integer.parseInt(token[4].trim()));
 						int userId = Integer.parseInt(token[19].trim());
 						CustomerBean cb = (CustomerBean) session.get(CustomerBean.class, userId);
 						tb.setCustomerBean(cb);
+
+						int provId = Integer.parseInt(token[20].trim());
+						ProvinceBean pb = (ProvinceBean) session.get(ProvinceBean.class, provId);
+						tb.setProvinceBean(pb);
+						tb.setJoinedNum(0);
 						// 讀取圖片檔
 //						Blob blob = SystemUtils2018.fileToBlob(token[5].trim());
 //						book.setCoverImage(blob);

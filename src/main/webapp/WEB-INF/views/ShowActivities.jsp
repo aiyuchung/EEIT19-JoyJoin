@@ -192,8 +192,8 @@ Released   : 20100501
 								class="dropdown-item" id="endFromEarlest" href="#">截止日期↑ (近到遠)</a> <a
 								class="dropdown-item" id="placeFromNorth" href="#">活動地點 (由北至南)</a> <a
 								class="dropdown-item" id="placeFromSouth" href="#">活動地點 (由南至北)</a> <a
-								class="dropdown-item" id="peopleFromFew" href="#">參加人數 (少數優先)</a> <a
-								class="dropdown-item" id="peopleFromMany" href="#">參加人數 (多數優先)</a>
+								class="dropdown-item" id="peopleFromFew" href="#">參加人數限制 (少數優先)</a> <a
+								class="dropdown-item" id="peopleFromMany" href="#">參加人數限制(多數優先)</a>
 						</div></li>
 
 				</ul>
@@ -557,6 +557,21 @@ Released   : 20100501
 			})
 			
 		}
+		
+	})
+	
+	$("#startFromLatest").click(function(){
+		$.ajax({
+			  url:"ajax_ordered",
+			  type: "POST",
+			  dataType: "json", //server送回
+			  contentType: 'application/json; charset=utf-8',
+			  data:  
+			  success:function(data){
+				  
+			  }
+	
+}
 		
 	})
 	

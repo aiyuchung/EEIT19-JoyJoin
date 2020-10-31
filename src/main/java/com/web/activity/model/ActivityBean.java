@@ -59,19 +59,22 @@ public class ActivityBean implements java.io.Serializable {
 	private Integer leftDays;
 	private Integer joinedNum;
 	
-
-	public Integer getJoinedNum() {
-		return joinedNum;
-	}
-	public void setJoinedNum(Integer joinedNum) {
-		this.joinedNum = joinedNum;
-	}
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="userId") 	
     private CustomerBean customerBean;
 	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="provId") 	
+	private ProvinceBean provinceBean;
 	
 	
+	
+	public ProvinceBean getProvinceBean() {
+		return provinceBean;
+	}
+	public void setProvinceBean(ProvinceBean provinceBean) {
+		this.provinceBean = provinceBean;
+	}
 	public ActivityTypeBean getActivityTypeBean() {
 		return activityTypeBean;
 	}
@@ -214,6 +217,12 @@ public class ActivityBean implements java.io.Serializable {
 	}
 	public void setLeftDays(Integer leftDays) {
 		this.leftDays = leftDays;
+	}
+	public Integer getJoinedNum() {
+		return joinedNum;
+	}
+	public void setJoinedNum(Integer joinedNum) {
+		this.joinedNum = joinedNum;
 	}
 }
 	//	public String getId() {

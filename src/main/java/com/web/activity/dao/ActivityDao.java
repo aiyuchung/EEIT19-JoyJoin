@@ -25,8 +25,28 @@ public interface ActivityDao {
 	
 	List<ActivityClassBean> selectAllClasses();
 	
+	//ajax 選擇類別
 	List<ActivityBean> checkedClasses(List<String> activityClass);
 	
+	//ajax排序方法
 	
+	List<ActivityBean> startFromLatest();
 	
+	List<ActivityBean> startFromEarlest();
+	
+	List<ActivityBean> endFromLatest();
+	
+	List<ActivityBean> endFromEarlest();
+	
+	List<ActivityBean> peopleFromFew();
+
+	List<ActivityBean> peopleFromMany();
+	
+	List<ActivityBean> placeOfNorth();
+	
+	List<ActivityBean> placeOfWest();
+	
+	List<ActivityBean> placeOfEast();
+	
+	List<ActivityBean> placeOfSouth();
 }
