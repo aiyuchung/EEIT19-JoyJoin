@@ -1,6 +1,8 @@
 package com.web.activity.service.impl;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -79,21 +81,29 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public List<String> selectRecentMonths() {
+	public Map<String, Integer> selectRecentMonths() {
 		List<ActivityBean> list = dao.selectRecentMonths();
 		Calendar today = Calendar.getInstance();
-		int currentMon = today.get(Calendar.MONTH)+1; //月份為0~11
-//	    SimpleDateFormat sdf;      
-		String thismon = Integer.toString(currentMon) + "月"	;
+		int currentMon = today.get(Calendar.MONTH)+1; //月份為0~11 //10月-->9
+//	    SimpleDateFormat sdf;    
+		int thismon = currentMon;
+//		String thismon = Integer.toString(currentMon) + "月"	;
+		
 //		System.out.println(thismon.getClass().getSimpleName());
 		today.add(Calendar.MONTH,1);
 		
-		String nextmon = Integer.toString(today.get(Calendar.MONTH)+1) + "月";
+		int nextmon = today.get(Calendar.MONTH)+1;
 		today.add(Calendar.MONTH,1);
-		String next2mon = Integer.toString(today.get(Calendar.MONTH)+1) + "月";
+		int next2mon = today.get(Calendar.MONTH)+1;
 		today.add(Calendar.MONTH,1);
-		String next3mon = Integer.toString(today.get(Calendar.MONTH)+1) + "月";
-	    List<String> recentOnes = new ArrayList<>();
+		int next3mon = today.get(Calendar.MONTH)+1;
+		
+//		String nextmon = Integer.toString(today.get(Calendar.MONTH)+1) + "月";
+//		today.add(Calendar.MONTH,1);
+//		String next2mon = Integer.toString(today.get(Calendar.MONTH)+1) + "月";
+//		today.add(Calendar.MONTH,1);
+//		String next3mon = Integer.toString(today.get(Calendar.MONTH)+1) + "月";
+	    Map<String, Integer> recentOnes = new HashMap<>();
 	    try {
 	    	int thissum = 0, nextsum=0, next2sum=0, next3sum=0;
 	    	for (ActivityBean bean : list) {
@@ -104,21 +114,28 @@ public class ActivityServiceImpl implements ActivityService {
 				calendar.setTime(activityDate);  //activityDate從date轉乘calendar
 //				 LocalDate dt = LocalDate.parse("2018-11-27");
 				
-				if (currentMon == calendar.get(Calendar.MONTH)) {
+				if (currentMon -1== calendar.get(Calendar.MONTH)) {
 					thissum +=1;
-				}else if (currentMon +1 == calendar.get(Calendar.MONTH)) {
+				}else if (currentMon  == calendar.get(Calendar.MONTH)) {
 					nextsum +=1;
-				}else if (currentMon +2 == calendar.get(Calendar.MONTH)) {
+				}else if (currentMon +1 == calendar.get(Calendar.MONTH)) {
 					next2sum +=1;
-				}else if (currentMon +3 == calendar.get(Calendar.MONTH)) {
+				}else if (currentMon +2 == calendar.get(Calendar.MONTH)) {
 					next3sum +=1;
 				}
 				
 	    	}
-	    	recentOnes.add(thismon +"  (" + thissum + ")");
-			recentOnes.add(nextmon+"  (" + nextsum+ ")");
-			recentOnes.add(next2mon+"  (" +next2sum+ ")");
-			recentOnes.add(next3mon+"  (" +next3sum+ ")");
+	    	recentOnes.put("thismon", thismon);
+	    	recentOnes.put("thissum", thissum);
+	    	recentOnes.put("nextmon", nextmon);
+	    	recentOnes.put("nextsum", nextsum);
+	    	recentOnes.put("next2mon", next2mon);
+	    	recentOnes.put("next2sum", next2sum);
+	    	recentOnes.put("next3mon", next3mon);
+	    	recentOnes.put("next3sum", next3sum);
+//			recentOnes.add(nextmon+"  (" + nextsum+ ")");
+//			recentOnes.add(next2mon+"  (" +next2sum+ ")");
+//			recentOnes.add(next3mon+"  (" +next3sum+ ")");
 	    }catch (Exception e) {
 	    	e.printStackTrace();
 	    }
@@ -144,6 +161,75 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public List<ActivityBean> checkedClasses(List<String> activityClass) {
 		return dao.checkedClasses(activityClass);
+	}
+
+	@Override
+	public List<ActivityBean> startFromLatest() {
+		return dao.startFromLatest();
+	}
+
+	@Override
+	public List<ActivityBean> startFromEarlest() {
+		return dao.startFromEarlest();
+	}
+
+	@Override
+	public List<ActivityBean> endFromLatest() {
+		return dao.endFromLatest();
+	}
+
+	@Override
+	public List<ActivityBean> endFromEarlest() {
+		return dao.endFromEarlest();
+	}
+
+	@Override
+	public List<ActivityBean> peopleFromFew() {
+		return dao.peopleFromFew();
+	}
+
+	@Override
+	public List<ActivityBean> peopleFromMany() {
+		return dao.peopleFromMany();
+	}
+
+	@Override
+	public List<ActivityBean> placeFromNorth() {
+		return dao.placeFromNorth();
+	}
+
+	@Override
+	public List<ActivityBean> placeFromSouth() {
+		return dao.placeFromSouth();
+	}
+
+	@Override
+	public List<ActivityBean> selectRecentMon(int thismon) {
+		Calendar today = Calendar.getInstance();
+		int currentMon = today.get(Calendar.MONTH)+1; //月份為0~11 //10月-->9
+		int currentYear = today.get(Calendar.YEAR); 
+		int thisyear = currentYear;
+		if (thismon < currentMon) {
+			thisyear = currentYear + 1;
+		}
+		
+		String thismon1 = thisyear +"-"+ thismon +"-01"; //2020-10-01
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date Datethismon1 =null;
+		Date Datethismon31 =null;
+		try {
+			Datethismon1 = dateFormat.parse(thismon1);//轉換型態  String-->Date
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(Datethismon1); //將日期轉為calendar型態
+			int lastday = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);//取該月最後一日(總共天數)
+			
+			String thismon31 = thisyear +"-"+ thismon +"-" + lastday; //2020-10-31
+			Datethismon31 = dateFormat.parse(thismon31);//轉換型態  String-->Date
+			return dao.selectRecentMon(Datethismon1,Datethismon31);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return dao.selectRecentMon(Datethismon1,Datethismon31);
 	}
 
 	

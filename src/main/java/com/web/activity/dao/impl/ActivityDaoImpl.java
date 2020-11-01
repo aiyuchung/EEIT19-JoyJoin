@@ -44,7 +44,7 @@ public class ActivityDaoImpl implements ActivityDao {
 	@Override
 	public List<ActivityTypeBean> showAllTypes() {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ActivityTypeBean  WHERE activityStatus = 'active'";
+		String hql = "FROM ActivityTypeBean";
 		List<ActivityTypeBean> allTypes = session.createQuery(hql).getResultList();
 		return allTypes;
 	}
@@ -94,10 +94,8 @@ public class ActivityDaoImpl implements ActivityDao {
 	public List<ActivityBean> checkedClasses(List<String> activityClass) {
 		Session session = factory.getCurrentSession();
 		List<ActivityBean> list = new ArrayList<ActivityBean>();
-		String hql = "FROM ActivityBean WHERE " ;
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' AND " ;
 		String classes ="";
-			classes += "activityStatus = 'active'";
-			System.out.println("if (activityClass == null for string =============================> "+classes);
 			for (int i = 0; i < activityClass.size(); i++) {
 				if (i == 0) {
 					classes += "activityClass = '"+ activityClass.get(0) +"'";
@@ -111,17 +109,9 @@ public class ActivityDaoImpl implements ActivityDao {
 		list = session.createQuery(hql).getResultList();	
 		return list;
 	}
-
+//ajax排序
 	@Override
 	public List<ActivityBean> startFromLatest() {
-		Session session = factory.getCurrentSession();
-		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY activityDate DESC";
-		List<ActivityBean> activities = session.createQuery(hql).getResultList();
-		return activities;
-	}
-
-	@Override
-	public List<ActivityBean> startFromEarlest() {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY activityDate ASC";
 		List<ActivityBean> activities = session.createQuery(hql).getResultList();
@@ -129,15 +119,15 @@ public class ActivityDaoImpl implements ActivityDao {
 	}
 
 	@Override
-	public List<ActivityBean> endFromLatest() {
+	public List<ActivityBean> startFromEarlest() {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY finalDate DESC";
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY activityDate DESC";
 		List<ActivityBean> activities = session.createQuery(hql).getResultList();
 		return activities;
 	}
 
 	@Override
-	public List<ActivityBean> endFromEarlest() {
+	public List<ActivityBean> endFromLatest() {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY finalDate ASC";
 		List<ActivityBean> activities = session.createQuery(hql).getResultList();
@@ -145,9 +135,17 @@ public class ActivityDaoImpl implements ActivityDao {
 	}
 
 	@Override
+	public List<ActivityBean> endFromEarlest() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY finalDate DESC";
+		List<ActivityBean> activities = session.createQuery(hql).getResultList();
+		return activities;
+	}
+
+	@Override
 	public List<ActivityBean> peopleFromFew() {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ActivityBean WHERE activityStatus = 'active' AND ";
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY minLimit ASC";
 		List<ActivityBean> activities = session.createQuery(hql).getResultList();
 		return activities;
 	}
@@ -155,35 +153,36 @@ public class ActivityDaoImpl implements ActivityDao {
 	@Override
 	public List<ActivityBean> peopleFromMany() {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY minLimit ACSC";
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY minLimit DESC";
 		List<ActivityBean> activities = session.createQuery(hql).getResultList();
 		return activities;
 	}
-
+	
 	@Override
-	public List<ActivityBean> placeOfNorth() {
+	public List<ActivityBean> placeFromNorth() {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY minLimit ACSC";
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY provId ASC";
 		List<ActivityBean> activities = session.createQuery(hql).getResultList();
 		return activities;
 	}
 
 	@Override
-	public List<ActivityBean> placeOfWest() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ActivityBean> placeFromSouth() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY provId DESC";
+		List<ActivityBean> activities = session.createQuery(hql).getResultList();
+		return activities;
 	}
 
 	@Override
-	public List<ActivityBean> placeOfEast() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ActivityBean> placeOfSouth() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ActivityBean> selectRecentMon(Date Datethismon1, Date Datethismon31) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' AND activityDate BETWEEN :stDate AND :edDate";
+		List<ActivityBean> activities = session.createQuery(hql)
+				.setParameter("stDate",Datethismon1)
+				.setParameter("edDate",Datethismon31)
+				.getResultList();
+		return activities;
 	}
 
 

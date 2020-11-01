@@ -1,5 +1,6 @@
 package com.web.activity.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,11 +43,12 @@ public interface ActivityDao {
 
 	List<ActivityBean> peopleFromMany();
 	
-	List<ActivityBean> placeOfNorth();
+	List<ActivityBean> placeFromNorth();
 	
-	List<ActivityBean> placeOfWest();
+	List<ActivityBean> placeFromSouth();
 	
-	List<ActivityBean> placeOfEast();
+	//ajax最近活動(指定月分)
 	
-	List<ActivityBean> placeOfSouth();
+	List<ActivityBean> selectRecentMon(Date Datethismon1, Date Datethismon31);
+
 }
