@@ -107,6 +107,10 @@ Released   : 20100501
     text-decoration: none;
     background-color: #f8f9fa;
 }
+#searchform {
+	margin: 0;
+	padding: 20px 0;
+}
 </style>
 
 </head>
@@ -143,7 +147,7 @@ Released   : 20100501
 								<div class="dropdown-item  dropdown-foreach">
 									<h6><strong>活動類型</strong></h6>
 										<c:forEach var="type" items="${allTypes}">
-											<ul class="ulof${type.activityType}">
+											<ul class="ulof${type.activityType}" id="ulid${type.activityType}">
 											<form:checkbox path="Bigtype" id="Bigtype${type.activityType}" value="${type.activityType}" class="Bigtype ${type.activityType}" />
 											<form:label path="Bigtype" for="Bigtype${type.activityType}">${type.activityTypeName}</form:label>
 											<span style="color:blue" class="navTypeList"> (更多分類 ▷)  </span>
@@ -225,10 +229,12 @@ Released   : 20100501
 
 			<div id="sidebar2" class="sidebar">
 				<ul>
+<!-- 關鍵字搜尋   -->					
 					<li>
 						<form id="searchform" method="get" action="#">
+							<h6>關鍵字搜尋</h6>
 							<div>
-								<input type="text" name="s" id="s" size="15" value="" /> <br />
+								<input type="text" name="s" id="s" size="15" value="" placeholder="EX: 瑜珈" /> <br />
 							</div>
 						</form>
 					</li>
@@ -295,20 +301,21 @@ Released   : 20100501
 						</div>
 					</li>
 					<li>
-						<h2>活動分類</h2>
+						<h2>活動分類快篩</h2>
 <!-- 活動分類 (大類 & 小類checkbox) -->
 						<ul id="categories">
 							<c:forEach var="type" items="${allTypes}">
-								<li id="${type.activityType}"><a href="javascript:;"
-									class="TypeList">${type.activityTypeName}</a> 
+								<li id="${type.activityType}">
+								
+								<a href="javascript:;" class="TypeList"><span class="triIcon">►</span>${type.activityTypeName}</a> 
 									<c:forEach var="category" items="${categoryList}">
-										<div class="classCheckbox panel" style="display: none">
+										<div class="classCheckbox panel" style="display:none">
 											<c:choose>
 												<c:when
 													test="${category.activityTypeBean.activityType == type.activityType}">
-													<input class="selectClass ${type.activityType}"
+													<input class="selectClass ${type.activityType}" id="classId${category.activityClass}"
 														type="checkbox" value="${category.activityClass}"
-														name="activityClass">${category.activityClass}</p>
+														name="activityClass"><label for="classId${category.activityClass}">${category.activityClass}</label>
 												</c:when>
 											</c:choose>
 										</div>
@@ -318,7 +325,7 @@ Released   : 20100501
 					</li>
 <!-- 近期活動(最近四個月)  -->					
 					<li>
-						<h2>近期活動</h2>
+						<h2>近期活動快篩</h2>
 						<ul>
 							<li><a href="#searchform" class="recentOne">${recentOnes.thismon}月 (${recentOnes.thissum})</a></li>
 							<li><a href="#searchform" class="recentOne">${recentOnes.nextmon}月 (${recentOnes.nextsum})</a></li>
@@ -371,10 +378,11 @@ Released   : 20100501
 					<li>
 						<h2>最後倒數</h2>
 						<ul>
-							<c:forEach var="finalOnes" items="${finalOnes}">
-								<c:if test="${finalOnes == null || finalOnes =='' ||finalOnes ==' '}">
-									<li><strong>目前暫無3天內要截止的活動喔</strong></li>
-								</c:if>
+							<li>
+							<input id="finalNum" type="text" value="${finalNum}" hidden />
+							<span id="noLessThan3"></span>
+							</li>
+								<c:forEach var="finalOnes" items="${finalOnes}">
 								<c:set var="days" scope="session" value="${finalOnes.leftDays}" />
 								<c:choose>
 									<c:when test="${days == 0}">
@@ -495,7 +503,7 @@ function showNext(){
 		  dayOfWeek = firstday.getDay(),           //判斷第一天是星期幾(返回[0-6]中的一個，0代表星期天，1代表星期一，以此類推)
 		  console.log(dayOfWeek);
 		  days_per_month = new Array(31, 28 + isLeap(y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31),         //建立月份陣列
-		  str_nums = Math.ceil((dayOfWeek + days_per_month[m])/ 7);                        //確定日期表格所需的行數
+		  str_nums = Math.ceil((dayOfWeek + days_per_month[m]) / 7);                        //確定日期表格所需的行數
 
 				var calendarbody = document.getElementById("calBody");
 				for (var i = 0; i < str_nums; i ++) {         //二維陣列建立日期表格
@@ -515,6 +523,13 @@ function showNext(){
 
 </script>
 	<script>
+	$(document).ready(function(){
+		var finalNum = $("#finalNum").val();
+		if(finalNum == 0){
+			$("#noLessThan3").text("目前沒有3天內要截止的活動");
+		}
+	})
+	
 	$("#navbarDropdownMenuLink").click(function() { //導覽列的"活動排序"控制下方區塊隱藏或顯示
 		 $("#dropdown-menu").toggle();
 		 $(".dropdown-checkbox").hide();
@@ -531,8 +546,15 @@ function showNext(){
 		$("#dropdown-menu").toggle();
 	})
 	
-	$(".TypeList").click(function(){ //點選大類別
+	$(".TypeList").click(function(){ //點選左列大類別
 		$(this).parent().find("div").toggle();
+
+		if($(this).parent().find("div").is(":hidden") ){ //三角形icon隨div是否隱藏而改變
+			$(this).find(".triIcon").text("►");
+		}else{
+			$(this).find(".triIcon").text("▼");
+		}
+		
 	})
 	
 	$(".navTypeList").click(function(){ //導覽列點選大類別旁邊的小勾勾
@@ -542,7 +564,7 @@ function showNext(){
 	$(".cancelChecked").click(function(){ //取消全部選取
 		$(".dropdown-foreach").find("input").prop("checked",false);
 	})
-	
+		
 	$(".selectClass").click(function(){ //左列以類別快速篩選
 		var categories = new Array();
 		$('input[name="activityClass"]:checked').each(function(i, item){
@@ -684,7 +706,7 @@ function showNext(){
 		})
 	})
 	
-	$(".recentOne").click(function(){
+	$(".recentOne").click(function(){ //以近期月份作為快速篩選
 		var thismon = $(this).text().split("月");
 		$.ajax({
 			  url:"ajax_recentOnes",
@@ -699,39 +721,65 @@ function showNext(){
 				}
 		})
 	})
+	
+	$("#s").change(function(){          //關鍵字篩選
+		var keywords = $("#s").val();
+		console.log(keywords);
+		$.ajax({
+			  url:"ajax_keyWords",
+			  type: "POST",
+			  dataType: "html",
+			  contentType: 'application/json; charset=utf-8',
+			  data:  {keyword : keywords},
+// 				  JSON.stringify(keywords),
+			  success:function(data){
+				  $(".post").empty();
+				  $(".newajaxlist").empty();
+				  $(".newajaxlist").append(data);
+					},
+				error:function(){
+				 	$(".newajaxlist").empty();
+		 			$(".newajaxlist").append(
+		 					'<c:forEach var="all" items="${activities}"><div class="post oldajaxlist"><h2 class="title"><strong>${all.activityDate} </strong> (${all.prov})</h2>'
+		 				        +'<h1 class="title"><a href="#">${all.name}</a></h1><p class="byline"><small><a href="#發起人的超連結" rel="nofollow">${all.customerBean.nickname}</a>於 ${all.createdDate} 發起</small></p>'
+		 				        +'<div class="entry"><p>本 <strong>${all.activityTypeName}</strong> 活動將於${all.finalDate}截止</p>'
+		 				        +'<p>只要 ${all.minLimit}人即可成公開團!     本活動最高上限人數:  ${all.maxLimit}</p>'
+		 				        +'<p class="links"><a href="#" class="more">(看詳細內容)</a> &nbsp;&nbsp;&nbsp;</p></div></div></c:forEach>'
+			 		);
+				  }
+		})
+	})
 	//nav的大小類選擇
 	$(".Bigtype").click(function(){
-		if ($(".Bigtype").is(":checked")){
-			console.log($(this).find(".classCheckbox"));
-			$(this).find(".Smalltype").prop("checked",true);
+		var liClass= "."+$(this).val();
+		if ($(this).is(":checked")){  //大類如果打勾
+// 			console.log(liClass);
+			$(this).parents("ul").find(liClass).prop("checked",true);  //小類全部的checkbox也要打勾
+// 			console.log($(this).parents("ul").find(liClass));
+// 			console.log("smalltype value=" + $("#ulidart .art").val());
 		}else{
-			$(this).find(".Smalltype").prop("checked",false);
+			$(this).parents("ul").find(liClass).prop("checked",false); //反之小類全部的checkbox要取消
+			console.log($(this).parents("ul").find(liClass));
 		}
 	})
 	
 	$(".Smalltype").click(function(){
 		var judge = false;
-		var ulclass = "."+$(this).parents("ul").attr("class");
-		
-		console.log($(this));
-		console.log($(this).parents("ul"));
-		console.log($(this).parents("ul").find(".Smalltype"));
-		console.log("------------------");
-		$(this).parents("ul").find(".Smalltype").each(function(){
-			
-			if ($(this).is(":checked")){
-				console.log("checked item: ");
-				console.log($(this));
+		var ulId = "#"+$(this).parents("ul").attr("id"); //抓直屬ul的id
+// 		console.log(ulId);
+// 		console.log($(ulId).find(".Smalltype")); //可以抓到所屬ul全部li之checkbox
+		$(ulId).find(".Smalltype").each(function(){
+			if ($(this).is(":checked")){ 
 				judge = true;
-			}else{
-				console.log("unchecked item: ");
-				console.log($(this));
+			}else{					//如果有一項li沒勾選 則judge=false並跳出迴圈
 				judge = false;
 				return false;
 			}
 		})
 		if (judge){
-			$(ulclass).find("input[type='checkbox']").prop("checked",true);
+			$(ulId).find(".Bigtype").prop("checked",true); //li全部勾選 大類則也要勾
+		}else{
+			$(ulId).find(".Bigtype").prop("checked",false); //li沒有全選 大類就取消勾選
 		}
 		
 	})

@@ -51,7 +51,6 @@ public class ActivityServiceImpl implements ActivityService {
 	public List<ActivityBean> selectFinal() {
 		List<ActivityBean> list = dao.selectFinal();
 		Date today = new Date();
-//	     sdf;      
 	    List<ActivityBean> finalOnes = new ArrayList<ActivityBean>();
 	    System.out.println("today = " + today);
 	    try {
@@ -64,11 +63,11 @@ public class ActivityServiceImpl implements ActivityService {
 				System.out.println("today-->"+ today);
 //				Date expiredDay = sdf.parse(bean.getFinalDate());
 //				System.out.println(expiredDay);
-				long diff = expiredDay.getTime() - today.getTime() ;
+				long diff = expiredDay.getTime() - today.getTime() ; //截止日跟今天差幾毫秒
 //				System.out.println("diff:"+ diff);
-				long diffDays = diff / (24 * 60 * 60 * 1000);
+				long diffDays = diff / (24 * 60 * 60 * 1000); //截止日跟今天差幾天
 //				System.out.println(diffDays);
-				if (diffDays  < 4 && diffDays >= 0) {
+				if (diffDays  < 4 && diffDays >= 0) { //如果差0~3天就存入list
 					
 					bean.setLeftDays((int)diffDays);
 					finalOnes.add(bean);
@@ -235,6 +234,11 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public List<ActivityBean> selectByFrom(String price, String location, String limit, String small) {
 		return dao.selectByFrom(price, location, limit, small);
+	}
+
+	@Override
+	public List<ActivityBean> searchByKey(String keyWord) {
+		return dao.searchByKey(keyWord);
 	}
 
 	

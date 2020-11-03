@@ -30,12 +30,19 @@ public class ActivitiesController {
 	@GetMapping("/activities")
 	public String list(Model model, @ModelAttribute("form") ActivityForm form) {
 		List<ActivityBean> list = service.selectAllActivities();
+		int elementsNum = list.size();
 		List<ActivityBean> latest = service.selectLatest();
 		List<ActivityTypeBean> types = service.showAllTypes();
 		List<ActivityBean> finalOnes = service.selectFinal();
+		System.out.println("finalOnes list========================" +finalOnes);
+		int finalNum = finalOnes.size();
+		System.out.println("finalOnes size----------------------->" +finalOnes);
+		
 		Map<String, Integer> recentOnes = service.selectRecentMonths();
 		List<ActivityClassBean> categoryList = service.selectAllClasses();
 		model.addAttribute("activities",list);
+		model.addAttribute("activitiesNum",elementsNum);
+		model.addAttribute("finalNum",finalNum);
 		model.addAttribute("latestOnes",latest);
 		model.addAttribute("allTypes",types);
 		model.addAttribute("finalOnes",finalOnes);
@@ -70,28 +77,28 @@ public class ActivitiesController {
 		List<ActivityBean> latest = service.selectLatest();
 		List<ActivityTypeBean> types = service.showAllTypes();
 		List<ActivityBean> finalOnes = service.selectFinal();
+		System.out.println("finalOnes list========================" +finalOnes);
+		int finalNum = finalOnes.size();
+		System.out.println("finalOnes size----------------------->" +finalOnes);
+		
 		Map<String, Integer> recentOnes = service.selectRecentMonths();
 		List<ActivityClassBean> categoryList = service.selectAllClasses();
 		model.addAttribute("activities",list);
 		model.addAttribute("latestOnes",latest);
 		model.addAttribute("allTypes",types);
 		model.addAttribute("finalOnes",finalOnes);
+		model.addAttribute("activitiesNum",finalNum);
 		model.addAttribute("recentOnes",recentOnes);
 		model.addAttribute("categoryList",categoryList);
 		return "ShowActivities";
 	}
 	
-//	@PostMapping("/ajax_checkedClass")
-//	public @ResponseBody List<ActivityBean> checkedClasses(Model model,
-//			@RequestBody List<String> activityClass) {
-//		List<ActivityBean> checkedActivities = service.checkedClasses(activityClass);
-//		return checkedActivities;
-//	}
-	
 	@PostMapping("/ajax_checkedClass")
 	public String checkedClasses(Model model,
 			@RequestBody List<String> activityClass) {
 		List<ActivityBean> checkedActivities = service.checkedClasses(activityClass);
+		int elementsNum = checkedActivities.size();
+		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",checkedActivities);
 		return "ajax/activity lists";
 	}
@@ -99,6 +106,7 @@ public class ActivitiesController {
 	@GetMapping("/ajax_ordered1")
 	public String startFromLatest(Model model) {
 		List<ActivityBean> beans = service.startFromLatest();
+		
 		model.addAttribute("activities",beans);
 		return "ajax/activity lists";
 
@@ -165,8 +173,24 @@ public class ActivitiesController {
 	public String selectRecentMon(Model model,
 			@RequestParam int thismon) {
 		List<ActivityBean> beans = service.selectRecentMon(thismon);
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",beans);
 		System.out.println("activity lists========="+beans);
+		return "ajax/activity lists";
+
+	}
+	
+	@PostMapping("/ajax_keyWords")
+	public String searchByKey(Model model,
+			@RequestParam String keyword) {
+		System.out.println("controller recept--------------------->" +keyword);
+		List<ActivityBean> beans = service.searchByKey(keyword);
+//		int elementsNum = beans.size();
+//		model.addAttribute("activitiesNum",elementsNum);
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
+		model.addAttribute("activities",beans);
 		return "ajax/activity lists";
 
 	}

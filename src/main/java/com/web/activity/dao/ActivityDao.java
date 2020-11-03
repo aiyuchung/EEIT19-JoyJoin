@@ -54,4 +54,6 @@ public interface ActivityDao {
 	//form
 	List<ActivityBean> selectByFrom(String price, String location, String limit, String small);
 
+	//關鍵字搜尋
+	List<ActivityBean> searchByKey(String keyWord);
 }

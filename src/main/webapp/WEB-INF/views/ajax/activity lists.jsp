@@ -4,15 +4,32 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
-<c:choose>
-	<c:when test=" ${activities == ''}">
-		<div>
-			<h3>目前尚無活動</h3>
-		</div>
-	</c:when>
-	<c:otherwise>
+<head>
+</head>
+<body>
+<input id="num" type="text" value="${activitiesNum}" hidden />
+<%-- <c:set var="aa" value="${activitiesNum}"/> --%>
+<%-- <c:if test="${aa==0}"> --%>
+<%-- 	<span id="textSpan">${aa}目前尚無活動12312</span> --%>
+<%-- </c:if> --%>
+<span id="textSpan"></span>
+
+<%-- <span></span><c:set var="num" value="${activitiesNum}"/> --%>
+
+<%-- <c:choose> --%>
+<%-- 	<c:when test=" ${num == 0}"> --%>
+<!-- 		activitiesNum: test -->
+<%-- 		${activitiesNum} --%>
+<!-- 		alert("test OK"); -->
+<!-- 			<span>目前尚無活動</span> -->
+
+<%-- 	</c:when> --%>
+<%-- 	<c:otherwise> --%>
+<%-- 	activitiesNum !=0 strange : ${activitiesNum} --%>
+<!-- 	alert("test NONO"); -->
 		<c:forEach var="all" items="${activities}">
 			<div class="post">
 				<h2 class="title">
@@ -36,6 +53,16 @@
 				</div>
 			</div>
 		</c:forEach>
-	</c:otherwise>
-</c:choose>
+<%-- 	</c:otherwise> --%>
+<%-- </c:choose> --%>
+<script type="text/javascript">
+	var number = $("#num").val();
+	if(number == 0){
+		$("#textSpan").text("目前尚無活動");
+	}else{
+		console.log("else")
+	}
+	
+</script>
+</body>
 </html>
