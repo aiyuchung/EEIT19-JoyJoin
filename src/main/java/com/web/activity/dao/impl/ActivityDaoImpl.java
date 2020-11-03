@@ -245,26 +245,23 @@ public class ActivityDaoImpl implements ActivityDao {
 
 	@Override
 	public List<ActivityBean> searchByKey(String keyWord) {
-		System.out.println("keyword=========================="+keyWord);
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ActivityBean WHERE activityStatus = 'active' "
-				+ "AND name LIKE :name ";
-//				+ "OR prov LIKE :prov "
-//				+ "OR introduction LIKE :introduction "
-//				+ "OR activityClass LIKE :activityClass";
-		List<ActivityBean> beans = session.createQuery(hql)
-				.setParameter("name","%"+keyWord+"%")
-//				.setParameter("prov","%"+keyWord+"%")
-//				.setParameter("introduction","%"+keyWord+"%")
-//				.setParameter("activityClass","%"+keyWord+"%")
-				.getResultList();
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ";
+		
+		String[] keyWords =keyWord.split(" ");
+		String key ="";
+		for (int i = 0; i< keyWords.length; i++) {
+			key += "AND name LIKE '%"+ keyWords[i] +"%'";
+			key += "OR prov LIKE '%"+ keyWords[i] +"%'";
+			key += "OR introduction LIKE '%"+ keyWords[i] +"%'";
+			key += "OR activityClass LIKE '%"+ keyWords[i] +"%'";
+		}
+		
+		hql += key;
+		List<ActivityBean> beans = session.createQuery(hql).getResultList();
 		return beans;
 
     }
 
-
-	
-
-	
 
 }

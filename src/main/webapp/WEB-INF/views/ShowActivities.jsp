@@ -92,10 +92,17 @@ Released   : 20100501
 }
 
 .panel {
-  padding: 0 18px;
+  padding: 0.3px 15px 0px 15px;
   background-color: dark-gray;
   display: none;
   overflow: hidden;
+  
+  vertical-align:middle;
+  line-height: 1.8rem;
+}
+
+.panel>label{
+	margin-bottom: 0rem;
 }
 .dropdown-item.active, .dropdown-item:active {
  
@@ -110,6 +117,9 @@ Released   : 20100501
 #searchform {
 	margin: 0;
 	padding: 20px 0;
+}
+.today{
+	border: solid 2px lightblue;
 }
 </style>
 
@@ -236,6 +246,9 @@ Released   : 20100501
 							<div>
 								<input type="text" name="s" id="s" size="15" value="" placeholder="EX: 瑜珈" /> <br />
 							</div>
+							<p></p>
+							<button type="button" class="btn btn-outline-light btn-sm">確認</button>
+							
 						</form>
 					</li>
 <!-- tags未寫 -->					
@@ -250,7 +263,7 @@ Released   : 20100501
 					</li>
 <!-- 日曆 -->
 					<li>
-						<h2>Calendar</h2>
+						<h2>日曆</h2>
 						<div id="calendar_wrap">
 							<table summary="Calendar">
 								<caption id="thiscap">
@@ -451,7 +464,7 @@ window.onload= function (){
 	m = today.getMonth(),                //獲取日期中的月份(需要注意的是：月份是從0開始計算，獲取的值比正常月份的值少1)
 	d = today.getDate(),                //獲取日期中的日(方便在建立日期表格時高亮顯示當天)
 	firstday = new Date(y, m, 1)            //獲取當月的第一天
-	 showCalendar(y,m,firstday);
+	 showCalendar(y,m,d,firstday);
 }
 
 function showPrev(){
@@ -468,7 +481,7 @@ function showPrev(){
 	document.getElementById("w61").innerText="";
 	document.getElementById("w62").innerText="";
 	
-	showCalendar(y,m,firstday);
+	showCalendar(y,m,d,firstday);
 	
 	document.getElementById("prev").innerHTML="&laquo;"+ (m==0?12:m) +"月";
 	document.getElementById("thiscap").innerHTML=y+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (m+1)+"月"
@@ -499,7 +512,7 @@ function showNext(){
 		  return year % 4 == 0 ? (year % 100 != 0 ? 1 : (year % 400 == 0 ? 1 : 0)) : 0;
 		  }
 		 
-		  function showCalendar(y,m,firstday){
+		  function showCalendar(y,m,d,firstday){
 		  dayOfWeek = firstday.getDay(),           //判斷第一天是星期幾(返回[0-6]中的一個，0代表星期天，1代表星期一，以此類推)
 		  console.log(dayOfWeek);
 		  days_per_month = new Array(31, 28 + isLeap(y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31),         //建立月份陣列
@@ -513,10 +526,11 @@ function showNext(){
 					  var date = idx - dayOfWeek + 1;          //將當月的1號與星期進行匹配
 					  (date <= 0 || date > days_per_month[m]) ? date = ' ': date = idx - dayOfWeek + 1;  //索引小於等於0或者大於月份最大值就用空表格代替
 					  calendarbody.rows[i].cells[k].innerText=date;
-					 <%--  date == d ? 
-							  newTr.appendChild(document.createElement('<td class="today">'+ date +'</td>')) : 
-							  newTr.appendChild(document.createElement('<td>'+ date +'</td>'));  //高亮顯示當天
-					  --%>
+					  var tdtag = calendarbody.rows[i].cells[k].classList;
+					  date == d ? 
+							  calendarbody.rows[i].cells[k].classList.add("today"): 
+								calendarbody.rows[i].cells[k].classList.remove("today")
+							;  //當天以today類別的Border做標示
 					  }
 		 		}
 		  }
@@ -722,15 +736,17 @@ function showNext(){
 		})
 	})
 	
-	$("#s").change(function(){          //關鍵字篩選
+	$(".btn-sm").click(function(){          //關鍵字篩選
 		var keywords = $("#s").val();
 		console.log(keywords);
 		$.ajax({
 			  url:"ajax_keyWords",
-			  type: "POST",
+			  type: "get",
 			  dataType: "html",
 			  contentType: 'application/json; charset=utf-8',
-			  data:  {keyword : keywords},
+			  data: {
+				  keyword: keywords
+				},
 // 				  JSON.stringify(keywords),
 			  success:function(data){
 				  $(".post").empty();

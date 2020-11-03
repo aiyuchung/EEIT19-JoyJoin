@@ -181,7 +181,7 @@ public class ActivitiesController {
 
 	}
 	
-	@PostMapping("/ajax_keyWords")
+	@GetMapping("/ajax_keyWords")
 	public String searchByKey(Model model,
 			@RequestParam String keyword) {
 		System.out.println("controller recept--------------------->" +keyword);
