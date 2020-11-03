@@ -1,19 +1,23 @@
 package com.web.activity.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityForm;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.service.ActivityService;
 
@@ -24,8 +28,45 @@ public class ActivitiesController {
 	ActivityService service;
 	
 	@GetMapping("/activities")
-	public String list(Model model) {
+	public String list(Model model, @ModelAttribute("form") ActivityForm form) {
 		List<ActivityBean> list = service.selectAllActivities();
+		List<ActivityBean> latest = service.selectLatest();
+		List<ActivityTypeBean> types = service.showAllTypes();
+		List<ActivityBean> finalOnes = service.selectFinal();
+		Map<String, Integer> recentOnes = service.selectRecentMonths();
+		List<ActivityClassBean> categoryList = service.selectAllClasses();
+		model.addAttribute("activities",list);
+		model.addAttribute("latestOnes",latest);
+		model.addAttribute("allTypes",types);
+		model.addAttribute("finalOnes",finalOnes);
+		model.addAttribute("recentOnes",recentOnes);
+		model.addAttribute("categoryList",categoryList);
+		return "ShowActivities";
+	}
+	
+	@PostMapping("/form")
+	public String form(Model model, @ModelAttribute("form") ActivityForm form) {
+//		try {
+//			request.setCharacterEncoding("UTF-8");
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
+		String price = form.getPrice();
+//		String big = form.getBigtype();
+		String location = form.getLocation();
+		String limit = form.getMinLimit();
+		String small = form.getSmalltype();
+		System.out.println(price);
+//		System.out.println(big);
+		System.out.println(location);
+		System.out.println(limit);
+		System.out.println(small);
+		
+		
+		
+//		List<ActivityBean> list = service.selectAllActivities();
+		
+		List<ActivityBean> list = service.selectByFrom(price, location, limit, small);
 		List<ActivityBean> latest = service.selectLatest();
 		List<ActivityTypeBean> types = service.showAllTypes();
 		List<ActivityBean> finalOnes = service.selectFinal();

@@ -129,8 +129,6 @@ public class TableSettingHibernate {
 					}
 			session.flush();
 			System.out.println("Member表格資料新增成功");
-			
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

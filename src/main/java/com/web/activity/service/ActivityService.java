@@ -48,5 +48,8 @@ public interface ActivityService {
 	//ajax最近活動(指定月分)
 	
 	List<ActivityBean> selectRecentMon(int thismon);
+	
+	//form
+	List<ActivityBean> selectByFrom(String price, String location, String limit, String small);
 
 }

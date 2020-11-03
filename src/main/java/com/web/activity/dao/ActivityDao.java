@@ -50,5 +50,8 @@ public interface ActivityDao {
 	//ajax最近活動(指定月分)
 	
 	List<ActivityBean> selectRecentMon(Date Datethismon1, Date Datethismon31);
+	
+	//form
+	List<ActivityBean> selectByFrom(String price, String location, String limit, String small);
 
 }

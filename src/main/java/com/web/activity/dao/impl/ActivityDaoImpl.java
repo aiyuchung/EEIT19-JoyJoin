@@ -105,7 +105,7 @@ public class ActivityDaoImpl implements ActivityDao {
 				}
 			}
 		hql += classes;
-		System.out.println("final for string =============================> "+classes);
+//		System.out.println("final for string =============================> "+classes);
 		list = session.createQuery(hql).getResultList();	
 		return list;
 	}
@@ -183,6 +183,64 @@ public class ActivityDaoImpl implements ActivityDao {
 				.setParameter("edDate",Datethismon31)
 				.getResultList();
 		return activities;
+	}
+	@Override
+	public List<ActivityBean> selectByFrom(String price, String location, String limit, String small) {
+		String[] prices = price.split(","); 
+		String[] locations = location.split(",");
+		String[] limits = limit.split(",");
+		String[] smalltypes = small.split(",");
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ";
+		String priceshql ="";
+		String locationshql ="";
+		String limitshql ="";
+		String smalltypeshql ="";
+		for (int i = 0; i < prices.length; i++) {
+			if (i == 0) {
+				if (prices[0].equals("0")) {
+					priceshql = "AND price = '"+ prices[0] +"'";
+					System.out.println("priceshql =0: "+priceshql);
+				}else {
+				priceshql += "AND price "+ prices[0];
+				}
+			}else {
+				priceshql += " OR price "+ prices[i];
+			}
+		}
+		System.out.println("priceshql : "+priceshql);
+		for (int i = 0; i < limits.length; i++) {
+			if (i == 0) {
+				limitshql += "AND maxLimit "+ limits[0];
+			}else {
+				limitshql += " OR maxLimit "+ limits[i];
+			}
+		}
+		System.out.println("limitshql : "+limitshql);
+		for (int i = 0; i < locations.length; i++) {
+			if (i == 0) {
+				locationshql += "AND location = '"+ locations[0] +"'";
+			}else {
+				locationshql += " OR location = '"+ locations[i] +"'";
+			}
+		}
+		System.out.println("locationshql : "+locationshql);
+		for (int i = 0; i < smalltypes.length; i++) {
+			if (i == 0) {
+				smalltypeshql += "AND activityClassNo ='"+ smalltypes[0] +"'";
+			}else {
+				smalltypeshql += " OR activityClassNo  ='"+ smalltypes[i] +"'";
+			}
+		}
+		System.out.println("smalltypeshql : "+smalltypeshql);
+		
+		hql = hql + priceshql + limitshql + locationshql + smalltypeshql;
+		List<ActivityBean> list = new ArrayList<ActivityBean>();
+		list = session.createQuery(hql).getResultList();	
+		System.out.println("List<ActivityBean> list : "+list);
+		System.out.println("--------------------------------------------------------------- ");
+		return list;
+
 	}
 
 

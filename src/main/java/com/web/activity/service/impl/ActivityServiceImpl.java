@@ -232,5 +232,10 @@ public class ActivityServiceImpl implements ActivityService {
 		return dao.selectRecentMon(Datethismon1,Datethismon31);
 	}
 
+	@Override
+	public List<ActivityBean> selectByFrom(String price, String location, String limit, String small) {
+		return dao.selectByFrom(price, location, limit, small);
+	}
+
 	
 }

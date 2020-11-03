@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <c:choose>
-	<c:when test=" ${empty activities}">
+	<c:when test=" ${activities == ''}">
 		<div>
 			<h3>目前尚無活動</h3>
 		</div>

@@ -20,11 +20,9 @@ public class ProvinceBean implements java.io.Serializable {
 	private int provId;
 	private String prov;
 	private String location;
-	
 
 	@OneToMany(mappedBy="provinceBean", cascade= {CascadeType.ALL})
 	private Set<ActivityBean> activityBean = new LinkedHashSet<>();
-	
 
 	public int getProvId() {
 		return provId;
@@ -48,10 +46,5 @@ public class ProvinceBean implements java.io.Serializable {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-
-
-
-
-	
 	
 }

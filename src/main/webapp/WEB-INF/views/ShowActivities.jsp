@@ -137,24 +137,24 @@ Released   : 20100501
 <!-- 						class="nav-link dropdown-toggle" href="#" -->
 <!-- 						id="navbarCheckboxMenuLink" role="button" data-toggle="dropdown" -->
 <!-- 						aria-haspopup="true" aria-expanded="false"> 條件篩選 </a> -->
-						<form>
+						<form:form method="POST" action="form" modelAttribute="form">
 <!-- 							<div class="dropdown-menu dropdown-checkbox" aria-labelledby="navbarDropdown"> -->
 							<div class="dropdown-menu dropdown-checkbox" aria-labelledby="navbarDropdown">
-								<div class="dropdown-item ">
+								<div class="dropdown-item  dropdown-foreach">
 									<h6><strong>活動類型</strong></h6>
 										<c:forEach var="type" items="${allTypes}">
 											<ul class="ulof${type.activityType}">
-											<input type="checkbox" name="" id="Bigtype${type.activityType}" value="" class="Bigtype ${type.activityType}" />
-											<label for="Bigtype${type.activityType}">${type.activityTypeName}</label>
+											<form:checkbox path="Bigtype" id="Bigtype${type.activityType}" value="${type.activityType}" class="Bigtype ${type.activityType}" />
+											<form:label path="Bigtype" for="Bigtype${type.activityType}">${type.activityTypeName}</form:label>
 											<span style="color:blue" class="navTypeList"> (更多分類 ▷)  </span>
 											
 												<c:forEach var="category" items="${categoryList}">
 												<li class="classCheckbox"  style="display: none">
 													<c:choose>
 														<c:when test="${category.activityTypeBean.activityType == type.activityType}">
-															<input class="Smalltype ${type.activityType}" id="Smalltype${category.activityClassNo}"
-																type="checkbox" value="${category.activityClass}" name="activityClass">
-															<label for="Smalltype${category.activityClassNo}">${category.activityClass}</label>
+															<form:checkbox path="Smalltype" class="Smalltype ${type.activityType}" id="Smalltype${category.activityClassNo}"
+																value="${category.activityClassNo}" />
+															<form:label path="Smalltype" for="Smalltype${category.activityClassNo}">${category.activityClass}</form:label>
 														</c:when>
 													</c:choose>
 												</li> 
@@ -162,36 +162,38 @@ Released   : 20100501
 											</ul>		
 										</c:forEach>
 									</div> 
-								<div class="dropdown-item">
+								<div class="dropdown-item dropdown-foreach">
 									<h6><strong>區域</strong></h6>
-									<input type="checkbox" name="" id="north" value="" /><label for="north">北部</label> 
-									<input type="checkbox" name="" id="west" value="" /><label for="west">中部</label> 
-									<input type="checkbox" name="" id="south" value="" /><label for="south">南部</label> 
-									<input type="checkbox" name="" id="east" value="" /><label for="east">東部</label>
-									<input type="checkbox" name="" id="outofisland" value="" /><label for="outofisland">福建省</label>
+									<form:checkbox path="location" id="north" value="north" /><form:label path="location" for="north">北部</form:label> 
+									<form:checkbox path="location" id="west" value="west" /><form:label path="location" for="west">中部</form:label> 
+									<form:checkbox path="location" id="south" value="south" /><form:label path="location" for="south">南部</form:label> 
+									<form:checkbox path="location" id="east" value="east" /><form:label path="location" for="east">東部</form:label>
+									<form:checkbox path="location" id="outofisland" value="outofisland" /><form:label path="location" for="outofisland">福建省</form:label>
 								</div>
-<%-- 								<class="nav-item dropdown"class="dropdown-item">  --%>
-								<div class="dropdown-item">
+								<div class="dropdown-item dropdown-foreach">
 									<h6><strong>費用</strong></h6>
-									<input type="checkbox" name="u" id="0" value="" /><label for="0">0元</label> 
-									<input type="checkbox" name="u" id="500" value="" /><label for="500">500元以下</label> 
-									<input type="checkbox" name="u" id="1000" value="" /><label for="1000">500~1000元</label> 
-									<input type="checkbox" name="u" id="2000" value="" /><label for="2000">1000~2000元</label> 
-									<input type="checkbox" name="u" id="2000up" value="" /><label for="2000up">2000元以上</label>
+									<form:checkbox path="price" id="0" value="0" /><form:label path="price" for="0">0元</form:label> 
+									<form:checkbox path="price" id="500" value="BETWEEN '1' AND '500'" /><form:label path="price" for="500">500元以下</form:label> 
+									<form:checkbox path="price" id="1000" value="BETWEEN '501' AND '1000'" /><form:label path="price" for="1000">500~1000元</form:label> 
+									<form:checkbox path="price" id="2000" value="BETWEEN '1001' AND '2000'" /><form:label path="price" for="2000">1000~2000元</form:label> 
+									<form:checkbox path="price" id="2000up" value="BETWEEN '2001' AND '99999'" /><form:label path="price" for="2000up">2000元以上</form:label>
 								</div>
-								<div class="dropdown-item">
+								<div class="dropdown-item dropdown-foreach">
 									<h6><strong>人數上限</strong></h6>
-									<input type="checkbox" name="u" id="3" value="" /><label for="3">3人以下</label> 
-									<input type="checkbox" name="u" id="10" value="" /><label for="10">3~10人</label> 
-									<input type="checkbox" name="u" id="20" value="" /><label for="20">10~20人</label>
-									<input type="checkbox" name="u" id="any" value="" /><label for="any">不限人數</label>
+									<form:checkbox path="minLimit" id="3" value="BETWEEN '0' AND '3'" /><form:label path="minLimit" for="3">3人以下</form:label> 
+									<form:checkbox path="minLimit" id="10" value="BETWEEN '4' AND '10'" /><form:label path="minLimit" for="10">3~10人</form:label> 
+									<form:checkbox path="minLimit" id="20" value="BETWEEN '11' AND '20'" /><form:label path="minLimit" for="20">10~20人</form:label>
+									<form:checkbox path="minLimit" id="any" value="BETWEEN '21' AND '9999'" /><form:label path="minLimit" for="any">不限人數</form:label>
 								</div>
 								
-								<div>
-									<input type="submit" value="查詢" />
+								<div align ="center">
+									<button type="button" class="btn btn-outline-warning cancelChecked">取消勾選</button>
+									<button type="submit" class="btn btn-outline-success">查詢條件</button>
+									<button type="submit" class="btn btn-outline-primary">查詢全部</button>
+									
 								</div>
 							</div>
-						</form></li>
+						</form:form></li>
 <!-- 排序按鈕  -->
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#"
@@ -199,14 +201,14 @@ Released   : 20100501
 						aria-haspopup="true" aria-expanded="false"> 活動排序 </a>
 						<div class="dropdown-menu" id="dropdown-menu"
 							aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" id="startFromLatest" href="javascript:;">活動日期↑ (近到遠)</a> 
-							<a class="dropdown-item" id="startFromEarlest" href="javascript:;">活動日期↓ (遠到近)</a>
-							<a class="dropdown-item" id="endFromLatest" href="javascript:;">截止日期↑ (近到遠)</a>
-							<a class="dropdown-item" id="endFromEarlest" href="javascript:;">截止日期↓ (遠到近)</a>
-							<a class="dropdown-item" id="placeFromNorth" href="javascript:;">活動地點 (由北至南)</a>
-							<a class="dropdown-item" id="placeFromSouth" href="javascript:;">活動地點 (由南至北)</a> 
-							<a class="dropdown-item" id="peopleFromFew" href="javascript:;">參加人數限制 (少數優先)</a> 
-							<a class="dropdown-item" id="peopleFromMany" href="javascript:;">參加人數限制(多數優先)</a>
+							<a class="dropdown-item fororder" id="startFromLatest" href="javascript:;">活動日期↑ (近到遠)</a> 
+							<a class="dropdown-item fororder" id="startFromEarlest" href="javascript:;">活動日期↓ (遠到近)</a>
+							<a class="dropdown-item fororder" id="endFromLatest" href="javascript:;">截止日期↑ (近到遠)</a>
+							<a class="dropdown-item fororder" id="endFromEarlest" href="javascript:;">截止日期↓ (遠到近)</a>
+							<a class="dropdown-item fororder" id="placeFromNorth" href="javascript:;">活動地點 (由北至南)</a>
+							<a class="dropdown-item fororder" id="placeFromSouth" href="javascript:;">活動地點 (由南至北)</a> 
+							<a class="dropdown-item fororder" id="peopleFromFew" href="javascript:;">參加人數限制 (少數優先)</a> 
+							<a class="dropdown-item fororder" id="peopleFromMany" href="javascript:;">參加人數限制(多數優先)</a>
 						</div></li>
 
 				</ul>
@@ -370,11 +372,15 @@ Released   : 20100501
 						<h2>最後倒數</h2>
 						<ul>
 							<c:forEach var="finalOnes" items="${finalOnes}">
+								<c:if test="${finalOnes == null || finalOnes =='' ||finalOnes ==' '}">
+									<li><strong>目前暫無3天內要截止的活動喔</strong></li>
+								</c:if>
 								<c:set var="days" scope="session" value="${finalOnes.leftDays}" />
 								<c:choose>
 									<c:when test="${days == 0}">
 										<li><a href="#"><strong>(今天結單!)</strong>${finalOnes.name}</a></li>
 									</c:when>
+									
 									<c:otherwise>
 										<li><a href="#"><strong>(只剩${days}天)</strong>${finalOnes.name}</a></li>
 									</c:otherwise>
@@ -451,7 +457,6 @@ function showPrev(){
 	var string = y + "-" + (m+1) + "-1";
 	console.log("string=" +string);
 	firstday = new Date(string);
-	console.log(firstday);
 	document.getElementById("w61").innerText="";
 	document.getElementById("w62").innerText="";
 	
@@ -490,7 +495,7 @@ function showNext(){
 		  dayOfWeek = firstday.getDay(),           //判斷第一天是星期幾(返回[0-6]中的一個，0代表星期天，1代表星期一，以此類推)
 		  console.log(dayOfWeek);
 		  days_per_month = new Array(31, 28 + isLeap(y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31),         //建立月份陣列
-		  str_nums = Math.ceil((dayOfWeek + days_per_month[m]) / 7);                        //確定日期表格所需的行數
+		  str_nums = Math.ceil((dayOfWeek + days_per_month[m])/ 7);                        //確定日期表格所需的行數
 
 				var calendarbody = document.getElementById("calBody");
 				for (var i = 0; i < str_nums; i ++) {         //二維陣列建立日期表格
@@ -510,17 +515,20 @@ function showNext(){
 
 </script>
 	<script>
-	$("#navbarDropdownMenuLink").click(function() {
+	$("#navbarDropdownMenuLink").click(function() { //導覽列的"活動排序"控制下方區塊隱藏或顯示
 		 $("#dropdown-menu").toggle();
 		 $(".dropdown-checkbox").hide();
 	})
 	
-	$("#navbarCheckboxMenuLink").click(function() {
+	$("#navbarCheckboxMenuLink").click(function() { //導覽列的"條件篩選"控制下方區塊隱藏或顯示
 		 $(".dropdown-checkbox").toggle();
 		 $("#dropdown-menu").hide();
 	})
-	$(".dropdown-checkbox").click(function() {
+	$(".dropdown-checkbox").click(function() { //勾選條件篩選下的方框時持續顯示整個區塊
 		 $(".dropdown-checkbox").show();
+	})
+	$(".fororder").click(function() { //如按"條件篩選"時"活動排序"未隱藏區塊直接隱藏"活動排序"之區塊
+		$("#dropdown-menu").toggle();
 	})
 	
 	$(".TypeList").click(function(){ //點選大類別
@@ -531,7 +539,11 @@ function showNext(){
 		$(this).siblings('li').toggle();
 	})
 	
-	$(".selectClass").click(function(){
+	$(".cancelChecked").click(function(){ //取消全部選取
+		$(".dropdown-foreach").find("input").prop("checked",false);
+	})
+	
+	$(".selectClass").click(function(){ //左列以類別快速篩選
 		var categories = new Array();
 		$('input[name="activityClass"]:checked').each(function(i, item){
 			categories.push($(item).val());
@@ -690,24 +702,36 @@ function showNext(){
 	//nav的大小類選擇
 	$(".Bigtype").click(function(){
 		if ($(".Bigtype").is(":checked")){
-			$(".Smalltype").prop("checked",true);
+			console.log($(this).find(".classCheckbox"));
+			$(this).find(".Smalltype").prop("checked",true);
 		}else{
-			$(".Smalltype").prop("checked",false);
+			$(this).find(".Smalltype").prop("checked",false);
 		}
 	})
 	
 	$(".Smalltype").click(function(){
 		var judge = false;
+		var ulclass = "."+$(this).parents("ul").attr("class");
+		
+		console.log($(this));
+		console.log($(this).parents("ul"));
+		console.log($(this).parents("ul").find(".Smalltype"));
+		console.log("------------------");
 		$(this).parents("ul").find(".Smalltype").each(function(){
+			
 			if ($(this).is(":checked")){
+				console.log("checked item: ");
+				console.log($(this));
 				judge = true;
 			}else{
+				console.log("unchecked item: ");
+				console.log($(this));
 				judge = false;
 				return false;
 			}
 		})
 		if (judge){
-			$(ulclass).find("input").prop("checked",true);
+			$(ulclass).find("input[type='checkbox']").prop("checked",true);
 		}
 		
 	})
