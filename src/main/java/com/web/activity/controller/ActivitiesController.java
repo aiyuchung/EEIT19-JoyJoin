@@ -29,17 +29,16 @@ public class ActivitiesController {
 	
 	@GetMapping("/activities")
 	public String list(Model model, @ModelAttribute("form") ActivityForm form) {
+		Map <String, Integer> changedStatus = service.checkFinalDate();
 		List<ActivityBean> list = service.selectAllActivities();
 		int elementsNum = list.size();
 		List<ActivityBean> latest = service.selectLatest();
 		List<ActivityTypeBean> types = service.showAllTypes();
 		List<ActivityBean> finalOnes = service.selectFinal();
-		System.out.println("finalOnes list========================" +finalOnes);
 		int finalNum = finalOnes.size();
-		System.out.println("finalOnes size----------------------->" +finalOnes);
-		
 		Map<String, Integer> recentOnes = service.selectRecentMonths();
 		List<ActivityClassBean> categoryList = service.selectAllClasses();
+		model.addAttribute("changedStatusNum",changedStatus);
 		model.addAttribute("activities",list);
 		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("finalNum",finalNum);
@@ -163,6 +162,16 @@ public class ActivitiesController {
 	@GetMapping("/ajax_ordered8")
 	public String placeFromSouth(Model model) {
 		List<ActivityBean> beans = service.placeFromSouth();
+		model.addAttribute("activities",beans);
+		return "ajax/activity lists";
+
+	}
+	
+	@GetMapping("/ajax_selectAll")
+	public String selectAll(Model model) {
+		List<ActivityBean> beans = service.selectAllActivities();
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",beans);
 		return "ajax/activity lists";
 

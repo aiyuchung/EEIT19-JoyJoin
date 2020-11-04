@@ -28,6 +28,11 @@ public class ActivityServiceImpl implements ActivityService {
 	ActivityDao dao;
 	
 	@Override
+	public Map<String, Integer>  checkFinalDate() {
+		return dao.checkFinalDate();
+	}
+	
+	@Override
 	public List<ActivityBean> selectAllActivities() {
 		return dao.selectAllActivities();
 	}
@@ -240,6 +245,8 @@ public class ActivityServiceImpl implements ActivityService {
 	public List<ActivityBean> searchByKey(String keyWord) {
 		return dao.searchByKey(keyWord);
 	}
+
+	
 
 	
 }

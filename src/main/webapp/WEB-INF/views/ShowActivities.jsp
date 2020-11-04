@@ -151,11 +151,11 @@ Released   : 20100501
 <!-- 						class="nav-link dropdown-toggle" href="#" -->
 <!-- 						id="navbarCheckboxMenuLink" role="button" data-toggle="dropdown" -->
 <!-- 						aria-haspopup="true" aria-expanded="false"> 條件篩選 </a> -->
-						<form:form method="POST" action="form" modelAttribute="form">
+						<form:form method="POST" action="form" modelAttribute="form" id="form">
 <!-- 							<div class="dropdown-menu dropdown-checkbox" aria-labelledby="navbarDropdown"> -->
 							<div class="dropdown-menu dropdown-checkbox" aria-labelledby="navbarDropdown">
-								<div class="dropdown-item  dropdown-foreach">
-									<h6><strong>活動類型</strong></h6>
+								<div class="dropdown-item  dropdown-foreach" id="check1">
+									<h6><strong>活動類型</strong><span class="reminder" style='color:red; font-size: 10px'></span></h6>
 										<c:forEach var="type" items="${allTypes}">
 											<ul class="ulof${type.activityType}" id="ulid${type.activityType}">
 											<form:checkbox path="Bigtype" id="Bigtype${type.activityType}" value="${type.activityType}" class="Bigtype ${type.activityType}" />
@@ -176,24 +176,24 @@ Released   : 20100501
 											</ul>		
 										</c:forEach>
 									</div> 
-								<div class="dropdown-item dropdown-foreach">
-									<h6><strong>區域</strong></h6>
+								<div class="dropdown-item dropdown-foreach" id="check2">
+									<h6><strong>區域</strong><span class="reminder" style='color:red; font-size: 10px'></span></h6>
 									<form:checkbox path="location" id="north" value="north" /><form:label path="location" for="north">北部</form:label> 
 									<form:checkbox path="location" id="west" value="west" /><form:label path="location" for="west">中部</form:label> 
 									<form:checkbox path="location" id="south" value="south" /><form:label path="location" for="south">南部</form:label> 
 									<form:checkbox path="location" id="east" value="east" /><form:label path="location" for="east">東部</form:label>
 									<form:checkbox path="location" id="outofisland" value="outofisland" /><form:label path="location" for="outofisland">福建省</form:label>
 								</div>
-								<div class="dropdown-item dropdown-foreach">
-									<h6><strong>費用</strong></h6>
+								<div class="dropdown-item dropdown-foreach" id="check3">
+									<h6><strong>費用</strong><span class="reminder" style='color:red; font-size: 10px'></span></h6>
 									<form:checkbox path="price" id="0" value="0" /><form:label path="price" for="0">0元</form:label> 
 									<form:checkbox path="price" id="500" value="BETWEEN '1' AND '500'" /><form:label path="price" for="500">500元以下</form:label> 
 									<form:checkbox path="price" id="1000" value="BETWEEN '501' AND '1000'" /><form:label path="price" for="1000">500~1000元</form:label> 
 									<form:checkbox path="price" id="2000" value="BETWEEN '1001' AND '2000'" /><form:label path="price" for="2000">1000~2000元</form:label> 
 									<form:checkbox path="price" id="2000up" value="BETWEEN '2001' AND '99999'" /><form:label path="price" for="2000up">2000元以上</form:label>
 								</div>
-								<div class="dropdown-item dropdown-foreach">
-									<h6><strong>人數上限</strong></h6>
+								<div class="dropdown-item dropdown-foreach" id="check4">
+									<h6><strong>人數上限</strong><span class="reminder" style='color:red; font-size: 10px'></span></h6>
 									<form:checkbox path="minLimit" id="3" value="BETWEEN '0' AND '3'" /><form:label path="minLimit" for="3">3人以下</form:label> 
 									<form:checkbox path="minLimit" id="10" value="BETWEEN '4' AND '10'" /><form:label path="minLimit" for="10">3~10人</form:label> 
 									<form:checkbox path="minLimit" id="20" value="BETWEEN '11' AND '20'" /><form:label path="minLimit" for="20">10~20人</form:label>
@@ -202,8 +202,8 @@ Released   : 20100501
 								
 								<div align ="center">
 									<button type="button" class="btn btn-outline-warning cancelChecked">取消勾選</button>
-									<button type="submit" class="btn btn-outline-success">查詢條件</button>
-									<button type="submit" class="btn btn-outline-primary">查詢全部</button>
+									<button type="button" class="btn btn-outline-success" id="submitForm">條件查詢</button>
+									<button type="button" class="btn btn-outline-primary" id="selectAll">查詢全部</button>
 									
 								</div>
 							</div>
@@ -544,6 +544,12 @@ function showNext(){
 		}
 	})
 	
+	$("#selectAll").click(function(){
+		window.location.href = "<c:url value='/activities' />";
+	})
+	
+	
+	
 	$("#navbarDropdownMenuLink").click(function() { //導覽列的"活動排序"控制下方區塊隱藏或顯示
 		 $("#dropdown-menu").toggle();
 		 $(".dropdown-checkbox").hide();
@@ -798,6 +804,59 @@ function showNext(){
 			$(ulId).find(".Bigtype").prop("checked",false); //li沒有全選 大類就取消勾選
 		}
 		
+	})
+	$("#submitForm").click(function(){
+		
+		var judge1 = false;
+		 $("#check1").find(".Smalltype").each(function(){
+			 console.log($(this));
+			 if ($(this).is(":checked")){ 
+				 console.log("checked");
+				 judge1 = true;
+				 return false;
+			 }
+		 })
+
+		if (judge1 == false){
+			$("#check1").find(".reminder").text("  *至少選擇一個小類別")
+		};	
+		
+		var judge2 = false;
+		$("#check2").find("input[type=checkbox]").each(function(){
+			 if($("#check2").find("input[type=checkbox]").is(":checked")){
+				 judge2 = true;
+				 return false;
+			 }
+		})
+		if (judge2 == false){
+			$("#check2").find(".reminder").text("  *至少選擇一個區域")
+		};
+		
+		var judge3 = false;	
+		$("#check3").find("input[type=checkbox]").each(function(){
+			 if($("#check3").find("input[type=checkbox]").is(":checked")){
+				 judge3 = true;
+				 return false;
+			 }
+		})
+		if (judge3 == false){
+			$("#check3").find(".reminder").text("  *至少選擇一個費用區段")
+		};
+		
+		var judge4 = false;	
+		$("#check4").find("input[type=checkbox]").each(function(){
+			 if($("#check4").find("input[type=checkbox]").is(":checked")){
+				 judge4 = true;
+				 return false;
+			 }
+		})	
+		if (judge4 == false){
+			$("#check4").find(".reminder").text("  *至少選擇一個最高人數限制")
+		};
+		
+		if (judge1 == true && judge2 == true && judge3 == true && judge4 == true){
+			$("#form").submit();
+		}
 	})
 
 	

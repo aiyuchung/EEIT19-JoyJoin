@@ -23,7 +23,22 @@ public class ActivityDaoImpl implements ActivityDao {
 	
 	@Autowired
 	SessionFactory factory;
-	
+
+	@Override
+	public Map<String, Integer>  checkFinalDate() {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE ActivityBean SET activityStatus = 'OK' WHERE finalDate = :now AND joinedNum >= minLimit ";
+		String hql1 = "UPDATE ActivityBean SET activityStatus = 'inactive' WHERE finalDate = :now AND joinedNum < minLimit ";
+		Date today = new Date();
+		List<ActivityBean> OKLists = session.createQuery(hql).setParameter("now",today).getResultList();
+		List<ActivityBean> inactiveLists = session.createQuery(hql1).setParameter("now",today).getResultList();
+		int todayOK = OKLists.size();
+		int todayinactive = inactiveLists.size();
+		Map <String, Integer> changedStatus = new HashMap<>();
+		changedStatus.put("todayOK",todayOK);
+		changedStatus.put("todayinactive",todayinactive);
+		return changedStatus;
+	}
 	
 	@Override
 	public List<ActivityBean> selectAllActivities() {
@@ -196,45 +211,57 @@ public class ActivityDaoImpl implements ActivityDao {
 		String locationshql ="";
 		String limitshql ="";
 		String smalltypeshql ="";
-		for (int i = 0; i < prices.length; i++) {
-			if (i == 0) {
-				if (prices[0].equals("0")) {
-					priceshql = "AND price = '"+ prices[0] +"'";
-					System.out.println("priceshql =0: "+priceshql);
+		if (price != null) {
+			for (int i = 0; i < prices.length; i++) {
+				if (i == 0) {
+					if (prices[0].equals("0")) {
+						priceshql = "AND price = '"+ prices[0] +"'";
+						System.out.println("priceshql =0: "+priceshql);
+					}else {
+					priceshql += "AND price "+ prices[0];
+					}
 				}else {
-				priceshql += "AND price "+ prices[0];
+					priceshql += " OR price "+ prices[i];
 				}
-			}else {
-				priceshql += " OR price "+ prices[i];
 			}
+			System.out.println("priceshql : "+priceshql);
 		}
-		System.out.println("priceshql : "+priceshql);
-		for (int i = 0; i < limits.length; i++) {
-			if (i == 0) {
-				limitshql += "AND maxLimit "+ limits[0];
-			}else {
-				limitshql += " OR maxLimit "+ limits[i];
+		
+		if (limit != null) {
+			for (int i = 0; i < limits.length; i++) {
+				if (i == 0) {
+					limitshql += " AND maxLimit "+ limits[0];
+				}else {
+					limitshql += " OR maxLimit "+ limits[i];
+				}
 			}
+			System.out.println("limitshql : "+limitshql);
 		}
-		System.out.println("limitshql : "+limitshql);
-		for (int i = 0; i < locations.length; i++) {
-			if (i == 0) {
-				locationshql += "AND location = '"+ locations[0] +"'";
-			}else {
-				locationshql += " OR location = '"+ locations[i] +"'";
+		
+		if (location != null) {
+			for (int i = 0; i < locations.length; i++) {
+				if (i == 0) {
+					locationshql += " AND location = '"+ locations[0] +"'";
+				}else {
+					locationshql += " OR location = '"+ locations[i] +"'";
+				}
 			}
+			System.out.println("locationshql : "+locationshql);
 		}
-		System.out.println("locationshql : "+locationshql);
-		for (int i = 0; i < smalltypes.length; i++) {
-			if (i == 0) {
-				smalltypeshql += "AND activityClassNo ='"+ smalltypes[0] +"'";
-			}else {
-				smalltypeshql += " OR activityClassNo  ='"+ smalltypes[i] +"'";
+		
+		if (small != null) {
+			for (int i = 0; i < smalltypes.length; i++) {
+				if (i == 0) {
+					smalltypeshql += " AND activityClassNo ='"+ smalltypes[0] +"'";
+				}else {
+					smalltypeshql += " OR activityClassNo  ='"+ smalltypes[i] +"'";
+				}
 			}
+			System.out.println("smalltypeshql : "+smalltypeshql);
 		}
-		System.out.println("smalltypeshql : "+smalltypeshql);
 		
 		hql = hql + priceshql + limitshql + locationshql + smalltypeshql;
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>"+hql);
 		List<ActivityBean> list = new ArrayList<ActivityBean>();
 		list = session.createQuery(hql).getResultList();	
 		System.out.println("List<ActivityBean> list : "+list);

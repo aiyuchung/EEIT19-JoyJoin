@@ -10,6 +10,8 @@ import com.web.activity.model.ActivityTypeBean;
 
 public interface ActivityDao {	
 	
+	Map<String, Integer> checkFinalDate();
+	
 	List<ActivityBean> selectAllActivities();
 	
 	List<ActivityBean> selectLatest();

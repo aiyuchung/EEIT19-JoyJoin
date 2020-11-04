@@ -9,6 +9,8 @@ import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityTypeBean;
 
 public interface ActivityService {
+	Map<String, Integer> checkFinalDate();
+	
 	List<ActivityBean> selectAllActivities();
 
 	List<ActivityBean> selectLatest();
