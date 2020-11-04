@@ -28,10 +28,15 @@ public class ActivityDaoImpl implements ActivityDao {
 	public Map<String, Integer>  checkFinalDate() {
 		Session session = factory.getCurrentSession();
 		String hql = "UPDATE ActivityBean SET activityStatus = 'OK' WHERE finalDate = :now AND joinedNum >= minLimit ";
+		String hqls = "FROM ActivityBean WHERE activityStatus = 'OK' AND finalDate = :now";
+
 		String hql1 = "UPDATE ActivityBean SET activityStatus = 'inactive' WHERE finalDate = :now AND joinedNum < minLimit ";
+		String hql1s = "FROM ActivityBean WHERE activityStatus = 'inactive' AND finalDate = :now";
 		Date today = new Date();
-		List<ActivityBean> OKLists = session.createQuery(hql).setParameter("now",today).getResultList();
-		List<ActivityBean> inactiveLists = session.createQuery(hql1).setParameter("now",today).getResultList();
+		session.createQuery(hql).setParameter("now",today).executeUpdate();
+		List<ActivityBean> OKLists = session.createQuery(hqls).setParameter("now",today).getResultList();
+		session.createQuery(hql1).setParameter("now",today).executeUpdate();
+		List<ActivityBean> inactiveLists = session.createQuery(hql1s).setParameter("now",today).getResultList();
 		int todayOK = OKLists.size();
 		int todayinactive = inactiveLists.size();
 		Map <String, Integer> changedStatus = new HashMap<>();

@@ -102,11 +102,13 @@ img.right {
 #menu-bg {
 	background: #1E3227;
 	height: 45px;
+	
 }
 
 #menu { 
-	width: 1000px;
+	width: 800px;
 	margin: 0 auto;
+/* 	position: relative; */
 }
 
 #menu ul {
@@ -141,7 +143,7 @@ img.right {
 
 #menu .current_page_item a {
 	background: none;
-	margin: 0 3px 0 0;
+	margin: 0 0 0 70px;
 	background: #191E1A;
 	border-bottom: 3px solid #DDBB04;
 	color: #FFFFFF;

@@ -43,6 +43,47 @@ Released   : 20100501
 	caption-side: top;
 }
 
+#menu>ul>li>a {
+	display: block;
+	float: left;
+	margin: 0 0 0 70px;
+	padding: 12px 15px 10px 15px;
+	border: none;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #DDBB04;
+}
+
+#menu>ul>li>a:hover {
+	margin: 0 0 0 70px;
+	background: #191E1A;
+	border-bottom: 3px solid #DDBB04;
+	color: #FFFFFF;
+}
+
+/* #dropdown-menu { */
+/*     position: absolute; */
+/*     top: 45px; */
+    
+/*     left: 0; */
+/*     z-index: 1000; */
+/*     display: none; */
+/*     float: left; */
+/*     min-width: 10rem; */
+/*     padding: .5rem 0; */
+/*     margin: .125rem 0 0; */
+/*     font-size: 1rem; */
+/*     color: #212529; */
+/*     text-align: left; */
+/*     list-style: none; */
+/*     background-color: #fff; */
+/*     background-clip: padding-box; */
+/*     border: 1px solid rgba(0,0,0,.15); */
+/*     border-radius: .25rem; */
+/* } */
+
 .dropdown-item {
 	display: block;
 	float: left;
@@ -59,7 +100,7 @@ Released   : 20100501
 
 .dropdown-menu {
     position: absolute;
-    top: 100%;
+    top: 44px;
     left: 0;
     z-index: 1000;
     display: none;
@@ -139,14 +180,15 @@ Released   : 20100501
 		<div id="menu-bg">
 			<div id="menu">
 				<ul id="main">
-					<li class="current_page_item"><a href="#">Homepage</a></li>
-					<li><a href="#">Products</a></li>
-					<li><a href="#">Services</a></li>
-					<li><a href="#">About Us</a></li>
-					<li><a href="#">Contact Us</a></li>
+					<li class="current_page_item" id="selectAll1"><a href="#">活動總覽</a></li>
+<!-- 					<li><a href="#">Products</a></li> -->
+<!-- 					<li><a href="#">Services</a></li> -->
+<!-- 					<li><a href="#">About Us</a></li> -->
+					<li><a href="#">新增活動</a></li>
 <!-- 查詢按鈕  -->
 					<li class="nav-item dropdown">
-					<a id="navbarCheckboxMenuLink" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><buttton>條件篩選</buttton></a>
+					<a id="navbarCheckboxMenuLink" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<buttton>條件篩選</buttton></a>
 <!-- 					<a -->
 <!-- 						class="nav-link dropdown-toggle" href="#" -->
 <!-- 						id="navbarCheckboxMenuLink" role="button" data-toggle="dropdown" -->
@@ -208,11 +250,12 @@ Released   : 20100501
 								</div>
 							</div>
 						</form:form></li>
+					
 <!-- 排序按鈕  -->
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#"
 						id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false"> 活動排序 </a>
+						aria-haspopup="true" aria-expanded="false" > 活動排序 </a>
 						<div class="dropdown-menu" id="dropdown-menu"
 							aria-labelledby="navbarDropdown">
 							<a class="dropdown-item fororder" id="startFromLatest" href="javascript:;">活動日期↑ (近到遠)</a> 
@@ -350,9 +393,10 @@ Released   : 20100501
 			</div>
 
 			<!-- start content -->
+<!-- 活動列表圖片 -->
 			<div id="content">
-				<div style="padding-bottom: 20px;">
-					<img src="images/img02.jpg" alt="" />
+				<div style="padding-bottom: 20px; overflow:hidden">
+					<img src="images/img02.jpg" alt=""/>
 				</div>
 				<div class="post newajaxlist"></div>
 <!-- 活動列表 (活動名稱v/活動日期v/截止日期/活動類別/最高人數/發起人v/發起日期v) -->
@@ -544,7 +588,7 @@ function showNext(){
 		}
 	})
 	
-	$("#selectAll").click(function(){
+	$("#selectAll, #selectAll1").click(function(){
 		window.location.href = "<c:url value='/activities' />";
 	})
 	
