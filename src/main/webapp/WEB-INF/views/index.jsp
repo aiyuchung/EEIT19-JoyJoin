@@ -130,7 +130,7 @@
 
 					<div class="3u">
 						<section>
-							<a href="movie/First.jsp" class="image full"><img src="images/pics03.jpg" alt=""></a>
+							<a href="<c:url value='/oneActivity' />" class="image full"><img src="images/pics03.jpg" alt=""></a>
 							<header>
 								<h2>電影 Movies</h2>
 							</header>

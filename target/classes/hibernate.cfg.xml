@@ -30,6 +30,7 @@
 		<mapping class="com.web.activity.model.CustomerBean"></mapping>
 		<mapping class="com.web.activity.model.ActivityTypeBean"></mapping>
 		<mapping class="com.web.activity.model.ActivityClassBean"></mapping>
+		<mapping class="com.web.activity.model.ProvinceBean"></mapping>
 
 
 	</session-factory>

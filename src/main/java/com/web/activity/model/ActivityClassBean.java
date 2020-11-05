@@ -1,15 +1,13 @@
 package com.web.activity.model;
 
-import java.sql.Blob;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -31,6 +29,9 @@ public class ActivityClassBean implements java.io.Serializable {
 	
 	@OneToMany(mappedBy="activityClassBean", cascade= {CascadeType.ALL})
 	private Set<ActivityBean> activityBean = new LinkedHashSet<>();
+	
+	@ManyToMany
+	
 
 	public String getActivityClassNo() {
 		return activityClassNo;

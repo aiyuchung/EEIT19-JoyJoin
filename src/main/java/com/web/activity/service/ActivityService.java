@@ -9,8 +9,10 @@ import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityTypeBean;
 
 public interface ActivityService {
-	List<ActivityBean> selectAllActivities();
+	Map<String, Integer> checkFinalDate();
 	
+	List<ActivityBean> selectAllActivities();
+
 	List<ActivityBean> selectLatest();
 	
 	List<ActivityTypeBean> showAllTypes();
@@ -19,20 +21,40 @@ public interface ActivityService {
 	
 	List<ActivityBean> selectFinal();
 	
-	List<String> selectRecentMonths();
+	Map<String, Integer> selectRecentMonths();
 	
 	List<ActivityClassBean> findCategories(String activityType);
 	
+	List<ActivityClassBean> selectAllClasses();
+	//ajax 選擇類別
+	List<ActivityBean> checkedClasses(List<String> activityClass);
 	
+	//ajax排序方法
 	
+	List<ActivityBean> startFromLatest();
 	
+	List<ActivityBean> startFromEarlest();
 	
-	void udpateTrip(String[] UpdateOne);
+	List<ActivityBean> endFromLatest();
 	
-	ActivityBean selectOneTrip(String tripNo);
+	List<ActivityBean> endFromEarlest();
 	
-	void insertTrip(String[] InsertOne) ;
-	
+	List<ActivityBean> peopleFromFew();
 
-	void deleteTrip(String tripNo);
+	List<ActivityBean> peopleFromMany();
+	
+	List<ActivityBean> placeFromNorth();
+	
+	List<ActivityBean> placeFromSouth();
+	
+	//ajax最近活動(指定月分)
+	
+	List<ActivityBean> selectRecentMon(int thismon);
+	
+	//form
+	List<ActivityBean> selectByFrom(String price, String location, String limit, String small);
+	
+	//關鍵字搜尋
+	List<ActivityBean> searchByKey(String keyWord);
+
 }

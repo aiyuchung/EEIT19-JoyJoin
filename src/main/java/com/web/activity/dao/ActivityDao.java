@@ -1,5 +1,6 @@
 package com.web.activity.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityTypeBean;
 
 public interface ActivityDao {	
+	
+	Map<String, Integer> checkFinalDate();
 	
 	List<ActivityBean> selectAllActivities();
 	
@@ -23,17 +26,36 @@ public interface ActivityDao {
 	
 	List<ActivityClassBean> findCategories(String activityType);
 	
+	List<ActivityClassBean> selectAllClasses();
 	
+	//ajax 選擇類別
+	List<ActivityBean> checkedClasses(List<String> activityClass);
 	
+	//ajax排序方法
 	
-	void udpateTrip(String[] UpdateOne);
+	List<ActivityBean> startFromLatest();
 	
-	ActivityBean selectOneTrip(String tripNo);
+	List<ActivityBean> startFromEarlest();
 	
-	void insertTrip(String[] InsertOne) ;
+	List<ActivityBean> endFromLatest();
 	
+	List<ActivityBean> endFromEarlest();
 	
-	void deleteTrip(String tripNo);
+	List<ActivityBean> peopleFromFew();
+
+	List<ActivityBean> peopleFromMany();
 	
+	List<ActivityBean> placeFromNorth();
 	
+	List<ActivityBean> placeFromSouth();
+	
+	//ajax最近活動(指定月分)
+	
+	List<ActivityBean> selectRecentMon(Date Datethismon1, Date Datethismon31);
+	
+	//form
+	List<ActivityBean> selectByFrom(String price, String location, String limit, String small);
+
+	//關鍵字搜尋
+	List<ActivityBean> searchByKey(String keyWord);
 }
