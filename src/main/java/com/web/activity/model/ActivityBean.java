@@ -58,7 +58,14 @@ public class ActivityBean implements java.io.Serializable {
 	private String activityStatus;
 	private Integer leftDays;
 	private Integer joinedNum;
+	private Integer hitCount;
 	
+	public Integer getHitCount() {
+		return hitCount;
+	}
+	public void setHitCount(Integer hitCount) {
+		this.hitCount = hitCount;
+	}
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="userId") 	
     private CustomerBean customerBean;

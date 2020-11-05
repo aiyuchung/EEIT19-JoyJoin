@@ -12,6 +12,9 @@ public interface ActivityDao {
 	
 	Map<String, Integer> checkFinalDate();
 	
+	//更新點擊量
+	Integer updateHitCount(int activityNo);
+	
 	List<ActivityBean> selectAllActivities();
 	
 	List<ActivityBean> selectLatest();
@@ -58,4 +61,7 @@ public interface ActivityDao {
 
 	//關鍵字搜尋
 	List<ActivityBean> searchByKey(String keyWord);
+	
+	//搜尋單個活動
+	ActivityBean selectOneActivity(int activityNo);
 }

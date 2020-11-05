@@ -31,7 +31,15 @@ public class ActivityServiceImpl implements ActivityService {
 	public Map<String, Integer>  checkFinalDate() {
 		return dao.checkFinalDate();
 	}
-	
+
+	@Override
+	public Map<String, Integer> updateHitCount(int activityNo) {
+		Integer hit =  dao.updateHitCount(activityNo);
+		Map<String, Integer> hitCount = new HashMap<>();
+		hitCount.put("hitCount",hit);
+		return hitCount;
+	}
+
 	@Override
 	public List<ActivityBean> selectAllActivities() {
 		return dao.selectAllActivities();
@@ -246,6 +254,10 @@ public class ActivityServiceImpl implements ActivityService {
 		return dao.searchByKey(keyWord);
 	}
 
+	@Override
+	public ActivityBean selectOneActivity(int activityNo) {
+		return dao.selectOneActivity(activityNo);
+	}
 	
 
 	

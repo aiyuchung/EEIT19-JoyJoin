@@ -9,7 +9,11 @@ import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityTypeBean;
 
 public interface ActivityService {
+	//確認是否截止
 	Map<String, Integer> checkFinalDate();
+	
+	//更新點擊量
+	Map<String, Integer> updateHitCount(int activityNo);
 	
 	List<ActivityBean> selectAllActivities();
 
@@ -57,4 +61,6 @@ public interface ActivityService {
 	//關鍵字搜尋
 	List<ActivityBean> searchByKey(String keyWord);
 
+	//搜尋單個活動
+	ActivityBean selectOneActivity(int activityNo);
 }

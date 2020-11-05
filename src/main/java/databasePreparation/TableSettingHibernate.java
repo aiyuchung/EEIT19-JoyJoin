@@ -290,6 +290,7 @@ public class TableSettingHibernate {
 						ProvinceBean pb = (ProvinceBean) session.get(ProvinceBean.class, provId);
 						tb.setProvinceBean(pb);
 						tb.setJoinedNum(0);
+						tb.setHitCount(0);
 						// 讀取圖片檔
 //						Blob blob = SystemUtils2018.fileToBlob(token[5].trim());
 //						book.setCoverImage(blob);

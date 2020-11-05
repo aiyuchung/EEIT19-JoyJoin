@@ -21,7 +21,7 @@ a {
 
 /*-Header-*/
 .header {
-	background-color: #99DEAB;
+	background-color: #191E1A;
 	border-bottom: 5px solid #85AD90;
 	padding: 30px 0px;
 }
@@ -74,7 +74,7 @@ a {
 
 /*-Section Blocks-*/
 .section-block {
-	background-color: #F7F7F7;
+	background-color: #ECEBEB;
 	border-radius:4px;
 	padding: 30px;
 	margin-bottom:30px;
@@ -186,7 +186,10 @@ a {
 	padding-top: 25px;
 	height: 0;
 	display:block;
+	
 }
+
+
 .video-frame iframe {
 	position: absolute;
 	top: 0;
@@ -232,6 +235,43 @@ a {
 	border-radius: 4px;
 	padding: 20px;
 	margin-bottom:10px;
+}
+
+.info-block {
+	position:relative;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 10px;
+	margin-bottom:5px;
+	vertical-align: middle;
+	
+}
+
+.info-block p {
+	width:100%;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	white-space:pre-line;
+}
+
+
+.fortitle{
+	display: inline-block;
+	width:200px;
+	padding:2px;
+	border-radius: 6px;
+/* 	border-right: gray solid 2px; */
+/* 	border-bottom: gray solid 1px; */
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.forcontent{
+	padding:2px 6px;
+	display: inline-block;
+	width:440px;
+/* 	border-radius: 6px;	 */
+/* 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); */
+	
 }
 .reward-block:hover {
 	background-color: #DCF7E3;

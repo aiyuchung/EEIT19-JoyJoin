@@ -26,7 +26,13 @@ public class ActivitiesController {
 	ActivityService service;
 	
 	@GetMapping("/oneActivity/{id}")
-	public String one(@PathVariable("id") int no, Model model) {
+	public String one(@PathVariable("id") int activityNo, Model model) {
+		System.out.println("controller activityno------------------"+activityNo);
+		ActivityBean activity = service.selectOneActivity(activityNo);
+		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
+		
+		model.addAttribute("one",activity);
+		model.addAttribute("hitCount",hitCount);
 		return "OneActivity";
 	}
 	

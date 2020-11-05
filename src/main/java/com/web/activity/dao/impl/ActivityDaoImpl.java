@@ -44,6 +44,21 @@ public class ActivityDaoImpl implements ActivityDao {
 		changedStatus.put("todayinactive",todayinactive);
 		return changedStatus;
 	}
+
+	@Override
+	public Integer updateHitCount(int activityNo) {
+		Session session = factory.getCurrentSession();
+		
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' AND activityNo = :id ";
+		ActivityBean list = (ActivityBean) session.createQuery(hql).setParameter("id",activityNo).getSingleResult();
+		Integer hit = list.getHitCount();
+		System.out.println("hit from bean====================="+hit);
+		hit += 1; 
+		
+		hql = "UPDATE ActivityBean SET hitCount= :hit WHERE activityStatus = 'active' AND activityNo = :id ";
+		session.createQuery(hql).setParameter("hit",hit).setParameter("id",activityNo).executeUpdate();
+		return hit;
+	}
 	
 	@Override
 	public List<ActivityBean> selectAllActivities() {
@@ -294,6 +309,14 @@ public class ActivityDaoImpl implements ActivityDao {
 		return beans;
 
     }
+
+	@Override
+	public ActivityBean selectOneActivity(int activityNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityBean WHERE activityNo = :no ";
+		ActivityBean activity = (ActivityBean) session.createQuery(hql).setParameter("no",activityNo).getSingleResult();
+		return activity;
+	}
 
 
 }

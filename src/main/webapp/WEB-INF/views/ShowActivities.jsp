@@ -19,7 +19,7 @@ Released   : 20100501
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>Brycesunrise by TEMPLATED</title>
+<title>JoyJoin - 活動總覽 </title>
 <meta name="keywords" content="" />
 <meta name="Bryce Sunrise" content="" />
 
@@ -57,6 +57,23 @@ Released   : 20100501
 }
 
 #menu>ul>li>a:hover {
+	margin: 0 0 0 70px;
+	background: #191E1A;
+	border-bottom: 3px solid #DDBB04;
+	color: #FFFFFF;
+}
+
+
+#selectAll1>a:hover {
+	background: red;
+	margin: 0 0 0 70px;
+	background: #191E1A;
+	border-bottom: 3px solid #DDBB04;
+	color: #FFFFFF;
+}
+
+#selectAll1>a {
+	background: none;
 	margin: 0 0 0 70px;
 	background: #191E1A;
 	border-bottom: 3px solid #DDBB04;
@@ -196,6 +213,11 @@ Released   : 20100501
 						<form:form method="POST" action="form" modelAttribute="form" id="form">
 <!-- 							<div class="dropdown-menu dropdown-checkbox" aria-labelledby="navbarDropdown"> -->
 							<div class="dropdown-menu dropdown-checkbox" aria-labelledby="navbarDropdown">
+<!-- 								<div> -->
+<!-- 									<button type="button" class="close" aria-label="Close"> -->
+<!-- 									<span aria-hidden="true">&times;</span> -->
+<!-- 									</button> -->
+<!-- 									</div> -->
 								<div class="dropdown-item  dropdown-foreach" id="check1">
 									<h6><strong>活動類型</strong><span class="reminder" style='color:red; font-size: 10px'></span></h6>
 										<c:forEach var="type" items="${allTypes}">
@@ -256,6 +278,7 @@ Released   : 20100501
 						class="nav-link dropdown-toggle" href="#"
 						id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false" > 活動排序 </a>
+						
 						<div class="dropdown-menu" id="dropdown-menu"
 							aria-labelledby="navbarDropdown">
 							<a class="dropdown-item fororder" id="startFromLatest" href="javascript:;">活動日期↑ (近到遠)</a> 
@@ -420,7 +443,7 @@ Released   : 20100501
 								</p>
 								<p>只要 ${all.minLimit}人即可成公開團! 本活動最高上限人數: ${all.maxLimit}</p>
 								<p class="links">
-									<a href="<c:url value='/oneAtivity/${all.activityNo}' />" class="more" > (看詳細內容) </a> &nbsp;&nbsp;&nbsp;
+									<a href="<c:url value='/oneActivity/${all.activityNo}' />" class="more"> (看詳細內容) </a> &nbsp;&nbsp;&nbsp;
 								</p>
 							</div>
 						</div>
@@ -603,6 +626,12 @@ function showNext(){
 		 $(".dropdown-checkbox").toggle();
 		 $("#dropdown-menu").hide();
 	})
+	
+	$(".close").click(function() { 
+		console.log("close!");
+		$(".dropdown-checkbox").hide();
+	})
+	
 	$(".dropdown-checkbox").click(function() { //勾選條件篩選下的方框時持續顯示整個區塊
 		 $(".dropdown-checkbox").show();
 	})
@@ -903,7 +932,7 @@ function showNext(){
 			$("#form").submit();
 		}
 	})
-
+	
 	
 </script>
 </body>
