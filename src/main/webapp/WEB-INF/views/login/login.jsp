@@ -30,7 +30,8 @@
 </head>
 
 <body>
-	<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="top:100px">
+
+	<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true" style="top:100px">
 	  <div class="modal-dialog">
 	    <div class="modal-content" style="border-radius:99em;height:380px;width:380px;left:55px">
 	      <div class="modal-header1">
@@ -39,11 +40,9 @@
 	        </button>
 	      </div>
 	      <div class="modal-body" id="resultArea" style="height:380px;width:380px">
-							<!-- 傳送回來的內容 -->
+				${status}
 	      </div>
 	      <div class="modal-footer1">
-	<!-- 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-	<!-- 	        <button type="button" class="btn btn-primary">Save changes</button> -->
 	      </div>
 	    </div>
 	  </div>
@@ -60,41 +59,28 @@
 		<input type="password"	class="login-password" placeholder="Password" /> 
 		<table align='center'>
 			<tr>
-				<td><input type="button" value="登入" name="Login" class="login-submit" id="login btn" data-toggle="modal" data-target="#resultModal" style="padding:4px;margin-right:10px"/></td>
+				<td><input type="submit" value="登入" name="Login" class="login-submit" id="login btn" style="padding:4px;margin-right:10px"/></td>
 				<td><input type="button" value="返回" class="login-submit" id="back btn"  style="padding:4px;margin-left:10px"/></td>
 			</tr>
 		</table>
-		
-
+		<a href="<c:url value='/insert'/>" class="login-forgot-pass" style="bottom:15px">現在註冊</a>
+		<a href="<c:url value=''/>" class="login-forgot-pass">忘記密碼</a>
 <!-- 		<input type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" value="GO" /> -->
-		
+
 	</form>
 	
 	
 	<div class="underlay-photo"></div>
 	<div class="underlay-black"></div>
 	<script>
-		var btn = document.getElementById("login btn");
-		var area = document.getElementById("resultArea");
-		btn.onclick = function(){
-			var xhr = new XMLHttpRequest();
-			if ( xhr != null ){
-				xhr.onreadystatechange = function(){
-					if( xhr.readyState === 4 ){
-						if( xhr.status === 200){
-							area.innerHTML = "<font color='red'>" + xhr.responseText + "</font>";
-						}else if( xhr.status === 404) {
-							div1.innerHTML = "<font color='red'>查無該物件</font>";
-						} else if (xhr.status === 500) {
-							div1.innerHTML = "<font color='red'>系統異常，請聯絡開發人員</font>";
-						}
-					}
-				}
-				xhr.open('GET', 'checkID', true);
-				xhr.send();
+			var t ="${status}" ;
+			if( t !=""){
+				$(window).on('load',function(){
+			        $('#resultModal').modal('show');
+			    });
 			}
-		}
 
+	
 		document.getElementById("back btn").onclick = function(){
 			location.href = "<c:url value = '/' />"
 		}

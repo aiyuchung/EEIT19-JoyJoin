@@ -44,6 +44,50 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	@Override
+	public void updateInfo(MemberBean mb) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE MemberBean SET password = :password, gender = :gender, picture = :picture"
+				+ ", nickname = :nickname, birthYear = :year, birthMonth = :month, starSign = :star, bloodType = :blood"
+				+ ", country = :country, address = :address, hobby = :hobby, education = :education, school = :school"
+				+ ", company = :company, job = :job, income = :income, signature = :signature, introduction = :introduction"
+				+ " WHERE account = :id";
+		session.createQuery(hql).setParameter("id", mb.getAccount())
+											  .setParameter("password", mb.getPassword())
+											  .setParameter("gender", mb.getGender())
+											  .setParameter("picture", mb.getPicture())
+											  .setParameter("nickname", mb.getNickname())
+											  .setParameter("year", mb.getBirthYear())
+											  .setParameter("month", mb.getBirthMonth())
+											  .setParameter("star", mb.getStarSign())
+											  .setParameter("blood", mb.getBloodType())
+											  .setParameter("country", mb.getCountry())
+											  .setParameter("address", mb.getAddress())
+											  .setParameter("hobby", mb.getHobby())
+											  .setParameter("education", mb.getEducation())
+											  .setParameter("school", mb.getSchool())
+											  .setParameter("company", mb.getCompany())
+											  .setParameter("job", mb.getJob())
+											  .setParameter("income", mb.getIncome())
+											  .setParameter("signature", mb.getSignature())
+											  .setParameter("introduction", mb.getIntroduction())
+											 .executeUpdate();		
+		}
+
+	public MemberBean getMember(String account) {
+		String hql = "FROM MemberBean WHERE account = :id";
+		Session session = factory.getCurrentSession();
+		MemberBean mb = new MemberBean();
+		try {
+			mb = (MemberBean) session.createQuery(hql)
+											.setParameter("id", account)
+											.getSingleResult();
+		}catch(Exception e) {
+			;
+		}
+		return mb;
+	}
+	
+	@Override
 	public boolean checkID(String account, String password) {
 		String hql = "SELECT password FROM MemberBean WHERE account = :id";
 		Session session = factory.getCurrentSession();
@@ -103,36 +147,6 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	@Override
-	public void updateInfo(MemberBean mb) {
-		Session session = factory.getCurrentSession();
-		String hql = "UPDATE MemberBean SET password = :password, gender = :gender, picture = :picture"
-				+ ", nickname = :nickname, birthYear = :year, birthMonth = :month, starSign = :star, bloodType = :blood"
-				+ ", country = :country, address = :address, hobby = :hobby, education = :education, school = :school"
-				+ ", company = :company, job = :job, income = :income, signature = :signature, introduction = :introduction"
-				+ " WHERE account = :id";
-		session.createQuery(hql).setParameter("id", mb.getAccount())
-											  .setParameter("password", mb.getPassword())
-											  .setParameter("gender", mb.getGender())
-											  .setParameter("picture", mb.getPicture())
-											  .setParameter("nickname", mb.getNickname())
-											  .setParameter("year", mb.getBirthYear())
-											  .setParameter("month", mb.getBirthMonth())
-											  .setParameter("star", mb.getStarSign())
-											  .setParameter("blood", mb.getBloodType())
-											  .setParameter("country", mb.getCountry())
-											  .setParameter("address", mb.getAddress())
-											  .setParameter("hobby", mb.getHobby())
-											  .setParameter("education", mb.getEducation())
-											  .setParameter("school", mb.getSchool())
-											  .setParameter("company", mb.getCompany())
-											  .setParameter("job", mb.getJob())
-											  .setParameter("income", mb.getIncome())
-											  .setParameter("signature", mb.getSignature())
-											  .setParameter("introduction", mb.getIntroduction())
-											 .executeUpdate();		
-		}
-
-	@Override
 	public void openType(String account) {
 		String hql = "UPDATE RoleBean SET accountType = :type WHERE account = :id";
 		Session session = factory.getCurrentSession();
@@ -156,7 +170,6 @@ public class MemberDaoImpl implements MemberDao {
 												.executeUpdate();
 	}
 
-	
 	@Override
 	public void updatePost(String account) {
 		String hql1 = "SELECT postType FROM RoleBean WHERE account = :id";
@@ -173,7 +186,6 @@ public class MemberDaoImpl implements MemberDao {
 												.executeUpdate();
 	}
 
-	
 	@Override
 	public void updateFinish(String account) {
 		String hql1 = "SELECT finishType FROM RoleBean WHERE account = :id";

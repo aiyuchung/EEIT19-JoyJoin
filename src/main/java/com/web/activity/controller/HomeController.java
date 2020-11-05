@@ -1,7 +1,6 @@
 package com.web.activity.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -10,6 +9,6 @@ public class HomeController {
 	
 	@GetMapping({"/","/index"})
 	public String home() {
-		return "index2";	
+		return "index";	
 	}
 }
