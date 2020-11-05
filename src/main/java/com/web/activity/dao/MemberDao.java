@@ -27,6 +27,8 @@ public interface MemberDao {
 //---------------------------------------------▼自增值方法▼---------------------------------------------//			
 		public void openType(String account);
 			//開通帳號
+		public void updateTime(String account, String time);
+			//更新最後上線時間
 		public void updateSign(String account);
 			//直接更新登入次數
 		public void updatePost(String account);

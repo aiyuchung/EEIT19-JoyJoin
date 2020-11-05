@@ -54,6 +54,12 @@ public class MemberServieImpl implements MemberService {
 		
 		@Transactional
 		@Override
+		public void updateTime(String account, String time) {
+			memberDao.updateTime(account, time);
+		}
+		
+		@Transactional
+		@Override
 		public void updateSign(String account) {
 			memberDao.updateSign(account);
 		}

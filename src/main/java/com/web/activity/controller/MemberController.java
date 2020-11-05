@@ -1,6 +1,10 @@
 package com.web.activity.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -107,6 +111,8 @@ public class MemberController {
 				}else {
 					session.setAttribute("level", 1);
 				}
+				String time = getDate();
+				memberService.updateTime(account, time);
 				session.setAttribute("id", account);
 				return "redirect:/index";
 			}else {
@@ -115,7 +121,11 @@ public class MemberController {
 			}
 		}
 		
-
+		public String getDate() {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
+			Date current = new Date();
+			return sdf.format(current);
+		}
 		
 		
 		

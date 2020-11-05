@@ -29,7 +29,7 @@ public class MemberBean implements Serializable {
 	@Column(nullable = false, updatable = false)
 	private String mail;						//信箱,快速註冊,不得UPDATE
 	private Blob picture;						//頭像
-	private String fullName;				//姓名
+	private String fullName;				//姓名	
 	@Column(nullable = false)
 	private String nickname;				//暱稱,快速註冊
 	private String birthYear;				//出生年份

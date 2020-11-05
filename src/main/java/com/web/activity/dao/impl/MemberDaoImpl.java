@@ -155,6 +155,20 @@ public class MemberDaoImpl implements MemberDao {
 	};
 	
 	@Override
+	public void updateTime(String account, String time) {
+		Session session = factory.getCurrentSession();
+		String hql1 = "SELECT lastTime FROM RoleBean WHERE Account = :id";
+		try {
+			String lastTime = (String) session.createQuery(hql1).setParameter("id", account)
+															   .getSingleResult();
+		}catch(Exception e) {
+			;
+		}
+		String hql2 = "UPDATE RolaBean SET lastTime = :time WHERE account = :id";
+		session.createQuery(hql2).setParameter("time", time).setParameter("id", account).executeUpdate();		
+	}
+	
+	@Override
 	public void updateSign(String account) {
 		String hql1 = "SELECT signType FROM RoleBean WHERE account = :id";
 		String hql2 = "UPDATE RoleBean SET signType = :st WHERE account = :id";
