@@ -420,7 +420,7 @@ Released   : 20100501
 								</p>
 								<p>只要 ${all.minLimit}人即可成公開團! 本活動最高上限人數: ${all.maxLimit}</p>
 								<p class="links">
-									<a href="#" class="more">(看詳細內容)</a> &nbsp;&nbsp;&nbsp;
+									<a href="<c:url value='/oneAtivity/${all.activityNo}' />" class="more" > (看詳細內容) </a> &nbsp;&nbsp;&nbsp;
 								</p>
 							</div>
 						</div>
@@ -815,7 +815,7 @@ function showNext(){
 				  }
 		})
 	})
-	//nav的大小類選擇
+//條件篩選中的大小類選擇
 	$(".Bigtype").click(function(){
 		var liClass= "."+$(this).val();
 		if ($(this).is(":checked")){  //大類如果打勾
@@ -849,6 +849,7 @@ function showNext(){
 		}
 		
 	})
+//條件篩選	
 	$("#submitForm").click(function(){
 		
 		var judge1 = false;
