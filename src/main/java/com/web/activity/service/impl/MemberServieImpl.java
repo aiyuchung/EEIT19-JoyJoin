@@ -24,6 +24,12 @@ public class MemberServieImpl implements MemberService {
 		
 		@Transactional
 		@Override
+		public MemberBean getMember(String account) {
+			return memberDao.getMember(account);
+		}
+		
+		@Transactional
+		@Override
 		public boolean checkID(String account, String password) {
 			return memberDao.checkID(account, password);
 		}
@@ -46,16 +52,25 @@ public class MemberServieImpl implements MemberService {
 			memberDao.openType(account);
 		}
 		
+		@Transactional
+		@Override
+		public void updateTime(String account, String time) {
+			memberDao.updateTime(account, time);
+		}
+		
+		@Transactional
 		@Override
 		public void updateSign(String account) {
 			memberDao.updateSign(account);
 		}
-
+		
+		@Transactional
 		@Override
 		public void updatePost(String account) {
 			memberDao.updatePost(account);
 		}
 
+		@Transactional
 		@Override
 		public void updateFinish(String account) {
 			memberDao.updateFinish(account);			

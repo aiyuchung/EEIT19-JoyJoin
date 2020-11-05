@@ -14,8 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Entity
 @Table(name = "member")
 public class MemberBean implements Serializable {
@@ -31,7 +29,7 @@ public class MemberBean implements Serializable {
 	@Column(nullable = false, updatable = false)
 	private String mail;						//信箱,快速註冊,不得UPDATE
 	private Blob picture;						//頭像
-	private String fullName;				//姓名
+	private String fullName;				//姓名	
 	@Column(nullable = false)
 	private String nickname;				//暱稱,快速註冊
 	private String birthYear;				//出生年份
@@ -51,7 +49,7 @@ public class MemberBean implements Serializable {
 	private String signature;				//自定義簽名
 	private String introduction;			//自我介紹
 
-	@JsonIgnoreProperties("member")
+//	@JsonIgnoreProperties("member")
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "roleNo")		//FK為RoleBean的roleNo
 	private RoleBean rolebean;

@@ -19,8 +19,8 @@ public class RoleBean implements Serializable {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Integer roleNo;			//角色編號,PK自增,不顯示
-		@Column(nullable = false, updatable = false)
-		private String account;				//帳號,用以關聯角色
+//		@Column(nullable = false, updatable = false)
+//		private String account;				//帳號,用以關聯角色
 		private Integer level;				//等級,初始為1,管理員設為4
 		private Integer emp;				//點數,初始為0,預設100後將level從1=>2;200從2=>3
 		private Integer signTrip;			//登入次數,以當天日期判斷==>Date與lastTime不同則+1
@@ -29,7 +29,8 @@ public class RoleBean implements Serializable {
 		private Integer finishTrip;		//成行次數,活動成行的同時判斷並+1
 		@Transient
 		private Integer trip; 				//活動次數,ajax顯示現在有的
-		private Integer accountType;	//帳號狀態,預設1為正常,0為封鎖,管理員level4可以更改
+		private Integer accountType;	//帳號狀態,預設1為正常,0為異常,未認證前為0,管理員level4可以更改
+		private String code;					//啟用碼,亂數生成,帳號申請成功產生
 		@Transient
 		private Integer signType;			//登入狀態,於前端顯示預設1為線上,0為離線
 		private Integer noticeType;		//注意狀態,預設1為正常,0為注意,管理員level4可以更改
@@ -49,11 +50,12 @@ public class RoleBean implements Serializable {
 				Integer postTrip,
 				Integer finishTrip,
 				Integer accountType,
+				String code,
 				Integer signType,
 				Integer noticeType
 				) {
 			this.roleNo = roleNo;
-			this.account = account;
+//			this.account = account;
 			this.level = level;
 			this.emp = emp;
 			this.signTrip = signTrip;
@@ -61,6 +63,7 @@ public class RoleBean implements Serializable {
 			this.postTrip = postTrip;
 			this.finishTrip = finishTrip;
 			this.accountType = accountType;
+			this.code = code;
 			this.signType = signType;
 			this.noticeType = noticeType;
 		}
@@ -72,14 +75,14 @@ public class RoleBean implements Serializable {
 		public void setRoleNo(Integer roleNo) {
 			this.roleNo = roleNo;
 		}
-
-		public String getAccount() {
-			return account;
-		}
-
-		public void setAccount(String account) {
-			this.account = account;
-		}
+//
+//		public String getAccount() {
+//			return account;
+//		}
+//
+//		public void setAccount(String account) {
+//			this.account = account;
+//		}
 
 		public Integer getLevel() {
 			return level;
@@ -143,6 +146,14 @@ public class RoleBean implements Serializable {
 
 		public void setAccountType(Integer accountType) {
 			this.accountType = accountType;
+		}
+
+		public String getCode() {
+			return code;
+		}
+
+		public void setCode(String code) {
+			this.code = code;
 		}
 
 		public Integer getSignType() {

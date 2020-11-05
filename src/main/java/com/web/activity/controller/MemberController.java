@@ -1,8 +1,13 @@
 package com.web.activity.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +26,21 @@ public class MemberController {
 		@Autowired
 		MemberService memberService;
 		
+//---------------------------------------------▼點擊個人頁面取得資料▼---------------------------------------------//	
 		
+		@GetMapping("/selectMember")
+		public String getMemberBean2Select(HttpServletRequest request, Model model) {
+			HttpSession session = request.getSession();
+			String account = (String) session.getAttribute("id");
+			MemberBean mb = memberService.getMember(account);
+			model.addAttribute("member", mb);
+			return "login/member";
+		}
 		
-	
-//-----------------------------------------------------------------------		
+//---------------------------------------------▼會員註冊▼---------------------------------------------//	
 		
 		@GetMapping("/insert")
-		public String getMemberBean(Model model) {
+		public String getMemberBean2SignUp(Model model) {
 			MemberBean mb = new MemberBean();
 			model.addAttribute("memberBean", mb);
 			model.addAttribute(mb);
@@ -40,10 +53,10 @@ public class MemberController {
 			return "jump";
 		}
 		
-//-----------------------------------------------------------------------		
+//---------------------------------------------▼會員資料更新▼---------------------------------------------//	
 		
 		@GetMapping("/update")
-		public String getMemberBean2(Model model) {
+		public String getMemberBean2Update(Model model) {
 			MemberBean mb = new MemberBean();
 			model.addAttribute("memberBean", mb);
 			model.addAttribute(mb);
@@ -56,14 +69,14 @@ public class MemberController {
 			return "redirect:/index";
 		}
 		
-//-----------------------------------------------------------------------		
+//---------------------------------------------▼跳轉頁面(暫)▼---------------------------------------------//			
 		
 		@GetMapping("/jumpTo")
 		public String jumpToIndex() {
 			return "redirect:/index";
 		}
 		
-//-----------------------------------------------------------------------		
+//---------------------------------------------▼會員帳號開通(暫)▼---------------------------------------------//	
 		
 		@GetMapping("/verification")
 		public String verification(Model model) {
@@ -79,7 +92,7 @@ public class MemberController {
 			return "redirect:/index";
 		}
 		
-//-----------------------------------------------------------------------	
+//---------------------------------------------▼會員登入帳號判斷▼---------------------------------------------//	
 		
 		@GetMapping("/login")
 		public String login(Model model) {
@@ -88,23 +101,31 @@ public class MemberController {
 		
 		@PostMapping("/login")
 		public String checkID(@RequestParam String account, @RequestParam String password, HttpServletRequest request) throws IOException {
+			HttpSession session = request.getSession();
 			boolean flag = memberService.checkID(account, password);
 			boolean isMama = memberService.checkManager(account);
 			//用Dao判斷帳密正確與權限
 			if( flag ) {
 				if( isMama ) {
-					request.setAttribute("level", 4);
+					session.setAttribute("level", 4);
 				}else {
-					request.setAttribute("level", 1);
+					session.setAttribute("level", 1);
 				}
+				String time = getDate();
+				memberService.updateTime(account, time);
+				session.setAttribute("id", account);
 				return "redirect:/index";
 			}else {
+				session.setAttribute("status", "登入失敗");
 				return "redirect:/login/login";
 			}
 		}
 		
-
-			
+		public String getDate() {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
+			Date current = new Date();
+			return sdf.format(current);
+		}
 		
 		
 		
