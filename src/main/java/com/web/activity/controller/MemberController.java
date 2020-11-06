@@ -103,35 +103,22 @@ public class MemberController {
 		}
 		
 		@PostMapping("/login")
-<<<<<<< HEAD
 		public String checkID(MemberBean mb, Model model) throws IOException {
 			String nickname = mb.getNickname();	//如果只有帳密==>登入,有暱稱==>註冊
+			String account = mb.getAccount();
+			String password = mb.getPassword();
 			if( nickname != null) {
 				memberService.signUp(mb);		//====註冊====
-=======
-		public String checkID(@RequestParam String account, @RequestParam String password, HttpServletRequest request) throws IOException {
-			HttpSession session = request.getSession();
-			boolean flag = memberService.checkID(account, password);
-            int level = memberService.checkLevel(account);
-			//用Dao判斷帳密正確與權限
-			if( flag ) {
-                session.setAttribute("level", level);    //權限存入session
-                session.setAttribute("id", account);    //帳號存入session
-                String time = getDate();
-				memberService.updateTime(account, time);
->>>>>>> 482804d7f3cd288bd8f7ef595b7e1da2f13855bb
 				return "redirect:/index";
 			}else {
-				String account = mb.getAccount();		//====登入====
-				String password = mb.getPassword();			
 				boolean flag = memberService.checkID(account, password);
-				int level = memberService.checkLevel(account);
+	            int level = memberService.checkLevel(account);
 				//用Dao判斷帳密正確與權限
 				if( flag ) {
-					model.addAttribute("level", level);	//權限存入session
-					model.addAttribute("id", account);	//帳號存入session
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
-					String time = sdf.format(new Date());
+	                model.addAttribute("level", level);    //權限存入session
+	                model.addAttribute("id", account);    //帳號存入session
+	    			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
+	    			String time = sdf.format(new Date());
 					memberService.updateTime(account, time);
 					return "redirect:/index";
 				}else {
@@ -139,7 +126,8 @@ public class MemberController {
 					return "redirect:/login";
 				}
 			}
-		}
+		}		
+	}
 		
 //		public String getDate() {
 //			
@@ -191,4 +179,4 @@ public class MemberController {
 //			}
 //			return "redirect:/products";
 //		}
-}
+//}

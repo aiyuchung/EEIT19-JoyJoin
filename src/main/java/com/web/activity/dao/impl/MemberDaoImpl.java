@@ -157,18 +157,14 @@ public class MemberDaoImpl implements MemberDao {
 		System.out.println("account>>>>>>>>>>>>>>>>" + account);
 		Session session = factory.getCurrentSession();
 		String hql1 = "SELECT lastTime FROM RoleBean WHERE Account = :id";
-<<<<<<< HEAD
 		String lastTime = "";
-=======
->>>>>>> 482804d7f3cd288bd8f7ef595b7e1da2f13855bb
 		try {
-			String lastTime = (String) session.createQuery(hql1).setParameter("id", account)
+			lastTime = (String) session.createQuery(hql1).setParameter("id", account)
 															   .getSingleResult();
 			 System.out.println("lastTime>>>>>>>>>>>>>>>>" + lastTime);
 		}catch(Exception e) {
 			;
 		}
-<<<<<<< HEAD
 		if((!(lastTime.equals(time)))||(lastTime.equals(""))) {
 			String hql2 = "UPDATE RoleBean SET lastTime = :time WHERE account = :id";
 			session.createQuery(hql2).setParameter("time", time).setParameter("id", account).executeUpdate();		
@@ -176,10 +172,8 @@ public class MemberDaoImpl implements MemberDao {
 		}else {
 			;
 		}	
-=======
 		String hql2 = "UPDATE RolaBean SET lastTime = :time WHERE account = :id";
 		session.createQuery(hql2).setParameter("time", time).setParameter("id", account).executeUpdate();		
->>>>>>> 482804d7f3cd288bd8f7ef595b7e1da2f13855bb
 	}
 	
 	@Override
