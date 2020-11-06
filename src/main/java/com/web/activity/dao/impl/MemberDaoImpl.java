@@ -172,7 +172,7 @@ public class MemberDaoImpl implements MemberDao {
 		}else {
 			;
 		}	
-		String hql2 = "UPDATE RolaBean SET lastTime = :time WHERE account = :id";
+		String hql2 = "UPDATE RoleBean SET lastTime = :time WHERE account = :id";
 		session.createQuery(hql2).setParameter("time", time).setParameter("id", account).executeUpdate();		
 	}
 	

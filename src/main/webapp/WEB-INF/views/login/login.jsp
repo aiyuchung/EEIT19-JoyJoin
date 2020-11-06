@@ -63,16 +63,16 @@
 				<span class="heading"></span>
 				<form:form method="POST"  modelAttribute="memberBean">
 					<div class="form-group">
-                        <input type="text" class="form-control" id="inputAccount" placeholder="帳號" path="account"/>
+                        <form:input type="text" class="form-control" id="inputAccount" placeholder="帳號" path="account"/>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="inputPassword" placeholder="密碼" path="password"/>
+                        <form:input type="password" class="form-control" id="inputPassword" placeholder="密碼" path="password"/>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="inputEmail" placeholder="信箱" path="mail"/>
+                        <form:input type="email" class="form-control" id="inputEmail" placeholder="信箱" path="mail"/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="inputNickname" placeholder="暱稱" path="nickname"/>
+                        <form:input type="text" class="form-control" id="inputNickname" placeholder="暱稱" path="nickname"/>
                     </div>
 					<input type="submit" class="btn btn-default" value="快速註冊" style="background-color:	#7B7B7B"/>
 				</form:form>
