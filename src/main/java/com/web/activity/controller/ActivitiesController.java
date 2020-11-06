@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityForm;
+import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
+import com.web.activity.model.MemberBean;
 import com.web.activity.service.ActivityService;
 
 @Controller
@@ -24,10 +26,10 @@ public class ActivitiesController {
 
 	@Autowired
 	ActivityService service;
-	
+//-----------------------------------------跳轉單個頁面↓-----------------------------------------	
 	@GetMapping("/oneActivity/{id}")
 	public String one(@PathVariable("id") int activityNo, Model model) {
-		System.out.println("controller activityno------------------"+activityNo);
+		
 		ActivityBean activity = service.selectOneActivity(activityNo);
 		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
 		
@@ -35,7 +37,7 @@ public class ActivitiesController {
 		model.addAttribute("hitCount",hitCount);
 		return "OneActivity";
 	}
-	
+//-----------------------------------------跳轉活動總覽頁面↓-----------------------------------------		
 	@GetMapping("/activities")
 	public String list(Model model, @ModelAttribute("form") ActivityForm form) {
 		Map <String, Integer> changedStatus = service.checkFinalDate();
@@ -58,7 +60,31 @@ public class ActivitiesController {
 		model.addAttribute("categoryList",categoryList);
 		return "ShowActivities";
 	}
+//-----------------------------------------單個活動的留言板↓-----------------------------------------	
+	@PostMapping("/ajax_msgSend")
+	public String saveMsg(Model model,
+			@RequestParam String msg,
+			@RequestParam int userId,
+			@RequestParam int activityNo) {
+		ActivityMsgBean newMsg = new ActivityMsgBean();
+		newMsg.setMsgContent(msg);
+		
+		ActivityBean ab = new ActivityBean();
+		ab.setActivityNo(activityNo);
+		newMsg.setActivityBean(ab);
+		
+		MemberBean mb = new MemberBean();
+		mb.setMemberNo(userId);
+		newMsg.setMemberBean(mb);
+		System.out.println("controller newMsg--------------------------"+newMsg);		
+		List<ActivityMsgBean> msgBox = service.saveMsg(newMsg);
+		
+		model.addAttribute("msgBox",msgBox);
+		return "ajax/msgBox";
+	}
 	
+	
+//-----------------------------------------條件查詢form表單↓-----------------------------------------		
 	@PostMapping("/form")
 	public String form(Model model, @ModelAttribute("form") ActivityForm form) {
 //		try {
@@ -100,7 +126,7 @@ public class ActivitiesController {
 		model.addAttribute("categoryList",categoryList);
 		return "ShowActivities";
 	}
-	
+//-----------------------------------------AJAX快篩↓-----------------------------------------		
 	@PostMapping("/ajax_checkedClass")
 	public String checkedClasses(Model model,
 			@RequestBody List<String> activityClass) {
@@ -198,7 +224,7 @@ public class ActivitiesController {
 		return "ajax/activity lists";
 
 	}
-	
+//-----------------------------------------模糊搜尋↓-----------------------------------------	
 	@GetMapping("/ajax_keyWords")
 	public String searchByKey(Model model,
 			@RequestParam String keyword) {

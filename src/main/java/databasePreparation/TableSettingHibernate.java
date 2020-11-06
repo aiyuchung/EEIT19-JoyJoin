@@ -10,6 +10,11 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,9 +22,11 @@ import org.hibernate.Transaction;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
-import com.web.activity.model.CustomerBean;
+import com.web.activity.model.MemberBean;
 import com.web.activity.model.ProvinceBean;
+import com.web.activity.model.RoleBean;
 
 
 public class TableSettingHibernate {
@@ -128,35 +135,76 @@ public class TableSettingHibernate {
 						count++;
 					}
 			session.flush();
+			System.out.println("Province表格資料新增成功");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+			
+			try (
+					FileInputStream fis = new FileInputStream("data/role.csv");
+					InputStreamReader isr0 = new InputStreamReader(fis, "UTF-8");
+					BufferedReader br = new BufferedReader(isr0);
+				) {
+					while ((line = br.readLine()) != null) {
+						
+						String[] sa = line.split(",");
+						RoleBean bean = new RoleBean();
+//						bean.setRoleNo(sa[0]);
+						bean.setAccount(sa[1]);
+						bean.setAccountType(Integer.parseInt(sa[2].trim()));
+						bean.setCode(sa[3]);
+						bean.setEmp(Integer.parseInt(sa[4].trim()));
+						bean.setFinishTrip(Integer.parseInt(sa[5].trim()));
+						bean.setLastTime(sa[6]);
+						bean.setLevel(Integer.parseInt(sa[7].trim()));
+						bean.setNoticeType(Integer.parseInt(sa[8].trim()));
+						bean.setTrip(Integer.parseInt(sa[9].trim()));
+						bean.setPostTrip(Integer.parseInt(sa[10].trim()));
+						bean.setSignType(Integer.parseInt(sa[11].trim()));
+						session.save(bean);
+						count++;
+					}
+			session.flush();
 			System.out.println("Member表格資料新增成功");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 			try (
-				FileInputStream fis = new FileInputStream("data/client.csv");
+				FileInputStream fis = new FileInputStream("data/member.csv");
 				InputStreamReader isr0 = new InputStreamReader(fis, "UTF-8");
 				BufferedReader br = new BufferedReader(isr0);
 			) {
 				while ((line = br.readLine()) != null) {
 					
 					String[] sa = line.split(",");
-					CustomerBean bean = new CustomerBean();
-//					bean.setId(Integer.parseInt(sa[0].trim()));
-					bean.setLoginId(sa[1].trim());
-					String pswd = GlobalService.getMD5Endocing(GlobalService.encryptString(sa[2]));
+					MemberBean bean = new MemberBean();
+					bean.setMemberNo(Integer.parseInt(sa[0].trim()));
+					bean.setAccount(sa[1].trim());
+					bean.setAddrArea(sa[2]);
+					bean.setBirthMonth(sa[3]);
+					bean.setBirthYear(sa[4]);
+					bean.setBloodType(sa[5]);
+					bean.setCompany(sa[6]);
+					bean.setCountry(sa[7]);
+					bean.setEducation(sa[8]);
+					bean.setFullName(sa[9]);
+					bean.setGender(sa[10]);
+					bean.setHobby(sa[11]);
+					bean.setIncome(sa[12]);
+					bean.setIntroduction(sa[13]);
+					bean.setJob(sa[14]);
+					bean.setMail(sa[15]);
+					bean.setNickname(sa[16]);
+					String pswd = GlobalService.getMD5Endocing(GlobalService.encryptString(sa[17]));
 					bean.setPassword(pswd);
-					bean.setUserName(sa[3]);
-					bean.setNickname(sa[4]);
-					bean.setGender(sa[5]);
-					bean.setEmail(sa[6]);
-					bean.setTel(sa[7]);
-					bean.setBirthYear(Integer.parseInt(sa[8]));
-					bean.setBirthMon(Integer.parseInt(sa[9]));
-					bean.setInterest(sa[10]);
-					bean.setLevel(Integer.parseInt(sa[11]));
-					bean.setAuthority(sa[12]);
-					bean.setStatus(sa[13]);
+//					picture
+					bean.setSchool(sa[19]);
+					bean.setSignature(sa[20]);
+					bean.setStarSign(sa[21]);
 					
+					Integer roleNo= Integer.parseInt(sa[22].trim());
+					RoleBean rb = (RoleBean) session.get(RoleBean.class, roleNo);
+					bean.setRolebean(rb);
 					
 					// --------------處理Blob(圖片)欄位----------------
 //					Blob sb = SystemUtils2018.fileToBlob(sa[8]);
@@ -283,8 +331,8 @@ public class TableSettingHibernate {
 						tb.setLeftDays(Integer.parseInt(token[18]));
 						
 						int userId = Integer.parseInt(token[19].trim());
-						CustomerBean cb = (CustomerBean) session.get(CustomerBean.class, userId);
-						tb.setCustomerBean(cb);
+						MemberBean cb = (MemberBean) session.get(MemberBean.class, userId);
+						tb.setMemberBean(cb);
 
 						int provId = Integer.parseInt(token[20].trim());
 						ProvinceBean pb = (ProvinceBean) session.get(ProvinceBean.class, provId);

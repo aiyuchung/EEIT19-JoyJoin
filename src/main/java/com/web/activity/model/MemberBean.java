@@ -2,6 +2,8 @@ package com.web.activity.model;
 
 import java.io.Serializable;
 import java.sql.Blob;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -53,6 +56,12 @@ public class MemberBean implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "roleNo")		//FK為RoleBean的roleNo
 	private RoleBean rolebean;
+	
+	@OneToMany(mappedBy="memberBean", cascade= {CascadeType.ALL})
+	private Set<ActivityBean> activities = new LinkedHashSet<>();
+
+	@OneToMany(mappedBy="memberBean", cascade= {CascadeType.ALL})
+	private Set<ActivityMsgBean> activityMsg = new LinkedHashSet<>();
 
 	public MemberBean() {
 	}

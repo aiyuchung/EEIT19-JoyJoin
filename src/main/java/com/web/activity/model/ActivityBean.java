@@ -2,6 +2,8 @@ package com.web.activity.model;
 
 import java.sql.Blob;
 import java.sql.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 //import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 //import org.hibernate.annotations.GenericGenerator;
@@ -68,11 +71,14 @@ public class ActivityBean implements java.io.Serializable {
 	}
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="userId") 	
-    private CustomerBean customerBean;
+    private MemberBean memberBean;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="provId") 	
 	private ProvinceBean provinceBean;
+	
+	@OneToMany(mappedBy="activityBean", cascade= {CascadeType.ALL})
+	private Set<ActivityMsgBean> activityMsgbean = new LinkedHashSet<>();
 	
 	
 	
@@ -98,13 +104,15 @@ public class ActivityBean implements java.io.Serializable {
 	
 	
 	
-	public CustomerBean getCustomerBean() {
-		return customerBean;
-	}
-	public void setCustomerBean(CustomerBean customerBean) {
-		this.customerBean = customerBean;
-	}
+
 	
+	public MemberBean getMemberBean() {
+		return memberBean;
+	}
+	public void setMemberBean(MemberBean memberBean) {
+		this.memberBean = memberBean;
+	}
+
 	public int getActivityNo() {
 		return activityNo;
 	}

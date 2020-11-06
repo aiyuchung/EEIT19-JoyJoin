@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.activity.dao.ActivityDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.service.ActivityService;
 
@@ -257,6 +258,11 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public ActivityBean selectOneActivity(int activityNo) {
 		return dao.selectOneActivity(activityNo);
+	}
+
+	@Override
+	public List<ActivityMsgBean> saveMsg(ActivityMsgBean activityMsg) {
+		return dao.saveMsg(activityMsg);
 	}
 	
 

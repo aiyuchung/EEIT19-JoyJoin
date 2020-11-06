@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.web.activity.dao.ActivityDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
 
 @Repository
@@ -316,6 +317,16 @@ public class ActivityDaoImpl implements ActivityDao {
 		String hql = "FROM ActivityBean WHERE activityNo = :no ";
 		ActivityBean activity = (ActivityBean) session.createQuery(hql).setParameter("no",activityNo).getSingleResult();
 		return activity;
+	}
+
+	@Override
+	public List<ActivityMsgBean> saveMsg(ActivityMsgBean activityMsg) {
+		Session session = factory.getCurrentSession();
+		session.save(activityMsg);
+		
+		String hql = "FROM ActivityMsgBean";
+		List<ActivityMsgBean> list = session.createQuery(hql).getResultList();
+		return list;
 	}
 
 

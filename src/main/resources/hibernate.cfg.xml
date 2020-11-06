@@ -27,11 +27,12 @@
 
 		<!-- 3. 宣告程式使用的Mapping檔 ，每個永續類別都需要定義一個Mapping檔 -->
 		<mapping class="com.web.activity.model.ActivityBean"></mapping>
-		<mapping class="com.web.activity.model.CustomerBean"></mapping>
+		<mapping class="com.web.activity.model.MemberBean"></mapping>
+		<mapping class="com.web.activity.model.RoleBean"></mapping>
 		<mapping class="com.web.activity.model.ActivityTypeBean"></mapping>
 		<mapping class="com.web.activity.model.ActivityClassBean"></mapping>
 		<mapping class="com.web.activity.model.ProvinceBean"></mapping>
-
+		<mapping class="com.web.activity.model.ActivityMsgBean"></mapping>
 
 	</session-factory>
 </hibernate-configuration>

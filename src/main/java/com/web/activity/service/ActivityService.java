@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
 
 public interface ActivityService {
@@ -63,4 +64,7 @@ public interface ActivityService {
 
 	//搜尋單個活動
 	ActivityBean selectOneActivity(int activityNo);
+
+	//存留言板
+	List<ActivityMsgBean> saveMsg(ActivityMsgBean activityMsg);
 }

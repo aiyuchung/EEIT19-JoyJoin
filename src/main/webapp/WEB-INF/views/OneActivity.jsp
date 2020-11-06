@@ -56,9 +56,19 @@
 	height: 350px;
 	overflow:hidden;
 }
-.imgRange{
-	
+.msgbox{
+	border:none;
+	resize : none;
 }
+
+textarea:focus {
+  outline : 0;
+}
+
+textarea{
+  padding-right:0;
+}
+
 </style>
 </head>
 <body>
@@ -274,25 +284,25 @@
 <!-- 							  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> -->
 <!-- 							    Button with data-target -->
 <!-- 							  </button> -->
-							<button class="btn btn-contact addmsg" data-toggle="collapse" data-target="#collapseExample">我要留言</button>
+							<button class="btn btn-contact addmsg" data-toggle="collapse" data-target="#collapseExample" style="display:none">我要留言</button>
 						</div>
 						
 					</div>
 					<div class="section-block msgbox collapse" id="collapseExample">
 						<h1 class="section-title" >新增留言</h1>
-						<!--credits block-->
-						
-						<div class="credit-block sources">
-							<ul class="list-unstyled">
-								<li>so4bkdfsldjf</li>
-								<li></li>
-								<li></li>
-								<li></li>
-								<li></li>
-								<li></li>
-							</ul>
+						<div class="credit-block sources ">
+							<textarea rows="2" name="msg" cols="28" class="msgbox" placeholder="(打點什麼吧)"></textarea>
 						</div>
-						<a href="#" class="btn btn-download"><i class="fa fa-twitter"></i>送出</a>
+						<button class="btn btn-contact sendmsg">送出</button>
+						<i class="fa fa-twitter"></i>
+						</form>
+					</div>
+					
+					<div class="section-block msgboard" style="display:none" >
+						<div class="credit-block sources ">
+							<img scr="" class="msgpic"/>
+							
+						</div>
 					</div>
 					
 <!-- 					<div class="section-block"> -->
@@ -418,12 +428,29 @@
 		$(".addmsg").show();
 	})
 	
-// 	$(".addmsg").click(function(){
-// 		$(".msgbox").toggle();
+	$('textarea').autoResize();
+	
+	$("sendmsg").click(function(){
+		var msgContent = $(".msgbox").text();
+		var userId = session.getUserId();
+		var activityNo = ${one.activityNo};
 		
-// 	})
-	
-	
+		$.ajax({
+			  url:"ajax_msgSend",
+			  type: "POST",
+			  dataType: "html", 
+			  contentType: 'application/json; charset=utf-8',
+			  data: {
+				msg: msgContent;
+			  	userId: userId;
+			  	activityNo: activityNo;
+				}, 
+			  success:function(data){
+				  $(".msgboard").empty();
+				  $(".msgboard").append(data);
+				}
+		})
+	})
 
 
 
