@@ -19,8 +19,8 @@ public class RoleBean implements Serializable {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Integer roleNo;			//角色編號,PK自增,不顯示
-//		@Column(nullable = false, updatable = false)
-//		private String account;				//帳號,用以關聯角色
+		@Column(nullable = false, updatable = false)
+		private String account;				//帳號,用以關聯角色
 		private Integer level;				//等級,初始為1,管理員設為4
 		private Integer emp;				//點數,初始為0,預設100後將level從1=>2;200從2=>3
 		private Integer signTrip;			//登入次數,以當天日期判斷==>Date與lastTime不同則+1
@@ -55,7 +55,7 @@ public class RoleBean implements Serializable {
 				Integer noticeType
 				) {
 			this.roleNo = roleNo;
-//			this.account = account;
+			this.account = account;
 			this.level = level;
 			this.emp = emp;
 			this.signTrip = signTrip;
@@ -75,14 +75,14 @@ public class RoleBean implements Serializable {
 		public void setRoleNo(Integer roleNo) {
 			this.roleNo = roleNo;
 		}
-//
-//		public String getAccount() {
-//			return account;
-//		}
-//
-//		public void setAccount(String account) {
-//			this.account = account;
-//		}
+
+		public String getAccount() {
+			return account;
+		}
+
+		public void setAccount(String account) {
+			this.account = account;
+		}
 
 		public Integer getLevel() {
 			return level;

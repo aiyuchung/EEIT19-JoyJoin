@@ -25,9 +25,10 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public void createRole(String account) {
 			RoleBean rb = new RoleBean();
-//			rb.setAccount(account);
+			rb.setAccount(account);
 			rb.setLevel(1);
 			rb.setEmp(0);
+			rb.setLastTime("0");
 			rb.setSignTrip(1);
 			rb.setPostTrip(0);
 			rb.setFinishTrip(0);
@@ -152,16 +153,19 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public void updateTime(String account, String time) {
+		System.out.println("time>>>>>>>>>>>>>>>>" + time);
+		System.out.println("account>>>>>>>>>>>>>>>>" + account);
 		Session session = factory.getCurrentSession();
 		String hql1 = "SELECT lastTime FROM RoleBean WHERE Account = :id";
-		String lastTime = null;
+		String lastTime = "";
 		try {
 			 lastTime = (String) session.createQuery(hql1).setParameter("id", account)
 															   .getSingleResult();
+			 System.out.println("lastTime>>>>>>>>>>>>>>>>" + lastTime);
 		}catch(Exception e) {
 			;
 		}
-		if(!lastTime.equals(time)) {
+		if((!(lastTime.equals(time)))||(lastTime.equals(""))) {
 			String hql2 = "UPDATE RoleBean SET lastTime = :time WHERE account = :id";
 			session.createQuery(hql2).setParameter("time", time).setParameter("id", account).executeUpdate();		
 			//獲得積分Method

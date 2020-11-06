@@ -13,12 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.service.MemberService;
 
 @Controller
+@SessionAttributes({"member"})
 public class MemberController {
 
 		@Autowired
@@ -37,20 +39,20 @@ public class MemberController {
 		
 //---------------------------------------------▼會員註冊▼---------------------------------------------//	
 		
-		@GetMapping("/insert")
-		public String getMemberBean2SignUp(Model model) {
-			MemberBean mb = new MemberBean();
-			model.addAttribute("memberBean", mb);
-			model.addAttribute(mb);
-			return "signup";
-		}
-		
-		@PostMapping(value="/insert")
-		public String sighUp(MemberBean mb) {
-			memberService.signUp(mb);
-			return "jump";
-		}
-		
+//		@GetMapping("/insert")
+//		public String getMemberBean2SignUp(Model model) {
+//			MemberBean mb = new MemberBean();
+//			model.addAttribute("memberBean", mb);
+//			model.addAttribute(mb);
+//			return "signup";
+//		}
+//		
+//		@PostMapping(value="/insert")
+//		public String sighUp(MemberBean mb) {
+//			memberService.signUp(mb);
+//			return "index";
+//		}
+//		
 //---------------------------------------------▼會員資料更新▼---------------------------------------------//	
 		
 		@GetMapping("/update")
@@ -94,32 +96,44 @@ public class MemberController {
 		
 		@GetMapping("/login")
 		public String login(Model model) {
+			MemberBean mb = new MemberBean();
+			model.addAttribute("memberBean", mb);
+//			model.addAttribute(mb);
 			return "login/login";
 		}
 		
 		@PostMapping("/login")
-		public String checkID(@RequestParam String account, @RequestParam String password, HttpServletRequest request) throws IOException {
-			HttpSession session = request.getSession();
-			boolean flag = memberService.checkID(account, password);
-			int level = memberService.checkLevel(account);
-			//用Dao判斷帳密正確與權限
-			if( flag ) {
-				session.setAttribute("level", level);	//權限存入session
-				session.setAttribute("id", account);	//帳號存入session
-				String time = getDate();
-				memberService.updateTime(account, time);
+		public String checkID(MemberBean mb, Model model) throws IOException {
+			String nickname = mb.getNickname();	//如果只有帳密==>登入,有暱稱==>註冊
+			if( nickname != null) {
+				memberService.signUp(mb);		//====註冊====
 				return "redirect:/index";
 			}else {
-				session.setAttribute("status", "登入失敗");
-				return "redirect:/login/login";
+				String account = mb.getAccount();		//====登入====
+				String password = mb.getPassword();			
+				boolean flag = memberService.checkID(account, password);
+				int level = memberService.checkLevel(account);
+				//用Dao判斷帳密正確與權限
+				if( flag ) {
+					model.addAttribute("level", level);	//權限存入session
+					model.addAttribute("id", account);	//帳號存入session
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
+					String time = sdf.format(new Date());
+					memberService.updateTime(account, time);
+					return "redirect:/index";
+				}else {
+					model.addAttribute("status", "登入失敗");
+					return "redirect:/login";
+				}
 			}
 		}
 		
-		public String getDate() {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
-			Date current = new Date();
-			return sdf.format(current);
-		}
+//		public String getDate() {
+//			
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
+//			Date current = new Date();
+//			return sdf.format(current);
+//		}
 		
 		
 		

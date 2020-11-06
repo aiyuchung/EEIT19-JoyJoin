@@ -20,9 +20,9 @@
 
 			<!-- Nav -->
 			<nav id="nav">
-				<c:set var="level" value="${level}"/>
+				<c:set var="level" value="${member.level}"/>
 				<c:choose>
-					<c:when test="${level} == 4">
+					<c:when test="${member.level} == 4">
 						<ul>
 							<li class="active"><span id="header-home">活動一覽</span></li> 
 							<li><span id="header-talk">討論區</span></li>
@@ -30,7 +30,7 @@
 							<li>管理後臺</li>
 						</ul>
 					</c:when>
-					<c:when test="${level} == 1">
+					<c:when test="${member.level} == 1">
 						<ul>
 							<li class="active"><span id="header-home">活動一覽</span></li> 
 							<li><span id="header-talk">討論區</span></li>
