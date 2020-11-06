@@ -14,7 +14,6 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
-		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-panels.min.js"></script>
@@ -31,10 +30,7 @@
 			
 			<link rel="stylesheet" href="css/style-desktop.css" />
 			<link rel="stylesheet" href="css/carousel.css" />
-		
-		
-		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+
 	</head>
 	<body class="homepage">
 

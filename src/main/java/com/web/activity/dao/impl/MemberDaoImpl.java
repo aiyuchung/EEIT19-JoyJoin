@@ -128,22 +128,18 @@ public class MemberDaoImpl implements MemberDao {
 			return false;
 	}
 
-	public boolean checkManager(String account) {
+	public Integer checkLevel(String account) {
 		String hql = "SELECT level FROM RoleBean WHERE account = :id";
 		Session session = factory.getCurrentSession();
-		Integer flag = null;
+		Integer level = null;
 		try {
-			flag = (Integer) session.createQuery(hql)
+			level = (Integer) session.createQuery(hql)
 												.setParameter("id", account)
 												.getSingleResult();
 		}catch(Exception e) {
-			;
+			return 0;
 		}
-		if( flag == 4 ) {
-			return true;
-		}else {
-			return false;
-		}
+		return level;
 	}
 	
 	@Override
@@ -158,14 +154,20 @@ public class MemberDaoImpl implements MemberDao {
 	public void updateTime(String account, String time) {
 		Session session = factory.getCurrentSession();
 		String hql1 = "SELECT lastTime FROM RoleBean WHERE Account = :id";
+		String lastTime = null;
 		try {
-			String lastTime = (String) session.createQuery(hql1).setParameter("id", account)
+			 lastTime = (String) session.createQuery(hql1).setParameter("id", account)
 															   .getSingleResult();
 		}catch(Exception e) {
 			;
 		}
-		String hql2 = "UPDATE RolaBean SET lastTime = :time WHERE account = :id";
-		session.createQuery(hql2).setParameter("time", time).setParameter("id", account).executeUpdate();		
+		if(!lastTime.equals(time)) {
+			String hql2 = "UPDATE RoleBean SET lastTime = :time WHERE account = :id";
+			session.createQuery(hql2).setParameter("time", time).setParameter("id", account).executeUpdate();		
+			//獲得積分Method
+		}else {
+			;
+		}	
 	}
 	
 	@Override
