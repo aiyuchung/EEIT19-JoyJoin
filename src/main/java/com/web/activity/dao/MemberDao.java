@@ -21,8 +21,8 @@ public interface MemberDao {
 			//判斷帳號密碼正確與否
 		public boolean checkType(String account);
 					//作為方法,判斷帳號狀態
-		public Integer checkLevel(String account);
-			//判斷帳號權限		
+        public Integer checkLevel(String account);
+        //判斷帳號權限        		
 		
 //---------------------------------------------▼自增值方法▼---------------------------------------------//			
 		public void openType(String account);

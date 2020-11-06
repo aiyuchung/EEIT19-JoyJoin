@@ -103,10 +103,23 @@ public class MemberController {
 		}
 		
 		@PostMapping("/login")
+<<<<<<< HEAD
 		public String checkID(MemberBean mb, Model model) throws IOException {
 			String nickname = mb.getNickname();	//如果只有帳密==>登入,有暱稱==>註冊
 			if( nickname != null) {
 				memberService.signUp(mb);		//====註冊====
+=======
+		public String checkID(@RequestParam String account, @RequestParam String password, HttpServletRequest request) throws IOException {
+			HttpSession session = request.getSession();
+			boolean flag = memberService.checkID(account, password);
+            int level = memberService.checkLevel(account);
+			//用Dao判斷帳密正確與權限
+			if( flag ) {
+                session.setAttribute("level", level);    //權限存入session
+                session.setAttribute("id", account);    //帳號存入session
+                String time = getDate();
+				memberService.updateTime(account, time);
+>>>>>>> 482804d7f3cd288bd8f7ef595b7e1da2f13855bb
 				return "redirect:/index";
 			}else {
 				String account = mb.getAccount();		//====登入====

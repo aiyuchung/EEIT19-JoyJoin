@@ -36,8 +36,8 @@ public class MemberServieImpl implements MemberService {
 		
 		@Transactional
 		@Override
-		public Integer checkLevel(String account) {
-			return memberDao.checkLevel(account);
+        public Integer checkLevel(String account) {
+            return memberDao.checkLevel(account);
 		}
 
 		@Transactional
