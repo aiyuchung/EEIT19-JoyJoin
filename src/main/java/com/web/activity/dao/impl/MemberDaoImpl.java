@@ -128,22 +128,18 @@ public class MemberDaoImpl implements MemberDao {
 			return false;
 	}
 
-	public boolean checkManager(String account) {
+    public Integer checkLevel(String account) {
 		String hql = "SELECT level FROM RoleBean WHERE account = :id";
 		Session session = factory.getCurrentSession();
-		Integer flag = null;
+        Integer level = null;
 		try {
-			flag = (Integer) session.createQuery(hql)
+            level = (Integer) session.createQuery(hql)
 												.setParameter("id", account)
 												.getSingleResult();
 		}catch(Exception e) {
-			;
+            return 0;
 		}
-		if( flag == 4 ) {
-			return true;
-		}else {
-			return false;
-		}
+        return level;
 	}
 	
 	@Override

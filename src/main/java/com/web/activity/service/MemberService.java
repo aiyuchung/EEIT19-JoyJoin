@@ -10,8 +10,8 @@ public interface MemberService {
 			//抓取單一會員資料
 		public boolean checkID(String account, String password);
 			//判斷帳密,同時判斷帳號狀態
-		public boolean checkManager(String account);
-			//判斷是否為管理員帳號
+		public Integer checkLevel(String account);
+        //判斷帳號權限    
 		public void updateInfo(MemberBean mb);
 			//更新個人資料
 		public void openType(String account);

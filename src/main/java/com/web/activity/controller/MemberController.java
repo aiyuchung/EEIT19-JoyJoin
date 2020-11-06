@@ -1,9 +1,7 @@
 package com.web.activity.controller;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -103,17 +101,13 @@ public class MemberController {
 		public String checkID(@RequestParam String account, @RequestParam String password, HttpServletRequest request) throws IOException {
 			HttpSession session = request.getSession();
 			boolean flag = memberService.checkID(account, password);
-			boolean isMama = memberService.checkManager(account);
+            int level = memberService.checkLevel(account);
 			//用Dao判斷帳密正確與權限
 			if( flag ) {
-				if( isMama ) {
-					session.setAttribute("level", 4);
-				}else {
-					session.setAttribute("level", 1);
-				}
-				String time = getDate();
+                session.setAttribute("level", level);    //權限存入session
+                session.setAttribute("id", account);    //帳號存入session
+                String time = getDate();
 				memberService.updateTime(account, time);
-				session.setAttribute("id", account);
 				return "redirect:/index";
 			}else {
 				session.setAttribute("status", "登入失敗");
