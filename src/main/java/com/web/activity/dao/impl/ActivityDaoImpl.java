@@ -17,6 +17,7 @@ import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
+import com.web.activity.model.ProvinceBean;
 
 @Repository
 @SuppressWarnings("unchecked")
@@ -326,6 +327,22 @@ public class ActivityDaoImpl implements ActivityDao {
 		
 		String hql = "FROM ActivityMsgBean";
 		List<ActivityMsgBean> list = session.createQuery(hql).getResultList();
+		return list;
+	}
+
+	@Override
+	public List<ProvinceBean> selectAllProvs() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ProvinceBean";
+		List<ProvinceBean> list = session.createQuery(hql).getResultList();
+		return list;
+	}
+
+	@Override
+	public List<ActivityClassBean> classForCheckedType(String type) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityClassBean where activityType =:type";
+		List<ActivityClassBean> list = session.createQuery(hql).setParameter("type",type).getResultList();
 		return list;
 	}
 

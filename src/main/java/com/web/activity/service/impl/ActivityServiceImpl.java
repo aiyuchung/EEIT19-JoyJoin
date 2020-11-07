@@ -19,6 +19,7 @@ import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
+import com.web.activity.model.ProvinceBean;
 import com.web.activity.service.ActivityService;
 
 @Transactional
@@ -263,6 +264,16 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public List<ActivityMsgBean> saveMsg(ActivityMsgBean activityMsg) {
 		return dao.saveMsg(activityMsg);
+	}
+
+	@Override
+	public List<ProvinceBean> selectAllProvs() {
+		return dao.selectAllProvs();
+	}
+
+	@Override
+	public List<ActivityClassBean> classForCheckedType(String type) {
+		return dao.classForCheckedType(type);
 	}
 	
 

@@ -8,7 +8,7 @@
 <title>Header what Guest can see</title>
 </head>
 <body>
-	<div id="header">
+	<div id="headerdiv">
 		<div class="container headernav">
 
 			<!-- Logo -->
@@ -19,7 +19,7 @@
 			</div>
 
 			<!-- Nav -->
-			<nav id="nav">
+			<nav id="headernav">
 				<c:set var="level" value="${member.level}"/>
 				<c:choose>
 					<c:when test="${member.level} == 4">

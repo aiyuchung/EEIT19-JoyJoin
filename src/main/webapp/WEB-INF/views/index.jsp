@@ -97,13 +97,68 @@
 	color: 	#FFF5EE;
 	font-size: 20px;
 	font-family:Microsoft YaHei;
-}		
+}
+
+#headernav
+	{
+		position: absolute;
+		right: 0em;
+		top: 5em;
+	}
+
+		#headernav > ul > li
+		{
+			float: left !important;
+			list-style-type: none;
+		}
+		
+			#headernav > ul > li:last-child
+			{
+				padding-right: 0 !important;
+			}
+
+			#headernav > ul > li > a,
+			#headernav > ul > li > span
+			{
+				display: block !important;
+				margin-left: 0.7em !important;
+				padding: 0.80em 1.2em !important;
+				letter-spacing: 0.06em !important;
+				text-decoration: none !important;
+				font-size: 1em !important;
+				outline: 0;
+				color: #FFF;
+			}
+
+			#headernav li.active a
+			{
+				background: #56c9d6;
+				border-radius: 5px;
+				color: #FFF;
+			}
+
+			#headernav > ul > li > ul
+			{
+				display: none;
+			}
+#headerdiv
+	{
+		position: relative;
+		height:150px;
+	}
+
+		#headerdiv .headernav
+		{
+			position: relative;
+			padding: 6em 0em;
+		}
+			
 </style>
 	</head>
 	<body class="homepage">
 
 <!---------- Header ------------>		
-		<div class="headerPage">
+		<div >
 			<jsp:include page="header/header_guest.jsp"/>
 		</div>
 <!---------- 輪播 ------------>		

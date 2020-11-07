@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
@@ -19,6 +20,7 @@ import com.web.activity.model.ActivityForm;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.ProvinceBean;
 import com.web.activity.service.ActivityService;
 
 @Controller
@@ -32,7 +34,6 @@ public class ActivitiesController {
 		
 		ActivityBean activity = service.selectOneActivity(activityNo);
 		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
-		
 		model.addAttribute("one",activity);
 		model.addAttribute("hitCount",hitCount);
 		return "OneActivity";
@@ -87,25 +88,10 @@ public class ActivitiesController {
 //-----------------------------------------條件查詢form表單↓-----------------------------------------		
 	@PostMapping("/form")
 	public String form(Model model, @ModelAttribute("form") ActivityForm form) {
-//		try {
-//			request.setCharacterEncoding("UTF-8");
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
 		String price = form.getPrice();
-//		String big = form.getBigtype();
 		String location = form.getLocation();
 		String limit = form.getMinLimit();
 		String small = form.getSmalltype();
-		System.out.println(price);
-//		System.out.println(big);
-		System.out.println(location);
-		System.out.println(limit);
-		System.out.println(small);
-		
-		
-		
-//		List<ActivityBean> list = service.selectAllActivities();
 		
 		List<ActivityBean> list = service.selectByFrom(price, location, limit, small);
 		List<ActivityBean> latest = service.selectLatest();
@@ -114,6 +100,7 @@ public class ActivitiesController {
 		System.out.println("finalOnes list========================" +finalOnes);
 		int finalNum = finalOnes.size();
 		System.out.println("finalOnes size----------------------->" +finalOnes);
+		//*****location沒辦法加入條件!!!
 		
 		Map<String, Integer> recentOnes = service.selectRecentMonths();
 		List<ActivityClassBean> categoryList = service.selectAllClasses();
@@ -126,6 +113,21 @@ public class ActivitiesController {
 		model.addAttribute("categoryList",categoryList);
 		return "ShowActivities";
 	}
+//-----------------------------------------新增活動空的form表單↓-----------------------------------------		
+	@GetMapping("/newActivities")
+	public String newAcitivity(Model model, @ModelAttribute("newform") ActivityBean newform) {
+		List<ActivityBean> list = service.selectAllActivities();
+		List<ActivityTypeBean> types = service.showAllTypes();
+		List<ActivityClassBean> categoryList = service.selectAllClasses();
+		List<ProvinceBean> provs = service.selectAllProvs();
+
+		model.addAttribute("activities",list);
+		model.addAttribute("allTypes",types);
+		model.addAttribute("categoryList",categoryList);
+		model.addAttribute("provs",provs);
+	      return "CreateNewActivity";
+	   }
+	
 //-----------------------------------------AJAX快篩↓-----------------------------------------		
 	@PostMapping("/ajax_checkedClass")
 	public String checkedClasses(Model model,
@@ -220,15 +222,25 @@ public class ActivitiesController {
 		int elementsNum = beans.size();
 		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",beans);
-		System.out.println("activity lists========="+beans);
 		return "ajax/activity lists";
 
 	}
+	
+	
+	@GetMapping("/ajax_checktype")
+	@ResponseBody
+	public List<ActivityClassBean> classForCheckedType(@RequestParam String type) {
+		List<ActivityClassBean> classes = service.classForCheckedType(type);
+		int elementsNum = classes.size();
+//		model.addAttribute("classes",classes);
+		return classes;
+
+	}
+	
 //-----------------------------------------模糊搜尋↓-----------------------------------------	
 	@GetMapping("/ajax_keyWords")
 	public String searchByKey(Model model,
 			@RequestParam String keyword) {
-		System.out.println("controller recept--------------------->" +keyword);
 		List<ActivityBean> beans = service.searchByKey(keyword);
 //		int elementsNum = beans.size();
 //		model.addAttribute("activitiesNum",elementsNum);

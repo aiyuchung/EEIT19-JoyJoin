@@ -68,6 +68,68 @@ textarea:focus {
 textarea{
   padding-right:0;
 }
+#headernav
+	{
+		position: absolute;
+		right: 0em;
+		top: 5em;
+	}
+
+		#headernav > ul > li
+		{
+			float: left !important;
+			list-style-type: none;
+		}
+		
+			#headernav > ul > li:last-child
+			{
+				padding-right: 0 !important;
+			}
+
+			#headernav > ul > li > a,
+			#headernav > ul > li > span
+			{
+				display: block !important;
+				margin-left: 0.7em !important;
+				padding: 0.80em 1.2em !important;
+				letter-spacing: 0.06em !important;
+				text-decoration: none !important;
+				font-size: 15px !important;
+				outline: 0;
+				color: #FFF;
+				border-radius:10px;  
+			}
+			#headernav > ul > li > a:hover,
+			#headernav > ul > li > span:hover
+			{
+				color:	#BBFFFF;
+				font-weight: 700;
+				box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
+			}
+
+			#headernav li.active a
+			{
+				background: #56c9d6;
+				border-radius: 5px;
+				color: #FFF;
+			}
+
+			#headernav > ul > li > ul
+			{
+				display: none;
+			}
+#headerdiv
+	{
+		position: relative;
+		height:150px;
+	}
+
+		#headerdiv .headernav
+		{
+			position: relative;
+			padding: 6em 0em;
+		}
+		
 
 </style>
 </head>
@@ -182,7 +244,7 @@ textarea{
 											<div class="forcontent">${one.meetTime}</div>
 									</div>
 									<div class="info-block  ">
-											<div class="fortitle">最低成行人舒</div>
+											<div class="fortitle">最低成行人數</div>
 											<div class="forcontent">${one.minLimit}</div>
 									</div>
 									<div class="info-block  ">

@@ -8,6 +8,7 @@ import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
+import com.web.activity.model.ProvinceBean;
 
 public interface ActivityService {
 	//確認是否截止
@@ -17,6 +18,8 @@ public interface ActivityService {
 	Map<String, Integer> updateHitCount(int activityNo);
 	
 	List<ActivityBean> selectAllActivities();
+	
+	List<ProvinceBean> selectAllProvs();
 
 	List<ActivityBean> selectLatest();
 	
@@ -33,6 +36,9 @@ public interface ActivityService {
 	List<ActivityClassBean> selectAllClasses();
 	//ajax 選擇類別
 	List<ActivityBean> checkedClasses(List<String> activityClass);
+	
+	//ajax 新增活動選擇類別後顯示class
+	List<ActivityClassBean> classForCheckedType(String type);
 	
 	//ajax排序方法
 	

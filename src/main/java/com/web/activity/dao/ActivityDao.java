@@ -8,6 +8,7 @@ import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
+import com.web.activity.model.ProvinceBean;
 
 public interface ActivityDao {	
 	
@@ -21,6 +22,8 @@ public interface ActivityDao {
 	List<ActivityBean> selectLatest();
 	
 	List<ActivityTypeBean> showAllTypes();
+
+	List<ProvinceBean> selectAllProvs();
 	
 	List<ActivityClassBean> showAllClasses(String activityType);
 	
@@ -34,6 +37,9 @@ public interface ActivityDao {
 	
 	//ajax 選擇類別
 	List<ActivityBean> checkedClasses(List<String> activityClass);
+
+	//ajax 新增活動選擇類別後顯示class
+	List<ActivityClassBean> classForCheckedType(String type);
 	
 	//ajax排序方法
 	

@@ -181,53 +181,63 @@ Released   : 20100501
 }
 
 
-#nav
+#headernav
 	{
 		position: absolute;
 		right: 0em;
 		top: 5em;
 	}
 
-		#nav > ul > li
+		#headernav > ul > li
 		{
 			float: left !important;
+			list-style-type: none;
 		}
 		
-			#nav > ul > li:last-child
+			#headernav > ul > li:last-child
 			{
 				padding-right: 0 !important;
 			}
 
-			#nav > ul > li > a,
-			#nav > ul > li > span
+			#headernav > ul > li > a,
+			#headernav > ul > li > span
 			{
 				display: block !important;
 				margin-left: 0.7em !important;
 				padding: 0.80em 1.2em !important;
 				letter-spacing: 0.06em !important;
 				text-decoration: none !important;
-				font-size: 1em !important;
+				font-size: 15px !important;
 				outline: 0;
 				color: #FFF;
+				border-radius:10px;  
+			}
+			#headernav > ul > li > a:hover,
+			#headernav > ul > li > span:hover
+			{
+				color:	#BBFFFF;
+				font-weight: 700;
+				box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
 			}
 
-			#nav li.active a
+			#headernav li.active a
 			{
 				background: #56c9d6;
 				border-radius: 5px;
 				color: #FFF;
 			}
 
-			#nav > ul > li > ul
+			#headernav > ul > li > ul
 			{
 				display: none;
 			}
-#header
+#headerdiv
 	{
 		position: relative;
+		height:150px;
 	}
 
-		#header .headernav
+		#headerdiv .headernav
 		{
 			position: relative;
 			padding: 6em 0em;
@@ -250,7 +260,8 @@ Released   : 20100501
 <!-- 					<li><a href="#">Products</a></li> -->
 <!-- 					<li><a href="#">Services</a></li> -->
 <!-- 					<li><a href="#">About Us</a></li> -->
-					<li><a href="#">新增活動</a></li>
+					<li class="nav-item dropdown"><a href="<c:url value='/newActivities' />">新增活動</a></li>
+					
 <!-- 查詢按鈕  -->
 					<li class="nav-item dropdown">
 					<a id="navbarCheckboxMenuLink" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -734,7 +745,7 @@ function showNext(){
 					 	$(".newajaxlist").empty();
 			 			$(".newajaxlist").append(
 			 					'<c:forEach var="all" items="${activities}"><div class="post oldajaxlist"><h2 class="title"><strong>${all.activityDate} </strong> (${all.prov})</h2>'
-			 				        +'<h1 class="title"><a href="#">${all.name}</a></h1><p class="byline"><small><a href="#發起人的超連結" rel="nofollow">${all.customerBean.nickname}</a>於 ${all.createdDate} 發起</small></p>'
+			 				        +'<h1 class="title"><a href="#">${all.name}</a></h1><p class="byline"><small><a href="#發起人的超連結" rel="nofollow">${all.memberBean.nickname}</a>於 ${all.createdDate} 發起</small></p>'
 			 				        +'<div class="entry"><p>本 <strong>${all.activityTypeName}</strong> 活動將於${all.finalDate}截止</p>'
 			 				        +'<p>只要 ${all.minLimit}人即可成公開團!     本活動最高上限人數:  ${all.maxLimit}</p>'
 			 				        +'<p class="links"><a href="#" class="more">(看詳細內容)</a> &nbsp;&nbsp;&nbsp;</p></div></div></c:forEach>'
@@ -885,7 +896,7 @@ function showNext(){
 				 	$(".newajaxlist").empty();
 		 			$(".newajaxlist").append(
 		 					'<c:forEach var="all" items="${activities}"><div class="post oldajaxlist"><h2 class="title"><strong>${all.activityDate} </strong> (${all.prov})</h2>'
-		 				        +'<h1 class="title"><a href="#">${all.name}</a></h1><p class="byline"><small><a href="#發起人的超連結" rel="nofollow">${all.customerBean.nickname}</a>於 ${all.createdDate} 發起</small></p>'
+		 				        +'<h1 class="title"><a href="#">${all.name}</a></h1><p class="byline"><small><a href="#發起人的超連結" rel="nofollow">${all.memberBean.nickname}</a>於 ${all.createdDate} 發起</small></p>'
 		 				        +'<div class="entry"><p>本 <strong>${all.activityTypeName}</strong> 活動將於${all.finalDate}截止</p>'
 		 				        +'<p>只要 ${all.minLimit}人即可成公開團!     本活動最高上限人數:  ${all.maxLimit}</p>'
 		 				        +'<p class="links"><a href="#" class="more">(看詳細內容)</a> &nbsp;&nbsp;&nbsp;</p></div></div></c:forEach>'
