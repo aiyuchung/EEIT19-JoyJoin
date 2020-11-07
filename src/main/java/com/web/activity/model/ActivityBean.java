@@ -70,7 +70,7 @@ public class ActivityBean implements java.io.Serializable {
 		this.hitCount = hitCount;
 	}
 	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="userId") 	
+	@JoinColumn(name="memberNo") 	
     private MemberBean memberBean;
 	
 	@ManyToOne(cascade=CascadeType.ALL)

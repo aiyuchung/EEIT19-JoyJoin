@@ -39,7 +39,7 @@
 					<a href="#">${all.name}</a>
 				</h1>
 				<p class="byline">
-					<small><a href="#發起人的超連結" rel="nofollow">${all.customerBean.nickname}</a>於
+					<small><a href="#發起人的超連結" rel="nofollow">${all.MemberBean.nickname}</a>於
 						${all.createdDate} 發起</small>
 				</p>
 				<div class="entry">

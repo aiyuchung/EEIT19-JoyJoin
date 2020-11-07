@@ -179,21 +179,70 @@ Released   : 20100501
 .today{
 	border: solid 2px lightblue;
 }
+
+
+#nav
+	{
+		position: absolute;
+		right: 0em;
+		top: 5em;
+	}
+
+		#nav > ul > li
+		{
+			float: left !important;
+		}
+		
+			#nav > ul > li:last-child
+			{
+				padding-right: 0 !important;
+			}
+
+			#nav > ul > li > a,
+			#nav > ul > li > span
+			{
+				display: block !important;
+				margin-left: 0.7em !important;
+				padding: 0.80em 1.2em !important;
+				letter-spacing: 0.06em !important;
+				text-decoration: none !important;
+				font-size: 1em !important;
+				outline: 0;
+				color: #FFF;
+			}
+
+			#nav li.active a
+			{
+				background: #56c9d6;
+				border-radius: 5px;
+				color: #FFF;
+			}
+
+			#nav > ul > li > ul
+			{
+				display: none;
+			}
+#header
+	{
+		position: relative;
+	}
+
+		#header .headernav
+		{
+			position: relative;
+			padding: 6em 0em;
+		}
+		
+
 </style>
 
 </head>
 <body>
-	<!-- start header -->
-	<div id="header">
-		<div id="logo">
-			<h1>
-				<a href="#">Bryce <span>Sunrise</span>
-				</a>
-			</h1>
-			<p>Designed By TEMPLATED</p>
+<!---------- Header ------------>		
+		<div class="headerPage">
+			<jsp:include page="header/header_guest.jsp"/>
 		</div>
 
-		<!--   header   -->
 		<div id="menu-bg">
 			<div id="menu">
 				<ul id="main">
@@ -433,7 +482,7 @@ Released   : 20100501
 								<a href="#">${all.name}</a>
 							</h1>
 							<p class="byline">
-								<small><a href="#發起人的超連結" rel="nofollow">${all.customerBean.nickname}</a>於
+								<small><a href="#發起人的超連結" rel="nofollow">${all.memberBean.nickname}</a>於
 									${all.createdDate} 發起</small>
 							</p>
 							<div class="entry">

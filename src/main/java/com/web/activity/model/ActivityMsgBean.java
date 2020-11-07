@@ -26,7 +26,7 @@ public class ActivityMsgBean implements java.io.Serializable {
 	private String msgContent;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="userId") 	
+	@JoinColumn(name="memberNo") 	
     private MemberBean memberBean;
 	
 	@ManyToOne(cascade=CascadeType.ALL)

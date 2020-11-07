@@ -72,6 +72,10 @@ textarea{
 </style>
 </head>
 <body>
+<!---------- Header ------------>		
+		<div class="headerPage">
+			<jsp:include page="header/header_guest.jsp"/>
+		</div>
 	<!--   header    -->
 	<header class="header">
 		<div class="container">
@@ -291,7 +295,7 @@ textarea{
 					<div class="section-block msgbox collapse" id="collapseExample">
 						<h1 class="section-title" >新增留言</h1>
 						<div class="credit-block sources ">
-							<textarea rows="2" name="msg" cols="28" class="msgbox" placeholder="(打點什麼吧)"></textarea>
+							<textarea rows="2" name="msg" cols="28" class="msgbox newmsg" placeholder="(打點什麼吧)"></textarea>
 						</div>
 						<button class="btn btn-contact sendmsg">送出</button>
 						<i class="fa fa-twitter"></i>
@@ -409,7 +413,7 @@ textarea{
 	</footer>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	
 <script>
 	$(".follow").click(function(){
@@ -428,22 +432,24 @@ textarea{
 		$(".addmsg").show();
 	})
 	
-	$('textarea').autoResize();
+// 	$('textarea').autoResize();
 	
-	$("sendmsg").click(function(){
-		var msgContent = $(".msgbox").text();
-		var userId = session.getUserId();
+	$(".sendmsg").click(function(){
+		var msgContent = $(".newmsg").text();
+		var userId = session.getMemberNo();
 		var activityNo = ${one.activityNo};
-		
+		console.log(msgContent);
+		console.log(userId);
+		console.log(activityNo);
 		$.ajax({
 			  url:"ajax_msgSend",
 			  type: "POST",
 			  dataType: "html", 
 			  contentType: 'application/json; charset=utf-8',
 			  data: {
-				msg: msgContent;
-			  	userId: userId;
-			  	activityNo: activityNo;
+				msg: msgContent,
+			  	userId: userId,
+			  	activityNo: activityNo,
 				}, 
 			  success:function(data){
 				  $(".msgboard").empty();

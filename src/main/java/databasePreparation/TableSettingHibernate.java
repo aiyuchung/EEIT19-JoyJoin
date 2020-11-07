@@ -165,7 +165,7 @@ public class TableSettingHibernate {
 						count++;
 					}
 			session.flush();
-			System.out.println("Member表格資料新增成功");
+			System.out.println("Role表格資料新增成功");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -330,8 +330,8 @@ public class TableSettingHibernate {
 						}
 						tb.setLeftDays(Integer.parseInt(token[18]));
 						
-						int userId = Integer.parseInt(token[19].trim());
-						MemberBean cb = (MemberBean) session.get(MemberBean.class, userId);
+						int memberNo = Integer.parseInt(token[19].trim());
+						MemberBean cb = (MemberBean) session.get(MemberBean.class, memberNo);
 						tb.setMemberBean(cb);
 
 						int provId = Integer.parseInt(token[20].trim());
