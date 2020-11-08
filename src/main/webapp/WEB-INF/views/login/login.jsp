@@ -93,8 +93,8 @@
 				<i class="fa fa-lock fa-stack-1x"></i>
 			</span>
 		</p>
-		<input type="text" class="login-username" autofocus="true"	placeholder="Account" name="account" /> 
-		<input type="password"	class="login-password" placeholder="Password" name="password" /> 
+		<form:input type="text" class="login-username" autofocus="true" placeholder="Account" name="account" id="account" path="account"/> 
+		<form:input type="password"	class="login-password" placeholder="Password" name="password"  path="password"/> 
 		<table align='center'>
 			<tr>
 				<td><input type="submit" value="登入" name="Login" class="login-submit" id="login btn" style="padding:4px;margin-right:10px"/></td>
@@ -111,24 +111,23 @@
 	<div class="underlay-photo"></div>
 	<div class="underlay-black"></div>
 	<script>
-		$(window).on("load",function(){
-			alert("${status}<=====")
-		})	
+	console.log(${ErrMsg});
+	console.log(${level});
+	console.log(${id});
 	
-		var t ="${member.status}" ;
-		if( t !=""){
-			$(window).on('load',function(){
-		        $('#resultModal').modal('show');
-		    });
-		}
+	
+	$(window).on('load',function(){
+        $('#resultModal').modal('show');
+    });
 
-		document.getElementById("back btn").onclick = function(){
-			location.href = "<c:url value = '/' />"
-		}
-		
-		$("#signup-btn").on("click",function(){
-			$('#signupArea').modal('show');
-		})
+
+	document.getElementById("back btn").onclick = function(){
+		location.href = "<c:url value = '/' />"
+	}
+	
+	$("#signup-btn").on("click",function(){
+		$('#signupArea').modal('show');
+	})
 			
 		
 		

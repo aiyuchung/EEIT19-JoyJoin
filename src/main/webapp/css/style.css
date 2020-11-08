@@ -9,7 +9,7 @@
 /*********************************************************************************/
 
 	body {
-		margin-top : 150px;
+		
 		padding: 0px;
 		background: #180E0B;
 		font-family: 'Raleway', sans-serif;
@@ -163,7 +163,7 @@
 	#headerdiv
 	{
 		position: relative;
-		height:150px;
+/* 		height:150px; */
 	}
 
 		#headerdiv .headernav

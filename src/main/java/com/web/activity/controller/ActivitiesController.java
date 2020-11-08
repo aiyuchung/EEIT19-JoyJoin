@@ -3,6 +3,9 @@ package com.web.activity.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +25,17 @@ import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.ProvinceBean;
 import com.web.activity.service.ActivityService;
+import com.web.activity.service.MemberService;
 
 @Controller
 public class ActivitiesController {
 
 	@Autowired
 	ActivityService service;
+	
+	@Autowired
+	MemberService memberService;
+	
 //-----------------------------------------跳轉單個頁面↓-----------------------------------------	
 	@GetMapping("/oneActivity/{id}")
 	public String one(@PathVariable("id") int activityNo, Model model) {
@@ -115,12 +123,16 @@ public class ActivitiesController {
 	}
 //-----------------------------------------新增活動空的form表單↓-----------------------------------------		
 	@GetMapping("/newActivities")
-	public String newAcitivity(Model model, @ModelAttribute("newform") ActivityBean newform) {
+	public String newAcitivity(HttpServletRequest request, Model model, 
+			@ModelAttribute("newform") ActivityBean newform) {
 		List<ActivityBean> list = service.selectAllActivities();
 		List<ActivityTypeBean> types = service.showAllTypes();
 		List<ActivityClassBean> categoryList = service.selectAllClasses();
 		List<ProvinceBean> provs = service.selectAllProvs();
-
+		
+		HttpSession session = request.getSession();
+		int level = (int) session.getAttribute("level");
+		model.addAttribute("level",level);
 		model.addAttribute("activities",list);
 		model.addAttribute("allTypes",types);
 		model.addAttribute("categoryList",categoryList);

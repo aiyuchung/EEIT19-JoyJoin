@@ -248,16 +248,16 @@ textarea{
 												<form:radiobutton path="maxLimit" value="" label="限制人數:" /><form:input path="maxLimit" />
 											</div>
 									</div>
-							<!--  		<div class="info-block  ">
+							  		<div class="info-block ">
 											<div class="fortitle">參加權限</div>
 											<div class="forcontent">
-												<form:select path="level">
+												<form:select path="level" id="levelOptions">
 													<form:option value="1" label="所有人"/>
 													<form:option value="2" label="lv.2以下"/>
 													<form:option value="3" label="lv.3以下"/>
 												</form:select>
 											</div>
-									</div>  -->
+									</div>  
 									<div class="info-block  ">
 											<div class="fortitle">報名截止日期</div>
 											<div class="forcontent">
@@ -312,6 +312,15 @@ textarea{
 				}
 		})
 		
+	})
+	
+	$("#levelOptions").change(function(){
+		var currentLevel = ${level};
+		$("#levelOptions").each(function(){
+			if ($(this).val > currentLevel){
+				$("#levelOptions").remove($(this));
+			}
+		})
 	})
 </script>	
 

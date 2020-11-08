@@ -339,6 +339,7 @@ public class TableSettingHibernate {
 						tb.setProvinceBean(pb);
 						tb.setJoinedNum(0);
 						tb.setHitCount(0);
+						tb.setLevelLimit(1);
 						// 讀取圖片檔
 //						Blob blob = SystemUtils2018.fileToBlob(token[5].trim());
 //						book.setCoverImage(blob);

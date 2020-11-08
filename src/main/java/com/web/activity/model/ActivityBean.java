@@ -62,6 +62,7 @@ public class ActivityBean implements java.io.Serializable {
 	private Integer leftDays;
 	private Integer joinedNum;
 	private Integer hitCount;
+	private Integer levelLimit;
 	
 	public Integer getHitCount() {
 		return hitCount;
@@ -106,6 +107,12 @@ public class ActivityBean implements java.io.Serializable {
 	
 
 	
+	public Integer getLevelLimit() {
+		return levelLimit;
+	}
+	public void setLevelLimit(Integer levelLimit) {
+		this.levelLimit = levelLimit;
+	}
 	public MemberBean getMemberBean() {
 		return memberBean;
 	}
