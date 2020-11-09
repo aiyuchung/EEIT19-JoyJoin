@@ -5,6 +5,8 @@ body{
 	-moz-user-select:none;
 	-o-user-select:none;
 	user-select:none;
+	background-size:cover; 
+	background-repeat: no-repeat;
 }
 
 div::-webkit-scrollbar {
@@ -61,11 +63,6 @@ div::-webkit-scrollbar {
 	background-color: transparent;
 }
 
-#backArea {
-	background-image: url(images/BB.jpg);
-	background-size:cover; 
-	background-repeat: no-repeat;
-}
 
 
 

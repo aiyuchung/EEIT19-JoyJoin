@@ -17,12 +17,11 @@
 					<a href="<c:url value='/'/>">JOYJOIN LOGO</a>
 				</h1>
 			</div>
-
+			
 			<!-- Nav -->
 			<nav id="headernav">
-				<c:set var="level" value="${member.level}"/>
 				<c:choose>
-					<c:when test="${member.level} == 4">
+					<c:when test="${level} == 4">
 						<ul>
 							<li class="active"><span id="header-home">活動一覽</span></li> 
 							<li><span id="header-talk">討論區</span></li>
@@ -30,14 +29,14 @@
 							<li>管理後臺</li>
 						</ul>
 					</c:when>
-					<c:when test="${member.level} == 1">
+					<c:when test="${level} == 1">
 						<ul>
 							<li class="active"><span id="header-home">活動一覽</span></li> 
 							<li><span id="header-talk">討論區</span></li>
 							<li>會員資料</li>
 							<li>登出</li>
 						</ul>	
-					</c:when>
+					</c:when>	
 					<c:otherwise>
 						<ul>
 							<li class="active"><span id="header-home">活動一覽</span></li> 
@@ -52,6 +51,9 @@
 		</div>
 	</div>
 <script>
+	console.log(${level})
+	console.log("${account}")
+
 	document.getElementById("header-home").onclick = function(){
 		location.href = "<c:url value = '/'/>";
 	}

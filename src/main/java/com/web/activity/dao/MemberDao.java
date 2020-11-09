@@ -1,6 +1,7 @@
 package com.web.activity.dao;
 
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.RoleBean;
 
 public interface MemberDao {
 	
@@ -15,6 +16,8 @@ public interface MemberDao {
 			//更新帳號資訊
 		public MemberBean getMember(String account);
 			//抓取個人資料
+		public RoleBean getRole(String account);
+			//抓取角色
 
 //---------------------------------------------▼會員登入判斷▼---------------------------------------------//			
 		public Integer checkID(String account, String password);

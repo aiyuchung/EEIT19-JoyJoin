@@ -1,6 +1,7 @@
 package com.web.activity.service;
 
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.RoleBean;
 
 public interface MemberService {
 		
@@ -8,6 +9,8 @@ public interface MemberService {
 			//註冊會員,同時獲得虛擬資料
 		public MemberBean getMember(String account);
 			//抓取單一會員資料
+		public RoleBean getRole(String account);
+			//抓取角色資料
 		public Integer checkID(String account, String password);
 			//判斷帳密,同時判斷帳號狀態
 		public Integer checkLevel(String account);

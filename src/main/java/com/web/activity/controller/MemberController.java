@@ -4,22 +4,21 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.RoleBean;
 import com.web.activity.service.MemberService;
 
 @Controller
-@SessionAttributes({"member"})
+@SessionAttributes( value = {"member", "role","level","account"} )
 public class MemberController {
 
 		@Autowired
@@ -27,16 +26,17 @@ public class MemberController {
 		
 //---------------------------------------------▼會員頁面&修改▼---------------------------------------------//	
 		
-		@GetMapping("/member")
-		public String selectMemberInfo(Model model, HttpServletRequest request) {
-			String account = request.getParameter("id");
+		@GetMapping("/member/{account}")
+		public String selectMemberInfo(@PathVariable String account ,Model model) {
 			MemberBean mb = memberService.getMember(account);
-			model.addAttribute("memberBean", mb);
+			RoleBean rb = memberService.getRole(account);
+			model.addAttribute("member", mb);
+			model.addAttribute("role", rb);
 			return "login/member";
 		}
 		
 		@PostMapping("/member")
-		public String updateMemberInfo(MemberBean mb) {
+		public String updateMemberInfo(@ModelAttribute MemberBean mb) {
 			memberService.updateInfo(mb);
 			return "redirect:/login/member";
 		}
@@ -48,6 +48,7 @@ public class MemberController {
 			model.addAttribute("memberBean", mb);
 			return "login/login";
 		}
+		
 		
 		@PostMapping("/login")
 		public String checkID(MemberBean mb, Model model) throws IOException {
@@ -63,11 +64,12 @@ public class MemberController {
 				//用Dao判斷帳密正確與權限
 				if( flag == 1 ) {
 					model.addAttribute("level", level);    //權限存入session
-	                model.addAttribute("id", account);    //帳號存入session
+	                model.addAttribute("account", account);    //帳號存入session
 	    			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
 	    			String time = sdf.format(new Date());
 					memberService.updateTime(account, time);
 					model.addAttribute("msg", "登入成功!!");
+					System.out.println("==================>"+level);
 					return "redirect:/index";
 				}else {
 					switch(flag) {

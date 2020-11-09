@@ -42,7 +42,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-body" id="resultArea" style="height:380px;width:380px">
-				${member.status}
+				<c:forEach var="errmsg" items="${msg}"/>
 	      </div>
 	      <div class="modal-footer1">
 	      </div>
@@ -111,10 +111,7 @@
 	<div class="underlay-photo"></div>
 	<div class="underlay-black"></div>
 	<script>
-	console.log(${ErrMsg});
-	console.log(${level});
-	console.log(${id});
-	
+
 	
 	$(window).on('load',function(){
         $('#resultModal').modal('show');

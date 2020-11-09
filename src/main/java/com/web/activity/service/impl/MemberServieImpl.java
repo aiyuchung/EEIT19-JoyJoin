@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.web.activity.dao.MemberDao;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.RoleBean;
 import com.web.activity.service.MemberService;
 
 @Service
@@ -26,6 +27,12 @@ public class MemberServieImpl implements MemberService {
 		@Override
 		public MemberBean getMember(String account) {
 			return memberDao.getMember(account);
+		}
+		
+		@Transactional
+		@Override
+		public RoleBean getRole(String account) {
+			return memberDao.getRole(account);
 		}
 		
 		@Transactional

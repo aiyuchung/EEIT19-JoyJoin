@@ -1,5 +1,5 @@
 package com.web.activity.dao.impl;
-//rolebean的lasttime還沒寫
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +87,21 @@ public class MemberDaoImpl implements MemberDao {
 			;
 		}
 		return mb;
+	}
+	
+	@Override
+	public RoleBean getRole(String account) {
+		String hql = "FROM RoleBean WHERE account = :id";
+		Session session = factory.getCurrentSession();
+		RoleBean rb = new RoleBean();
+		try {
+			rb = (RoleBean) session.createQuery(hql)
+									.setParameter("id", account)
+									.getSingleResult();
+		}catch(Exception e) {
+			;
+		}
+		return rb;
 	}
 	
 	@Override
