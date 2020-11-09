@@ -160,7 +160,6 @@ public class TableSettingHibernate {
 						bean.setNoticeType(Integer.parseInt(sa[8].trim()));
 						bean.setTrip(Integer.parseInt(sa[9].trim()));
 						bean.setPostTrip(Integer.parseInt(sa[10].trim()));
-						bean.setSignType(Integer.parseInt(sa[11].trim()));
 						session.save(bean);
 						count++;
 					}

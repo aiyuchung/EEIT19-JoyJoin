@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
@@ -28,6 +29,7 @@ import com.web.activity.service.ActivityService;
 import com.web.activity.service.MemberService;
 
 @Controller
+@SessionAttributes({"level", "id"})
 public class ActivitiesController {
 
 	@Autowired
@@ -123,7 +125,9 @@ public class ActivitiesController {
 	}
 //-----------------------------------------新增活動空的form表單↓-----------------------------------------		
 	@GetMapping("/newActivities")
+	
 	public String newAcitivity(HttpServletRequest request, Model model, 
+//			@ModelAttribute("level") int level, 
 			@ModelAttribute("newform") ActivityBean newform) {
 		List<ActivityBean> list = service.selectAllActivities();
 		List<ActivityTypeBean> types = service.showAllTypes();
@@ -131,7 +135,10 @@ public class ActivitiesController {
 		List<ProvinceBean> provs = service.selectAllProvs();
 		
 		HttpSession session = request.getSession();
-		int level = (int) session.getAttribute("level");
+		
+		String id = (String) session.getAttribute("id");
+		String level = (String) session.getAttribute("level");
+		model.addAttribute("id",id);
 		model.addAttribute("level",level);
 		model.addAttribute("activities",list);
 		model.addAttribute("allTypes",types);

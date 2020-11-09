@@ -25,6 +25,9 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"
 	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 	crossorigin="anonymous"></script>
+	
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <!--  -----------------------------------------------------------  -->
 
 
@@ -175,7 +178,7 @@ textarea{
 									<h1 class="section-title">活動細項</h1>
 									<div class="info-block  ">
 											<div class="fortitle">主辦人</div>
-											<div class="forcontent"><a href="#">主辦人暱稱</a></div>
+											<div class="forcontent"><a href="#">主辦人()稱</a></div>
 									</div>
 									<div class="info-block  ">
 											<div class="fortitle">活動類型</div>
@@ -192,15 +195,8 @@ textarea{
 											<div class="fortitle">活動性質</div>
 											<div class="forcontent">
 												<form:select path="activityClass">
-													   <form:option class="showClass" value="請選擇" label="請選擇"/>
-													  
-													   <c:forEach var="category" items="${categoryList}">
-														   <c:choose>
-																<c:when test="${category.activityTypeBean.activityType == type.activityType}">
-																	<form:option value="${category.activityClassNo}" label="${category.activityClass}" />
-																</c:when>
-															</c:choose>
-														</c:forEach>
+												   <form:option class="showClass" value="請選擇" label="請選擇" />
+														<form:options items="${categoryList}" />
 												</form:select>
 											</div>
 									</div>
@@ -208,9 +204,13 @@ textarea{
 											<div class="fortitle">活動所在縣市</div>
 											<div class="forcontent">
 												<form:select path="prov">
+													<form:option value="請選擇" label="請選擇"/>
+<!-- 												<form:options items="${provs}" itemValue="provId" itemLabel="prov"/> 
+
+												
 													<c:forEach var="prov" items="${provs}">
-													<form:options value="${prov.provId}" label="${prov.prov}" />
-													</c:forEach>
+													<form:option value="${prov.provId}" >${prov.prov}</form:option>
+													</c:forEach>  -->
 												</form:select>
 											</div>
 									</div>
@@ -251,7 +251,7 @@ textarea{
 							  		<div class="info-block ">
 											<div class="fortitle">參加權限</div>
 											<div class="forcontent">
-												<form:select path="level" id="levelOptions">
+												<form:select path="levelLimit" id="levelOptions">
 													<form:option value="1" label="所有人"/>
 													<form:option value="2" label="lv.2以下"/>
 													<form:option value="3" label="lv.3以下"/>
@@ -293,9 +293,24 @@ textarea{
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src=“https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
+	$('.date-picker').datepicker()
+// 	$(function() {
+//     $('.date-picker').datepicker( {
+//         changeMonth: true,
+//         changeYear: true,
+//         showButtonPanel: true,
+//         dateFormat: 'yyyy MM ',
+//         onClose: function(dateText, inst) { 
+//             var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+//             var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+//             $(this).datepicker('setDate', new Date(year, month, 1));
+//         }
+//     });
 	$("#selecytType").change(function(){
 		var checkedtype = $("#selecytType").next().val();
+		console.log(checkedtype);
 		$.ajax({
 			  url:"ajax_checktype",
 			  type: "GET",
