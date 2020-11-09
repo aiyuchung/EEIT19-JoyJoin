@@ -48,7 +48,7 @@ public class MemberDaoImpl implements MemberDao {
 	public void updateInfo(MemberBean mb) {
 		Session session = factory.getCurrentSession();
 		String hql = "UPDATE MemberBean SET password = :password, gender = :gender, picture = :picture"
-				+ ", nickname = :nickname, birthYear = :year, birthMonth = :month, starSign = :star, bloodType = :blood"
+				+ ", nickname = :nickname, phone = :phone, birthYear = :year, birthMonth = :month, starSign = :star, bloodType = :blood"
 				+ ", country = :country, address = :address, hobby = :hobby, education = :education, school = :school"
 				+ ", company = :company, job = :job, income = :income, signature = :signature, introduction = :introduction"
 				+ " WHERE account = :id";
@@ -57,6 +57,7 @@ public class MemberDaoImpl implements MemberDao {
 											  .setParameter("gender", mb.getGender())
 											  .setParameter("picture", mb.getPicture())
 											  .setParameter("nickname", mb.getNickname())
+											  .setParameter("phone", mb.getPhone())
 											  .setParameter("year", mb.getBirthYear())
 											  .setParameter("month", mb.getBirthMonth())
 											  .setParameter("star", mb.getStarSign())
@@ -89,7 +90,7 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	@Override
-	public boolean checkID(String account, String password) {
+	public Integer checkID(String account, String password) {
 		String hql = "SELECT password FROM MemberBean WHERE account = :id";
 		Session session = factory.getCurrentSession();
 		String pwd = null;
@@ -97,17 +98,17 @@ public class MemberDaoImpl implements MemberDao {
 			pwd = (String) session.createQuery(hql).setParameter("id", account)
 																		 .getSingleResult();
 		}catch(Exception e){
-			return false;
+			return 2;
 		}
 		
 		if( pwd.equals(password)) {
 			if( checkType(account) ) {
-				return true;
+				return 1;
 			}else {
-				return false;
+				return 4;
 			}			
 		}else {
-			return false;
+			return 3;
 		}
 	}
 

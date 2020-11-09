@@ -35,6 +35,7 @@ public class MemberBean implements Serializable {
 	private String fullName;				//姓名	
 	@Column(nullable = false)
 	private String nickname;				//暱稱,快速註冊
+	private String phone;					//電話
 	private String birthYear;				//出生年份
 	private String birthMonth;			//出生月份
 	private String starSign;				//星座
@@ -67,7 +68,7 @@ public class MemberBean implements Serializable {
 	}
 
 	public MemberBean(Integer memberNo, String account, String password, String gender, String mail, Blob picture,
-			String fullName, String nickname, String birthYear, String birthMonth, String starSign, String bloodType,
+			String fullName, String nickname, String phone, String birthYear, String birthMonth, String starSign, String bloodType,
 			String country, String address, String hobby, String education, String school, String company, String job,
 			String income, String signature, String introduction) {
 		this.memberNo = memberNo;
@@ -78,6 +79,7 @@ public class MemberBean implements Serializable {
 		this.picture = picture;
 		this.fullName = fullName;
 		this.nickname = nickname;
+		this.phone = phone;
 		this.birthYear = birthYear;
 		this.birthMonth = birthMonth;
 		this.starSign = starSign;
@@ -156,6 +158,14 @@ public class MemberBean implements Serializable {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getBirthYear() {

@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.web.activity.model.MemberBean;
-import com.web.activity.model.RoleBean;
 import com.web.activity.service.MemberService;
 
 @Controller
@@ -26,79 +25,27 @@ public class MemberController {
 		@Autowired
 		MemberService memberService;
 		
-//---------------------------------------------▼點擊個人頁面取得資料▼---------------------------------------------//	
+//---------------------------------------------▼會員頁面&修改▼---------------------------------------------//	
 		
-		@GetMapping("/selectMember")
-		public String getMemberBean2Select(HttpServletRequest request, Model model) {
-			HttpSession session = request.getSession();
-			String account = (String) session.getAttribute("id");
+		@GetMapping("/member")
+		public String selectMemberInfo(Model model, HttpServletRequest request) {
+			String account = request.getParameter("id");
 			MemberBean mb = memberService.getMember(account);
-			model.addAttribute("member", mb);
+			model.addAttribute("memberBean", mb);
 			return "login/member";
 		}
 		
-//---------------------------------------------▼會員註冊▼---------------------------------------------//	
-		
-//		@GetMapping("/insert")
-//		public String getMemberBean2SignUp(Model model) {
-//			MemberBean mb = new MemberBean();
-//			model.addAttribute("memberBean", mb);
-//			model.addAttribute(mb);
-//			return "signup";
-//		}
-//		
-//		@PostMapping(value="/insert")
-//		public String sighUp(MemberBean mb) {
-//			memberService.signUp(mb);
-//			return "index";
-//		}
-//		
-//---------------------------------------------▼會員資料更新▼---------------------------------------------//	
-		
-		@GetMapping("/update")
-		public String getMemberBean2Update(Model model) {
-			MemberBean mb = new MemberBean();
-			model.addAttribute("memberBean", mb);
-			model.addAttribute(mb);
-			return "update";
-		}
-		
-		@PostMapping("/update")
-		public String update(MemberBean mb) {
+		@PostMapping("/member")
+		public String updateMemberInfo(MemberBean mb) {
 			memberService.updateInfo(mb);
-			return "redirect:/index";
+			return "redirect:/login/member";
 		}
-		
-//---------------------------------------------▼跳轉頁面(暫)▼---------------------------------------------//			
-		
-		@GetMapping("/jumpTo")
-		public String jumpToIndex() {
-			return "redirect:/index";
-		}
-		
-//---------------------------------------------▼會員帳號開通(暫)▼---------------------------------------------//	
-		
-		@GetMapping("/verification")
-		public String verification(Model model) {
-			RoleBean rb = new RoleBean();
-			model.addAttribute("roleBean", rb);
-			model.addAttribute(rb);
-			return "verification";
-		}
-		
-		@PostMapping("/verification")
-		public String open(@RequestParam String account) {
-			memberService.openType(account);
-			return "redirect:/index";
-		}
-		
-//---------------------------------------------▼會員登入帳號判斷▼---------------------------------------------//	
+//---------------------------------------------▼會員註冊&登入▼---------------------------------------------//	
 		
 		@GetMapping("/login")
 		public String login(Model model) {
 			MemberBean mb = new MemberBean();
 			model.addAttribute("memberBean", mb);
-//			model.addAttribute(mb);
 			return "login/login";
 		}
 		
@@ -111,32 +58,29 @@ public class MemberController {
 				memberService.signUp(mb);		//====註冊====
 				return "redirect:/index";
 			}else {
-				boolean flag = memberService.checkID(account, password);
+				int flag = memberService.checkID(account, password);
 	            int level = memberService.checkLevel(account);
 				//用Dao判斷帳密正確與權限
-				if( flag ) {
-	                model.addAttribute("level", level);    //權限存入session
+				if( flag == 1 ) {
+					model.addAttribute("level", level);    //權限存入session
 	                model.addAttribute("id", account);    //帳號存入session
 	    			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
 	    			String time = sdf.format(new Date());
 					memberService.updateTime(account, time);
+					model.addAttribute("msg", "登入成功!!");
 					return "redirect:/index";
 				}else {
-					model.addAttribute("status", "登入失敗");
-					return "redirect:/login";
-				}
+					switch(flag) {
+					case 2: model.addAttribute("msg", "此帳號沒有資料。");break;
+					case 3: model.addAttribute("msg", "密碼錯誤,請重新輸入。!!");break;
+					case 4: model.addAttribute("msg", "此帳號尚未開通。");break;
+						default: model.addAttribute("msg", "登入失敗!!");break;
+					}
+					return "login/login";
+				}	            
 			}
 		}		
-	}
-		
-//		public String getDate() {
-//			
-//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
-//			Date current = new Date();
-//			return sdf.format(current);
-//		}
-		
-		
+	}		
 		
 		
 //-----------------------------------------------------------------------

@@ -8,7 +8,7 @@ public interface MemberService {
 			//註冊會員,同時獲得虛擬資料
 		public MemberBean getMember(String account);
 			//抓取單一會員資料
-		public boolean checkID(String account, String password);
+		public Integer checkID(String account, String password);
 			//判斷帳密,同時判斷帳號狀態
 		public Integer checkLevel(String account);
         //判斷帳號權限    

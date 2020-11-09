@@ -65,7 +65,7 @@
 	}
 	
 	document.getElementById("header-member").onclick = function(){
-		location.href = "<c:url value = '/selectMember'/>";
+		location.href = "<c:url value = '/member'/>";
 	}
 	
 	

@@ -17,7 +17,7 @@ public interface MemberDao {
 			//抓取個人資料
 
 //---------------------------------------------▼會員登入判斷▼---------------------------------------------//			
-		public boolean checkID(String account, String password);
+		public Integer checkID(String account, String password);
 			//判斷帳號密碼正確與否
 		public boolean checkType(String account);
 					//作為方法,判斷帳號狀態

@@ -30,7 +30,7 @@ public class MemberServieImpl implements MemberService {
 		
 		@Transactional
 		@Override
-		public boolean checkID(String account, String password) {
+		public Integer checkID(String account, String password) {
 			return memberDao.checkID(account, password);
 		}
 		
