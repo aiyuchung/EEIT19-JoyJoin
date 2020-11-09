@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${sessionScope.member.account}的個人頁面</title>
+<title>${account}的個人頁面</title>
 <!-- 	<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' -->
 <!--         type='text/css'> -->
 <!--     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
@@ -18,27 +18,26 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <!--     <link rel="stylesheet" href="css/style.css" /> -->
-    <link rel="stylesheet" href="css/memberpage.css" />
+    <link rel="stylesheet" href="<c:url value='css/memberpage.css' />" />
+    
 <!--     <link rel="stylesheet" type="text/css" href="path/to/css/bootstrap.min.css"> -->
-<!--     <link rel="stylesheet" type="text/css" href="path/to/css/bootstrap-directional-buttons.css"> -->
+    <link rel="stylesheet" type="text/css" href="path/to/css/bootstrap-directional-buttons.css">
     <!-- ====================文字特效======================= -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="<c:url value='css/bootstrap.css' />" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cabin+Sketch:700&display=swap" rel="stylesheet">
 
 </head>
 <body class="homepage" style="background-image:url(images/memberBack.jpg);">
 	<!-- Header -->
 <!-- 	<div class="headerPage"> -->
-<%-- 		<jsp:include page="../header/header_guest.jsp" /> --%>
+		<jsp:include page="../header/header_guest.jsp" />
 <!-- 	</div> -->
 	
-	<c:forEach var='member' items='${member}'/>
-	<c:forEach var='role' items='${role}'/>
 	<div id="infoArea">
 		<div id="info">
-			<div id="pictureArea"></div>
+			<div id="pictureArea">${member.picture }</div>
 			<div id="nicknameArea" class="text-effect">
-				<p><span>${member.nickname}</span> ( ${member.account} )</p>
+				<p><span>${member.nickname}</span> ( ${account} )</p>
 				<p>${member.mail}</p>
 			</div>
 		</div>
