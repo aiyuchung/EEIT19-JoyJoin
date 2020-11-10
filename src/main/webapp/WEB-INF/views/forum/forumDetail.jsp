@@ -487,7 +487,7 @@ Released   : 20100501
 
 <script>	
 	document.getElementById("to_forumNewArticle").onclick = function(){
-		location.href = "<c:url value = '/forumNewArticle'/>";		//改成討論版的路徑
+		location.href = "<c:url value = '/forumNewArticle'/>";
 	}
 </script>
 
