@@ -7,10 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Login Page</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	crossorigin="anonymous">
+<!-- <link rel="stylesheet" -->
+<!-- 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" -->
+<!-- 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" -->
+<!-- 	crossorigin="anonymous"> -->
 <script src="https://code.jquery.com/jquery-3.5.1.js"
 	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 	crossorigin="anonymous"></script>
@@ -25,7 +25,9 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
 <link rel="stylesheet" href="<c:url value = 'css/signIn.css'/>" />
+
 <style>
 	
 </style>
@@ -35,14 +37,14 @@
 
 	<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true" style="top:100px">
 	  <div class="modal-dialog">
-	    <div class="modal-content" style="border-radius:99em;height:380px;width:380px;left:55px">
+	    <div class="modal-content" style="border-radius:99em;height:380px;width:380px;left:55px;background-color:	#F0F0F0"">
 	      <div class="modal-header1">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <!-- 	          <span aria-hidden="true">&times;</span> -->
 	        </button>
 	      </div>
 	      <div class="modal-body" id="resultArea" style="height:380px;width:380px">
-				<c:forEach var="errmsg" items="${msg}"/>
+				<h2 id='msg'>${errMsg}</h2><span id='msg2'>點選空白處返回</span>
 	      </div>
 	      <div class="modal-footer1">
 	      </div>
@@ -74,7 +76,7 @@
                     <div class="form-group">
                         <form:input type="text" class="form-control" id="inputNickname" placeholder="暱稱" path="nickname"/>
                     </div>
-					<input type="submit" class="btn btn-default" value="快速註冊" style="background-color:	#7B7B7B"/>
+					<input type="submit" class="btn btn-default" value="快速註冊" style="color:	#33FFFF;box-shadow: #33FFFF 0px 0px 15px;background-color:	#7B7B7B"/>
 				</form:form>
 				</div>
 	      </div>
@@ -111,11 +113,12 @@
 	<div class="underlay-photo"></div>
 	<div class="underlay-black"></div>
 	<script>
-
 	
-	$(window).on('load',function(){
-        $('#resultModal').modal('show');
-    });
+	if( "${errMsg}" != "" ){
+		$(window).on('load',function(){
+	        $('#resultModal').modal('show');
+	    });
+	}
 
 
 	document.getElementById("back btn").onclick = function(){

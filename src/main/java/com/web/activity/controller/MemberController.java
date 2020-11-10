@@ -27,7 +27,7 @@ public class MemberController {
 		@Autowired
 		MemberService memberService;
 		
-//---------------------------------------------▼會員頁面&修改▼---------------------------------------------//	
+//---------------------------------------------▼會員頁面▼---------------------------------------------//	
 		
 		@GetMapping("/member")
 		public String selectMemberInfo(HttpSession session ,Model model) {
@@ -39,11 +39,6 @@ public class MemberController {
 			return "login/member";
 		}
 		
-		@PostMapping("/member")
-		public String updateMemberInfo(@ModelAttribute MemberBean mb) {
-			memberService.updateInfo(mb);
-			return "redirect:/login/member";
-		}
 //---------------------------------------------▼會員註冊&登入▼---------------------------------------------//	
 		
 		@GetMapping("/login")
@@ -79,18 +74,18 @@ public class MemberController {
 					return "redirect:/index";
 				}else {
 					switch(flag) {
-					case 2: model.addAttribute("msg", "此帳號沒有資料。");break;
-					case 3: model.addAttribute("msg", "密碼錯誤,請重新輸入。!!");break;
-					case 4: model.addAttribute("msg", "此帳號尚未開通。");break;
-						default: model.addAttribute("msg", "登入失敗!!");break;
+					case 2: model.addAttribute("errMsg", "此帳號沒有資料。");break;
+					case 3: model.addAttribute("errMsg", "密碼錯誤,請重新輸入。!!");break;
+					case 4: model.addAttribute("errMsg", "此帳號尚未開通。");break;
+						default: model.addAttribute("errMsg", "登入失敗!!");break;
 					}
 					return "login/login";
 				}	            
 			}
 		}
 		
-		
 //---------------------------------------------▼會員登出▼---------------------------------------------//			
+		
 		  @RequestMapping("/out")
 		  public String logOut (HttpSession session, SessionStatus sessionStatus) {
 		   session.invalidate();
@@ -98,7 +93,23 @@ public class MemberController {
 		   return "redirect:/index";
 		  }
 		
-		
+//---------------------------------------------▼會員修改▼---------------------------------------------//	
+			
+//			@GetMapping("/update")
+//			public String getUpdateForm(HttpSession session ,Model model) {
+//				String account = (String) session.getAttribute("account");
+//				MemberBean mb = memberService.getMember(account);
+//				model.addAttribute("member", mb);
+//				return "login/member";
+//			}
+//			
+			@PostMapping("/member")
+			public String updateInfo(@ModelAttribute MemberBean mb) {
+				memberService.updateInfo(mb);
+				return "redirect:/member";
+			}
+		  
+		  
 	}		
 		
 		
