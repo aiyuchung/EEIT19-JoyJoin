@@ -32,7 +32,7 @@ body{
 			<!-- Nav -->
 			<nav id="headernav">
 				<ul>
-					<li class="active"><a href = "<c:url value = '/activities'/>">活動一覽</a></li>
+					<li ><a href = "<c:url value = '/activities'/>">活動一覽</a></li>
 					<li><a href = "<c:url value = '/forum'/>">討論區</a></li>
 					<c:choose>
 						<c:when test="${level == 1}">
