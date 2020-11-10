@@ -464,7 +464,7 @@ Released   : 20100501
 					<li>
 						<h2>最新發起</h2> <c:forEach var="latest" items="${latestOnes}">
 							<ul>
-								<li><a href="#">${latest.name}</a> (${latest.createdDate})</li>
+								<li><a href="<c:url value='/oneActivity/${latestOnes.activityNo}' />">${latest.name}</a> (${latest.createdDate})</li>
 							</ul>
 						</c:forEach>
 					</li>

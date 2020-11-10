@@ -180,7 +180,7 @@ textarea{
 									<h1 class="section-title">活動細項</h1>
 									<div class="info-block  ">
 											<div class="fortitle">主辦人</div>
-											<div class="forcontent"><a href="#">主辦人${level}</a></div>
+											<div class="forcontent"><a href="#">主辦人${member.nickname}</a></div>
 									</div>
 									<div class="info-block  ">
 											<div class="fortitle">活動名稱</div>
@@ -375,7 +375,7 @@ textarea{
 				
 			}
 		})
-	}
+	})
 	
 </script>	
 

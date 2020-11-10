@@ -25,7 +25,7 @@ public class ActivityDaoImpl implements ActivityDao {
 	
 	@Autowired
 	SessionFactory factory;
-
+	//----------------------------------------確認是否為截止日--------------------------------------------
 	@Override
 	public Map<String, Integer>  checkFinalDate() {
 		Session session = factory.getCurrentSession();
@@ -46,6 +46,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		changedStatus.put("todayinactive",todayinactive);
 		return changedStatus;
 	}
+	//----------------------------------------新增點擊率並回傳--------------------------------------------
 
 	@Override
 	public Integer updateHitCount(int activityNo) {
@@ -61,6 +62,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		session.createQuery(hql).setParameter("hit",hit).setParameter("id",activityNo).executeUpdate();
 		return hit;
 	}
+	//----------------------------------------查詢全部的活動--------------------------------------------
 	
 	@Override
 	public List<ActivityBean> selectAllActivities() {
@@ -70,6 +72,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return activities;
 	}
 	
+	//----------------------------------------查詢最新的活動--------------------------------------------
 	@Override
 	public List<ActivityBean> selectLatest() {
 		Session session = factory.getCurrentSession();
@@ -78,6 +81,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return latestOnes;
 	}
 	
+	//----------------------------------------查詢所有大類--------------------------------------------
 	@Override
 	public List<ActivityTypeBean> showAllTypes() {
 		Session session = factory.getCurrentSession();
@@ -86,6 +90,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return allTypes;
 	}
 
+	//----------------------------------------查詢所有小類--------------------------------------------
 	@Override
 	public List<ActivityClassBean> showAllClasses(String activityType) {
 		Session session = factory.getCurrentSession();
@@ -94,6 +99,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return allClasses;
 	}
 
+	//----------------------------------------查詢截止日--------------------------------------------
 	@Override
 	public List<ActivityBean> selectFinal() {
 		Session session = factory.getCurrentSession();
@@ -102,6 +108,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return FinalOnes;
 	}
 	
+	//----------------------------------------查詢今天後舉辦的活動--------------------------------------------
 	@Override
 	public List<ActivityBean> selectRecentMonths() {
 		Session session = factory.getCurrentSession();
@@ -111,6 +118,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return actives;
 	}
 	
+	//----------------------------------------查詢限定大類下的小類別--------------------------------------------
 	@Override
 	public List<ActivityClassBean> findCategories(String activityType) {
 		Session session = factory.getCurrentSession();
@@ -118,7 +126,15 @@ public class ActivityDaoImpl implements ActivityDao {
 		List<ActivityClassBean> classes = session.createQuery(hql).setParameter("activityType",activityType).getResultList();
 		return classes;
 	}
-
+	//----------------------------------------查詢限定大類下的小類別--------------------------------------------
+		@Override
+		public List<ActivityClassBean> classForCheckedType(String type) {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM ActivityClassBean where activityType =:type";
+			List<ActivityClassBean> list = session.createQuery(hql).setParameter("type",type).getResultList();
+			return list;
+		}
+	//----------------------------------------查詢所有任何狀態的活動--------------------------------------------
 	@Override
 	public List<ActivityClassBean> selectAllClasses() {
 		Session session = factory.getCurrentSession();
@@ -127,6 +143,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return allClasses;
 	}
 
+	//----------------------------------------快篩查詢--------------------------------------------
 	@Override
 	public List<ActivityBean> checkedClasses(List<String> activityClass) {
 		Session session = factory.getCurrentSession();
@@ -146,7 +163,9 @@ public class ActivityDaoImpl implements ActivityDao {
 		list = session.createQuery(hql).getResultList();	
 		return list;
 	}
+	
 //ajax排序
+	//----------------------------------------上架中之最近的活動日期開始--------------------------------------------
 	@Override
 	public List<ActivityBean> startFromLatest() {
 		Session session = factory.getCurrentSession();
@@ -155,6 +174,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return activities;
 	}
 
+	//----------------------------------------上架中之最早的活動日期開始--------------------------------------------
 	@Override
 	public List<ActivityBean> startFromEarlest() {
 		Session session = factory.getCurrentSession();
@@ -163,6 +183,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return activities;
 	}
 
+	//----------------------------------------上架中之最近的截止日期開始--------------------------------------------
 	@Override
 	public List<ActivityBean> endFromLatest() {
 		Session session = factory.getCurrentSession();
@@ -171,6 +192,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return activities;
 	}
 
+	//----------------------------------------上架中之最早的截止日期開始--------------------------------------------
 	@Override
 	public List<ActivityBean> endFromEarlest() {
 		Session session = factory.getCurrentSession();
@@ -179,6 +201,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return activities;
 	}
 
+	//----------------------------------------上架中之最低參加人數少數開始--------------------------------------------
 	@Override
 	public List<ActivityBean> peopleFromFew() {
 		Session session = factory.getCurrentSession();
@@ -187,6 +210,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return activities;
 	}
 
+	//----------------------------------------上架中之最低參加人數多數開始--------------------------------------------
 	@Override
 	public List<ActivityBean> peopleFromMany() {
 		Session session = factory.getCurrentSession();
@@ -195,6 +219,8 @@ public class ActivityDaoImpl implements ActivityDao {
 		return activities;
 	}
 	
+
+	//----------------------------------------上架中之從北部活動開始--------------------------------------------
 	@Override
 	public List<ActivityBean> placeFromNorth() {
 		Session session = factory.getCurrentSession();
@@ -203,6 +229,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return activities;
 	}
 
+	//----------------------------------------上架中之從南部活動開始--------------------------------------------
 	@Override
 	public List<ActivityBean> placeFromSouth() {
 		Session session = factory.getCurrentSession();
@@ -211,6 +238,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return activities;
 	}
 
+	//----------------------------------------上架中之當月活動--------------------------------------------
 	@Override
 	public List<ActivityBean> selectRecentMon(Date Datethismon1, Date Datethismon31) {
 		Session session = factory.getCurrentSession();
@@ -221,6 +249,8 @@ public class ActivityDaoImpl implements ActivityDao {
 				.getResultList();
 		return activities;
 	}
+	
+	//----------------------------------------表單的條件查詢--------------------------------------------
 	@Override
 	public List<ActivityBean> selectByFrom(String price, String location, String limit, String small) {
 		String[] prices = price.split(","); 
@@ -292,6 +322,7 @@ public class ActivityDaoImpl implements ActivityDao {
 
 	}
 
+	//----------------------------------------關鍵字查詢--------------------------------------------
 	@Override
 	public List<ActivityBean> searchByKey(String keyWord) {
 		Session session = factory.getCurrentSession();
@@ -312,6 +343,7 @@ public class ActivityDaoImpl implements ActivityDao {
 
     }
 
+	//----------------------------------------單一活動查詢--------------------------------------------
 	@Override
 	public ActivityBean selectOneActivity(int activityNo) {
 		Session session = factory.getCurrentSession();
@@ -320,6 +352,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return activity;
 	}
 
+	//----------------------------------------留言版的存取--------------------------------------------
 	@Override
 	public List<ActivityMsgBean> saveMsg(ActivityMsgBean activityMsg) {
 		Session session = factory.getCurrentSession();
@@ -330,6 +363,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return list;
 	}
 
+	//----------------------------------------查詢全部縣市--------------------------------------------
 	@Override
 	public List<ProvinceBean> selectAllProvs() {
 		Session session = factory.getCurrentSession();
@@ -338,13 +372,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return list;
 	}
 
-	@Override
-	public List<ActivityClassBean> classForCheckedType(String type) {
-		Session session = factory.getCurrentSession();
-		String hql = "FROM ActivityClassBean where activityType =:type";
-		List<ActivityClassBean> list = session.createQuery(hql).setParameter("type",type).getResultList();
-		return list;
-	}
+	
 
 
 }
