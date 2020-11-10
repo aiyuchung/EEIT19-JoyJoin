@@ -68,67 +68,6 @@ textarea:focus {
 textarea{
   padding-right:0;
 }
-#headernav
-	{
-		position: absolute;
-		right: 0em;
-		top: 5em;
-	}
-
-		#headernav > ul > li
-		{
-			float: left !important;
-			list-style-type: none;
-		}
-		
-			#headernav > ul > li:last-child
-			{
-				padding-right: 0 !important;
-			}
-
-			#headernav > ul > li > a,
-			#headernav > ul > li > span
-			{
-				display: block !important;
-				margin-left: 0.7em !important;
-				padding: 0.80em 1.2em !important;
-				letter-spacing: 0.06em !important;
-				text-decoration: none !important;
-				font-size: 15px !important;
-				outline: 0;
-				color: #FFF;
-				border-radius:10px;  
-			}
-			#headernav > ul > li > a:hover,
-			#headernav > ul > li > span:hover
-			{
-				color:	#BBFFFF;
-				font-weight: 700;
-				box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
-			}
-
-			#headernav li.active a
-			{
-				background: #56c9d6;
-				border-radius: 5px;
-				color: #FFF;
-			}
-
-			#headernav > ul > li > ul
-			{
-				display: none;
-			}
-#headerdiv
-	{
-		position: relative;
-		height:150px;
-	}
-
-		#headerdiv .headernav
-		{
-			position: relative;
-			padding: 6em 0em;
-		}
 		
 
 </style>
@@ -270,17 +209,23 @@ textarea{
 									<div class="info-block  ">
 											<div class="fortitle">最高人數限制</div>
 											<div class="forcontent">
-												<form:radiobutton path="maxLimit" value="無限制" label="無限制" checked="checked"/> &nbsp;
+												<form:radiobutton path="maxLimit" value="無限制" label="無限制" id="nolimitmax" checked="checked"/> &nbsp;
 												<form:radiobutton path="maxLimit" value="" label="限制人數:" id="limitmax" /><form:input disabled="true" path="maxLimit" class="form-control inputhide" style="width:100px; display:inline-block"/>
 											</div>
 									</div>
 							  		<div class="info-block ">
 											<div class="fortitle">參加權限</div>
 											<div class="forcontent">
+<%-- 												<c:set var="level" value="${level}" /> --%>
 												<form:select path="levelLimit" id="levelOptions" class="form-control">
 													<form:option value="1" label="所有人" checked="checked"/>
+													<c:if test="${level == 2}">
+													<form:option value="2" label="Lv.2以上" />
+													</c:if>
+													<<c:if test="${level > 2}">
 													<form:option value="2" label="Lv.2以上" />
 													<form:option value="3" label="Lv.3以上" />
+													</c:if>
 												</form:select>
 											</div>
 									</div>
@@ -367,6 +312,10 @@ textarea{
 	
 	$("#limitmax").click(function(){
 		$(".inputhide").prop("disabled",false);
+	})
+	
+	$("#nolimitmax").click(function(){
+		$(".inputhide").prop("disabled",true);
 	})
 	
 	$("#createnew").click(function(){

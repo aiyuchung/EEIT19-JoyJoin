@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.web.activity.model.ActivityBean;
@@ -72,20 +71,23 @@ public class ActivitiesController {
 		return "ShowActivities";
 	}
 //-----------------------------------------單個活動的留言板↓-----------------------------------------	
-	@PostMapping("/ajax_msgSend")
-	public String saveMsg(Model model,
+	@GetMapping("/ajax_msgSend")
+	public String saveMsg(Model model, HttpSession session,
 			@RequestParam String msg,
-			@RequestParam int userId,
-			@RequestParam int activityNo) {
+			@RequestParam String No) {
+		
+		Integer memberNo = (Integer) session.getAttribute("member.memberNo");
+		System.out.println(memberNo);
 		ActivityMsgBean newMsg = new ActivityMsgBean();
 		newMsg.setMsgContent(msg);
 		
+		int activityNo = Integer.parseInt(No);
 		ActivityBean ab = new ActivityBean();
 		ab.setActivityNo(activityNo);
 		newMsg.setActivityBean(ab);
 		
 		MemberBean mb = new MemberBean();
-		mb.setMemberNo(userId);
+		mb.setMemberNo(memberNo);
 		newMsg.setMemberBean(mb);
 		System.out.println("controller newMsg--------------------------"+newMsg);		
 		List<ActivityMsgBean> msgBox = service.saveMsg(newMsg);

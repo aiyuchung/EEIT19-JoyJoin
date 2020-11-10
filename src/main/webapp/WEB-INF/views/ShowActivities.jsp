@@ -181,73 +181,17 @@ Released   : 20100501
 }
 
 
-#headernav
-	{
-		position: absolute;
-		right: 0em;
-		top: 5em;
-	}
 
-		#headernav > ul > li
-		{
-			float: left !important;
-			list-style-type: none;
-		}
 		
-			#headernav > ul > li:last-child
-			{
-				padding-right: 0 !important;
-			}
-
-			#headernav > ul > li > a,
-			#headernav > ul > li > span
-			{
-				display: block !important;
-				margin-left: 0.7em !important;
-				padding: 0.80em 1.2em !important;
-				letter-spacing: 0.06em !important;
-				text-decoration: none !important;
-				font-size: 15px !important;
-				outline: 0;
-				color: #FFF;
-				border-radius:10px;  
-			}
-			#headernav > ul > li > a:hover,
-			#headernav > ul > li > span:hover
-			{
-				color:	#BBFFFF;
-				font-weight: 700;
-				box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
-			}
-
-			#headernav li.active a
-			{
-				background: #56c9d6;
-				border-radius: 5px;
-				color: #FFF;
-			}
-
-			#headernav > ul > li > ul
-			{
-				display: none;
-			}
-#headerdiv
-	{
-		position: relative;
-		height:150px;
-	}
-
-		#headerdiv .headernav
-		{
-			position: relative;
-			padding: 6em 0em;
-		}
-		
-
+.btn-primary:hover, .btn-primary:focus {
+	background-color: #779A81;
 </style>
 
 </head>
 <body>
+<input type="text" id="userAccount" value="${account}" hidden>
+<button type="button" id="showmodal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" hidden>
+</button>
 <!---------- Header ------------>		
 		<div class="headerPage">
 			<jsp:include page="header/header_guest.jsp"/>
@@ -260,7 +204,7 @@ Released   : 20100501
 <!-- 					<li><a href="#">Products</a></li> -->
 <!-- 					<li><a href="#">Services</a></li> -->
 <!-- 					<li><a href="#">About Us</a></li> -->
-					<li class="nav-item dropdown"><a href="<c:url value='/newActivities' />">新增活動</a></li>
+					<li class="nav-item dropdown"><a href="<c:url value='/newActivities' />" class="more" > 新增活動</a></li>
 					
 <!-- 查詢按鈕  -->
 					<li class="nav-item dropdown">
@@ -450,11 +394,10 @@ Released   : 20100501
 								<c:set var="days" scope="session" value="${finalOnes.leftDays}" />
 								<c:choose>
 									<c:when test="${days == 0}">
-										<li><a href="#"><strong>(今天結單!)</strong>${finalOnes.name}</a></li>
+										<li><a href="<c:url value='/oneActivity/${finalOnes.activityNo}' />" class="more"><strong>(今天結單!)</strong>${finalOnes.name}</a></li>
 									</c:when>
-									
 									<c:otherwise>
-										<li><a href="#"><strong>(只剩${days}天)</strong>${finalOnes.name}</a></li>
+										<li><a href="<c:url value='/oneActivity/${finalOnes.activityNo}' />" class="more"><strong>(只剩${days}天)</strong>${finalOnes.name}</a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
@@ -464,7 +407,7 @@ Released   : 20100501
 					<li>
 						<h2>最新發起</h2> <c:forEach var="latest" items="${latestOnes}">
 							<ul>
-								<li><a href="<c:url value='/oneActivity/${latestOnes.activityNo}' />">${latest.name}</a> (${latest.createdDate})</li>
+								<li><a href="<c:url value='/oneActivity/${latest.activityNo}' />" class="more">${latest.name}</a> (${latest.createdDate})</li>
 							</ul>
 						</c:forEach>
 					</li>
@@ -570,16 +513,26 @@ Released   : 20100501
 			<!-- end sidebars -->
 			<div style="clear: both;">&nbsp;</div>
 		</div>
-		<!-- end page -->
+
+<!-- 請登入的modal  -->	
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content" style="background-color:#ECEBEB;">
+	      <div class="modal-header" style="background-color:#85AD90; border:2px solid #85AD90">
+	        <h5 class="modal-title" id="exampleModalLabel" style="color:black;font-size:15px ">未登入提醒</h5>
+	      </div>
+	      <div class="modal-body" style="color:black; font-size:19px">
+	        	您現在正在前往會員才能使用的功能!
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal" >晚點再登入</button>
+	        <button type="button" class="btn btn-primary" href="<c:url value='/login' />" style="background-color:#85AD90;border:1px solid #85AD90">現在登入</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
-	<div id="footer">
-		<div id="footer-content">
-			<p>
-				&copy;2007 All Rights Reserved. &nbsp;&nbsp; Design by <a
-					href="http://templated.co" rel="nofollow">TEMPLATED</a>.
-			</p>
-		</div>
-	</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <script>
 var 
@@ -641,7 +594,6 @@ function showNext(){
 		 
 		  function showCalendar(y,m,d,firstday){
 		  dayOfWeek = firstday.getDay(),           //判斷第一天是星期幾(返回[0-6]中的一個，0代表星期天，1代表星期一，以此類推)
-		  console.log(dayOfWeek);
 		  days_per_month = new Array(31, 28 + isLeap(y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31),         //建立月份陣列
 		  str_nums = Math.ceil((dayOfWeek + days_per_month[m])/ 7);                        //確定日期表格所需的行數
 
@@ -998,6 +950,16 @@ function showNext(){
 			$("#form").submit();
 		}
 	})
+	
+	$(".more").click(function(){
+		var account = $("#userAccount").val();
+		console.log("account ="+account);
+		if (account == "" || account == null){
+			$('#exampleModal').modal('show');
+			event.preventDefault();
+		}
+	})
+
 	
 	
 </script>

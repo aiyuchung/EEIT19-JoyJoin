@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
@@ -85,7 +87,18 @@ public class MemberController {
 					return "login/login";
 				}	            
 			}
-		}		
+		}
+		
+		
+//---------------------------------------------▼會員登出▼---------------------------------------------//			
+		  @RequestMapping("/out")
+		  public String logOut (HttpSession session, SessionStatus sessionStatus) {
+		   session.invalidate();
+		   sessionStatus.setComplete();
+		   return "redirect:/index";
+		  }
+		
+		
 	}		
 		
 		

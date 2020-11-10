@@ -17,6 +17,70 @@ body{
 }
 
 </style>
+<style>
+#headernav
+	{
+		position: absolute;
+		right: 0em;
+		top: 5em;
+	}
+
+		#headernav > ul > li
+		{
+			float: left !important;
+			list-style-type: none;
+		}
+		
+			#headernav > ul > li:last-child
+			{
+				padding-right: 0 !important;
+			}
+
+			#headernav > ul > li > a,
+			#headernav > ul > li > span
+			{
+				display: block !important;
+				margin-left: 0.7em !important;
+				padding: 0.80em 1.2em !important;
+				letter-spacing: 0.06em !important;
+				text-decoration: none !important;
+				font-size: 15px !important;
+				outline: 0;
+				color: #FFF;
+				border-radius:10px;  
+			}
+			#headernav > ul > li > a:hover,
+			#headernav > ul > li > span:hover
+			{
+				color:	#BBFFFF;
+				font-weight: 700;
+				box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
+			}
+
+			#headernav li.active a
+			{
+				background: #56c9d6;
+				border-radius: 5px;
+				color: #FFF;
+			}
+
+			#headernav > ul > li > ul
+			{
+				display: none;
+			}
+#headerdiv
+	{
+		position: relative;
+		height:150px;
+	}
+
+		#headerdiv .headernav
+		{
+			position: relative;
+			padding: 6em 0em;
+		}
+		
+</style>
 </head>
 <body>
 	<div id="headerdiv">
@@ -36,7 +100,8 @@ body{
 					<li><a href = "<c:url value = '/forum'/>">討論區</a></li>
 					<c:choose>
 						<c:when test="${level == 1}">
-							<li><a href = "<c:url value = '/member'/>">會員資料</a></li>
+							
+							<li><a href = "<c:url value = '/member'/>">${account}</a></li>
 							<li><a href = "<c:url value = '/out'/>">登出</a></li>
 						</c:when>
 						<c:when test="${level == 4}">

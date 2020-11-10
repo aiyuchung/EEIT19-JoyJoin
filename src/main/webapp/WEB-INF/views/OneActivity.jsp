@@ -474,9 +474,10 @@ textarea{
 		</div>
 	</footer>
 </body>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	
+
 <script>
 	$(".follow").click(function(){
 		var text = $(this).text();
@@ -497,21 +498,18 @@ textarea{
 // 	$('textarea').autoResize();
 	
 	$(".sendmsg").click(function(){
-		var msgContent = $(".newmsg").text();
-		var userId = session.getMemberNo();
+		var msgContent = $(".newmsg").val();
 		var activityNo = ${one.activityNo};
 		console.log(msgContent);
-		console.log(userId);
 		console.log(activityNo);
 		$.ajax({
 			  url:"ajax_msgSend",
-			  type: "POST",
+			  type: "GET",
 			  dataType: "html", 
 			  contentType: 'application/json; charset=utf-8',
 			  data: {
 				msg: msgContent,
-			  	userId: userId,
-			  	activityNo: activityNo,
+			  	No: activityNo,
 				}, 
 			  success:function(data){
 				  $(".msgboard").empty();
@@ -519,7 +517,6 @@ textarea{
 				}
 		})
 	})
-
 
 
 </script>
