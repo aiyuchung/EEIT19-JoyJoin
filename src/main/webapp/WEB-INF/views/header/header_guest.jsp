@@ -61,7 +61,7 @@
 	}
 	
 	document.getElementById("header-talk").onclick = function(){
-		location.href = "<c:url value = '/'/>";		//改成討論版的路徑
+		location.href = "<c:url value = '/forum'/>";		//改成討論版的路徑
 	}
 	
 	document.getElementById("header-login").onclick = function(){
