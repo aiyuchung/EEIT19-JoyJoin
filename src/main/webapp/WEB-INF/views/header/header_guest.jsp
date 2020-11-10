@@ -1,11 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Header what Guest can see</title>
+<style>
+body{
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-o-user-select:none;
+	user-select:none;
+	background-size:cover; 
+	background-repeat: no-repeat;
+}
+
+</style>
 </head>
 <body>
 	<div id="headerdiv">
@@ -17,62 +28,33 @@
 					<a href="<c:url value='/'/>">JOYJOIN LOGO</a>
 				</h1>
 			</div>
-			
+
 			<!-- Nav -->
 			<nav id="headernav">
-				<c:choose>
-					<c:when test="${level == '4'}  ">
-						<ul>
-							<li class="active"><span id="header-home">活動一覽</span></li> 
-							<li><span id="header-talk">討論區</span></li>
-							<li></li>
-							<li>管理後臺</li>
-						</ul>
-					</c:when>
-					<c:when test="${level  == '1'} ">
-						<ul>
-							<li class="active"><span id="header-home">活動一覽</span></li> 
-							<li><span id="header-talk">討論區</span></li>
-							<li>會員資料</li>
-							<li>登出</li>
-						</ul>	
-					</c:when>	
-					<c:otherwise>
-						<ul>
-							<li class="active"><span id="header-home">活動一覽</span></li> 
-							<li><span id="header-talk">討論區</span></li>
-							<li><span id="header-member">會員資料(暫)</span></li>
-							<li><a id="header-login">會員登入</a></li>
-						</ul>
-					</c:otherwise>					
-				</c:choose>
+				<ul>
+					<li class="active"><a href = "<c:url value = '/activities'/>">活動一覽</a></li>
+					<li><a href = "<c:url value = '/forum'/>">討論區</a></li>
+					<c:choose>
+						<c:when test="${level == 1}">
+							<li><a href = "<c:url value = '/member'/>">會員資料</a></li>
+							<li><a href = "<c:url value = '/out'/>">登出</a></li>
+						</c:when>
+						<c:when test="${level == 4}">
+							<li><a href = "<c:url value = '/'/>">後台管理</a></li>
+							<li><a href = "<c:url value = '/out'/>">登出</a></li>
+						</c:when>
+						<c:when test="${empty level}">
+							<li><a href = "<c:url value = '/member'/>">會員資料</a></li>
+							<li><a href = "<c:url value = '/login'/>">會員登入</a></li>
+						</c:when>
+					</c:choose>
+				</ul>
 			</nav>
-
 		</div>
 	</div>
-	<input type="hidden" id="test123">
-<script>
-	console.log(${level})
-	document.getElementById("test123").value='${level}';
-	console.log("${account}")
 
-	document.getElementById("header-home").onclick = function(){
-		location.href = "<c:url value = '/activities'/>";
-	}
+<script>
 	
-	document.getElementById("header-talk").onclick = function(){
-		location.href = "<c:url value = '/forum'/>";		//改成討論版的路徑
-	}
-	
-	document.getElementById("header-login").onclick = function(){
-		location.href = "<c:url value = '/login'/>";
-	}
-	
-	document.getElementById("header-member").onclick = function(){
-		location.href = "<c:url value = '/member'/>";
-	}
-	
-	
-</script>	
+</script>
 </body>
 </html>
