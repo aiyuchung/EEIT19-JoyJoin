@@ -368,13 +368,11 @@ Released   : 20100501
 <!-- 關鍵字搜尋   -->					
 					<li>
 						<form id="searchform" method="get" action="#">
-							<h6>關鍵字搜尋</h6>
+							<h6>&nbsp;&nbsp;關鍵字搜尋</h6>
 							<div>
-								<input type="text" name="s" id="s" size="15" value="" placeholder="EX: 瑜珈" /> <br />
+								&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="s" id="s" size="20" value="" placeholder="EX: 瑜珈" /> <br />
+								<button type="button" class="btn btn-outline-light btn-sm">確認</button>
 							</div>
-							<p></p>
-							<button type="button" class="btn btn-outline-light btn-sm">確認</button>
-							
 						</form>
 					</li>
 <!-- tags未寫 -->					
@@ -438,6 +436,37 @@ Released   : 20100501
 								</tfoot>
 							</table>
 						</div>
+					</li>
+					
+<!-- 最後倒數(截止日期<3天)  -->					
+					<li>
+						<h2>最後倒數</h2>
+						<ul>
+							<li>
+							<input id="finalNum" type="text" value="${finalNum}" hidden />
+							<span id="noLessThan3"></span>
+							</li>
+								<c:forEach var="finalOnes" items="${finalOnes}">
+								<c:set var="days" scope="session" value="${finalOnes.leftDays}" />
+								<c:choose>
+									<c:when test="${days == 0}">
+										<li><a href="#"><strong>(今天結單!)</strong>${finalOnes.name}</a></li>
+									</c:when>
+									
+									<c:otherwise>
+										<li><a href="#"><strong>(只剩${days}天)</strong>${finalOnes.name}</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</ul>
+					</li>
+<!-- 最新發起(最新建立)  -->	
+					<li>
+						<h2>最新發起</h2> <c:forEach var="latest" items="${latestOnes}">
+							<ul>
+								<li><a href="#">${latest.name}</a> (${latest.createdDate})</li>
+							</ul>
+						</c:forEach>
 					</li>
 					<li>
 						<h2>活動分類快篩</h2>
@@ -514,54 +543,25 @@ Released   : 20100501
 			<!-- start sidebars -->
 			<div id="sidebar1" class="sidebar">
 				<ul>
-<!-- 最後倒數(截止日期<3天)  -->					
-					<li>
-						<h2>最後倒數</h2>
-						<ul>
-							<li>
-							<input id="finalNum" type="text" value="${finalNum}" hidden />
-							<span id="noLessThan3"></span>
-							</li>
-								<c:forEach var="finalOnes" items="${finalOnes}">
-								<c:set var="days" scope="session" value="${finalOnes.leftDays}" />
-								<c:choose>
-									<c:when test="${days == 0}">
-										<li><a href="#"><strong>(今天結單!)</strong>${finalOnes.name}</a></li>
-									</c:when>
-									
-									<c:otherwise>
-										<li><a href="#"><strong>(只剩${days}天)</strong>${finalOnes.name}</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</ul>
-					</li>
-<!-- 最新發起(最新建立)  -->	
-					<li>
-						<h2>最新發起</h2> <c:forEach var="latest" items="${latestOnes}">
-							<ul>
-								<li><a href="#">${latest.name}</a> (${latest.createdDate})</li>
-							</ul>
-						</c:forEach>
-					</li>
+
 <!-- 其他 (未寫)  -->						
-					<li>
-						<h2>Recent Comments</h2>
-						<ul>
-							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a>
-								on <a href="#">Aliquam libero</a></li>
-							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a>
-								on <a href="#">Consectetuer adipiscing elit</a></li>
-							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a>
-								on <a href="#">Metus aliquam pellentesque</a></li>
-							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a>
-								on <a href="#">Suspendisse iaculis mauris</a></li>
-							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a>
-								on <a href="#">Urnanet non molestie semper</a></li>
-							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a>
-								on <a href="#">Proin gravida orci porttitor</a></li>
-						</ul>
-					</li>
+<!-- 					<li> -->
+<!-- 						<h2>Recent Comments</h2> -->
+<!-- 						<ul> -->
+<!-- 							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a> -->
+<!-- 								on <a href="#">Aliquam libero</a></li> -->
+<!-- 							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a> -->
+<!-- 								on <a href="#">Consectetuer adipiscing elit</a></li> -->
+<!-- 							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a> -->
+<!-- 								on <a href="#">Metus aliquam pellentesque</a></li> -->
+<!-- 							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a> -->
+<!-- 								on <a href="#">Suspendisse iaculis mauris</a></li> -->
+<!-- 							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a> -->
+<!-- 								on <a href="#">Urnanet non molestie semper</a></li> -->
+<!-- 							<li><a href="http://templated.co" rel="nofollow">TEMPLATED</a> -->
+<!-- 								on <a href="#">Proin gravida orci porttitor</a></li> -->
+<!-- 						</ul> -->
+<!-- 					</li> -->
 
 
 				</ul>
@@ -615,7 +615,7 @@ function showPrev(){
 } 
 
 function showNext(){
-	m = m+1; //上個月是10月 m就=9
+	m = m+1; //下個月是11月 m就=10
 	if (m > 11){
 		m=0
 		y += 1
@@ -629,7 +629,7 @@ function showNext(){
 	document.getElementById("w61").innerText="";
 	document.getElementById("w62").innerText="";
 	
-	showCalendar(y,m,firstday);
+	showCalendar(y,m,d,firstday);
 	
 	document.getElementById("next").innerHTML=((m+2)>12?1:m+2)+"月 &raquo;";
 	document.getElementById("thiscap").innerHTML=y+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (m+1)+"月"
@@ -643,7 +643,7 @@ function showNext(){
 		  dayOfWeek = firstday.getDay(),           //判斷第一天是星期幾(返回[0-6]中的一個，0代表星期天，1代表星期一，以此類推)
 		  console.log(dayOfWeek);
 		  days_per_month = new Array(31, 28 + isLeap(y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31),         //建立月份陣列
-		  str_nums = Math.ceil((dayOfWeek + days_per_month[m]) / 7);                        //確定日期表格所需的行數
+		  str_nums = Math.ceil((dayOfWeek + days_per_month[m])/ 7);                        //確定日期表格所需的行數
 
 				var calendarbody = document.getElementById("calBody");
 				for (var i = 0; i < str_nums; i ++) {         //二維陣列建立日期表格
@@ -654,10 +654,16 @@ function showNext(){
 					  (date <= 0 || date > days_per_month[m]) ? date = ' ': date = idx - dayOfWeek + 1;  //索引小於等於0或者大於月份最大值就用空表格代替
 					  calendarbody.rows[i].cells[k].innerText=date;
 					  var tdtag = calendarbody.rows[i].cells[k].classList;
-					  date == d ? 
-							  calendarbody.rows[i].cells[k].classList.add("today"): 
-								calendarbody.rows[i].cells[k].classList.remove("today")
-							;  //當天以today類別的Border做標示
+					  thismon = (new Date()).getMonth();
+					  if (thismon == m ){
+						  date == d ? 
+								  calendarbody.rows[i].cells[k].classList.add("today"): 
+									calendarbody.rows[i].cells[k].classList.remove("today")
+								;  //當天以today類別的Border做標示
+					  }else{
+						  calendarbody.rows[i].cells[k].classList.remove("today");
+					  }
+					 
 					  }
 		 		}
 		  }

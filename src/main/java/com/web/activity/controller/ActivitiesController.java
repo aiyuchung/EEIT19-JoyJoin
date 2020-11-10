@@ -137,9 +137,9 @@ public class ActivitiesController {
 		HttpSession session = request.getSession();
 		
 		String id = (String) session.getAttribute("id");
-		String level = (String) session.getAttribute("level");
-		model.addAttribute("id",id);
-		model.addAttribute("level",level);
+//		String level = (String) session.getAttribute("level");
+//		model.addAttribute("id",id);
+//		model.addAttribute("level",level);
 		model.addAttribute("activities",list);
 		model.addAttribute("allTypes",types);
 		model.addAttribute("categoryList",categoryList);
@@ -247,12 +247,13 @@ public class ActivitiesController {
 	
 	
 	@GetMapping("/ajax_checktype")
-	@ResponseBody
-	public List<ActivityClassBean> classForCheckedType(@RequestParam String type) {
+	public String classForCheckedType(Model model, @RequestParam String type) {
+		System.out.println("controller type--------------------->"+type);
 		List<ActivityClassBean> classes = service.classForCheckedType(type);
-		int elementsNum = classes.size();
-//		model.addAttribute("classes",classes);
-		return classes;
+//		int elementsNum = classes.size();
+		model.addAttribute("categoryList",classes);
+		
+		return "ajax/classes";
 
 	}
 	
@@ -270,5 +271,8 @@ public class ActivitiesController {
 
 	}
 
-	
+//	@ModelAttribute
+//	public MemberBean isexist(
+//			@RequestParam(value="userId"), required = false Integer id)
+			
 }

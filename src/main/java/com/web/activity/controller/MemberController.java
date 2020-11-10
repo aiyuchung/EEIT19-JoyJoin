@@ -65,7 +65,9 @@ public class MemberController {
 	            int level = memberService.checkLevel(account);
 				//用Dao判斷帳密正確與權限
 				if( flag == 1 ) {
-					model.addAttribute("level", level);    //權限存入session
+					String level123 = String.valueOf(level);
+					System.out.println("level=" + level123);
+					model.addAttribute("level", level123);    //權限存入session
 	                model.addAttribute("account", account);    //帳號存入session
 	    			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
 	    			String time = sdf.format(new Date());

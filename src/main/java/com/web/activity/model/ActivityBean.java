@@ -1,5 +1,6 @@
 package com.web.activity.model;
 
+
 import java.sql.Blob;
 import java.sql.Date;
 import java.util.LinkedHashSet;
@@ -13,6 +14,8 @@ import javax.persistence.GenerationType;
 //import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -63,6 +66,9 @@ public class ActivityBean implements java.io.Serializable {
 	private Integer joinedNum;
 	private Integer hitCount;
 	private Integer levelLimit;
+//	@Transient
+//	private multiPartFiles updateImg;
+	
 	
 	public Integer getHitCount() {
 		return hitCount;
@@ -80,6 +86,18 @@ public class ActivityBean implements java.io.Serializable {
 	
 	@OneToMany(mappedBy="activityBean", cascade= {CascadeType.ALL})
 	private Set<ActivityMsgBean> activityMsgbean = new LinkedHashSet<>();
+	
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="ActivityJoin",
+			joinColumns= {
+					@JoinColumn (name = "FK_activityNo", referencedColumnName="activityNo")
+			},
+			inverseJoinColumns= {
+					@JoinColumn (name= "FK_memberNo", referencedColumnName="memberNo")
+			}
+	)
+	private Set<MemberBean> joinedMembers = new LinkedHashSet<>(0) ;
+	
 	
 	
 	
