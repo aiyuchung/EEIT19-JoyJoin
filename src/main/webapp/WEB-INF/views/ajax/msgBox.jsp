@@ -8,12 +8,34 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+	.showmsg{
+		padding: 2px;
+		margin-top:2px;
+	}
+	.userpic{
+		display:inline-block;
+		width:60px;
+		height:60px;
+		border-radius:50%;
+		border:2px solid grey;
+	}
+</style>
 </head>
 <body>
-<input id="num" type="text" value="${activitiesNum}" hidden />
-<span id="textSpan"></span>
 
-		
+
+<h1 class="section-title" >new留言板</h1>
+<c:forEach var="msg" items="${msgBox}">
+<div class="credit-block sources ">
+	<div class="">
+		<img src="" class="userpic msgpic"/><a href="#"><h5 style="display: inline-block">${member.nickname} ( ${account} )</h5></a>
+	</div>
+	<div class="showmsg">
+		<textarea rows="2" name="msg" cols="28" class="msgbox newmsg" readonly>${msg.msgContent}</textarea>
+	</div>
+</div>
+</c:forEach>
 <script type="text/javascript">
 	var number = $("#num").val();
 	if(number == 0){

@@ -446,13 +446,13 @@ a {
 
 /*-Credits-*/
 .credit-block {
-	padding: 20px;
+	padding: 5px;
 	background-color: #FFF;
 	border-radius: 4px;
 	margin-bottom: 10px;
 }
 .credit-block.sources a{
-	margin: 10px 0px;
+	margin: 5px 0px;
 	display: block;
 }
 .credit-block.license a.lined{

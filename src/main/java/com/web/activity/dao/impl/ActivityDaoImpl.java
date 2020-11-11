@@ -1,11 +1,14 @@
 package com.web.activity.dao.impl;
 
+import java.lang.reflect.Member;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,6 +20,7 @@ import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
+import com.web.activity.model.MemberBean;
 import com.web.activity.model.ProvinceBean;
 
 @Repository
@@ -354,12 +358,25 @@ public class ActivityDaoImpl implements ActivityDao {
 
 	//----------------------------------------留言版的存取--------------------------------------------
 	@Override
-	public List<ActivityMsgBean> saveMsg(ActivityMsgBean activityMsg) {
+	public List<ActivityMsgBean> saveMsg(String msg, Integer activityNo, Integer memberNo) {
 		Session session = factory.getCurrentSession();
-		session.save(activityMsg);
+		ActivityMsgBean newmsg = new ActivityMsgBean();
+		newmsg.setMemberBean(session.get(MemberBean.class, memberNo));
+		newmsg.setActivityBean(session.get(ActivityBean.class, activityNo));
+		newmsg.setMsgContent(msg);
+		session.save(newmsg);
 		
-		String hql = "FROM ActivityMsgBean";
-		List<ActivityMsgBean> list = session.createQuery(hql).getResultList();
+		String hql = "FROM ActivityMsgBean WHERE activityNo=:no";
+		List<ActivityMsgBean> list = session.createQuery(hql).setParameter("no",activityNo).getResultList();
+		return list;
+	}
+
+	//----------------------------------------留言版的查詢--------------------------------------------
+	@Override
+	public List<ActivityMsgBean> showMsg(int activityNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityMsgBean WHERE activityNo=:no";
+		List<ActivityMsgBean> list = session.createQuery(hql).setParameter("no",activityNo).getResultList();
 		return list;
 	}
 
@@ -372,7 +389,36 @@ public class ActivityDaoImpl implements ActivityDao {
 		return list;
 	}
 
-	
+	//----------------------------------------參加人數的欄位+1--------------------------------------------
+	@Override
+	public Integer joinedOne(int activityNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' AND activityNo = :id ";
+		ActivityBean list = (ActivityBean) session.createQuery(hql).setParameter("id",activityNo).getSingleResult();
+		Integer joinedNum = list.getJoinedNum();
+		joinedNum += 1;
+		
+		hql = "UPDATE ActivityBean SET joinedNum= :joinedNum WHERE activityStatus = 'active' AND activityNo = :id ";
+		session.createQuery(hql).setParameter("joinedNum",joinedNum).setParameter("id",activityNo).executeUpdate();
+		return joinedNum;
+	}
+
+	//----------------------------------------參加活動的會員--------------------------------------------
+	@Override
+	public void joinedMember(Integer memeberNo, int activityNo) {
+		Session session = factory.getCurrentSession();
+		ActivityBean activity = new ActivityBean();
+		activity.setActivityNo(activityNo);//存activityNo
+		
+		MemberBean member = new MemberBean();
+		member.setMemberNo(memeberNo);//存memberNo
+		
+		Set<MemberBean> joinedMember = new LinkedHashSet<>(0);//空表格
+		joinedMember.add(member);//先存mapping那邊
+		activity.setJoinedMembers(joinedMember);//在存有血中屆表格的bean
+		
+		session.save(activity);
+	}
 
 
 }

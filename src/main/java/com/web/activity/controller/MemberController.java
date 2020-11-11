@@ -27,16 +27,23 @@ public class MemberController {
 		@Autowired
 		MemberService memberService;
 		
-//---------------------------------------------▼會員頁面▼---------------------------------------------//	
+//---------------------------------------------▼會員頁面&修改▼---------------------------------------------//	
 		
 		@GetMapping("/member")
 		public String selectMemberInfo(HttpSession session ,Model model) {
 			String account = (String) session.getAttribute("account");
 			MemberBean mb = memberService.getMember(account);
 			RoleBean rb = memberService.getRole(account);
+			model.addAttribute("memberBean", mb);
 			model.addAttribute("member", mb);
 			model.addAttribute("role", rb);
 			return "login/member";
+		}
+		
+		@PostMapping("/member")
+		public String updateInfo(@ModelAttribute MemberBean mb) {
+			memberService.updateInfo(mb);
+			return "redirect:/member";
 		}
 		
 //---------------------------------------------▼會員註冊&登入▼---------------------------------------------//	
@@ -66,11 +73,11 @@ public class MemberController {
 					memberService.signUp(mb);		//====註冊====
 					return "redirect:/index";					
 				}else {
-					if(!checkAccount) {
-						model.addAttribute("errMsg", "此帳號已被註冊");
-					}
 					if(!checkEmail) {
 						model.addAttribute("errMsg", "此信箱已被註冊");
+					}
+					if(!checkAccount) {
+						model.addAttribute("errMsg", "此帳號已被註冊");
 					}
 					return "login/login";
 				}
@@ -110,21 +117,8 @@ public class MemberController {
 		   return "redirect:/index";
 		  }
 		
-//---------------------------------------------▼會員修改▼---------------------------------------------//	
-			
-//			@GetMapping("/update")
-//			public String getUpdateForm(HttpSession session ,Model model) {
-//				String account = (String) session.getAttribute("account");
-//				MemberBean mb = memberService.getMember(account);
-//				model.addAttribute("member", mb);
-//				return "login/member";
-//			}
-//			
-			@PostMapping("/member")
-			public String updateInfo(@ModelAttribute MemberBean mb) {
-				memberService.updateInfo(mb);
-				return "redirect:/member";
-			}
+
+
 		  
 		  
 	}		

@@ -101,6 +101,12 @@ public class ActivityBean implements java.io.Serializable {
 	
 	
 	
+	public Set<MemberBean> getJoinedMembers() {
+		return joinedMembers;
+	}
+	public void setJoinedMembers(Set<MemberBean> joinedMembers) {
+		this.joinedMembers = joinedMembers;
+	}
 	public ProvinceBean getProvinceBean() {
 		return provinceBean;
 	}

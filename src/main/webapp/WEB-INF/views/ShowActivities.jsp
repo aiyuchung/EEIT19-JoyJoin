@@ -5,17 +5,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
-<!--
-Design by TEMPLATED
-http://templated.co
-Released for free under the Creative Commons Attribution License
-
-Name       : Bryce Sunrise
-Description: A three-column, fixed-width blog design.
-Version    : 1.0
-Released   : 20100501
-
--->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -190,7 +179,6 @@ Released   : 20100501
 </head>
 <body>
 <input type="text" id="userAccount" value="${account}" hidden>
-<button type="button" id="showmodal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" hidden>
 </button>
 <!---------- Header ------------>		
 		<div class="headerPage">
@@ -462,7 +450,7 @@ Released   : 20100501
 								<strong>${all.activityDate} </strong> (${all.prov})
 							</h2>
 							<h1 class="title">
-								<a href="#">${all.name}</a>
+								<a href="<c:url value='/oneActivity/${all.activityNo}' />" class="more">${all.name}</a>
 							</h1>
 							<p class="byline">
 								<small><a href="#發起人的超連結" rel="nofollow">${all.memberBean.nickname}</a>於
@@ -526,7 +514,7 @@ Released   : 20100501
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal" >晚點再登入</button>
-	        <button type="button" class="btn btn-primary" href="<c:url value='/login' />" style="background-color:#85AD90;border:1px solid #85AD90">現在登入</button>
+	        <a type="button" class="btn btn-primary" href="<c:url value='/login' />" style="background-color:#85AD90;border:1px solid #85AD90">現在登入</a>
 	      </div>
 	    </div>
 	  </div>
@@ -958,6 +946,7 @@ function showNext(){
 			$('#exampleModal').modal('show');
 			event.preventDefault();
 		}
+		
 	})
 
 	

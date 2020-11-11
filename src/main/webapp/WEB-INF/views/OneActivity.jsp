@@ -12,7 +12,6 @@
 <meta name="description" content="unititled">
 <meta name="keywords" content="HTML5 Crowdfunding Profile Template">
 <meta name="author" content="Audain Designs">
-<!-- <link rel="shortcut icon" href="favicon.ico"> -->
 <title>JoyJoin - 活動詳細資料</title>
 <!--  -----------------------------------------------------------  -->
 <link rel="stylesheet"
@@ -27,11 +26,8 @@
 	crossorigin="anonymous"></script>
 <!--  -----------------------------------------------------------  -->
 
-
-<!-- 	<!--Fonts-->
--->
-<!-- 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
-<!-- 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <script>
 	(function(i, s, o, g, r, a, m) {
@@ -50,90 +46,102 @@
 	ga('send', 'pageview');
 </script>
 <style>
-.video-frame div{
-	border: 2px solid darkgrey;
-/* 	width: auto; */ 
-	height: 350px;
-	overflow:hidden;
-}
-.msgbox{
-	border:none;
-	resize : none;
-}
-
-textarea:focus {
-  outline : 0;
-}
-
-textarea{
-  padding-right:0;
-}
-#headernav
-	{
-		position: absolute;
-		right: 0em;
-		top: 5em;
+	.video-frame div{
+		border: 2px solid darkgrey;
+	/* 	width: auto; */ 
+		height: 350px;
+		overflow:hidden;
 	}
-
-		#headernav > ul > li
+	.msgbox{
+		border:none;
+		resize : none;
+	}
+	
+	textarea:focus {
+	  outline : 0;
+	}
+	
+	textarea{
+	  padding-right:0;
+	}
+	#headernav
 		{
-			float: left !important;
-			list-style-type: none;
+			position: absolute;
+			right: 0em;
+			top: 5em;
 		}
-		
-			#headernav > ul > li:last-child
+	
+			#headernav > ul > li
 			{
-				padding-right: 0 !important;
+				float: left !important;
+				list-style-type: none;
 			}
-
-			#headernav > ul > li > a,
-			#headernav > ul > li > span
-			{
-				display: block !important;
-				margin-left: 0.7em !important;
-				padding: 0.80em 1.2em !important;
-				letter-spacing: 0.06em !important;
-				text-decoration: none !important;
-				font-size: 15px !important;
-				outline: 0;
-				color: #FFF;
-				border-radius:10px;  
-			}
-			#headernav > ul > li > a:hover,
-			#headernav > ul > li > span:hover
-			{
-				color:	#BBFFFF;
-				font-weight: 700;
-				box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
-			}
-
-			#headernav li.active a
-			{
-				background: #56c9d6;
-				border-radius: 5px;
-				color: #FFF;
-			}
-
-			#headernav > ul > li > ul
-			{
-				display: none;
-			}
-#headerdiv
-	{
-		position: relative;
-		height:150px;
-	}
-
-		#headerdiv .headernav
+			
+				#headernav > ul > li:last-child
+				{
+					padding-right: 0 !important;
+				}
+	
+				#headernav > ul > li > a,
+				#headernav > ul > li > span
+				{
+					display: block !important;
+					margin-left: 0.7em !important;
+					padding: 0.80em 1.2em !important;
+					letter-spacing: 0.06em !important;
+					text-decoration: none !important;
+					font-size: 15px !important;
+					outline: 0;
+					color: #FFF;
+					border-radius:10px;  
+				}
+				#headernav > ul > li > a:hover,
+				#headernav > ul > li > span:hover
+				{
+					color:	#BBFFFF;
+					font-weight: 700;
+					box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
+				}
+	
+				#headernav li.active a
+				{
+					background: #56c9d6;
+					border-radius: 5px;
+					color: #FFF;
+				}
+	
+				#headernav > ul > li > ul
+				{
+					display: none;
+				}
+	#headerdiv
 		{
 			position: relative;
-			padding: 6em 0em;
+			height:150px;
 		}
-		
-
+	
+			#headerdiv .headernav
+			{
+				position: relative;
+				padding: 6em 0em;
+			}
+			
+	.showmsg{
+		padding: 2px;
+		margin-top:2px;
+	}
+	.userpic{
+		display:inline-block;
+		width:60px;
+		height:60px;
+		border-radius:50%;
+		border:2px solid grey;
+	}
 </style>
 </head>
+
 <body>
+
 <!---------- Header ------------>		
 		<div class="headerPage">
 			<jsp:include page="header/header_guest.jsp"/>
@@ -361,99 +369,25 @@ textarea{
 						</div>
 						<button class="btn btn-contact sendmsg">送出</button>
 						<i class="fa fa-twitter"></i>
-						</form>
 					</div>
 					
 					<div class="section-block msgboard" style="display:none" >
+						<c:if test="${msgNum == 0}">
+						<p>目前還沒有人留言</p>
+						</c:if>
+						<c:if test="${msgNum != 0}">
+						<c:forEach var="msg" items="${msgBox}">
 						<div class="credit-block sources ">
-							<img scr="" class="msgpic"/>
-							
+							<div >
+								<img src="" class="userpic msgpic"/><a href="#"><h5 style="display: inline-block">${member.nickname} ( ${account} )</h5></a>
+							</div>
+							<div class="showmsg">
+								<textarea rows="2" name="msg" cols="28" class="msgbox newmsg" readonly>${msg.msgContent}</textarea>
+							</div>
 						</div>
+						</c:forEach>
+						</c:if>
 					</div>
-					
-<!-- 					<div class="section-block"> -->
-<!-- 						<h1 class="section-title">REWARDS</h1> -->
-<!-- 						reward blocks -->
-<!-- 						<div class="reward-block"> -->
-<!-- 							<h3>$10</h3> -->
-<!-- 							<h2>Early Bird</h2> -->
-<!-- 							<p>Curabitur accumsan sem sed velit ultrices fermentum. -->
-<!-- 								Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id -->
-<!-- 								vestibulum eros. Nullam nunc velit, viverra sed consequat ac, -->
-<!-- 								pulvinar in metus.</p> -->
-<!-- 							<span><i class="fa fa-users"></i> 180 backers</span> <a href="" -->
-<!-- 								class="btn btn-reward">GET THIS REWARD</a> -->
-<!-- 						</div> -->
-<!-- 						<div class="reward-block popular"> -->
-<!-- 							<h3>$20</h3> -->
-<!-- 							<h2>Value Bird</h2> -->
-<!-- 							<p>Curabitur accumsan sem sed velit ultrices fermentum. -->
-<!-- 								Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id -->
-<!-- 								vestibulum eros. Nullam nunc velit, viverra sed consequat ac, -->
-<!-- 								pulvinar in metus.</p> -->
-<!-- 							<span><i class="fa fa-users"></i> 320 backers</span> <a href="" -->
-<!-- 								class="btn btn-reward">GET THIS REWARD</a> -->
-<!-- 						</div> -->
-<!-- 						<div class="reward-block"> -->
-<!-- 							<h3>$30</h3> -->
-<!-- 							<h2>Super Bird</h2> -->
-<!-- 							<p>Curabitur accumsan sem sed velit ultrices fermentum. -->
-<!-- 								Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id -->
-<!-- 								vestibulum eros. Nullam nunc velit, viverra sed consequat ac, -->
-<!-- 								pulvinar in metus.</p> -->
-<!-- 							<span><i class="fa fa-users"></i> 105 backers</span> <a href="" -->
-<!-- 								class="btn btn-reward">GET THIS REWARD</a> -->
-<!-- 						</div> -->
-<!-- 						<div class="reward-block last"> -->
-<!-- 							<h3>$50</h3> -->
-<!-- 							<h2>Premium Bird</h2> -->
-<!-- 							<p>Curabitur accumsan sem sed velit ultrices fermentum. -->
-<!-- 								Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id -->
-<!-- 								vestibulum eros. Nullam nunc velit, viverra sed consequat ac, -->
-<!-- 								pulvinar in metus.</p> -->
-<!-- 							<span><i class="fa fa-users"></i> 64 backers</span> <a href="" -->
-<!-- 								class="btn btn-reward">GET THIS REWARD</a> -->
-<!-- 						</div> -->
-<!-- 						/reward blocks -->
-<!-- 					</div> -->
-
-
-					<!--credits-->
-					<div class="section-block msgboard" style="display:none">
-						<h1 class="section-title" >留言板</h1>
-						<!--credits block-->
-						<div class="credit-block sources">
-							<ul class="list-unstyled">
-								<li><a href="http://getbootstrap.com/"><i
-										class="fa fa-external-link"></i>Bootstrap</a></li>
-								<li><a href="http://fortawesome.github.io/Font-Awesome/"><i
-										class="fa fa-external-link"></i>FontAwesome</a></li>
-								<li><a href="https://www.google.com/fonts"><i
-										class="fa fa-external-link"></i>Google Fonts</a></li>
-								<li><a href="http://jquery.com/"><i
-										class="fa fa-external-link"></i>jQuery</a></li>
-								<li><a href="https://vimeo.com/67938315"><i
-										class="fa fa-external-link"></i>Vimeo Video</a></li>
-								<li><a href="http://uifaces.com/"><i
-										class="fa fa-external-link"></i>Glasses Image</a></li>
-							</ul>
-						</div>
-						<div class="credit-block license">
-							<p>
-								The Launch template was created by <a class="lined"
-									href="http://themes.audaindesigns.com">Audain Designs</a> for
-								use by anyone for <strong>FREE</strong> and is covered uner the
-								<a class="lined"
-									href="http://creativecommons.org/licenses/by/3.0/">Creative
-									Commons Attribution 3.0 License</a>.
-							</p>
-							<p>As time goes on the template may receive updates, follow
-								us on twitter to get notified when an update is released.</p>
-							<a href="http://twitter.com/audaindesigns" class="btn btn-follow"><i
-								class="fa fa-twitter"></i>FOLLOW US</a> <a href="#"
-								class="btn btn-download"><i class="fa fa-download"></i>DOWNLOAD
-								TEMPLATE</a>
-						</div>
 						<!--/credits block-->
 					</div>
 					<!--/credits-->
@@ -461,7 +395,6 @@ textarea{
 				<!--/sidebar-->
 			</div>
 		</div>
-	</div>
 	<footer class="footer">
 		<div class="container">
 			<div class="row">
@@ -473,10 +406,6 @@ textarea{
 			</div>
 		</div>
 	</footer>
-</body>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <script>
 	$(".follow").click(function(){
@@ -500,24 +429,26 @@ textarea{
 	$(".sendmsg").click(function(){
 		var msgContent = $(".newmsg").val();
 		var activityNo = ${one.activityNo};
-		console.log(msgContent);
-		console.log(activityNo);
+// 		var data ={msg: msgContent,No: activityNo};
 		$.ajax({
-			  url:"ajax_msgSend",
-			  type: "GET",
+			
+			  url:"<c:url value='/msgSend' />",
+			  type: "POST",
 			  dataType: "html", 
-			  contentType: 'application/json; charset=utf-8',
-			  data: {
-				msg: msgContent,
-			  	No: activityNo,
-				}, 
+// 			  contentType: 'application/json; charset=utf-8',
+			  data:  {
+				  msg: msgContent,
+				  activityNo: parseInt(activityNo),
+				  },
 			  success:function(data){
+				  console.log("OK");
 				  $(".msgboard").empty();
 				  $(".msgboard").append(data);
 				}
 		})
 	})
 
-
+	
 </script>
+</body>
 </html>
