@@ -34,6 +34,7 @@ public class MemberController {
 			String account = (String) session.getAttribute("account");
 			MemberBean mb = memberService.getMember(account);
 			RoleBean rb = memberService.getRole(account);
+			model.addAttribute("memberBean", mb);
 			model.addAttribute("member", mb);
 			model.addAttribute("role", rb);
 			return "login/member";
@@ -66,11 +67,11 @@ public class MemberController {
 					memberService.signUp(mb);		//====註冊====
 					return "redirect:/index";					
 				}else {
-					if(!checkAccount) {
-						model.addAttribute("errMsg", "此帳號已被註冊");
-					}
 					if(!checkEmail) {
 						model.addAttribute("errMsg", "此信箱已被註冊");
+					}
+					if(!checkAccount) {
+						model.addAttribute("errMsg", "此帳號已被註冊");
 					}
 					return "login/login";
 				}
