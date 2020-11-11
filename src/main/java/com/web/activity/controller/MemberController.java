@@ -27,7 +27,7 @@ public class MemberController {
 		@Autowired
 		MemberService memberService;
 		
-//---------------------------------------------▼會員頁面▼---------------------------------------------//	
+//---------------------------------------------▼會員頁面&修改▼---------------------------------------------//	
 		
 		@GetMapping("/member")
 		public String selectMemberInfo(HttpSession session ,Model model) {
@@ -38,6 +38,12 @@ public class MemberController {
 			model.addAttribute("member", mb);
 			model.addAttribute("role", rb);
 			return "login/member";
+		}
+		
+		@PostMapping("/member")
+		public String updateInfo(@ModelAttribute MemberBean mb) {
+			memberService.updateInfo(mb);
+			return "redirect:/member";
 		}
 		
 //---------------------------------------------▼會員註冊&登入▼---------------------------------------------//	
@@ -111,21 +117,8 @@ public class MemberController {
 		   return "redirect:/index";
 		  }
 		
-//---------------------------------------------▼會員修改▼---------------------------------------------//	
-			
-//			@GetMapping("/update")
-//			public String getUpdateForm(HttpSession session ,Model model) {
-//				String account = (String) session.getAttribute("account");
-//				MemberBean mb = memberService.getMember(account);
-//				model.addAttribute("member", mb);
-//				return "login/member";
-//			}
-//			
-			@PostMapping("/member")
-			public String updateInfo(@ModelAttribute MemberBean mb) {
-				memberService.updateInfo(mb);
-				return "redirect:/member";
-			}
+
+
 		  
 		  
 	}		
