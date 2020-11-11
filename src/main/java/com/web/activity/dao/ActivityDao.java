@@ -73,5 +73,13 @@ public interface ActivityDao {
 	ActivityBean selectOneActivity(int activityNo);
 	
 	//存留言板
-	List<ActivityMsgBean> saveMsg(ActivityMsgBean activityMsg);
+	List<ActivityMsgBean> saveMsg(String msg, Integer activityNo, Integer memberNo);
+
+	//查留言板
+	List<ActivityMsgBean> showMsg(int activityNo);
+	
+	//參加活動
+	Integer joinedOne(int activityNo);
+	
+	void joinedMember(Integer memeberNo, int activityNo);
 }

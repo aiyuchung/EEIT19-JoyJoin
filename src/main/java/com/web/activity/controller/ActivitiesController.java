@@ -33,16 +33,20 @@ public class ActivitiesController {
 
 	@Autowired
 	ActivityService service;
-	
+
 	@Autowired
 	MemberService memberService;
 	
 //-----------------------------------------跳轉單個頁面↓-----------------------------------------	
 	@GetMapping("/oneActivity/{id}")
-	public String one(@PathVariable("id") int activityNo, Model model) {
+	public String one(@PathVariable("id") int activityNo, Model model, @ModelAttribute("msg") ActivityMsgBean msg) {
 		
 		ActivityBean activity = service.selectOneActivity(activityNo);
 		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
+		List<ActivityMsgBean> msgBox = service.showMsg(activityNo);
+		int msgNum = msgBox.size();
+		model.addAttribute("msgBox",msgBox);
+		model.addAttribute("msgNum",msgNum);
 		model.addAttribute("one",activity);
 		model.addAttribute("hitCount",hitCount);
 		return "OneActivity";
@@ -71,27 +75,14 @@ public class ActivitiesController {
 		return "ShowActivities";
 	}
 //-----------------------------------------單個活動的留言板↓-----------------------------------------	
-	@GetMapping("/ajax_msgSend")
+	
+	@PostMapping("/msgSend")
 	public String saveMsg(Model model, HttpSession session,
-			@RequestParam String msg,
-			@RequestParam String No) {
-		
-		Integer memberNo = (Integer) session.getAttribute("member.memberNo");
-		System.out.println(memberNo);
-		ActivityMsgBean newMsg = new ActivityMsgBean();
-		newMsg.setMsgContent(msg);
-		
-		int activityNo = Integer.parseInt(No);
-		ActivityBean ab = new ActivityBean();
-		ab.setActivityNo(activityNo);
-		newMsg.setActivityBean(ab);
-		
-		MemberBean mb = new MemberBean();
-		mb.setMemberNo(memberNo);
-		newMsg.setMemberBean(mb);
-		System.out.println("controller newMsg--------------------------"+newMsg);		
-		List<ActivityMsgBean> msgBox = service.saveMsg(newMsg);
-		
+			String msg, Integer activityNo
+			) {
+		MemberBean member= (MemberBean) session.getAttribute("member");
+		Integer memberNo = member.getMemberNo();
+		List<ActivityMsgBean> msgBox = service.saveMsg(msg,activityNo,memberNo);
 		model.addAttribute("msgBox",msgBox);
 		return "ajax/msgBox";
 	}
@@ -250,7 +241,6 @@ public class ActivitiesController {
 	
 	@GetMapping("/ajax_checktype")
 	public String classForCheckedType(Model model, @RequestParam String type) {
-		System.out.println("controller type--------------------->"+type);
 		List<ActivityClassBean> classes = service.classForCheckedType(type);
 //		int elementsNum = classes.size();
 		model.addAttribute("categoryList",classes);
@@ -276,5 +266,24 @@ public class ActivitiesController {
 //	@ModelAttribute
 //	public MemberBean isexist(
 //			@RequestParam(value="userId"), required = false Integer id)
-			
+	
+	
+//-----------------------------------------參加活動↓-----------------------------------------	
+	@GetMapping("/ajax_joinOne")
+	public String joinOne(Model model, HttpSession session,
+			@RequestParam int activityNo) {
+		Integer memberNo = (Integer) session.getAttribute("member.memberNo");
+		Integer joinedNum = service.joinedOne(activityNo); //在活動的參加人數+1
+		service.joinedMember(memberNo, activityNo ); //在參加活動的表格加入此會員
+		
+		ActivityBean activity = service.selectOneActivity(activityNo);
+		model.addAttribute("one",activity);
+		return "OneActivity";
+		
+	}
+	
+	@GetMapping("/wsendpoing")
+	public String chatbot(Model model) {
+		return "index00";
+	}
 }

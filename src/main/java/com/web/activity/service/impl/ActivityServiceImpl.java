@@ -262,8 +262,13 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public List<ActivityMsgBean> saveMsg(ActivityMsgBean activityMsg) {
-		return dao.saveMsg(activityMsg);
+	public List<ActivityMsgBean> saveMsg(String msg, Integer activityNo, Integer memberNo) {
+		return dao.saveMsg(msg, activityNo, memberNo);
+	}
+
+	@Override
+	public List<ActivityMsgBean> showMsg(int activityNo) {
+		return dao.showMsg(activityNo);
 	}
 
 	@Override
@@ -274,6 +279,17 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public List<ActivityClassBean> classForCheckedType(String type) {
 		return dao.classForCheckedType(type);
+	}
+
+	@Override
+	public Integer joinedOne(int activityNo) {
+		return dao.joinedOne(activityNo);
+	}
+
+	@Override
+	public void joinedMember(Integer memeberNo, int activityNo) {
+		dao.joinedMember(memeberNo,activityNo);
+		
 	}
 	
 
