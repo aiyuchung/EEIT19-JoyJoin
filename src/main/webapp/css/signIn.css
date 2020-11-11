@@ -101,16 +101,17 @@ body {
   }
   
 /* ---------------------------▼按鍵設定▼-------------------------- */  
-.login-submit {
-  border: 1px solid white;
-  background: transparent;
-  color: white;
-  display: block;
-  margin: 1rem auto;
-  min-width: 1px;
-  padding: .25rem;
-  transition: 250ms background ease-in;
-}
+	.login-submit {
+	  border: 1px solid white;
+	  background: transparent;
+	  color: white;
+	  display: block;
+	  margin: 1rem auto;
+	  min-width: 1px;
+	  transition: 250ms background ease-in;
+	  padding:4px;
+	}
+
 
   .login-submit:hover, .login-submit:focus {
     background: white;
@@ -214,7 +215,7 @@ body {
     background: #f0f0f0;
     border: none;
     border-radius: 30px;
-    box-shadow:none;
+    box-shadow: #FFFF77 0px 0px 15px;
     padding: 0 20px 0 45px;
     height: 40px;
     transition: all 0.3s ease 0s;
@@ -222,19 +223,19 @@ body {
 }
 .form-horizontal .form-control:focus{
     background: #e0e0e0;
-    box-shadow:#FFFF77 0px 0px 15px;
     outline: 0 none;
 }
 .form-horizontal .form-group i{
     position: absolute;
     top: 12px;
-    left: 60px;
+    left: 50px;
     font-size: 17px;
     color: #c8c8c8;
     transition : all 0.5s ease 0s;
 }
 .form-horizontal .form-control:focus + i{
     color: #00b4ef;
+    box-shadow:#FFA488 0px 0px 15px;
 }
 .form-horizontal .fa-question-circle{
     display: inline-block;

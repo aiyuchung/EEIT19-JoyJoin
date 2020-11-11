@@ -25,7 +25,11 @@ public interface MemberDao {
 		public boolean checkType(String account);
 					//作為方法,判斷帳號狀態
         public Integer checkLevel(String account);
-        //判斷帳號權限        		
+        	//判斷帳號權限 
+        public boolean checkAccount(String account);
+        	//判斷帳號重複
+        public boolean cheakEmail(String email);
+        	//判斷信箱重複
 		
 //---------------------------------------------▼自增值方法▼---------------------------------------------//			
 		public void openType(String account);

@@ -17,6 +17,10 @@ public interface MemberService {
         //判斷帳號權限    
 		public void updateInfo(MemberBean mb);
 			//更新個人資料
+		 public boolean checkAccount(String account);
+     		//判斷帳號重複
+		 public boolean cheakEmail(String email);
+     		//判斷信箱重複
 		public void openType(String account);
 			//開通帳號
 		public void updateTime(String account, String time);

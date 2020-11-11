@@ -128,6 +128,30 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+    public boolean checkAccount(String account) {
+		String hql = "FROM MemberBean WHERE account = :id";
+		Session session = factory.getCurrentSession();
+		try {
+			session.createQuery(hql).setParameter("id", account).getSingleResult();
+		}catch(Exception e){
+			return true;
+		}
+		return false;
+	}
+
+    @Override
+    public boolean cheakEmail(String email) {
+    	String hql = "FROM MemberBean WHERE mail = :email";
+		Session session = factory.getCurrentSession();
+		try {
+			session.createQuery(hql).setParameter("email", email).getSingleResult();
+		}catch(Exception e){
+			return true;
+		}
+		return false;
+    }
+	
+	@Override
 	public boolean checkType(String account) {
 		String hql = "SELECT accountType FROM RoleBean WHERE account = :id";
 		Session session = factory.getCurrentSession();

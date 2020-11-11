@@ -52,6 +52,18 @@ public class MemberServieImpl implements MemberService {
 		public void updateInfo(MemberBean mb) {
 			memberDao.updateInfo(mb);
 		}
+		
+		@Transactional
+		@Override
+		 public boolean checkAccount(String account) {
+			 return memberDao.checkAccount(account);
+		 }
+
+		 @Transactional
+		 @Override
+    	public boolean cheakEmail(String email) {
+    		return memberDao.cheakEmail(email);
+    	}
 
 		@Transactional
 		@Override

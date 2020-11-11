@@ -54,29 +54,46 @@ public class MemberController {
 			String nickname = mb.getNickname();	//如果只有帳密==>登入,有暱稱==>註冊
 			String account = mb.getAccount();
 			String password = mb.getPassword();
+			String email = mb.getMail();
+			if( account == "" || password == "") {
+				model.addAttribute("errMsg", "請確實輸入資料");
+				return "login/login";
+			}			
 			if( nickname != null) {
-				memberService.signUp(mb);		//====註冊====
-				return "redirect:/index";
+				boolean checkAccount = memberService.checkAccount(account);
+				boolean checkEmail = memberService.cheakEmail(email);
+				if(checkAccount==true&&checkEmail==true) {
+					memberService.signUp(mb);		//====註冊====
+					return "redirect:/index";					
+				}else {
+					if(!checkAccount) {
+						model.addAttribute("errMsg", "此帳號已被註冊");
+					}
+					if(!checkEmail) {
+						model.addAttribute("errMsg", "此信箱已被註冊");
+					}
+					return "login/login";
+				}
 			}else {
 				int flag = memberService.checkID(account, password);
 	            int level = memberService.checkLevel(account);
 				//用Dao判斷帳密正確與權限
 				if( flag == 1 ) {
 					String level123 = String.valueOf(level);
-					System.out.println("level=" + level123);
+//					System.out.println("level=" + level123);
 					model.addAttribute("level", level123);    //權限存入session
 	                model.addAttribute("account", account);    //帳號存入session
 	    			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
 	    			String time = sdf.format(new Date());
 					memberService.updateTime(account, time);
-					model.addAttribute("msg", "登入成功!!");
-					System.out.println("==================>"+level);
+//					model.addAttribute("msg", "登入成功!!");
+//					System.out.println("==================>"+level);
 					return "redirect:/index";
 				}else {
 					switch(flag) {
-					case 2: model.addAttribute("errMsg", "此帳號沒有資料。");break;
-					case 3: model.addAttribute("errMsg", "密碼錯誤,請重新輸入。!!");break;
-					case 4: model.addAttribute("errMsg", "此帳號尚未開通。");break;
+					case 2: model.addAttribute("errMsg", "此帳號沒有資料");break;
+					case 3: model.addAttribute("errMsg", "密碼錯誤請重新輸入");break;
+					case 4: model.addAttribute("errMsg", "此帳號尚未開通");break;
 						default: model.addAttribute("errMsg", "登入失敗!!");break;
 					}
 					return "login/login";

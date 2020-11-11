@@ -65,18 +65,18 @@
 				<span class="heading"></span>
 				<form:form method="POST"  modelAttribute="memberBean">
 					<div class="form-group">
-                        <form:input type="text" class="form-control" id="inputAccount" placeholder="帳號" path="account"/>
+                        <form:input type="text" class="form-control" id="inputAccount" placeholder="帳號 ( 必填 )" path="account"/>
                     </div>
                     <div class="form-group">
-                        <form:input type="password" class="form-control" id="inputPassword" placeholder="密碼" path="password"/>
+                        <form:input type="password" class="form-control" id="inputPassword" placeholder="密碼 ( 必填 )" path="password"/>
                     </div>
                     <div class="form-group">
-                        <form:input type="email" class="form-control" id="inputEmail" placeholder="信箱" path="mail"/>
+                        <form:input type="email" class="form-control" id="inputEmail" placeholder="信箱 ( 必填 )" path="mail"/>
                     </div>
                     <div class="form-group">
-                        <form:input type="text" class="form-control" id="inputNickname" placeholder="暱稱" path="nickname"/>
+                        <form:input type="text" class="form-control" id="inputNickname" placeholder="暱稱 ( 必填 )" path="nickname"/>
                     </div>
-					<input type="submit" class="btn btn-default" value="快速註冊" style="color:	#33FFFF;box-shadow: #33FFFF 0px 0px 15px;background-color:	#7B7B7B"/>
+					<input type="button" class="btn btn-default" value="快速註冊" id="signUp-btn" style="color:black;box-shadow:none;background-color:	#7B7B7B"/>
 				</form:form>
 				</div>
 	      </div>
@@ -99,8 +99,8 @@
 		<form:input type="password"	class="login-password" placeholder="Password" name="password"  path="password"/> 
 		<table align='center'>
 			<tr>
-				<td><input type="submit" value="登入" name="Login" class="login-submit" id="login btn" style="padding:4px;margin-right:10px"/></td>
-				<td><input type="button" value="返回" class="login-submit" id="back btn"  style="padding:4px;margin-left:10px"/></td>
+				<td><input type="submit" value="登入" name="Login" class="login-submit" id="login-btn" style="margin-right:10px"/></td>
+				<td><input type="button" value="返回" class="login-submit" id="back-btn" style="margin-left:10px"/></td>
 			</tr>
 		</table>
 		<span class="login-forgot-pass" style="bottom:15px" id="signup-btn">現在註冊</span>
@@ -113,22 +113,51 @@
 	<div class="underlay-photo"></div>
 	<div class="underlay-black"></div>
 	<script>
-	
 	if( "${errMsg}" != "" ){
 		$(window).on('load',function(){
 	        $('#resultModal').modal('show');
 	    });
 	}
 
-
-	document.getElementById("back btn").onclick = function(){
+	$("#back-btn").on("click",function(){
 		location.href = "<c:url value = '/' />"
-	}
+	})
 	
 	$("#signup-btn").on("click",function(){
 		$('#signupArea').modal('show');
 	})
-			
+	
+	var idUp = "";
+	var pwdUp = "";
+	var emailUp = "";
+	var nameUp = "";
+	$("#inputAccount").on("blur",function(){
+		 idUp = $("#inputAccount").val();
+		 gogo(idUp,pwdUp,emailUp,nameUp);
+	})
+	$("#inputPassword").on("blur",function(){
+		pwdUp = $("#inputPassword").val();
+		gogo(idUp,pwdUp,emailUp,nameUp);
+	})
+	$("#inputNickname").on("blur",function(){
+		nameUp = $("#inputNickname").val();
+		 gogo(idUp,pwdUp,emailUp,nameUp);
+	})
+	$("#inputEmail").on("blur",function(){
+		 emailUp = $("#inputEmail").val();
+		 gogo(idUp,pwdUp,emailUp,nameUp);
+	})
+
+	function  gogo(idUp,pwdUp,emailUp,nameUp){
+		if ( idUp !="" && pwdUp !=""&& emailUp !=""&& nameUp !="" ){
+			$("#signUp-btn").attr("type","submit").css("color","#33FFFF").css("box-shadow","#33FFFF 0px 0px 15px")
+		} else {
+			$("#signUp-btn").attr("type","button").css("color","black").css("box-shadow","none")
+		}
+	}
+	
+	
+	
 		
 		
 	</script>
