@@ -65,8 +65,8 @@ public class MemberBean implements Serializable {
 	@OneToMany(mappedBy="memberBean", cascade= {CascadeType.ALL})
 	private Set<ActivityMsgBean> activityMsg = new LinkedHashSet<>();
 
-	@ManyToMany(mappedBy="joinedMembers")
-	private Set<ActivityBean> joinedActivities = new LinkedHashSet<>(0) ;
+//	@ManyToMany(mappedBy="joinedMembers")
+//	private Set<ActivityBean> joinedActivities = new LinkedHashSet<>(0) ;
 	
 	public MemberBean() {
 	}

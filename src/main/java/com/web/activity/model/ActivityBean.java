@@ -87,26 +87,26 @@ public class ActivityBean implements java.io.Serializable {
 	@OneToMany(mappedBy="activityBean", cascade= {CascadeType.ALL})
 	private Set<ActivityMsgBean> activityMsgbean = new LinkedHashSet<>();
 	
-	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="ActivityJoin",
-			joinColumns= {
-					@JoinColumn (name = "FK_activityNo", referencedColumnName="activityNo")
-			},
-			inverseJoinColumns= {
-					@JoinColumn (name= "FK_memberNo", referencedColumnName="memberNo")
-			}
-	)
-	private Set<MemberBean> joinedMembers = new LinkedHashSet<>(0) ;
+//	@ManyToMany(cascade=CascadeType.ALL)
+//	@JoinTable(name="ActivityJoin",
+//			joinColumns= {
+//					@JoinColumn (name = "FK_activityNo", referencedColumnName="activityNo")
+//			},
+//			inverseJoinColumns= {
+//					@JoinColumn (name= "FK_memberNo", referencedColumnName="memberNo")
+//			}
+//	)
+//	private Set<MemberBean> joinedMembers = new LinkedHashSet<>(0) ;
+//	
 	
 	
-	
-	
-	public Set<MemberBean> getJoinedMembers() {
-		return joinedMembers;
-	}
-	public void setJoinedMembers(Set<MemberBean> joinedMembers) {
-		this.joinedMembers = joinedMembers;
-	}
+//	
+//	public Set<MemberBean> getJoinedMembers() {
+//		return joinedMembers;
+//	}
+//	public void setJoinedMembers(Set<MemberBean> joinedMembers) {
+//		this.joinedMembers = joinedMembers;
+//	}
 	public ProvinceBean getProvinceBean() {
 		return provinceBean;
 	}

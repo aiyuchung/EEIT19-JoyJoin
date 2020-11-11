@@ -1,5 +1,6 @@
 package com.web.activity.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityForm;
+import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.MemberBean;
@@ -36,21 +38,7 @@ public class ActivitiesController {
 
 	@Autowired
 	MemberService memberService;
-	
-//-----------------------------------------跳轉單個頁面↓-----------------------------------------	
-	@GetMapping("/oneActivity/{id}")
-	public String one(@PathVariable("id") int activityNo, Model model, @ModelAttribute("msg") ActivityMsgBean msg) {
-		
-		ActivityBean activity = service.selectOneActivity(activityNo);
-		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
-		List<ActivityMsgBean> msgBox = service.showMsg(activityNo);
-		int msgNum = msgBox.size();
-		model.addAttribute("msgBox",msgBox);
-		model.addAttribute("msgNum",msgNum);
-		model.addAttribute("one",activity);
-		model.addAttribute("hitCount",hitCount);
-		return "OneActivity";
-	}
+
 //-----------------------------------------跳轉活動總覽頁面↓-----------------------------------------		
 	@GetMapping("/activities")
 	public String list(Model model, @ModelAttribute("form") ActivityForm form) {
@@ -73,6 +61,62 @@ public class ActivitiesController {
 		model.addAttribute("recentOnes",recentOnes);
 		model.addAttribute("categoryList",categoryList);
 		return "ShowActivities";
+	}
+	
+//-----------------------------------------跳轉單個頁面↓-----------------------------------------	
+	@GetMapping("/oneActivity/{id}")
+	public String one(@PathVariable("id") int activityNo, Model model, 
+			HttpSession session, @ModelAttribute("msg") ActivityMsgBean msg) {
+		
+		ActivityBean activity = service.selectOneActivity(activityNo); //活動內容
+		Map<String, Integer> hitCount = service.updateHitCount(activityNo); //點進來就增加一次點擊率
+		List<ActivityMsgBean> msgBox = service.showMsg(activityNo); //留言板內容
+		int msgNum = msgBox.size(); //留言板留言數量
+		String account = (String) session.getAttribute("account"); //取得目前使用者帳號
+		List<ActivityJoinedBean> joined = service.joinedMember(activityNo); //取得本活動參加名單
+		boolean isJoined = false;
+		for(ActivityJoinedBean ajb:joined) {
+			String joinedAccount = ajb.getMemberBean().getAccount();
+			if (joinedAccount.equals(account)) {  //如果使用者在參加名單內回傳true
+				isJoined = true;
+				break;
+			}
+		}
+		
+		model.addAttribute("isJoined",isJoined);
+		model.addAttribute("joined",joined);
+		model.addAttribute("msgBox",msgBox);
+		model.addAttribute("msgNum",msgNum);
+		model.addAttribute("one",activity);
+		model.addAttribute("hitCount",hitCount);
+		return "OneActivity";
+	}
+//-----------------------------------------加入活動後跳轉單個頁面↓-----------------------------------------	
+	@GetMapping("/addActivity/{id}")
+	public String add(@PathVariable("id") int activityNo, HttpSession session, Model model) {
+		
+		ActivityBean activity = service.selectOneActivity(activityNo);
+		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
+		List<ActivityMsgBean> msgBox = service.showMsg(activityNo);
+		
+		MemberBean member= (MemberBean) session.getAttribute("member");
+		Integer memberNo = member.getMemberNo();
+		service.joinedOne(memberNo, activityNo);
+		List<ActivityJoinedBean> joined = service.joinedMember(activityNo);
+		List<String> joinedList = new ArrayList<>();
+		for(ActivityJoinedBean ajb:joined) {
+			String account = ajb.getMemberBean().getAccount();
+			joinedList.add(account);
+		}
+		
+		int msgNum = msgBox.size();
+		model.addAttribute("joinedList",joinedList);
+		model.addAttribute("joined",joined);
+		model.addAttribute("msgBox",msgBox);
+		model.addAttribute("msgNum",msgNum);
+		model.addAttribute("one",activity);
+		model.addAttribute("hitCount",hitCount);
+		return "redirect:/oneActivity/{id}";
 	}
 //-----------------------------------------單個活動的留言板↓-----------------------------------------	
 	
@@ -269,18 +313,18 @@ public class ActivitiesController {
 	
 	
 //-----------------------------------------參加活動↓-----------------------------------------	
-	@GetMapping("/ajax_joinOne")
-	public String joinOne(Model model, HttpSession session,
-			@RequestParam int activityNo) {
-		Integer memberNo = (Integer) session.getAttribute("member.memberNo");
-		Integer joinedNum = service.joinedOne(activityNo); //在活動的參加人數+1
-		service.joinedMember(memberNo, activityNo ); //在參加活動的表格加入此會員
-		
-		ActivityBean activity = service.selectOneActivity(activityNo);
-		model.addAttribute("one",activity);
-		return "OneActivity";
-		
-	}
+//	@GetMapping("/ajax_joinOne")
+//	public String joinOne(Model model, HttpSession session,
+//			@RequestParam int activityNo) {
+//		Integer memberNo = (Integer) session.getAttribute("member.memberNo");
+//		Integer joinedNum = service.joinedOne(activityNo); //在活動的參加人數+1
+//		service.joinedMember(memberNo, activityNo ); //在參加活動的表格加入此會員
+//		
+//		ActivityBean activity = service.selectOneActivity(activityNo);
+//		model.addAttribute("one",activity);
+//		return "OneActivity";
+//		
+//	}
 	
 	@GetMapping("/wsendpoing")
 	public String chatbot(Model model) {

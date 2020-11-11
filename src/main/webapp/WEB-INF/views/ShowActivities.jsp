@@ -188,15 +188,12 @@
 		<div id="menu-bg">
 			<div id="menu">
 				<ul id="main">
-					<li class="current_page_item" id="selectAll1"><a href="#">活動總覽</a></li>
-<!-- 					<li><a href="#">Products</a></li> -->
-<!-- 					<li><a href="#">Services</a></li> -->
-<!-- 					<li><a href="#">About Us</a></li> -->
-					<li class="nav-item dropdown"><a href="<c:url value='/newActivities' />" class="more" > 新增活動</a></li>
+					<li class="current_page_item" id="selectAll1"><a href="#"  style="font-size:15px">活動總覽</a></li>
+					<li class="nav-item dropdown"><a href="<c:url value='/newActivities' />" class="more" style="font-size:15px"> 新增活動</a></li>
 					
 <!-- 查詢按鈕  -->
 					<li class="nav-item dropdown">
-					<a id="navbarCheckboxMenuLink" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<a id="navbarCheckboxMenuLink" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="font-size:15px">
 					<buttton>條件篩選</buttton></a>
 <!-- 					<a -->
 <!-- 						class="nav-link dropdown-toggle" href="#" -->
@@ -269,7 +266,7 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#"
 						id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false" > 活動排序 </a>
+						aria-haspopup="true" aria-expanded="false"  style="font-size:15px"> 活動排序 </a>
 						
 						<div class="dropdown-menu" id="dropdown-menu"
 							aria-labelledby="navbarDropdown">
@@ -505,7 +502,7 @@
 <!-- 請登入的modal  -->	
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
-	    <div class="modal-content" style="background-color:#ECEBEB;">
+	    <div class="modal-content" style="background-color:#ECEBEB; border:0">
 	      <div class="modal-header" style="background-color:#85AD90; border:2px solid #85AD90">
 	        <h5 class="modal-title" id="exampleModalLabel" style="color:black;font-size:15px ">未登入提醒</h5>
 	      </div>
