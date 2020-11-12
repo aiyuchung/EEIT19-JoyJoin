@@ -4,7 +4,14 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +73,14 @@ public class MemberController {
 				model.addAttribute("errMsg", "請確實輸入資料");
 				return "login/login";
 			}			
-			if( nickname != null) {
+			if( nickname != null) {					
 				boolean checkAccount = memberService.checkAccount(account);
 				boolean checkEmail = memberService.cheakEmail(email);
 				if(checkAccount==true&&checkEmail==true) {
 					memberService.signUp(mb);		//====註冊====
+					send2open(account, email);
+					model.addAttribute("level", "1");    //權限存入session
+	                model.addAttribute("account", account);    //帳號存入session
 					return "redirect:/index";					
 				}else {
 					if(!checkEmail) {
@@ -87,13 +97,11 @@ public class MemberController {
 				//用Dao判斷帳密正確與權限
 				if( flag == 1 ) {
 					String level123 = String.valueOf(level);
-//					System.out.println("level=" + level123);
 					model.addAttribute("level", level123);    //權限存入session
 	                model.addAttribute("account", account);    //帳號存入session
 	                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	       		 	String time = dateFormat.format(new Date());
 					memberService.updateTime(account, time);
-					System.out.println("time==================>"+time);
 					return "redirect:/index";
 				}else {
 					switch(flag) {
@@ -116,7 +124,54 @@ public class MemberController {
 		   return "redirect:/index";
 		  }
 		
+//---------------------------------------------▼信箱驗證▼---------------------------------------------//			
 
+		  
+		  @GetMapping("/check")
+		  public String openType( Model model, String account) {  
+			memberService.openType(account);
+			return	"redirect:/index";	
+//要寄出		  http://localhost:8080/JoyJoin/check?account=A1234
+		  }
+		  
+		  //做為方法寄信
+		  public void send2open(String account, String mail) {
+//			  String user = "eeit19joinjoy";
+			  String pwd = "jkwwrqowszlonefv";		//寄件者信箱密碼
+			  String to = mail;
+			  String from = "eeit19joinjoy@gmail.com";
+			  String host = "gmail.com";
+			  String subject = "歡迎加入JoyJoin的大家庭";
+			  String body = "http://localhost:8080/JoyJoin/check?account=" + account + "/r/n點選以開通帳號";
+			  
+			  Properties properties = System.getProperties();
+				properties.put("mail.smtp.starttls.enable", "true");
+				properties.put("mail.smtp.host", host);
+				properties.put("mail.smtp.user", from);
+				properties.put("mail.smtp.password", pwd);
+				properties.put("mail.smtp.port", "25");
+				properties.put("mail.smtp.auth", "true");
+				properties.put("mail.mime.allowutf8", "true");
+				Session session = Session.getDefaultInstance(properties);
+				try {
+					MimeMessage message = new MimeMessage(session);
+					message.setFrom(new InternetAddress(from));
+					message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+					message.setSubject(subject);
+					message.setText(body);
+					
+					Transport transport = session.getTransport("smtp");
+					transport.connect(host, from, pwd);
+					transport.sendMessage(message, message.getAllRecipients());
+					transport.close();
+				} catch (MessagingException mex) {
+					mex.printStackTrace();
+				}
+		      
+			  
+		  }
+		  
+		  
 
 		  
 		  

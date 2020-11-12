@@ -132,12 +132,17 @@
 	var emailUp = "";
 	var nameUp = "";
 	$("#inputAccount").on("blur",function(){
-		 idUp = $("#inputAccount").val();
-		 gogo(idUp,pwdUp,emailUp,nameUp);
+			idUp = $("#inputAccount").val();
+			 gogo(idUp,pwdUp,emailUp,nameUp);
 	})
 	$("#inputPassword").on("blur",function(){
-		pwdUp = $("#inputPassword").val();
-		gogo(idUp,pwdUp,emailUp,nameUp);
+		if($("#inputPassword").val().length<8){
+			pwdUp = "";
+			alert("密碼至少8位數")
+		}else{
+			pwdUp = $("#inputPassword").val();
+			gogo(idUp,pwdUp,emailUp,nameUp);			
+		}
 	})
 	$("#inputNickname").on("blur",function(){
 		nameUp = $("#inputNickname").val();

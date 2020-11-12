@@ -209,12 +209,12 @@
 								</tr>
 								<tr>
 									<td><form:label path = "signature">簽名</form:label></td>
-									<td><form:input path = "signature" type = "textarea" rows = "3" resize = "none"/></td>
+									<td><form:textarea path = "signature" type = "textarea" rows = "3" cols="30" style="resize: none;"/></td>
 									
 								</tr>
 								<tr>
 									<td><form:label path = "introduction">自我介紹</form:label></td>
-									<td><form:input path = "introduction" type = "textarea" rows = "8" resize = "none"/></td>
+									<td><form:textarea  path = "introduction" type = "textarea" rows = "8" cols="30"  style="resize: none;"/></td>
 								</tr>
 							</table>	
 							<table class="tablebtn">
@@ -243,7 +243,7 @@
 			str = '<span>姓名</span><br>${member.fullName}<br><br>'
 					+ '<span>性別</span><br>${member.gender}<br><br>'
 					+ '<span>電話</span><br>${member.phone}<br><br>'
-					+ '<span>出生日期</span><br>${member.birthYear}年${member.birthMonth}月<br><br>'
+					+ '<span>出生日期</span><br>${member.birthYear}年${member.birthMonth}<br><br>'
 					+ '<span>星座</span><br>${member.starSign}<br><br>'
 				+ '<span>血型</span><br>${member.bloodType}<br><br>'
 				+ '<span>居住地址</span><br>${member.address}<br><br>'

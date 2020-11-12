@@ -109,7 +109,7 @@ body{
 							<li><a href = "<c:url value = '/out'/>">登出</a></li>
 						</c:when>
 						<c:when test="${empty level}">
-							<li><a href = "<c:url value = '/member'/>">會員資料</a></li>
+							<li><a href = "<c:url value = '/check'/>">測試</a></li>
 							<li><a href = "<c:url value = '/login'/>">會員登入</a></li>
 						</c:when>
 					</c:choose>
