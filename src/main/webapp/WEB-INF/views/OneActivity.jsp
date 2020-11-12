@@ -137,6 +137,10 @@
 		border-radius:50%;
 		border:2px solid grey;
 	}
+	.btn-cancel{
+		background-color:#85AD90;
+		color:#fff;
+	}
 </style>
 </head>
 
@@ -293,11 +297,12 @@
 										<span>已有 </span>${one.joinedNum}<span>人參加</span>
 									</h2>
 									<!-- 							<span class="contribution">raised by <strong>5,234</strong> ready to launch</span> -->
-									<div class="progress">
+									<div class="progress" style="border:dotted white 2px">
+										<c:set var="persentage" value="${activity.joinedNum / activity.minLimit }"/>
 										<div class="progress-bar" role="progressbar"
 											aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"
-											style="width: 45%;">
-											<span class="sr-only">45% Complete</span>
+											style="width:persentage; ">
+<!-- 											<span class="sr-only">45% Complete</span> -->
 										</div>
 									</div>
 
@@ -305,7 +310,12 @@
 									<strong><fmt:parseNumber integerOnly="true" value="${one.joinedNum / one.minLimit *100}" /> 
 									</strong>%達成</span> 
 									<span class="count-down">剩下<strong>${one.leftDays}</strong>天截止</span> 
-									<a href="#" class="btn btn-launch">參加活動</a>
+									<c:if test="${isJoined == false}">
+									<button class="btn btn-launch">參加活動</button>
+									</c:if>
+									<c:if test="${isJoined == true}">
+									<button class="btn btn-cancel">取消參加</button>
+									</c:if>
 								</div>
 							</div>
 <!-- 							<div role="tabpanel" class="tab-pane" id="updates"> -->
@@ -395,19 +405,68 @@
 				<!--/sidebar-->
 			</div>
 		</div>
-	<footer class="footer">
-		<div class="container">
-			<div class="row">
-				<!--This template has been created under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using this template in your own project, thank you.-->
-				<span class="copyright">Created by <a
-					href="http://themes.audaindesigns.com" target="_blank">Audain
-						Designs</a> for free use
-				</span>
-			</div>
-		</div>
-	</footer>
-
+<!------------------------參加活動------------------------->		
+	<div class="modal fade bd-example-modal-sm" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm" role="document">
+	    <div class="modal-content" style="background-color:#ECEBEB; border:0">
+	      <div class="modal-header" style="background-color:#85AD90; border:2px solid #85AD90">
+	        <h5 class="modal-title" id="exampleModalLabel" style="color:white;font-size:15px ">未登入提醒</h5>
+	      </div>
+	      <div class="modal-body" style="color:black; font-size:19px">
+	        	<p>您已成功參加此活動👌👌👌</p>
+	        	<p>幫你自動關注本活動囉!</p>
+	        	<p>歡迎使用右邊留言板跟大家交流   👉👉👉👉👉👉👉👉👉👉</p>
+	      </div>
+	      <div class="modal-footer" style="padding:0 16 12 16">
+	        <a type="button" class="btn btn-primary" href="<c:url value='/addActivity/${one.activityNo}' />" style="background-color:#85AD90;border:1px solid #85AD90">OK</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+<!------------------------取消參加活動------------------------->		
+	<div class="modal fade bd-example-modal-sm" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm" role="document">
+	    <div class="modal-content" style="background-color:#ECEBEB; border:0">
+	      <div class="modal-header" style="background-color:#85AD90; border:2px solid #85AD90">
+	        <h5 class="modal-title" id="exampleModalLabel" style="color:white;font-size:15px ">未登入提醒</h5>
+	      </div>
+	      <div class="modal-body" style="color:black; font-size:19px">
+	        	<p>您確定不參加這個活動嗎?</p>
+	        	<p>取消前可以在留言版說明一下喔</p>
+	      </div>
+	      <div class="modal-footer" style="padding:0 16 12 16">
+	     	 <button type="button" class="btn btn-secondary" data-dismiss="modal" >還是參加</button>
+	        <a type="button" class="btn btn-primary" href="<c:url value='/cancelActivity/${one.activityNo}' />" style="background-color:#85AD90;border:1px solid #85AD90">確定不參加</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+<!------------------------非參加者點留言板------------------------->		
+	<div class="modal fade bd-example-modal-sm" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm" role="document">
+	    <div class="modal-content" style="background-color:#ECEBEB; border:0">
+	      <div class="modal-header" style="background-color:#85AD90; border:2px solid #85AD90">
+	        <h5 class="modal-title" id="exampleModalLabel" style="color:white;font-size:15px ">未開放功能</h5>
+	      </div>
+	      <div class="modal-body" style="color:black; font-size:19px">
+	        	<p>您目前還沒有參加此活動，</p>
+	        	<p>這個功能暫不開放喔~</p>
+	      </div>
+	      <div class="modal-footer" style="padding:0 16 12 16">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal" style="background-color:#85AD90;border:1px solid #85AD90">知道了</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 <script>
+
+// 	$(window).load(function(){
+// 		if (isJoined){
+// 			$(".btn-launch").text("取消參加").addClass("cancel").css("background-color","#85AD90");
+// 			$(".follow").text("取消關注").css("background-color","#85AD90");
+// 		}
+// 	})
+		
 	$(".follow").click(function(){
 		var text = $(this).text();
 		if (text == "取消關注"){
@@ -420,8 +479,14 @@
 	
 	
 	$(".lookmsg").click(function(){
-		$(".msgboard").show();
-		$(".addmsg").show();
+		var isJoined = ${isJoined}
+		if (isJoined){
+			$(".msgboard").show();
+			$(".addmsg").show();
+		}else{
+			$('#msgModal').modal('show');
+		}
+		
 	})
 	
 // 	$('textarea').autoResize();
@@ -441,12 +506,21 @@
 				  activityNo: parseInt(activityNo),
 				  },
 			  success:function(data){
-				  console.log("OK");
 				  $(".msgboard").empty();
 				  $(".msgboard").append(data);
 				}
 		})
 	})
+	$(".btn-launch").click(function(){
+		$('#joinModal').modal('show');
+		
+	})
+	
+	$(".btn-cancel").click(function(){
+		$('#cancelModal').modal('show');
+		
+	})
+	
 
 	
 </script>

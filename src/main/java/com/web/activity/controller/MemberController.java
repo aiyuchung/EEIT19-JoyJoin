@@ -1,6 +1,7 @@
 package com.web.activity.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -41,7 +41,7 @@ public class MemberController {
 		}
 		
 		@PostMapping("/member")
-		public String updateInfo(@ModelAttribute MemberBean mb) {
+		public String updateInfo(MemberBean mb) {
 			memberService.updateInfo(mb);
 			return "redirect:/member";
 		}
@@ -90,11 +90,10 @@ public class MemberController {
 //					System.out.println("level=" + level123);
 					model.addAttribute("level", level123);    //權限存入session
 	                model.addAttribute("account", account);    //帳號存入session
-	    			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
-	    			String time = sdf.format(new Date());
+	                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	       		 	String time = dateFormat.format(new Date());
 					memberService.updateTime(account, time);
-//					model.addAttribute("msg", "登入成功!!");
-//					System.out.println("==================>"+level);
+					System.out.println("time==================>"+time);
 					return "redirect:/index";
 				}else {
 					switch(flag) {

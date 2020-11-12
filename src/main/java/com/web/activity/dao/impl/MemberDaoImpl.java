@@ -2,6 +2,7 @@ package com.web.activity.dao.impl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -93,6 +94,7 @@ public class MemberDaoImpl implements MemberDao {
 	public RoleBean getRole(String account) {
 		String hql = "FROM RoleBean WHERE account = :id";
 		Session session = factory.getCurrentSession();
+		checkEmp2Level(account);
 		RoleBean rb = new RoleBean();
 		try {
 			rb = (RoleBean) session.createQuery(hql)
@@ -103,6 +105,33 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		return rb;
 	}
+	
+	@Override
+	public void checkEmp2Level(String account) {
+		String hql = "FROM RoleBean WHERE account = :id";
+		String hql2 = "UPDATE RoleBean SET level = :iv WHERE account = :id";
+		Session session = factory.getCurrentSession();
+		int emp = 0;
+		try {
+			emp = (int) session.createQuery(hql). setParameter("id", account).getSingleResult();			
+		}catch(Exception e) {
+			;
+		}
+		if(emp>500) {
+			session.createQuery(hql2).setParameter("lv","1" ).setParameter("id", account).executeUpdate();
+		}else if(emp>=500 && emp<1000) {
+			session.createQuery(hql2).setParameter("lv","2" ).setParameter("id", account).executeUpdate();
+		}else if(emp>=1000) {
+			session.createQuery(hql2).setParameter("lv","3" ).setParameter("id", account).executeUpdate();			
+		}
+	}
+	//判斷經驗,更改等級
+
+
+	
+	
+	
+	
 	
 	@Override
 	public Integer checkID(String account, String password) {
@@ -193,37 +222,53 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public void updateTime(String account, String time) {
-		System.out.println("time>>>>>>>>>>>>>>>>" + time);
-		System.out.println("account>>>>>>>>>>>>>>>>" + account);
 		Session session = factory.getCurrentSession();
 		String hql1 = "SELECT lastTime FROM RoleBean WHERE Account = :id";
 		String lastTime = "";
 		try {
 			lastTime = (String) session.createQuery(hql1).setParameter("id", account)
 															   .getSingleResult();
-			 System.out.println("lastTime>>>>>>>>>>>>>>>>" + lastTime);
 		}catch(Exception e) {
 			;
 		}
 		if((!(lastTime.equals(time)))||(lastTime.equals(""))) {
 			String hql2 = "UPDATE RoleBean SET lastTime = :time WHERE account = :id";
-			session.createQuery(hql2).setParameter("time", time).setParameter("id", account).executeUpdate();		
-			//獲得積分Method
+			session.createQuery(hql2).setParameter("time", time).setParameter("id", account).executeUpdate();
+			login2Emp(account);
+			updateSign(account);
 		}else {
 			;
-		}	
-		String hql2 = "UPDATE RoleBean SET lastTime = :time WHERE account = :id";
-		session.createQuery(hql2).setParameter("time", time).setParameter("id", account).executeUpdate();		
+		}
 	}
 	
 	@Override
+	public void login2Emp(String account) {
+		String hql = "SELECT emp FROM RoleBean WHERE account = :id";
+		String hql2 = "UPDATE RoleBean SET emp = :emp WHERE account = :id";
+		Session session = factory.getCurrentSession();
+		int emp = 0;
+		try {
+			emp = ((int) session.createQuery(hql).setParameter("id", account).getSingleResult())+10;
+			System.out.println("emp==========>"+emp);
+		}catch(Exception e) {
+			;
+		}
+		session.createQuery(hql2).setParameter("emp", emp).setParameter("id", account).executeUpdate();
+	}
+	//比對登入時間,第一次登入增加經驗
+	
+	
+	
+	
+	
+	@Override
 	public void updateSign(String account) {
-		String hql1 = "SELECT signType FROM RoleBean WHERE account = :id";
-		String hql2 = "UPDATE RoleBean SET signType = :st WHERE account = :id";
+		String hql1 = "SELECT signTrip FROM RoleBean WHERE account = :id";
+		String hql2 = "UPDATE RoleBean SET signTrip = :st WHERE account = :id";
 		Session session = factory.getCurrentSession();
 		Integer time = null;
 		try{
-			time = (Integer) session.createQuery(hql1).setParameter("id", account).getSingleResult();
+			time = ((Integer) session.createQuery(hql1).setParameter("id", account).getSingleResult())+1;
 		}catch(Exception e) {
 			;
 		}
@@ -239,7 +284,7 @@ public class MemberDaoImpl implements MemberDao {
 		Session session = factory.getCurrentSession();
 		Integer time = null;
 		try{
-			time = (Integer) session.createQuery(hql1).setParameter("id", account).getSingleResult();
+			time = ((Integer) session.createQuery(hql1).setParameter("id", account).getSingleResult())+1;
 		}catch(Exception e) {
 			;
 		}
@@ -255,7 +300,7 @@ public class MemberDaoImpl implements MemberDao {
 		Session session = factory.getCurrentSession();
 		Integer time = null;
 		try{
-			time = (Integer) session.createQuery(hql1).setParameter("id", account).getSingleResult();
+			time = ((Integer) session.createQuery(hql1).setParameter("id", account).getSingleResult())+1;
 		}catch(Exception e) {
 			;
 		}

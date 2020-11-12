@@ -320,7 +320,7 @@ input select{
 /* 	border-radius:4px; */
 /* 	text-transform:uppercase; */
 	color:black;
-	width:64%;
+	width:69%;
 	padding:2px 20px;
 /* 	font-weight:700; */
     font-size: 20px;	
@@ -366,6 +366,12 @@ input select{
 	color:#1888c4;
 }
 
+input{
+	padding-left:15px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
 
-
-
+#drop-select1{
+	padding:5px 18px;
+}

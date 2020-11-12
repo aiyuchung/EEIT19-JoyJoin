@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.ProvinceBean;
@@ -78,7 +79,7 @@ public interface ActivityService {
 	List<ActivityMsgBean> showMsg(int activityNo);
 		
 	//參加活動
-		Integer joinedOne(int activityNo);
+	void joinedOne(Integer memberNo, int activityNo);
 		
-		void joinedMember(Integer memeberNo, int activityNo);
+	List<ActivityJoinedBean> joinedMember(int activityNo);
 }

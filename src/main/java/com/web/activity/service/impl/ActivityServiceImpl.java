@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.activity.dao.ActivityDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.ProvinceBean;
@@ -282,13 +283,13 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public Integer joinedOne(int activityNo) {
-		return dao.joinedOne(activityNo);
+	public void joinedOne(Integer memberNo, int activityNo) {
+		dao.joinedOne(memberNo, activityNo);
 	}
 
 	@Override
-	public void joinedMember(Integer memeberNo, int activityNo) {
-		dao.joinedMember(memeberNo,activityNo);
+	public List<ActivityJoinedBean> joinedMember(int activityNo) {
+		return dao.joinedMember(activityNo);
 		
 	}
 	

@@ -1,7 +1,5 @@
 package com.web.activity.dao.impl;
 
-import java.lang.reflect.Member;
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.web.activity.dao.ActivityDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.MemberBean;
@@ -389,35 +388,30 @@ public class ActivityDaoImpl implements ActivityDao {
 		return list;
 	}
 
-	//----------------------------------------參加人數的欄位+1--------------------------------------------
+	//----------------------------------------存入參加會員  參加人數的欄位+1--------------------------------------------
 	@Override
-	public Integer joinedOne(int activityNo) {
+	public void joinedOne(Integer memberNo, int activityNo) {
 		Session session = factory.getCurrentSession();
+		ActivityJoinedBean activityJoined = new ActivityJoinedBean();
+		activityJoined.setMemberBean(session.get(MemberBean.class,memberNo));
+		activityJoined.setActivityBean(session.get(ActivityBean.class, activityNo));
+		session.save(activityJoined);
+		
 		String hql = "FROM ActivityBean WHERE activityStatus = 'active' AND activityNo = :id ";
 		ActivityBean list = (ActivityBean) session.createQuery(hql).setParameter("id",activityNo).getSingleResult();
 		Integer joinedNum = list.getJoinedNum();
 		joinedNum += 1;
-		
 		hql = "UPDATE ActivityBean SET joinedNum= :joinedNum WHERE activityStatus = 'active' AND activityNo = :id ";
 		session.createQuery(hql).setParameter("joinedNum",joinedNum).setParameter("id",activityNo).executeUpdate();
-		return joinedNum;
 	}
 
 	//----------------------------------------參加活動的會員--------------------------------------------
 	@Override
-	public void joinedMember(Integer memeberNo, int activityNo) {
+	public List<ActivityJoinedBean> joinedMember(int activityNo) {
 		Session session = factory.getCurrentSession();
-		ActivityBean activity = new ActivityBean();
-		activity.setActivityNo(activityNo);//存activityNo
-		
-		MemberBean member = new MemberBean();
-		member.setMemberNo(memeberNo);//存memberNo
-		
-		Set<MemberBean> joinedMember = new LinkedHashSet<>(0);//空表格
-		joinedMember.add(member);//先存mapping那邊
-		activity.setJoinedMembers(joinedMember);//在存有血中屆表格的bean
-		
-		session.save(activity);
+		String hql = "FROM ActivityJoinedBean WHERE activityNo = :id ";
+		List<ActivityJoinedBean> list = session.createQuery(hql).setParameter("id",activityNo).getResultList();
+		return list;
 	}
 
 
