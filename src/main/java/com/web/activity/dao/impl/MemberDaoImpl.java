@@ -280,7 +280,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public void updatePost(String account) {
 		String hql1 = "SELECT postType FROM RoleBean WHERE account = :id";
-		String hql2 = "UPDATE RoleBean SET postType = :pt WHERE account = :id";
+		String hql2 = "UPDATE RoleBean SET postTrip = :pt WHERE account = :id";
 		Session session = factory.getCurrentSession();
 		Integer time = null;
 		try{

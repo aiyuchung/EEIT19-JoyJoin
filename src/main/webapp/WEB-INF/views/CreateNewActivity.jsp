@@ -111,21 +111,21 @@ textarea{
 							</div>
 						</div>
 					</div>
-					<form:form method="POST" action="newform" modelAttribute="newform" id="newform">
+					<form:form method="POST" action="newActivities" modelAttribute="newform" id="newform">
 					<div class="section-block">
 						<div class="tab-content">
 							<div role="tabpanel" class="active" id="about">
 <!-- 								<div class="about-information"> -->
 									<h1 class="section-title">活動細項</h1>
 									<div class="info-block  ">
-											<div class="fortitle">主辦人</div>
+											<div class="fortitle">主辦人: </div>
 											<div class="forcontent"><a href="#">主辦人${member.nickname}</a></div>
 									</div>
 									<div class="info-block  ">
 											<div class="fortitle">活動名稱</div>
 											<div class="forcontent">
-											<form:input path="meetPoint" class="form-control must"/>
-											<form:errors path="meetPoint" />
+											<form:input path="name" class="form-control must"/>
+											<form:errors path="name" />
 											<div class="invalid-feedback" style="display:none"></div>
 											</div>
 									</div>
@@ -135,7 +135,7 @@ textarea{
 												<form:select path="activityTypeName" id="selecytType" class="form-control must">
 													<form:option value="" label="請選擇"/>
 													<c:forEach var="type" items="${allTypes}">
-														<form:option value="${type.activityType}" label="${type.activityTypeName}"  />
+														<form:option value="${type.activityTypeName}" label="${type.activityTypeName}" class="${type.activityType}" />
 													</c:forEach>
 												</form:select>
 												<div class="invalid-feedback" style="display:none"></div>
@@ -146,7 +146,7 @@ textarea{
 											<div class="forcontent">
 												<form:select path="activityClass" class="form-control showClass must" >
 												   <form:option  value="" label="請選擇"/>
-											    	<form:options  items="${categoryList}" itemValue="activityClassNo" itemLabel="activityClass" style="display:none"/>  
+											    	<form:options  items="${categoryList}" itemValue="activityClass" itemLabel="activityClass" style="display:none"/>  
 												</form:select>
 												<div class="invalid-feedback" style="display:none"></div>
 											</div>
@@ -156,7 +156,7 @@ textarea{
 											<div class="forcontent">
 												<form:select path="prov" class="form-control must" >
 													<form:option value="" label="請選擇" />
-													<form:options items="${provs}" itemValue="provId" itemLabel="prov"/> 
+													<form:options items="${provs}" itemValue="prov" itemLabel="prov"/> 
 												</form:select>
 												<div class="invalid-feedback" style="display:none"></div>
 											</div>
@@ -235,7 +235,7 @@ textarea{
 									<div class="info-block  ">
 											<div class="fortitle">所需費用</div>
 											<div class="forcontent">
-											<form:input path="price"  class="form-control"/>
+											<form:input path="price" value="0" class="form-control"/>
 											</div>
 									</div>
 									<div class="info-block  ">
@@ -277,7 +277,7 @@ textarea{
 	
 	
 	$("#selecytType").change(function(){
-		var checkedtype = $("#selecytType").val();
+		var checkedtype = $("#selecytType").find("option:checked").attr("class");
 		console.log("type:"+checkedtype);
 		$.ajax({
 			  url:"ajax_checktype",
@@ -321,7 +321,9 @@ textarea{
 	$("#createnew").click(function(){
 		$(".must").each(function(){
 			if($(this).hasClass("is-invalid")){
-				
+				window.location.href = "#";
+			}else{
+				$("#newform").submit();
 			}
 		})
 	})

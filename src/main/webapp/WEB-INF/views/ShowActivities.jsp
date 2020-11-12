@@ -168,7 +168,28 @@
 .today{
 	border: solid 2px lightblue;
 }
+.host{
+	font-size:15px; 
+}
+.host:hover{
+	color:rgb(138, 253, 253); 
+	text-decoration:none;
+}
 
+.entry{
+	padding: 10px;
+}
+.entry p{
+	font-size:15px;
+}
+
+.activitytitle{
+	background-color:#4a6d53;
+	color:white;
+}
+.post{
+	padding: 5px;
+}
 
 
 		
@@ -231,26 +252,26 @@
 									</div> 
 								<div class="dropdown-item dropdown-foreach" id="check2">
 									<h6><strong>區域</strong><span class="reminder" style='color:red; font-size: 10px'></span></h6>
-									<form:checkbox path="location" id="north" value="north" /><form:label path="location" for="north">北部</form:label> 
-									<form:checkbox path="location" id="west" value="west" /><form:label path="location" for="west">中部</form:label> 
-									<form:checkbox path="location" id="south" value="south" /><form:label path="location" for="south">南部</form:label> 
-									<form:checkbox path="location" id="east" value="east" /><form:label path="location" for="east">東部</form:label>
-									<form:checkbox path="location" id="outofisland" value="outofisland" /><form:label path="location" for="outofisland">福建省</form:label>
+									<form:radiobutton  path="location" id="north" value="north" /><form:label path="location" for="north">北部</form:label> 
+									<form:radiobutton  path="location" id="west" value="west" /><form:label path="location" for="west">中部</form:label> 
+									<form:radiobutton  path="location" id="south" value="south" /><form:label path="location" for="south">南部</form:label> 
+									<form:radiobutton  path="location" id="east" value="east" /><form:label path="location" for="east">東部</form:label>
+									<form:radiobutton  path="location" id="outofisland" value="outofisland" /><form:label path="location" for="outofisland">福建省</form:label>
 								</div>
 								<div class="dropdown-item dropdown-foreach" id="check3">
 									<h6><strong>費用</strong><span class="reminder" style='color:red; font-size: 10px'></span></h6>
-									<form:checkbox path="price" id="0" value="0" /><form:label path="price" for="0">0元</form:label> 
-									<form:checkbox path="price" id="500" value="BETWEEN '1' AND '500'" /><form:label path="price" for="500">500元以下</form:label> 
-									<form:checkbox path="price" id="1000" value="BETWEEN '501' AND '1000'" /><form:label path="price" for="1000">500~1000元</form:label> 
-									<form:checkbox path="price" id="2000" value="BETWEEN '1001' AND '2000'" /><form:label path="price" for="2000">1000~2000元</form:label> 
-									<form:checkbox path="price" id="2000up" value="BETWEEN '2001' AND '99999'" /><form:label path="price" for="2000up">2000元以上</form:label>
+									<form:radiobutton  path="price" id="0" value="0" /><form:label path="price" for="0">0元</form:label> 
+									<form:radiobutton  path="price" id="500" value="BETWEEN '1' AND '500'" /><form:label path="price" for="500">500元以下</form:label> 
+									<form:radiobutton  path="price" id="1000" value="BETWEEN '501' AND '1000'" /><form:label path="price" for="1000">500~1000元</form:label> 
+									<form:radiobutton  path="price" id="2000" value="BETWEEN '1001' AND '2000'" /><form:label path="price" for="2000">1000~2000元</form:label> 
+									<form:radiobutton  path="price" id="2000up" value="BETWEEN '2001' AND '99999'" /><form:label path="price" for="2000up">2000元以上</form:label>
 								</div>
 								<div class="dropdown-item dropdown-foreach" id="check4">
 									<h6><strong>人數上限</strong><span class="reminder" style='color:red; font-size: 10px'></span></h6>
-									<form:checkbox path="minLimit" id="3" value="BETWEEN '0' AND '3'" /><form:label path="minLimit" for="3">3人以下</form:label> 
-									<form:checkbox path="minLimit" id="10" value="BETWEEN '4' AND '10'" /><form:label path="minLimit" for="10">3~10人</form:label> 
-									<form:checkbox path="minLimit" id="20" value="BETWEEN '11' AND '20'" /><form:label path="minLimit" for="20">10~20人</form:label>
-									<form:checkbox path="minLimit" id="any" value="BETWEEN '21' AND '9999'" /><form:label path="minLimit" for="any">不限人數</form:label>
+									<form:radiobutton  path="maxLimit" id="3" value="BETWEEN '0' AND '3'" /><form:label path="maxLimit" for="3">3人以下</form:label> 
+									<form:radiobutton  path="maxLimit" id="10" value="BETWEEN '4' AND '10'" /><form:label path="maxLimit" for="10">3~10人</form:label> 
+									<form:radiobutton  path="maxLimit" id="20" value="BETWEEN '11' AND '20'" /><form:label path="maxLimit" for="20">10~20人</form:label>
+									<form:radiobutton  path="maxLimit" id="any" value="BETWEEN '21' AND '9999'" /><form:label path="maxLimit" for="any">不限人數</form:label>
 								</div>
 								
 								<div align ="center">
@@ -439,26 +460,34 @@
 					<img src="images/img02.jpg" alt=""/>
 				</div>
 				<div class="post newajaxlist"></div>
+				
+				
 <!-- 活動列表 (活動名稱v/活動日期v/截止日期/活動類別/最高人數/發起人v/發起日期v) -->
 				<div id="oldajaxlist">
+					<div id="ifnolist" style="display:none">
+						<input id="num" type="text" value="${selectedNum}" style="display:none"/>
+						<span>似乎沒有符合條件的活動...</span>
+						<p>可以重新提供條件或是用快篩方式查詢喔!</p>
+					</div>
 					<c:forEach var="all" items="${activities}">
 						<div class="post">
-							<h2 class="title">
+							<h2 class="title activitytitle">
 								<strong>${all.activityDate} </strong> (${all.prov})
 							</h2>
 							<h1 class="title">
 								<a href="<c:url value='/oneActivity/${all.activityNo}' />" class="more">${all.name}</a>
 							</h1>
 							<p class="byline">
-								<small><a href="#發起人的超連結" rel="nofollow">${all.memberBean.nickname}</a>於
+								<small><a href="#發起人的超連結" rel="nofollow" class="host"><strong>${all.memberBean.nickname}</strong></a>&nbsp;於
 									${all.createdDate} 發起</small>
 							</p>
 							<div class="entry">
 								<p>
 									本 <strong>${all.activityTypeName}</strong>
-									活動將於${all.finalDate}截止
+									活動&nbsp;將於${all.finalDate}截止
 								</p>
-								<p>只要 ${all.minLimit}人即可成公開團! 本活動最高上限人數: ${all.maxLimit}</p>
+								<p>只要 ${all.minLimit}人即可成公開團! </p>
+								<p>本活動最高上限人數: ${all.maxLimit}</p>
 								<p class="links">
 									<a href="<c:url value='/oneActivity/${all.activityNo}' />" class="more"> (看詳細內容) </a> &nbsp;&nbsp;&nbsp;
 								</p>
@@ -611,6 +640,18 @@ function showNext(){
 		var finalNum = $("#finalNum").val();
 		if(finalNum == 0){
 			$("#noLessThan3").text("目前沒有3天內要截止的活動");
+		}
+		
+		var number = $("#num").val();
+		var selectedNum = ${selectedNum}
+		console.log("number"+number);
+		
+		if(number === '0'){
+			$("#ifnolist").css("display","block");
+// 			$("#textSpan").text("似乎沒有符合條件的活動...");
+// 			$("#textSpan1").text("可以重新提供條件或是用快篩方式查詢喔!");
+		}else if (selectedNum == ""){
+			$("#ifnolist").css("display","none");
 		}
 	})
 	
@@ -899,8 +940,8 @@ function showNext(){
 		};	
 		
 		var judge2 = false;
-		$("#check2").find("input[type=checkbox]").each(function(){
-			 if($("#check2").find("input[type=checkbox]").is(":checked")){
+		$("#check2").find("input[name=location]").each(function(){
+			 if($("#check2").find("input[name=location]").is(":checked")){
 				 judge2 = true;
 				 return false;
 			 }
@@ -910,8 +951,8 @@ function showNext(){
 		};
 		
 		var judge3 = false;	
-		$("#check3").find("input[type=checkbox]").each(function(){
-			 if($("#check3").find("input[type=checkbox]").is(":checked")){
+		$("#check3").find("input[name=price]").each(function(){
+			 if($("#check3").find("input[name=price]").is(":checked")){
 				 judge3 = true;
 				 return false;
 			 }
@@ -921,8 +962,8 @@ function showNext(){
 		};
 		
 		var judge4 = false;	
-		$("#check4").find("input[type=checkbox]").each(function(){
-			 if($("#check4").find("input[type=checkbox]").is(":checked")){
+		$("#check4").find("input[name=maxLimit]").each(function(){
+			 if($("#check4").find("input[name=maxLimit]").is(":checked")){
 				 judge4 = true;
 				 return false;
 			 }

@@ -56,6 +56,12 @@
 		border:none;
 		resize : none;
 	}
+	.header {
+	position:relative;
+	background-color: #191E1A;
+	border-bottom: 5px solid #85AD90;
+	padding: 10px 0px;
+}
 	
 	textarea:focus {
 	  outline : 0;
@@ -64,67 +70,6 @@
 	textarea{
 	  padding-right:0;
 	}
-	#headernav
-		{
-			position: absolute;
-			right: 0em;
-			top: 5em;
-		}
-	
-			#headernav > ul > li
-			{
-				float: left !important;
-				list-style-type: none;
-			}
-			
-				#headernav > ul > li:last-child
-				{
-					padding-right: 0 !important;
-				}
-	
-				#headernav > ul > li > a,
-				#headernav > ul > li > span
-				{
-					display: block !important;
-					margin-left: 0.7em !important;
-					padding: 0.80em 1.2em !important;
-					letter-spacing: 0.06em !important;
-					text-decoration: none !important;
-					font-size: 15px !important;
-					outline: 0;
-					color: #FFF;
-					border-radius:10px;  
-				}
-				#headernav > ul > li > a:hover,
-				#headernav > ul > li > span:hover
-				{
-					color:	#BBFFFF;
-					font-weight: 700;
-					box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
-				}
-	
-				#headernav li.active a
-				{
-					background: #56c9d6;
-					border-radius: 5px;
-					color: #FFF;
-				}
-	
-				#headernav > ul > li > ul
-				{
-					display: none;
-				}
-	#headerdiv
-		{
-			position: relative;
-			height:150px;
-		}
-	
-			#headerdiv .headernav
-			{
-				position: relative;
-				padding: 6em 0em;
-			}
 			
 	.showmsg{
 		padding: 2px;
@@ -168,7 +113,18 @@
 						<span>倒數截止天數</span>
 					</div>
 					<div class="reminder last">
-						<a href="#" class="follow"><strong><i class="fa fa-star"></i>關注本活動</strong></a> 
+						<c:if test="${isJoined == false}">
+						<a href="#" class="follow">
+<%-- 						<img src="<c:url value='/icons/star.png'/>"/> --%>
+						<strong>✰關注本活動</strong></a>
+						</c:if>
+						<c:if test="${isJoined == true}">
+						<a href="#" class="nofollow">
+<%-- 						<img src="<c:url value='/icons/filled-star.png'/>" /> --%>
+						<strong>★取消關注</strong></a>
+						</c:if>
+					
+						 
 						<!--   點選後可在個人頁面擁有此活動之連結    -->
 					</div>
 				</div>
@@ -233,7 +189,7 @@
 									<h1 class="section-title">活動細項</h1>
 									<div class="info-block  ">
 											<div class="fortitle">主辦人</div>
-											<div class="forcontent"><a href="#">主辦人暱稱</a></div>
+											<div class="forcontent"><a href="#">${member.nickname}</a></div>
 									</div>
 									<div class="info-block  ">
 											<div class="fortitle">活動類型</div>
@@ -296,12 +252,19 @@
 									<h2>
 										<span>已有 </span>${one.joinedNum}<span>人參加</span>
 									</h2>
+									<c:if test="${isJoined}">
+										<h5>參加人員:</h5>
+											<c:forEach var="joined" items="${joined}">
+											<span><a href="">${joined.memberBean.nickname}</a></span>
+											<span>&nbsp;&nbsp;</span>
+											</c:forEach>
+									</c:if>
 									<!-- 							<span class="contribution">raised by <strong>5,234</strong> ready to launch</span> -->
 									<div class="progress" style="border:dotted white 2px">
-										<c:set var="persentage" value="${activity.joinedNum / activity.minLimit }"/>
+<%-- 										<c:set var="persentage" value="${activity.joinedNum / activity.minLimit *100 }"/> --%>
 										<div class="progress-bar" role="progressbar"
 											aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"
-											style="width:persentage; ">
+											>
 <!-- 											<span class="sr-only">45% Complete</span> -->
 										</div>
 									</div>
@@ -389,10 +352,10 @@
 						<c:forEach var="msg" items="${msgBox}">
 						<div class="credit-block sources ">
 							<div >
-								<img src="" class="userpic msgpic"/><a href="#"><h5 style="display: inline-block">${member.nickname} ( ${account} )</h5></a>
+								<img src="" class="userpic msgpic"/><span>&nbsp;${member.nickname}<a href="#"> ( ${account} ) </a></span>
 							</div>
 							<div class="showmsg">
-								<textarea rows="2" name="msg" cols="28" class="msgbox newmsg" readonly>${msg.msgContent}</textarea>
+								<textarea name="msg" cols="28" class="msgbox newmsg" readonly>${msg.msgContent}</textarea>
 							</div>
 						</div>
 						</c:forEach>
@@ -459,21 +422,25 @@
 	  </div>
 	</div>
 <script>
-
-// 	$(window).load(function(){
-// 		if (isJoined){
-// 			$(".btn-launch").text("取消參加").addClass("cancel").css("background-color","#85AD90");
-// 			$(".follow").text("取消關注").css("background-color","#85AD90");
-// 		}
-// 	})
+	$(document).ready(function(){
+		var persentage= ${one.joinedNum/one.minLimit*100};
+		$(".progress-bar").css("width", persentage+"%");
 		
-	$(".follow").click(function(){
-		var text = $(this).text();
-		if (text == "取消關注"){
-			$(this).text("關注本活動");
-			$(this).css("background-color","#fff").css("color","#85AD90");
-		}else{
-			$(this).text("取消關注");
+	})
+	$(".reminder").click(function(){
+		var isJoined = ${isJoined}
+		if (!isJoined){
+			var text = $(this).text();
+			if (text == "取消關注"){
+				var url = "<c:url value='/icons/star.png'/>"
+				$(".reminder").empty();
+				$(".reminder").append('<a href="#" class="follow"><img src="'+url+'"/><strong>關注本活動</strong></a>')
+//	 			$(this).css("background-color","#fff").css("color","#85AD90");
+			}else{
+				var url = "<c:url value='/icons/star-filled.png'/>"
+				$(".reminder").empty();
+				$(".reminder").append('<a href="#" class="nofollow"><img src="'+url+'"/><strong>取消關注</strong></a>')
+			}
 		}
 	})
 	
@@ -511,12 +478,12 @@
 				}
 		})
 	})
-	$(".btn-launch").click(function(){
+	$(".btn-launch").one("click", function(){
 		$('#joinModal').modal('show');
 		
 	})
 	
-	$(".btn-cancel").click(function(){
+	$(".btn-cancel").one("click", function(){
 		$('#cancelModal').modal('show');
 		
 	})

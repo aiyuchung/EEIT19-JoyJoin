@@ -1,5 +1,6 @@
 package com.web.activity.dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -58,7 +59,6 @@ public class ActivityDaoImpl implements ActivityDao {
 		String hql = "FROM ActivityBean WHERE activityStatus = 'active' AND activityNo = :id ";
 		ActivityBean list = (ActivityBean) session.createQuery(hql).setParameter("id",activityNo).getSingleResult();
 		Integer hit = list.getHitCount();
-		System.out.println("hit from bean====================="+hit);
 		hit += 1; 
 		
 		hql = "UPDATE ActivityBean SET hitCount= :hit WHERE activityStatus = 'active' AND activityNo = :id ";
@@ -221,7 +221,6 @@ public class ActivityDaoImpl implements ActivityDao {
 		List<ActivityBean> activities = session.createQuery(hql).getResultList();
 		return activities;
 	}
-	
 
 	//----------------------------------------上架中之從北部活動開始--------------------------------------------
 	@Override
@@ -256,71 +255,33 @@ public class ActivityDaoImpl implements ActivityDao {
 	//----------------------------------------表單的條件查詢--------------------------------------------
 	@Override
 	public List<ActivityBean> selectByFrom(String price, String location, String limit, String small) {
-		String[] prices = price.split(","); 
-		String[] locations = location.split(",");
-		String[] limits = limit.split(",");
 		String[] smalltypes = small.split(",");
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ";
+		hql += " AND maxLimit "+	limit;
+		hql += " AND location = '"+ location +"'";
+		
 		String priceshql ="";
-		String locationshql ="";
-		String limitshql ="";
+		if (price.equals("0")) {
+			priceshql = " AND price = '"+ price +"'";
+			System.out.println("priceshql =0: "+priceshql);
+		}else {
+			priceshql += " AND price "+ price;
+		}
+		hql += priceshql;
+		
 		String smalltypeshql ="";
-		if (price != null) {
-			for (int i = 0; i < prices.length; i++) {
-				if (i == 0) {
-					if (prices[0].equals("0")) {
-						priceshql = "AND price = '"+ prices[0] +"'";
-						System.out.println("priceshql =0: "+priceshql);
-					}else {
-					priceshql += "AND price "+ prices[0];
-					}
-				}else {
-					priceshql += " OR price "+ prices[i];
-				}
+		for (int i = 0; i < smalltypes.length; i++) {
+			if (i == 0) {
+				smalltypeshql += " AND activityClassNo IN ('"+ smalltypes[0] +"'";
+			}else {
+				smalltypeshql += ", '"+ smalltypes[i] +"'";
 			}
-			System.out.println("priceshql : "+priceshql);
-		}
+		}smalltypeshql += ")";
+		hql += smalltypeshql;
 		
-		if (limit != null) {
-			for (int i = 0; i < limits.length; i++) {
-				if (i == 0) {
-					limitshql += " AND maxLimit "+ limits[0];
-				}else {
-					limitshql += " OR maxLimit "+ limits[i];
-				}
-			}
-			System.out.println("limitshql : "+limitshql);
-		}
-		
-		if (location != null) {
-			for (int i = 0; i < locations.length; i++) {
-				if (i == 0) {
-					locationshql += " AND location = '"+ locations[0] +"'";
-				}else {
-					locationshql += " OR location = '"+ locations[i] +"'";
-				}
-			}
-			System.out.println("locationshql : "+locationshql);
-		}
-		
-		if (small != null) {
-			for (int i = 0; i < smalltypes.length; i++) {
-				if (i == 0) {
-					smalltypeshql += " AND activityClassNo ='"+ smalltypes[0] +"'";
-				}else {
-					smalltypeshql += " OR activityClassNo  ='"+ smalltypes[i] +"'";
-				}
-			}
-			System.out.println("smalltypeshql : "+smalltypeshql);
-		}
-		
-		hql = hql + priceshql + limitshql + locationshql + smalltypeshql;
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>"+hql);
 		List<ActivityBean> list = new ArrayList<ActivityBean>();
 		list = session.createQuery(hql).getResultList();	
-		System.out.println("List<ActivityBean> list : "+list);
-		System.out.println("--------------------------------------------------------------- ");
 		return list;
 
 	}
@@ -339,11 +300,9 @@ public class ActivityDaoImpl implements ActivityDao {
 			key += "OR introduction LIKE '%"+ keyWords[i] +"%'";
 			key += "OR activityClass LIKE '%"+ keyWords[i] +"%'";
 		}
-		
 		hql += key;
 		List<ActivityBean> beans = session.createQuery(hql).getResultList();
 		return beans;
-
     }
 
 	//----------------------------------------單一活動查詢--------------------------------------------
@@ -404,6 +363,22 @@ public class ActivityDaoImpl implements ActivityDao {
 		hql = "UPDATE ActivityBean SET joinedNum= :joinedNum WHERE activityStatus = 'active' AND activityNo = :id ";
 		session.createQuery(hql).setParameter("joinedNum",joinedNum).setParameter("id",activityNo).executeUpdate();
 	}
+	
+	//----------------------------------------取消參加會員  參加人數的欄位-1--------------------------------------------
+		@Override
+		public void cancelOne(Integer memberNo, int activityNo) {
+			Session session = factory.getCurrentSession();
+			String hql = "DELETE ActivityJoinedBean WHERE memberNo =: memberNo AND activityNo = :id ";
+			session.createQuery(hql).setParameter("memberNo",memberNo)
+									.setParameter("id",activityNo).executeUpdate();
+			
+			hql = "FROM ActivityBean WHERE activityStatus = 'active' AND activityNo = :id ";
+			ActivityBean list = (ActivityBean) session.createQuery(hql).setParameter("id",activityNo).getSingleResult();
+			Integer joinedNum = list.getJoinedNum();
+			joinedNum -= 1;
+			hql = "UPDATE ActivityBean SET joinedNum= :joinedNum WHERE activityStatus = 'active' AND activityNo = :id ";
+			session.createQuery(hql).setParameter("joinedNum",joinedNum).setParameter("id",activityNo).executeUpdate();
+		}
 
 	//----------------------------------------參加活動的會員--------------------------------------------
 	@Override
@@ -413,6 +388,48 @@ public class ActivityDaoImpl implements ActivityDao {
 		List<ActivityJoinedBean> list = session.createQuery(hql).setParameter("id",activityNo).getResultList();
 		return list;
 	}
+	
+	//----------------------------------------參加活動的會員--------------------------------------------
+		@Override
+		public void createActivity(Integer memberNo, ActivityBean newform) {
+			Session session = factory.getCurrentSession();
+			Date today = new Date();
+			java.sql.Date sqltoday = new java.sql.Date(today.getTime());
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+//			Date sqltoday = sdf.(today);
+//			java.sql.Date sqlDate1 = new java.sql.Date(date1.getTime());
+			
+			
+			String prov = newform.getProv();
+			String hql1 = "FROM ProvinceBean WHERE prov = :prov ";
+			ProvinceBean provs = (ProvinceBean) session.createQuery(hql1).setParameter("prov",prov).getSingleResult();
+			String location = provs.getLocation();
+			int provId = provs.getProvId();
+			
+			String type = newform.getActivityTypeName();
+			String hql2 = "FROM ActivityTypeBean WHERE activityTypeName = :type ";
+			ActivityTypeBean types = (ActivityTypeBean) session.createQuery(hql2).setParameter("type",type).getSingleResult();
+			String activityTypeName = types.getActivityTypeName();
+			String typeno = types.getActivityType();
+			
+			String classname = newform.getActivityClass();
+			String hql3 = "FROM ActivityClassBean WHERE activityClass = :classname ";
+			ActivityClassBean classes = (ActivityClassBean) session.createQuery(hql3).setParameter("classname",classname).getSingleResult();
+			String activityClassNo = classes.getActivityClassNo();
+			
+			newform.setCreatedDate(sqltoday);
+			newform.setActivityStatus("active");
+			
+			newform.setJoinedNum(0);
+			newform.setHitCount(0);
+			newform.setLocation(location);
+			newform.setActivityTypeName(activityTypeName);
+			newform.setMemberBean(session.get(MemberBean.class,memberNo));
+			newform.setActivityTypeBean(session.get(ActivityTypeBean.class,typeno));
+			newform.setProvinceBean(session.get(ProvinceBean.class,provId));
+			newform.setActivityClassBean(session.get(ActivityClassBean.class,activityClassNo));
+			session.save(newform);
+		}
 
 
 }

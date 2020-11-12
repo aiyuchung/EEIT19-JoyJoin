@@ -81,6 +81,13 @@ public interface ActivityDao {
 	
 	//參加活動
 	void joinedOne(Integer memberNo, int activityNo);
+
+	//取消參加活動
+	void cancelOne(Integer memberNo, int activityNo);
 	
+	//取參加活動的人員
 	List<ActivityJoinedBean> joinedMember(int activityNo);
+	
+	//新增活動
+	void createActivity(Integer memberNo, ActivityBean newform);
 }

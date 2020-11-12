@@ -288,9 +288,19 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
+	public void cancelOne(Integer memberNo, int activityNo) {
+		dao.cancelOne(memberNo, activityNo);
+	}
+
+	@Override
 	public List<ActivityJoinedBean> joinedMember(int activityNo) {
 		return dao.joinedMember(activityNo);
 		
+	}
+
+	@Override
+	public void createActivity(Integer memberNo, ActivityBean newform) {
+		dao.createActivity(memberNo,newform);
 	}
 	
 
