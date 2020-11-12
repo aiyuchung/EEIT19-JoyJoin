@@ -33,7 +33,6 @@
 		<mapping class="com.web.activity.model.ActivityClassBean"></mapping>
 		<mapping class="com.web.activity.model.ProvinceBean"></mapping>
 		<mapping class="com.web.activity.model.ActivityMsgBean"></mapping>
-		<mapping class="com.web.activity.model.ActivityJoionedBean"></mapping>
-
+		<mapping class="com.web.activity.model.ForumBean"></mapping>
 	</session-factory>
 </hibernate-configuration>

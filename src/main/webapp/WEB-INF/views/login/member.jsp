@@ -93,7 +93,8 @@
 								<table class="tableForm">
 								<tr>
 									<td><form:label path = "password">密碼</form:label></td>
-									<td><form:input path = "password" type = "text"/></td>
+									<td><form:input path = "password" type = "password" id="pwd"/>
+									<span id="seePwd">顯示密碼</span></td>
 								</tr>
 								<tr>
 									<td><form:label path = "fullName">姓名</form:label></td>
@@ -116,12 +117,9 @@
 									<td><form:input path = "phone" type = "text" placeholder = "${member.phone}"/></td>
 								</tr>
 								<tr>
-									<td><form:label path = "birthYear">出生年份</form:label></td>
-									<td><form:input path = "birthYear" type = "text" placeholder = "${member.birthYear}"/></td>
-								</tr>
-								<tr>
-									<td><form:label path = "birthMonth">出生月份</form:label></td>
-									<td><form:select path = "birthMonth" id = "drop-select" placeholder = "${member.birthMonth}">										
+									<td><form:label path = "birthYear">出生日期</form:label></td>
+									<td><form:input path = "birthYear" size="5" maxlength="4" type = "text" placeholder = "${member.birthYear}"/>
+										<form:select path = "birthMonth" id = "drop-select1" placeholder = "${member.birthMonth}">										
 										<form:option id="dropdown-list" value = "不顯示" />
 										<form:option id="dropdown-list" value = "1月" />
 										<form:option id="dropdown-list" value = "2月"/>
@@ -247,7 +245,7 @@
 					+ '<span>電話</span><br>${member.phone}<br><br>'
 					+ '<span>出生日期</span><br>${member.birthYear}年${member.birthMonth}月<br><br>'
 					+ '<span>星座</span><br>${member.starSign}<br><br>'
-				+ '<span>血型</span><br>${member.bloodType}型<br><br>'
+				+ '<span>血型</span><br>${member.bloodType}<br><br>'
 				+ '<span>居住地址</span><br>${member.address}<br><br>'
 	 			+'<span>興趣</span><br>${member.hobby}<br><br>'
 				+ '<span>學歷</span><br>${member.education}<br><br>'
@@ -288,6 +286,17 @@
 		
 		$("#update-btn").on("click",function(){
 			 $('#updateForm').modal('show');
+		})
+		
+//			checkpwd
+		$("#seePwd").on("click",function(){
+			if($("#pwd").attr("type")=="password"){
+				$("#pwd").attr("type","text");
+				$("#seePwd").text("隱藏密碼");
+			}else{
+				$("#pwd").attr("type","password");				
+				$("#seePwd").text("顯示密碼");
+			}
 		})
 		
 // 		表單

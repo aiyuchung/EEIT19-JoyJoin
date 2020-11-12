@@ -1,11 +1,14 @@
 package com.web.activity.dao;
 
+import org.hibernate.Session;
+
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
 
 public interface MemberDao {
 	
-//---------------------------------------------▼會員資料CRUD▼---------------------------------------------//				
+//---------------------------------------------▼會員資料CRUD▼---------------------------------------------//		
+	
 		public void signUp(MemberBean mb);
 			//註冊會員,快速註冊表單只需要Account, Password, Email, nickname
 		public void createRole(String account);
@@ -18,8 +21,16 @@ public interface MemberDao {
 			//抓取個人資料
 		public RoleBean getRole(String account);
 			//抓取角色
+		
+//---------------------------------------------▼角色屬性判斷更改▼---------------------------------------------//	
+		
+		public void checkEmp2Level(String account);
+			//判斷經驗,更改等級
+		public void login2Emp(String account) ;
+		//比對登入時間,第一次登入增加經驗
 
-//---------------------------------------------▼會員登入判斷▼---------------------------------------------//			
+//---------------------------------------------▼會員登入判斷▼---------------------------------------------//		
+		
 		public Integer checkID(String account, String password);
 			//判斷帳號密碼正確與否
 		public boolean checkType(String account);
@@ -32,6 +43,7 @@ public interface MemberDao {
         	//判斷信箱重複
 		
 //---------------------------------------------▼自增值方法▼---------------------------------------------//			
+        
 		public void openType(String account);
 			//開通帳號
 		public void updateTime(String account, String time);
