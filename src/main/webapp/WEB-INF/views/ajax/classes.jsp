@@ -12,7 +12,7 @@
 <body>
    <option  value="" label="請選擇" />
    <c:forEach var="all" items="${categoryList}">
-   	<option  value="${all.activityClassNo}">${all.activityClass} </option>
+   	<option  value="${all.activityClass}">${all.activityClass} </option>
 	</c:forEach>
 <div class="invalid-feedback" style="display:none"></div>
 

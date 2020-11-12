@@ -118,6 +118,34 @@ public class ActivitiesController {
 		model.addAttribute("hitCount",hitCount);
 		return "redirect:/oneActivity/{id}";
 	}
+	
+//-----------------------------------------加入活動後跳轉單個頁面↓-----------------------------------------	
+	@GetMapping("/cancelActivity/{id}")
+	public String cancel(@PathVariable("id") int activityNo, HttpSession session, Model model) {
+		
+		ActivityBean activity = service.selectOneActivity(activityNo);
+		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
+		List<ActivityMsgBean> msgBox = service.showMsg(activityNo);
+		
+		MemberBean member= (MemberBean) session.getAttribute("member");
+		Integer memberNo = member.getMemberNo();
+		service.cancelOne(memberNo, activityNo);
+		List<ActivityJoinedBean> joined = service.joinedMember(activityNo);
+		List<String> joinedList = new ArrayList<>();
+		for(ActivityJoinedBean ajb:joined) {
+			String account = ajb.getMemberBean().getAccount();
+			joinedList.add(account);
+		}
+		
+		int msgNum = msgBox.size();
+		model.addAttribute("joinedList",joinedList);
+		model.addAttribute("joined",joined);
+		model.addAttribute("msgBox",msgBox);
+		model.addAttribute("msgNum",msgNum);
+		model.addAttribute("one",activity);
+		model.addAttribute("hitCount",hitCount);
+		return "redirect:/oneActivity/{id}";
+	}
 //-----------------------------------------單個活動的留言板↓-----------------------------------------	
 	
 	@PostMapping("/msgSend")
@@ -137,20 +165,19 @@ public class ActivitiesController {
 	public String form(Model model, @ModelAttribute("form") ActivityForm form) {
 		String price = form.getPrice();
 		String location = form.getLocation();
-		String limit = form.getMinLimit();
+		String limit = form.getMaxLimit();
 		String small = form.getSmalltype();
 		
 		List<ActivityBean> list = service.selectByFrom(price, location, limit, small);
+		int selectedNum = list.size();
 		List<ActivityBean> latest = service.selectLatest();
 		List<ActivityTypeBean> types = service.showAllTypes();
 		List<ActivityBean> finalOnes = service.selectFinal();
-		System.out.println("finalOnes list========================" +finalOnes);
 		int finalNum = finalOnes.size();
-		System.out.println("finalOnes size----------------------->" +finalOnes);
-		//*****location沒辦法加入條件!!!
 		
 		Map<String, Integer> recentOnes = service.selectRecentMonths();
 		List<ActivityClassBean> categoryList = service.selectAllClasses();
+		model.addAttribute("selectedNum",selectedNum);
 		model.addAttribute("activities",list);
 		model.addAttribute("latestOnes",latest);
 		model.addAttribute("allTypes",types);
@@ -163,25 +190,31 @@ public class ActivitiesController {
 //-----------------------------------------新增活動空的form表單↓-----------------------------------------		
 	@GetMapping("/newActivities")
 	
-	public String newAcitivity(HttpServletRequest request, Model model, 
-//			@ModelAttribute("level") int level, 
+	public String newAcitivity(Model model, 
 			@ModelAttribute("newform") ActivityBean newform) {
 		List<ActivityBean> list = service.selectAllActivities();
 		List<ActivityTypeBean> types = service.showAllTypes();
 		List<ActivityClassBean> categoryList = service.selectAllClasses();
 		List<ProvinceBean> provs = service.selectAllProvs();
 		
-		HttpSession session = request.getSession();
-		
-		String id = (String) session.getAttribute("id");
-//		String level = (String) session.getAttribute("level");
-//		model.addAttribute("id",id);
-//		model.addAttribute("level",level);
 		model.addAttribute("activities",list);
 		model.addAttribute("allTypes",types);
 		model.addAttribute("categoryList",categoryList);
 		model.addAttribute("provs",provs);
 	      return "CreateNewActivity";
+	   }
+//-----------------------------------------新增活動↓-----------------------------------------		
+	@PostMapping("/newActivities")
+	
+	public String createNewAcitivity(HttpSession session, Model model, 
+			@ModelAttribute("newform") ActivityBean newform) {
+		String account =  (String) session.getAttribute("account");
+		MemberBean member= (MemberBean) session.getAttribute("member");
+		Integer memberNo = member.getMemberNo();
+		service.createActivity(memberNo,newform);
+		memberService.updatePost(account);
+		
+	    return "redirect:/activities";
 	   }
 	
 //-----------------------------------------AJAX快篩↓-----------------------------------------		
@@ -285,6 +318,7 @@ public class ActivitiesController {
 	
 	@GetMapping("/ajax_checktype")
 	public String classForCheckedType(Model model, @RequestParam String type) {
+		System.out.println("大類傳ajax:"+type);
 		List<ActivityClassBean> classes = service.classForCheckedType(type);
 //		int elementsNum = classes.size();
 		model.addAttribute("categoryList",classes);

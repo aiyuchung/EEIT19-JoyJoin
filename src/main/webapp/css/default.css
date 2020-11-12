@@ -16,7 +16,7 @@ body {
 
 h1, h2, h3 {
 	margin-top: 0;
-	color: #6E6C00;
+/* 	color: #6E6C00; */
 }
 
 h1 {
@@ -179,7 +179,6 @@ img.right {
 }
 
 .post {
-	margin-bottom: 20px;
 	padding-bottom: 15px;
 	line-height: 200%;
 }
@@ -195,7 +194,7 @@ img.right {
 
 .title {
 	margin: 0;
-	padding: 15px 0px 0px 0px;
+	padding: 7px 0px 7px 0px;
 	font-weight: normal;
 }
 

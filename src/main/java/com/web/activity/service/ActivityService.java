@@ -80,6 +80,12 @@ public interface ActivityService {
 		
 	//參加活動
 	void joinedOne(Integer memberNo, int activityNo);
+	
+	//取消參加活動
+	void cancelOne(Integer memberNo, int activityNo);
 		
 	List<ActivityJoinedBean> joinedMember(int activityNo);
+	
+	//新增活動
+		void createActivity(Integer memberNo, ActivityBean newform);
 }
