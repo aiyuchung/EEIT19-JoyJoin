@@ -1,6 +1,7 @@
 package com.web.activity.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.web.activity.model.ForumBean;
 
@@ -10,6 +11,22 @@ public interface ForumService {
 	
 	//查詢討論標題清單
     public List<ForumBean> selectForumTitleList(ForumBean forumBean);
+    
+    //查詢討論熱門清單
+    Map<String, Integer> updateHitCount(int forumSeq);
+    
+    //查詢討論活動類型
+    public List<ForumBean> selectForumType();
+    
+    //查詢討論發文者
+    public List<ForumBean> selectForumAuthor();
+    
+    //查詢討論地區
+    public List<ForumBean> selectForumLocation();
+    
+    
+    
+    
 //	/**
 //	 * 建立一筆新的討論
 //	 * @param forumBean 討論物件
