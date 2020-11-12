@@ -9,25 +9,31 @@ public interface ForumService {
 
 	
 	
-	//查詢討論標題清單
-    public List<ForumBean> selectForumTitleList(ForumBean forumBean);
+	/**
+	 * 條件查詢討論標題
+	 * @param forumBean 查詢條件物件
+	 * @return 查詢結果
+	 */
+    public List<ForumBean> selectForumTitleListByParam(ForumBean forumBean);
     
-    //查詢討論熱門清單
-    Map<String, Integer> updateHitCount(int forumSeq);
+
+    public List<ForumBean> selectForumDteailListByParam(ForumBean forumBean);
     
-    //查詢討論活動類型
-    public List<ForumBean> selectForumType();
+	/**
+	 * 增加點擊次數
+	 * @param forumSeq 討論序號
+	 * @return 點擊次數結果
+	 */
+    public Integer plusPopularity(int forumSeq);
     
-    //查詢討論發文者
-    public List<ForumBean> selectForumAuthor();
-    
-    //查詢討論地區
-    public List<ForumBean> selectForumLocation();
-    
-    
-    
-    
-//	/**
+	/**
+	 * 根據Key值查詢單筆討論
+	 * @param forumSeq 討論序號
+	 * @return 指定討論
+	 */
+    public ForumBean selectOneForum(int forumSeq);
+	
+        
 //	 * 建立一筆新的討論
 //	 * @param forumBean 討論物件
 //	 * @return 查詢新增結果

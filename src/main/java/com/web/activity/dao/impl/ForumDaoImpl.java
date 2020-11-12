@@ -1,17 +1,19 @@
 package com.web.activity.dao.impl;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.web.activity.dao.ForumDao;
 import com.web.activity.model.ForumBean;
-
+@SuppressWarnings("unchecked")
 @Repository
 public class ForumDaoImpl implements ForumDao {
 	@Autowired
@@ -57,7 +59,7 @@ public class ForumDaoImpl implements ForumDao {
 	}
 	
 	@Override
-	public Integer updateHitCount(int forumSeq) {
+	public Integer plusPopularity(int forumSeq) {
 		Session session = factory.getCurrentSession();
 		//先查出指定資料
 		//String hql = "FROM ForumBean WHERE status = 'ACTIVE' AND forumSeq = :forumSeq ";
@@ -71,21 +73,37 @@ public class ForumDaoImpl implements ForumDao {
 		return popularity;
 	}
 	
+
 	@Override
 	public List<ForumBean> selectAllForumByParam(ForumBean forumBean){
 		Session session = factory.getCurrentSession();
 		StringBuffer  sb = new StringBuffer("FROM ForumBean WHERE 1=1 ");
 		if(forumBean.getForumType() != null) {
-			sb.append("forumType = :forumType");
+			sb.append(" AND forumType = :forumType");
 		}
 		if(forumBean.getCode() != null && !StringUtils.isEmpty(forumBean.getCode())) {
-			sb.append("code = :code");
+			sb.append(" AND code = :code");
+		}
+		if(forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType())) {
+			sb.append(" AND type = :type");
 		}
 		String hql = sb.toString();
-		List<ForumBean> list = session.createQuery(hql)
-				.setParameter("forumType", forumBean.getForumType())
-				.setParameter("code", forumBean.getCode())
-				.getResultList();
+		  Query<ForumBean> query = session.createQuery(hql);
+		
+		if(forumBean.getForumType() != null) {
+			query.setParameter("forumType", forumBean.getForumType());
+		}
+		if(forumBean.getCode() != null && !StringUtils.isEmpty(forumBean.getCode())) {
+			query.setParameter("code", forumBean.getCode());
+		}
+		if(forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType())) {
+			query.setParameter("type", forumBean.getType());
+		}
+		List<ForumBean> list =query.getResultList();
+		
+		if(forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType())) {
+			sb.append(" AND type = :type");
+		}
 		return list;
 	}
 	

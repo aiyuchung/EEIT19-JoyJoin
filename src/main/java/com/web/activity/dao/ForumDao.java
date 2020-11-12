@@ -21,7 +21,7 @@ public interface ForumDao {
     public ForumBean updateForumByParam(int forumSeq,ForumBean forumBean) ;
 	
 	//更新點擊量
-    public Integer updateHitCount(int forumSeq);
+    public Integer plusPopularity(int forumSeq);
 	
 	//查詢討論清單
     public List<ForumBean> selectAllForumByParam(ForumBean forumBean);

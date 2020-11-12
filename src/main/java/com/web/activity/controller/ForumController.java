@@ -23,9 +23,11 @@ import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityForm;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
+import com.web.activity.model.ForumBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.ProvinceBean;
 import com.web.activity.service.ActivityService;
+import com.web.activity.service.ForumService;
 import com.web.activity.service.MemberService;
 
 @Controller
@@ -33,22 +35,41 @@ import com.web.activity.service.MemberService;
 public class ForumController {
 
 	@Autowired
-	ActivityService service;
+	ForumService service;
 	
-	@Autowired
-	MemberService memberService;
 	
 	@GetMapping("/forum")
-	public String getMemberBean2Select(HttpServletRequest request, Model model) {
+	public String selectAllForum(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
-		String account = (String) session.getAttribute("id");
+		ForumBean forumBean = new ForumBean();
+		List<ForumBean>forumList = service.selectForumTitleListByParam(forumBean);
+		model.addAttribute("forumList", forumList);
 		return "forum/forum";
 	}
 	
+	@GetMapping("/ajax_forum")
+	public String selectRecentMon(Model model,@RequestParam String activeType) {
+		ForumBean forumBean = new ForumBean();
+		forumBean.setType(activeType);
+		List<ForumBean>forumList = service.selectForumTitleListByParam(forumBean);
+		model.addAttribute("forumList",forumList);
+		return "ajax/forumTable";
+
+	}
+	
 	@GetMapping("/forumDetail")
-	public String getForumDetail(HttpServletRequest request, Model model) {
-		HttpSession session = request.getSession();
-		String account = (String) session.getAttribute("id");
+	public String getForumDetail(Model model,@ModelAttribute("form") ForumBean form) {
+		service.plusPopularity(form.getForumSeq());
+		List<ForumBean>forumList = service.selectForumDteailListByParam(form);
+		model.addAttribute("forumList",forumList);
+		return "forum/forumDetail";
+	}
+	
+	
+	@GetMapping("/forumDetail_ONE")
+	public String getForumDetailOne(Model model,@RequestParam Integer forumSeq) {
+		ForumBean forum = service.selectOneForum(forumSeq);
+		model.addAttribute("forum", forum);
 		return "forum/forumDetail";
 	}
 	

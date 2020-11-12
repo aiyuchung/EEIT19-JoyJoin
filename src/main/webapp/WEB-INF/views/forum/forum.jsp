@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <!--
 Design by TEMPLATED
@@ -241,18 +242,14 @@ Released   : 20100501
 	<div id="menu-bg">
 		<div id="menu">
 			<ul id="main">
-				<li class="nav-item dropdown"><a href="#">熱門 </a></li>
-				<li class="nav-item dropdown"><a href="#">電影 </a></li>
-				<li class="nav-item dropdown"><a href="#">運動 </a></li>
-				<li class="nav-item dropdown"><a href="#">美食 </a></li>
-				<li class="nav-item dropdown"><a href="#">文青 </a></li>
-				<li class="nav-item dropdown"><a href="#">旅遊 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "HIT" class="activeType">熱門 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "MOVIE" class="activeType">電影 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "SPORT" class="activeType">運動 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "FOOD" class="activeType">美食 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "HIPSTER" class="activeType">文青 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "TRAVEL" class="activeType">旅遊 </a></li>
 			</ul>
 		</div>
-
-
-		
-
 		<!-- end header -->
 		<br>
 		
@@ -267,52 +264,24 @@ Released   : 20100501
 						</form>
 					</li>
 
-		<table width="70%" border="1" align="center">
-			<tr>
-				<td>類型</td>
-				<td>標題</td>
-				<td>評分</td>
-				<td>發文者</td>
-				<td>發文時間</td>
-				<td>地區</td>
-				<td>點閱率</td>
-			</tr>
-			<tr>
-				<td><a id="to_detail">旅遊xxxx</a></td>
-				<td>粗乃玩啊</td>
-				<td>4.5</td>
-				<td>揪王之王</td>
-				<td>2020-11-11</td>
-				<td>台北市</td>
-				<td>20</td>
-			</tr>
-
-			<tr>
-				<td><a id="">電影</a></td>
-				<td>粗乃看啊</td>
-				<td>4.5</td>
-				<td>揪王之王</td>
-				<td>2020-11-11</td>
-				<td>台東縣</td>
-				<td>20</td>
-			</tr>
-
-			<tr>
-				<td><a id="">美食</a></td>
-				<td>粗乃吃啊</td>
-				<td>4.5</td>
-				<td>揪王之王</td>
-				<td>2020-11-11</td>
-				<td>高雄市</td>
-				<td>20</td>
-			</tr>
-		</table>
-
-
+<div class="newajaxlist">
+	 <c:import url="../ajax/forumTable.jsp"></c:import> 
+</div>
 		<script>
-			document.getElementById("to_detail").onclick = function() {
-				location.href = "<c:url value = '/forumDetail'/>"; //改成討論版的路徑
-			}
+			$(".activeType").click(function(){ //以近期月份作為快速篩選
+				var activeType = $(this).attr('name');
+		 		$.ajax({
+					  url:"ajax_forum",
+					  type: "GET",
+					  dataType: "html", //server送回
+					  contentType: 'application/json; charset=utf-8',
+					  data: {activeType: activeType},
+					  success:function(data){
+						  $(".newajaxlist").empty();
+						  $(".newajaxlist").append(data);
+						}
+				}) 
+			})
 		</script>
 </body>
 </html>

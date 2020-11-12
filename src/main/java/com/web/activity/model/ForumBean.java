@@ -3,9 +3,12 @@ package com.web.activity.model;
 
 import java.sql.Blob;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 //import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 //import javax.persistence.GenerationType;
@@ -27,10 +30,10 @@ public class ForumBean implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	//資料編碼
-	private int forumSeq;
+	private Integer forumSeq;
 	//活動編碼
 	@NotNull
-	private int activityCode;
+	private String activityCode;
 	//討論區 類型
 	@NotNull
 	private String type;
@@ -45,7 +48,7 @@ public class ForumBean implements java.io.Serializable {
 	private String author;
 	//討論區 發文時間
 	@NotNull
-	private LocalDateTime time;
+	private Date time;
 	//討論區 地區
 	@NotNull
 	private String location;
@@ -59,24 +62,29 @@ public class ForumBean implements java.io.Serializable {
 	private String article;
 	
 	//討論區文章的型態
+	@Enumerated(EnumType.STRING)
+	@NotNull
 	private ForumType forumType;
 	
 	//討論主題編碼
 	private String code;
 	
+	//保單狀態
+	@Enumerated(EnumType.STRING)
+	@NotNull
 	private Status status;
 	
 
-	public int getForumSeq() {
+	public Integer getForumSeq() {
 		return forumSeq;
 	}
-	public void setForumSeq(int forumSeq) {
+	public void setForumSeq(Integer forumSeq) {
 		this.forumSeq = forumSeq;
 	}
-	public int getActivityCode() {
+	public String getActivityCode() {
 		return activityCode;
 	}
-	public void setActivityCode(int activityCode) {
+	public void setActivityCode(String activityCode) {
 		this.activityCode = activityCode;
 	}
 	public String getType() {
@@ -103,10 +111,10 @@ public class ForumBean implements java.io.Serializable {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public LocalDateTime getTime() {
+	public Date getTime() {
 		return time;
 	}
-	public void setTime(LocalDateTime time) {
+	public void setTime(Date time) {
 		this.time = time;
 	}
 	public String getLocation() {
