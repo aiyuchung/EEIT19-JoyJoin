@@ -67,12 +67,11 @@ table tbody tr:last-child td:last-child {
 			</tr>
 		</thead>
 			 <c:forEach var="forum" items="${forumList}">
-			 		<form id>
+			 <form id = "form${forum.forumSeq}" method ="get" action="<%=request.getContextPath()%>/forumDetail">
 			 		<input type="hidden" name="forumSeq" value="${forum.forumSeq}"/>
-			 		<input type="hidden" name="code" value="${forum.type}${forum.forumSeq}"/>
 			</form>
 			 	<tr style="text-align: center" height="60px">
-				<td><a id="to_detail">${forum.type}</a></td>
+				<td><a class="to_detail" name ="${forum.forumSeq}">${forum.type}</a></td>
 				<td>${forum.title}</td>
 				<td>${forum.score}</td>
 				<td>${forum.author}</td>
@@ -115,9 +114,10 @@ table tbody tr:last-child td:last-child {
 			</tr> -->
 		</table>
 <script type="text/javascript">
-document.getElementById("to_detail").onclick = function() {
-	location.href = "<c:url value = '/forumDetail'/>"; //改成討論版的路徑
-}
+$(".to_detail").click(function(){ //以活動類型作為快速篩選
+	var forumSeq = $(this).attr('name');
+	$("#form"+forumSeq).submit();
+})
 </script>
 </body>
 </html>

@@ -331,6 +331,8 @@ Released   : 20100501
 	</table>
 	
 	<table width="70%" border="1" align="center"  style="border-top: 5px #ff0000;" >
+
+		 <c:forEach var="forum" items="${forumList}">		
 		<tr>
 			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
 				<img width = "100%" src="images/img02.jpg" alt=""/>
@@ -341,94 +343,8 @@ Released   : 20100501
 			<!-- <td width="20%"  height="100px" style="border-right: 0px;">	<img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/></td> -->
 			<td width="60%"  height="100px" style="border-left: 0px;">海詞詞典，<img width = "10%" src="images/img02.jpg" alt=""/><button>很讚</button>最權威的學習詞典，專業出版線上討論區的英文，線上討論區翻譯，線上討論區英語怎麼說等詳細講解。海詞詞典：學習變容易，記憶很深刻。</td>
 		</tr>
-		<tr>
-			<td>
-				<table border="1" width="100%">
-					<tr>
-						<td width="25%">
-						    <div>
-						        <img id="img1" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img2" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img3" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img4" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img5" class="i" width = "33" src="images/chngstar.gif" />
-						    </div>
-    					</td>
-						<td width="75%"><button>很讚</button><button>很讚讚</button><button>很讚讚讚</button></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		
-		<tr>
-			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
-				<img width = "100%" src="images/img02.jpg" alt=""/>
-			</td>
-			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
-			深海異音<br /> hbl917070<br /> 稱號 未夠班的勇者<br /> 種族 妖精<br /> 巴幣 226632 <br />GP 7881<br />
-			</td>
-			<!-- <td width="20%"  height="100px" style="border-right: 0px;">	<img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/></td> -->
-			<td width="60%"  height="100px" style="border-left: 0px;">海詞詞典，<img width = "10%" src="images/img02.jpg" alt=""/><button>很讚</button>最權威的學習詞典，專業出版線上討論區的英文，線上討論區翻譯，線上討論區英語怎麼說等詳細講解。海詞詞典：學習變容易，記憶很深刻。</td>
-		</tr>
-		<tr>
-			<td>
-				<table border="1" width="100%">
-					<tr>
-						<td width="25%">
-						    <div>
-						        <img id="img1" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img2" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img3" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img4" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img5" class="i" width = "33" src="images/star.gif" />
-						    </div>
-    					</td>
-						<td width="75%"><button>很讚</button><button>很讚讚</button><button>很讚讚讚</button></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		
+			
 				<tr>
-			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
-				<img width = "100%" src="images/img02.jpg" alt=""/>
-			</td>
-			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
-			深海異音<br /> hbl917070<br /> 稱號 未夠班的勇者<br /> 種族 妖精<br /> 巴幣 226632 <br />GP 7881<br />
-			</td>
-			<!-- <td width="20%"  height="100px" style="border-right: 0px;">	<img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/></td> -->
-			<td width="60%"  height="100px" style="border-left: 0px;">海詞詞典，<img width = "10%" src="images/img02.jpg" alt=""/><button>很讚</button>最權威的學習詞典，專業出版線上討論區的英文，線上討論區翻譯，線上討論區英語怎麼說等詳細講解。海詞詞典：學習變容易，記憶很深刻。</td>
-		</tr>
-		<tr>
-			<td>
-				<table border="1" width="100%">
-					<tr>
-						<td width="25%">
-						    <div>
-						        <img id="img1" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img2" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img3" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img4" class="i" width = "33" src="images/star.gif" />
-						        <img id="img5" class="i" width = "33" src="images/star.gif" />
-						    </div>
-    					</td>
-						<td width="75%"><button>很讚</button><button>很讚讚</button><button>很讚讚讚</button></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		
-		<tr>
-			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
-				<img width = "100%" src="images/img02.jpg" alt=""/>
-			</td>
-			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
-			深海異音<br /> hbl917070<br /> 稱號 未夠班的勇者<br /> 種族 妖精<br /> 巴幣 226632 <br />GP 7881<br />
-			</td>
-			<!-- <td width="20%"  height="100px" style="border-right: 0px;">	<img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/></td> -->
-			<td width="60%"  height="100px" style="border-left: 0px;">海詞詞典，<img width = "10%" src="images/img02.jpg" alt=""/><button>很讚</button>最權威的學習詞典，專業出版線上討論區的英文，線上討論區翻譯，線上討論區英語怎麼說等詳細講解。海詞詞典：學習變容易，記憶很深刻。</td>
-		</tr>
-		<tr>
 			<td>
 				<table border="1" width="100%">
 					<tr>
@@ -441,41 +357,12 @@ Released   : 20100501
 						        <img id="img5" class="i" width = "33" src="images/star.gif" />
 						    </div>
     					</td>
-						<td width="75%"><button>很讚</button><button>很讚讚</button><button>很讚讚讚</button></td>
+						<td width="75%">${forum.code}</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
-		
-		<tr>
-			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
-				<img width = "100%" src="images/img02.jpg" alt=""/>
-			</td>
-			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
-			深海異音<br /> hbl917070<br /> 稱號 未夠班的勇者<br /> 種族 妖精<br /> 巴幣 226632 <br />GP 7881<br />
-			</td>
-			<!-- <td width="20%"  height="100px" style="border-right: 0px;">	<img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/></td> -->
-			<td width="60%"  height="100px" style="border-left: 0px;">海詞詞典，<img width = "10%" src="images/img02.jpg" alt=""/><button>很讚</button>最權威的學習詞典，專業出版線上討論區的英文，線上討論區翻譯，線上討論區英語怎麼說等詳細講解。海詞詞典：學習變容易，記憶很深刻。</td>
-		</tr>
-		<tr>
-			<td>
-				<table border="1" width="100%">
-					<tr>
-						<td width="25%">
-						    <div>
-						        <img id="img1" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img2" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img3" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img4" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img5" class="i" width = "33" src="images/star.gif" />
-						    </div>
-    					</td>
-						<td width="75%"><button>很讚</button><button>很讚讚</button><button>很讚讚讚</button></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		
+			  </c:forEach>	
 		<tr>
 			<td height ="70" colspan="3" align="center">
 				<input type="submit" value="新增貼文" id="to_forumNewArticle">

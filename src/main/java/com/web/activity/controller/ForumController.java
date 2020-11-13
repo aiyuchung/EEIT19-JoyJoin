@@ -48,9 +48,10 @@ public class ForumController {
 	}
 	
 	@GetMapping("/ajax_forum")
-	public String selectRecentMon(Model model,@RequestParam String activeType) {
+	public String selectRecentMon(Model model, String activeType, String keyWord) {
 		ForumBean forumBean = new ForumBean();
 		forumBean.setType(activeType);
+		forumBean.setKeyWord(keyWord);
 		List<ForumBean>forumList = service.selectForumTitleListByParam(forumBean);
 		model.addAttribute("forumList",forumList);
 		return "ajax/forumTable";

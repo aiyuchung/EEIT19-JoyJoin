@@ -26,6 +26,7 @@ public class ForumServiceImpl implements ForumService {
 	// 查詢討論內容清單
 	public List<ForumBean> selectForumDteailListByParam(ForumBean forumBean) {
 		forumBean.setForumType(ForumType.DETAIL);
+		forumBean.setCode(String.valueOf(forumBean.getForumSeq()));
 		forumBean.setForumSeq(null);
 		return forumDao.selectAllForumByParam(forumBean);
 	}

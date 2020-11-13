@@ -85,8 +85,16 @@ public class ForumDaoImpl implements ForumDao {
 			sb.append(" AND code = :code");
 		}
 		if(forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType())) {
-			sb.append(" AND type = :type");
+			if(forumBean.getType().equals("熱門")) {
+				sb.append(" AND popularity > 10");
+			}else {
+				sb.append(" AND type = :type");
+			}
 		}
+		if(forumBean.getKeyWord() != null && !StringUtils.isEmpty(forumBean.getKeyWord())) {
+			sb.append(" AND (author like :keyWord OR location like :keyWord OR title like :keyWord) ");
+		}
+		
 		String hql = sb.toString();
 		  Query<ForumBean> query = session.createQuery(hql);
 		
@@ -96,14 +104,14 @@ public class ForumDaoImpl implements ForumDao {
 		if(forumBean.getCode() != null && !StringUtils.isEmpty(forumBean.getCode())) {
 			query.setParameter("code", forumBean.getCode());
 		}
-		if(forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType())) {
+		if(forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType()) && !forumBean.getType().equals("熱門")) {
 			query.setParameter("type", forumBean.getType());
+		}
+		if(forumBean.getKeyWord() != null && !StringUtils.isEmpty(forumBean.getKeyWord())) {
+			query.setParameter("keyWord", "%"+forumBean.getKeyWord()+"%");
 		}
 		List<ForumBean> list =query.getResultList();
 		
-		if(forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType())) {
-			sb.append(" AND type = :type");
-		}
 		return list;
 	}
 	

@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 //import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.sun.istack.NotNull;
 import com.web.activity.Enum.ForumType;
@@ -73,6 +74,9 @@ public class ForumBean implements java.io.Serializable {
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private Status status;
+	
+	@Transient
+	private String keyWord;
 	
 
 	public Integer getForumSeq() {
@@ -159,5 +163,10 @@ public class ForumBean implements java.io.Serializable {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
+	public String getKeyWord() {
+		return keyWord;
+	}
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
 }

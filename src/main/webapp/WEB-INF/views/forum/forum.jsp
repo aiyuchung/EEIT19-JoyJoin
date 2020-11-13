@@ -265,8 +265,8 @@ Released   : 20100501
 						<form id="searchform" method="get" action="#">
 							<h6>&nbsp;&nbsp;關鍵字搜尋</h6>
 							<div>
-								&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="s" id="s" size="20" value="" placeholder="EX: 籃球、和牛" /> <br />
-								<button type="button" class="btn btn-outline-light btn-sm">確認</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"  id="keyWord" size="20" value="" placeholder="EX: 籃球、和牛" /> <br />
+								<button type="button" class="btn btn-outline-light btn-sm submitBtn">確認</button>
 							</div>
 						</form>
 					</div>
@@ -277,12 +277,27 @@ Released   : 20100501
 		<script>
 			$(".activeType").click(function(){ //以活動類型作為快速篩選
 				var activeType = $(this).attr('name');
+				var keyWord = $('#keyWord').val();
 		 		$.ajax({
 					  url:"ajax_forum",
 					  type: "GET",
 					  dataType: "html", //server送回
 					  contentType: 'application/json; charset=utf-8',
-					  data: {activeType: activeType},
+					  data: {activeType: activeType,keyWord: keyWord},
+					  success:function(data){
+						  $(".newajaxlist").empty();
+						  $(".newajaxlist").append(data);
+						}
+				}) 
+			})
+			$(".submitBtn").click(function(){ //關鍵字搜尋
+				var keyWord = $('#keyWord').val();
+		 		$.ajax({
+					  url:"ajax_forum",
+					  type: "GET",
+					  dataType: "html", //server送回
+					  contentType: 'application/json; charset=utf-8',
+					  data: {keyWord: keyWord},
 					  success:function(data){
 						  $(".newajaxlist").empty();
 						  $(".newajaxlist").append(data);
