@@ -75,7 +75,7 @@ public class MemberController {
 			}			
 			if( nickname != null) {					
 				boolean checkAccount = memberService.checkAccount(account);
-				boolean checkEmail = memberService.cheakEmail(email);
+				boolean checkEmail = memberService.checkEmail(email);
 				if(checkAccount==true&&checkEmail==true) {
 					memberService.signUp(mb);		//====註冊====
 					System.out.println("======================>"+"註冊成功");
@@ -173,13 +173,80 @@ public class MemberController {
 					transport.close();
 				} catch (MessagingException mex) {
 					mex.printStackTrace();
-				}
-		      
-			  
+				}  
+		  }
+		  
+//---------------------------------------------▼忘記密碼▼---------------------------------------------//	
+		  
+		  @GetMapping("/missPwd")
+		  public String forgotPwd(String account, Model model) {
+			  boolean flag = memberService.checkAccount(account);
+			  if(flag) {
+				  model.addAttribute("errMsg","此帳號沒有資料");
+				  return "login/login";
+			  }else {
+				  String mail = memberService.getMail(account);
+				  send2pwd(account, mail);
+			  }			  
+			  return "redirect:/login";
+		  }
+		  
+		  @GetMapping("/getPwd")
+		  public String newPwd(Model model) {
+			  MemberBean mb = new MemberBean();
+			  model.addAttribute("memberBean",mb);
+			  return "login/newpwd";
 		  }
 		  
 		  
+		  @PostMapping("/getPwd")
+		  public String getNewPwd(String account, String password) {
+			  memberService.newPwd(account, password);
+			  return "redirect:/login";
+		  }
 
+		  public void send2pwd(String account, String mail) {
+//			  String user = "eeit19joinjoy";
+			  String pwd = "jkwwrqowszlonefv";		//寄件者信箱密碼
+			  String to = mail;
+			  String from = "eeit19joinjoy@gmail.com";
+			  String host = "smtp.gmail.com";
+			  String subject = "JoyJoin找回遺失的密碼";
+			  String body = "http://localhost:8080/JoyJoin/getPwd?account=" + account + "\r\n點選建立新密碼";
+			  
+			  Properties properties = System.getProperties();
+				properties.put("mail.smtp.starttls.enable", "true");
+				properties.put("mail.smtp.host", host);
+				properties.put("mail.smtp.user", from);
+				properties.put("mail.smtp.password", pwd);
+				properties.put("mail.smtp.port", "25");
+				properties.put("mail.smtp.auth", "true");
+				properties.put("mail.mime.allowutf8", "true");
+				properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+				Session session = Session.getDefaultInstance(properties);
+
+				System.out.println("======================>"+"成功設定信件發送");
+				try {
+					MimeMessage message = new MimeMessage(session);
+					message.setFrom(new InternetAddress(from));
+					message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+					message.setSubject(subject);
+					message.setText(body);
+					
+					Transport transport = session.getTransport("smtp");
+					transport.connect(host, from, pwd);
+					transport.sendMessage(message, message.getAllRecipients());
+		            System.out.println("發送成功");	
+					transport.close();
+				} catch (MessagingException mex) {
+					mex.printStackTrace();
+				}  
+		  }
+		  
+		  
+		  
+		  
 		  
 		  
 	}		

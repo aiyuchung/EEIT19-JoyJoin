@@ -103,11 +103,33 @@
 				<td><input type="button" value="返回" class="login-submit" id="back-btn" style="margin-left:10px"/></td>
 			</tr>
 		</table>
-		<span class="login-forgot-pass" style="bottom:15px" id="signup-btn">現在註冊</span>
-		<a href="<c:url value='/'/>" class="login-forgot-pass">忘記密碼</a>
+		<span class="login-forgot-pass" style="bottom:35px" id="signup-btn">現在註冊</span><br>
+		<span class="login-forgot-pass" style="bottom:15px" id="missPwd-btn">忘記密碼</span>
 <!-- 		<input type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" value="GO" /> -->
 
 	</form:form>
+	
+<!-- 	忘記密碼 -->
+	<div class="modal fade" id="missPwd" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true" style="top:100px">
+	  <div class="modal-dialog">
+	    <div class="modal-content" style="border-radius:99em;height:380px;width:380px;left:55px;background-color:	#F0F0F0"">
+	      <div class="modal-header1">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<!-- 	          <span aria-hidden="true">&times;</span> -->
+	        </button>
+	      </div>
+	      <div class="modal-body" id="resultArea" style="height:380px;width:380px">
+				<form:form modelAttribute="memberBean">
+					<form:input type="text" class="form-control" id="missAccount" placeholder="請輸入帳號" path="account" required="required"/>
+					<input type=button id="getPwd-btn" value="送出"/>
+				</form:form>
+	      </div>
+	      <div class="modal-footer1">
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
 	
 	
 	<div class="underlay-photo"></div>
@@ -161,9 +183,22 @@
 		}
 	}
 	
+	$("#missPwd-btn").on("click",function(){
+		$('#missPwd').modal('show');
+	})
+	
+	$("#missAccount").on("blur",function(){
+		if($(this).val()==""){
+			$("#getPwd-btn").attr("type","button");
+			alert("請輸入帳號");
+		}else{
+			$("#getPwd-btn").attr("type","submit");
+			alert("信件送往註冊信箱")
+		}
+	})
 	
 	
-		
+	
 		
 	</script>
 </body>

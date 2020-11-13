@@ -107,6 +107,26 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	@Override
+	public String getMail(String account) {
+		String hql = "SELECT mail FROM MemberBean WHERE account = :id";
+		Session session = factory.getCurrentSession();
+		String mail = null;
+		try {
+			 mail = (String) session.createQuery(hql).setParameter("id", account).getSingleResult();			
+		}catch(Exception e) {
+			;
+		}
+		return mail;
+	}
+	
+	@Override
+	public void newPwd(String account, String password) {
+		String hql = "UPDATE MemberBean SET password = :pwd WHERE account = :id";
+		Session session = factory.getCurrentSession();
+		session.createQuery(hql).setParameter("pwd", password).setParameter("id", account).executeUpdate();
+	}
+	
+	@Override
 	public void checkEmp2Level(String account) {
 		String hql = "FROM RoleBean WHERE account = :id";
 		String hql2 = "UPDATE RoleBean SET level = :iv WHERE account = :id";
@@ -169,7 +189,7 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
     @Override
-    public boolean cheakEmail(String email) {
+    public boolean checkEmail(String email) {
     	String hql = "FROM MemberBean WHERE mail = :email";
 		Session session = factory.getCurrentSession();
 		try {

@@ -37,6 +37,18 @@ public class MemberServieImpl implements MemberService {
 		
 		@Transactional
 		@Override
+		public String getMail(String account) {
+			return memberDao.getMail(account);
+		}		
+		
+		@Transactional
+		@Override
+		public void newPwd(String account, String password) {
+			memberDao.newPwd(account, password);
+		}
+		
+		@Transactional
+		@Override
 		public Integer checkID(String account, String password) {
 			return memberDao.checkID(account, password);
 		}
@@ -61,8 +73,8 @@ public class MemberServieImpl implements MemberService {
 
 		 @Transactional
 		 @Override
-    	public boolean cheakEmail(String email) {
-    		return memberDao.cheakEmail(email);
+    	public boolean checkEmail(String email) {
+    		return memberDao.checkEmail(email);
     	}
 
 		@Transactional

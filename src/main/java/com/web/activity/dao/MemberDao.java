@@ -21,6 +21,10 @@ public interface MemberDao {
 			//抓取個人資料
 		public RoleBean getRole(String account);
 			//抓取角色
+		public String getMail(String account);
+			//取得信箱位置===>忘記密碼第二步
+		public void newPwd(String account, String password);
+			//更改密碼===>忘記密碼最後一步
 		
 //---------------------------------------------▼角色屬性判斷更改▼---------------------------------------------//	
 		
@@ -39,7 +43,7 @@ public interface MemberDao {
         	//判斷帳號權限 
         public boolean checkAccount(String account);
         	//判斷帳號重複
-        public boolean cheakEmail(String email);
+        public boolean checkEmail(String email);
         	//判斷信箱重複
 		
 //---------------------------------------------▼自增值方法▼---------------------------------------------//			
