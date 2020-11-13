@@ -36,6 +36,11 @@ Released   : 20100501
 	crossorigin="anonymous"></script>
 
 <style>
+#menu-bb {
+	background: #E0E000;
+	height: 50px;
+	
+}
 #thiscap {
 	padding-top: .75rem;
 	padding-bottom: .75rem;
@@ -52,23 +57,24 @@ Released   : 20100501
 	border: none;
 	text-decoration: none;
 	text-transform: uppercase;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 微軟正黑體;
+	font-weight:900;
 	font-size: 20px;
-	color: #DDBB04;
+	color: BLACK;
 }
 
 #menu>ul>li>a:hover {
 	margin: 0 0 0 50px;
 	background: #191E1A;
-	border-bottom: 3px solid #DDBB04;
-	color: #FFFFFF;
+	border-bottom: 3px solid #FF30FF;
+	color: white;
 }
 
 #selectAll1>a:hover {
 	background: red;
 	margin: 0 0 0 70px;
 	background: #191E1A;
-	border-bottom: 3px solid #DDBB04;
+	border-bottom: 3px solid #FF30FF;
 	color: #FFFFFF;
 }
 
@@ -141,7 +147,7 @@ Released   : 20100501
 
 #menu>.dropdown-checkbox:hover {
 	margin: 0 3px 0 0;
-	background: #191E1A;
+	background: #E0E0000;
 	border-bottom: 3px solid #DDBB04;
 	color: #FFFFFF;
 }
@@ -166,7 +172,7 @@ Released   : 20100501
 .dropdown-item:focus, .dropdown-item:hover {
 	color: #16181b;
 	text-decoration: none;
-	background-color: #f8f9fa;
+	background-color: yellow;
 }
 
 #searchform {
@@ -212,7 +218,7 @@ Released   : 20100501
 }
 
 #headernav li.active a {
-	background: #56c9d6;
+	background: yellow;
 	border-radius: 5px;
 	color: #FFF;
 }
@@ -239,7 +245,7 @@ Released   : 20100501
 		<jsp:include page="../header/header_guest.jsp" />
 	</div>
 
-	<div id="menu-bg">
+	<div id="menu-bb">
 		<div id="menu">
 			<ul id="main">
 				<li class="nav-item dropdown"><a href="#" name = "熱門" class="activeType">熱門 </a></li>
@@ -248,14 +254,14 @@ Released   : 20100501
 				<li class="nav-item dropdown"><a href="#" name = "美食" class="activeType">美食 </a></li>
 				<li class="nav-item dropdown"><a href="#" name = "旅遊" class="activeType">旅遊 </a></li>
 				<li class="nav-item dropdown"><a href="#" name = "音樂藝文 " class="activeType">音樂藝文 </a></li>
-				
 			</ul>
 		</div>
+	</div>
 		<!-- end header -->
-		<br>
+
 		
 		<!-- 關鍵字搜尋   -->					
-					<li>
+					<div>
 						<form id="searchform" method="get" action="#">
 							<h6>&nbsp;&nbsp;關鍵字搜尋</h6>
 							<div>
@@ -263,7 +269,7 @@ Released   : 20100501
 								<button type="button" class="btn btn-outline-light btn-sm">確認</button>
 							</div>
 						</form>
-					</li>
+					</div>
 
 <div class="newajaxlist">
 	 <c:import url="../ajax/forumTable.jsp"></c:import> 
