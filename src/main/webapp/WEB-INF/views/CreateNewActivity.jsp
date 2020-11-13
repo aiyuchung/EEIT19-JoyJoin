@@ -30,12 +30,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <!--  -----------------------------------------------------------  -->
 
-
-<!-- 	<!--Fonts-->
--->
-<!-- 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
-<!-- 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'> -->
-
 <script>
 	(function(i, s, o, g, r, a, m) {
 		i['GoogleAnalyticsObject'] = r;
@@ -53,25 +47,26 @@
 	ga('send', 'pageview');
 </script>
 <style>
-.video-frame div{
-	border: 2px solid darkgrey;
-/*  	width: auto;  */
-	height: 380px;
-	overflow:hidden;
-}
-
-
-textarea:focus {
-  outline : 0;
-}
-
-textarea{
-  padding-right:0;
-}
+	.video-frame div{
+		border: 2px solid darkgrey;
+	/*  	width: auto;  */
+		height: 380px;
+		overflow:hidden;
+	}
+	
+	
+	textarea:focus {
+	  outline : 0;
+	}
+	
+	textarea{
+	  padding-right:0;
+	}
 		
 
 </style>
 </head>
+
 <body>
 <!---------- Header ------------>		
 		<div class="headerPage">
@@ -83,23 +78,15 @@ textarea{
 		<div class="container addNew">
 			<div class="row">
 				<div class="content" style="margin: auto">
-				
-				 	
-						<div class="section-block">
+					<form method="POST" action="/newActivities" enctype="multipart/form-data" id="picform">
+					
+				 		<div class="section-block">
 							<div class="tab-content">
 								<div role="tabpanel" class="active" id="about">
 										<h1 class="section-title">活動封面照</h1>
-<!-- 							<div class="funding-meta"> -->
-<%-- 								<jsp:useBean id="now" class="java.util.Date" /> --%>
-									
-<!-- 								<span class="type-meta"><i class="fa fa-user"></i>  -->
-<!-- 								發起日期: -->
-<%-- 								<fmt:formatDate value="${isoDate}" type="date" dateStyle="long"/> --%>
-<!-- 								</span> -->
-<!-- 														<span class="type-meta"><i class="fa fa-tag"></i> <a href="#">crowdfunding</a>, <a href="#">launch</a> </span> -->
-<!-- 							img src="assets/img/image-heartbeat.jpg" class="img-responsive" alt="launch HTML5 Crowdfunding" -->
-<!-- 								<h4>活動封面照</h4> -->
-								<input type="file" id="file" />
+
+								<input type="file" name="updateImg" id="file"/>
+								
 								
 								<div class="video-frame">
 									<div id="forimg" align="center">
@@ -111,7 +98,9 @@ textarea{
 							</div>
 						</div>
 					</div>
-					<form:form method="POST" action="newActivities" modelAttribute="newform" id="newform">
+					</form>
+					<form:form method="POST" modelAttribute="newform" id="newform">
+					
 					<div class="section-block">
 						<div class="tab-content">
 							<div role="tabpanel" class="active" id="about">
@@ -248,10 +237,10 @@ textarea{
 							</div>
 						</div>
 					</div>
-					</form:form>
 					<div align="center">
 						<button id="createnew"  class="btn btn-secondary btn-lg" style="width:80%;background-color:#85AD90">確認送出</button>
 					</div>
+					</form:form>
 					</div>
 					<div>
 			  </div>
@@ -260,6 +249,7 @@ textarea{
   </div>
 
 </body>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script>
@@ -271,6 +261,7 @@ textarea{
 		$("#forimg").empty();
 		$("#forimg").append('<img id="demo" style="max-width: 100%; max-height: 100%;object-fit: cover" src="'+ e.target.result +'" />')
 // 	    $('#demo').attr('src', e.target.result);
+		$('#activityPic').val(e.target.result);
 	  };
 	  reader.readAsDataURL(file);
 	});
@@ -301,6 +292,7 @@ textarea{
 	})
 	$(".must").blur(function(){
 			var val = $(this).val();
+			console.log(val);
 			if (val ==""){
 				$(this).addClass("is-invalid");
 				$(this).parent().find(".invalid-feedback").css("display","block").text("必填欄位");
@@ -324,6 +316,7 @@ textarea{
 				window.location.href = "#";
 			}else{
 				$("#newform").submit();
+				$("#picform").submit();
 			}
 		})
 	})

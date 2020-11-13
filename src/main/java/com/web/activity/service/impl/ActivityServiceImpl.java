@@ -19,6 +19,7 @@ import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
+import com.web.activity.model.ActivityPicBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.ProvinceBean;
 import com.web.activity.service.ActivityService;
@@ -29,6 +30,11 @@ public class ActivityServiceImpl implements ActivityService {
 	
 	@Autowired
 	ActivityDao dao;
+	
+	@Override
+	public void updateLeftDays() {
+		dao.updateLeftDays();
+	}
 	
 	@Override
 	public Map<String, Integer>  checkFinalDate() {
@@ -299,8 +305,8 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public void createActivity(Integer memberNo, ActivityBean newform) {
-		dao.createActivity(memberNo,newform);
+	public void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic) {
+		dao.createActivity(memberNo,newform,pic);
 	}
 	
 

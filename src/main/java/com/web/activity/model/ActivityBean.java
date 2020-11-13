@@ -15,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Entity
@@ -22,12 +25,11 @@ import javax.persistence.Table;
 public class ActivityBean implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
 //	@GeneratedValue(generator = "UUID")
 //	@GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
 //	@Column(name = "id", updatable = false, nullable = false)
 //	private String id;
-
+	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)	
 	private int activityNo;
 	
@@ -55,15 +57,12 @@ public class ActivityBean implements java.io.Serializable {
 	private Integer minLimit;
 	private Integer price;
 	private String introduction;
-	private Blob activityPic;
+	
 	private String activityStatus;
 	private Integer leftDays;
 	private Integer joinedNum;
 	private Integer hitCount;
 	private Integer levelLimit;
-//	@Transient
-//	private multiPartFiles updateImg;
-	
 	
 	public Integer getHitCount() {
 		return hitCount;
@@ -241,12 +240,7 @@ public class ActivityBean implements java.io.Serializable {
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
 	}
-	public Blob getActivityPic() {
-		return activityPic;
-	}
-	public void setActivityPic(Blob activityPic) {
-		this.activityPic = activityPic;
-	}
+
 	public String getActivityStatus() {
 		return activityStatus;
 	}

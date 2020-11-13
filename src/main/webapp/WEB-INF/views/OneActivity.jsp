@@ -113,20 +113,27 @@
 						<span>倒數截止天數</span>
 					</div>
 					<div class="reminder last">
-						<c:if test="${isJoined == false}">
-						<a href="#" class="follow">
-<%-- 						<img src="<c:url value='/icons/star.png'/>"/> --%>
-						<strong>✰關注本活動</strong></a>
-						</c:if>
-						<c:if test="${isJoined == true}">
-						<a href="#" class="nofollow">
-<%-- 						<img src="<c:url value='/icons/filled-star.png'/>" /> --%>
-						<strong>★取消關注</strong></a>
-						</c:if>
-					
-						 
+						
+							<c:if test="${isJoined == false}">
+								<c:choose>
+									<c:when test="${one.memberBean.account == account}">
+										<a href="<c:url value='/updateActivity/${one.activityNo}'/>" >
+										<strong>修改活動</strong></a>
+									</c:when>
+									<c:otherwise>
+										<a href="#" class="follow">
+				<%-- 						<img src="<c:url value='/icons/star.png'/>"/> --%>
+										<strong>✰關注本活動</strong></a>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+							<c:if test="${isJoined == true}">
+								<a href="#" class="nofollow">
+		<%-- 						<img src="<c:url value='/icons/filled-star.png'/>" /> --%>
+								<strong>★取消關注</strong></a>
+							</c:if>
+						
 						<!--   點選後可在個人頁面擁有此活動之連結    -->
-					</div>
 				</div>
 			</div>
 		</div>
@@ -268,16 +275,28 @@
 <!-- 											<span class="sr-only">45% Complete</span> -->
 										</div>
 									</div>
+									
+									
+									
+											
+									
+									
 
 									<span class="goal-progress">
 									<strong><fmt:parseNumber integerOnly="true" value="${one.joinedNum / one.minLimit *100}" /> 
 									</strong>%達成</span> 
 									<span class="count-down">剩下<strong>${one.leftDays}</strong>天截止</span> 
 									<c:if test="${isJoined == false}">
-									<button class="btn btn-launch">參加活動</button>
+										<c:choose>
+											<c:when test="${one.memberBean.account == account}">
+											</c:when>
+											<c:otherwise>
+												<button class="btn btn-launch">參加活動</button>
+											</c:otherwise>
+										</c:choose>
 									</c:if>
 									<c:if test="${isJoined == true}">
-									<button class="btn btn-cancel">取消參加</button>
+										<button class="btn btn-cancel">取消參加</button>
 									</c:if>
 								</div>
 							</div>
@@ -447,7 +466,12 @@
 	
 	$(".lookmsg").click(function(){
 		var isJoined = ${isJoined}
+		var host = ${one.memberBean.account}
+		var vsit = ${accout}
 		if (isJoined){
+			$(".msgboard").show();
+			$(".addmsg").show();
+		}else if(host == vsit){
 			$(".msgboard").show();
 			$(".addmsg").show();
 		}else{

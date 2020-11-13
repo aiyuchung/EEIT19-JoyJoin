@@ -1,13 +1,10 @@
 package com.web.activity.dao.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,6 +16,7 @@ import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
+import com.web.activity.model.ActivityPicBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.ProvinceBean;
@@ -29,6 +27,21 @@ public class ActivityDaoImpl implements ActivityDao {
 	
 	@Autowired
 	SessionFactory factory;
+	//----------------------------------------更新截止天數--------------------------------------------
+		@Override
+		public void updateLeftDays() {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM ActivityBean";
+			List<ActivityBean> lists = session.createQuery(hql).getResultList();
+			for (ActivityBean bean:lists) {
+				Date today = new Date();
+				Date expiredDay = bean.getFinalDate();
+				long diff = expiredDay.getTime() - today.getTime() ; //截止日跟今天差幾毫秒
+				long diffDays = diff / (24 * 60 * 60 * 1000); //截止日跟今天差幾天
+				bean.setLeftDays((int)diffDays);
+				session.saveOrUpdate(bean);
+			}
+		}
 	//----------------------------------------確認是否為截止日--------------------------------------------
 	@Override
 	public Map<String, Integer>  checkFinalDate() {
@@ -391,7 +404,7 @@ public class ActivityDaoImpl implements ActivityDao {
 	
 	//----------------------------------------參加活動的會員--------------------------------------------
 		@Override
-		public void createActivity(Integer memberNo, ActivityBean newform) {
+		public void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic) {
 			Session session = factory.getCurrentSession();
 			Date today = new Date();
 			java.sql.Date sqltoday = new java.sql.Date(today.getTime());
@@ -401,6 +414,7 @@ public class ActivityDaoImpl implements ActivityDao {
 			
 			
 			String prov = newform.getProv();
+			System.out.println("prov="+prov);
 			String hql1 = "FROM ProvinceBean WHERE prov = :prov ";
 			ProvinceBean provs = (ProvinceBean) session.createQuery(hql1).setParameter("prov",prov).getSingleResult();
 			String location = provs.getLocation();
@@ -429,6 +443,12 @@ public class ActivityDaoImpl implements ActivityDao {
 			newform.setProvinceBean(session.get(ProvinceBean.class,provId));
 			newform.setActivityClassBean(session.get(ActivityClassBean.class,activityClassNo));
 			session.save(newform);
+			
+			String hql4 = "SELECT MAX(activityNo) FROM ActivityBean ";
+			Integer no = (Integer) session.createQuery(hql4).getSingleResult();
+//			int no = list.getActivityNo();
+			pic.setActivityBean(session.get(ActivityBean.class,no));
+			session.save(pic);
 		}
 
 

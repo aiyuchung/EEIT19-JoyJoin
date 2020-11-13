@@ -8,11 +8,16 @@ import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
+import com.web.activity.model.ActivityPicBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.ProvinceBean;
 
 public interface ActivityDao {	
 	
+	//更新截止天數
+	void updateLeftDays();
+	
+	//確認是否為截止日
 	Map<String, Integer> checkFinalDate();
 	
 	//更新點擊量
@@ -89,5 +94,5 @@ public interface ActivityDao {
 	List<ActivityJoinedBean> joinedMember(int activityNo);
 	
 	//新增活動
-	void createActivity(Integer memberNo, ActivityBean newform);
+	void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic);
 }
