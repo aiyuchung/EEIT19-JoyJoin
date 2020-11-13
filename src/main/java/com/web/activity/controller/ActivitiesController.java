@@ -78,6 +78,8 @@ public class ActivitiesController {
 		List<ActivityMsgBean> msgBox = service.showMsg(activityNo); //留言板內容
 		int msgNum = msgBox.size(); //留言板留言數量
 		String account = (String) session.getAttribute("account"); //取得目前使用者帳號
+		MemberBean member = memberService.getMember(account);
+		String nickname = member.getNickname();
 		List<ActivityJoinedBean> joined = service.joinedMember(activityNo); //取得本活動參加名單
 		boolean isJoined = false;
 		for(ActivityJoinedBean ajb:joined) {
@@ -87,7 +89,7 @@ public class ActivitiesController {
 				break;
 			}
 		}
-		
+		model.addAttribute("nickname",nickname);
 		model.addAttribute("isJoined",isJoined);
 		model.addAttribute("joined",joined);
 		model.addAttribute("msgBox",msgBox);
@@ -104,14 +106,15 @@ public class ActivitiesController {
 		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
 		List<ActivityMsgBean> msgBox = service.showMsg(activityNo);
 		
-		MemberBean member= (MemberBean) session.getAttribute("member");
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
 		Integer memberNo = member.getMemberNo();
 		service.joinedOne(memberNo, activityNo);
 		List<ActivityJoinedBean> joined = service.joinedMember(activityNo);
 		List<String> joinedList = new ArrayList<>();
 		for(ActivityJoinedBean ajb:joined) {
-			String account = ajb.getMemberBean().getAccount();
-			joinedList.add(account);
+			String joinedaccount = ajb.getMemberBean().getAccount();
+			joinedList.add(joinedaccount);
 		}
 		
 		int msgNum = msgBox.size();
@@ -132,14 +135,15 @@ public class ActivitiesController {
 		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
 		List<ActivityMsgBean> msgBox = service.showMsg(activityNo);
 		
-		MemberBean member= (MemberBean) session.getAttribute("member");
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
 		Integer memberNo = member.getMemberNo();
 		service.cancelOne(memberNo, activityNo);
 		List<ActivityJoinedBean> joined = service.joinedMember(activityNo);
 		List<String> joinedList = new ArrayList<>();
 		for(ActivityJoinedBean ajb:joined) {
-			String account = ajb.getMemberBean().getAccount();
-			joinedList.add(account);
+			String joinedaccount = ajb.getMemberBean().getAccount();
+			joinedList.add(joinedaccount);
 		}
 		
 		int msgNum = msgBox.size();
@@ -153,7 +157,8 @@ public class ActivitiesController {
 	}
 //-----------------------------------------更新活動跳轉頁面↓-----------------------------------------	
 	@GetMapping("/updateActivity/{id}")
-	public String update(@PathVariable("id") int activityNo, HttpSession session, Model model) {
+	public String update(@PathVariable("id") int activityNo, HttpSession session, Model model
+			,ActivityPicBean pic, @ModelAttribute("newform") ActivityBean newform) {
 		
 //		ActivityBean activity = service.selectOneActivity(activityNo);
 //		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
@@ -178,16 +183,70 @@ public class ActivitiesController {
 //		model.addAttribute("hitCount",hitCount);
 		return "CreateNewActivity";
 	}
+//-----------------------------------------新增活動空的form表單↓-----------------------------------------		
+	@GetMapping("/newActivities")
+	
+	public String newAcitivity(Model model,@ModelAttribute("newform") ActivityBean newform
+			) {
+//			ActivityPicBean pic = new ActivityPicBean();
+		List<ActivityBean> list = service.selectAllActivities();
+		List<ActivityTypeBean> types = service.showAllTypes();
+		List<ActivityClassBean> categoryList = service.selectAllClasses();
+		List<ProvinceBean> provs = service.selectAllProvs();
+		model.addAttribute("activities",list);
+		model.addAttribute("allTypes",types);
+		model.addAttribute("categoryList",categoryList);
+		model.addAttribute("provs",provs);
+	    return "CreateNewActivity";
+	   }
+//-----------------------------------------新增活動↓-----------------------------------------
+	@PostMapping("/newActivities")
+	public String createNewAcitivity(HttpSession session, Model model, 
+			ActivityPicBean pic, @ModelAttribute("newform") ActivityBean newform) {
+		String account =  (String) session.getAttribute("account");
+		MemberBean member= (MemberBean) session.getAttribute("member");
+		Integer memberNo = member.getMemberNo();
+		String fileName = pic.getFileName();
+		MultipartFile mFile = pic.getUpdateImg();
+//			//取得檔案型態 令存檔名
+//			for (int i : mFile) {
+//				String original = mFile[i].getOriginalFilename();
+//				UUID uuid = UUID.randomUUID();
+//				String fileTyle = original.substring(original.lastIndexOf("."), original.length());
+//				albumn.setPicContent("Pet_" + uuid + "_" + service.MaxID() + fileTyle);
+//			}
+//			
+		if (mFile != null && !mFile.isEmpty()) {
+			byte[] b;
+			try {
+				b = mFile.getBytes();
+				Blob blob = new SerialBlob(b);
+				pic.setActivityPic(blob);
+			} catch (IOException | SQLException e) {
+				e.printStackTrace();
+				throw new RuntimeException("異常:" + e.getMessage());
+			}
+		}
+		String prov= newform.getProv();
+		System.out.println("controller prov:"+prov);
+		service.createActivity(memberNo, newform, pic);
+		memberService.updatePost(account);
 		
+	    return "redirect:/activities";
+	   }
+				
 //-----------------------------------------單個活動的留言板↓-----------------------------------------	
 	
 	@PostMapping("/msgSend")
 	public String saveMsg(Model model, HttpSession session,
 			String msg, Integer activityNo
 			) {
-		MemberBean member= (MemberBean) session.getAttribute("member");
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
 		Integer memberNo = member.getMemberNo();
+		String nickname = member.getNickname();
 		List<ActivityMsgBean> msgBox = service.saveMsg(msg,activityNo,memberNo);
+		model.addAttribute("nickname",nickname);
 		model.addAttribute("msgBox",msgBox);
 		return "ajax/msgBox";
 	}
@@ -220,58 +279,7 @@ public class ActivitiesController {
 		model.addAttribute("categoryList",categoryList);
 		return "ShowActivities";
 	}
-//-----------------------------------------新增活動空的form表單↓-----------------------------------------		
-	@GetMapping("/newActivities")
-	
-	public String newAcitivity(Model model,@ModelAttribute("newform") ActivityBean newform
-			) {
-//		ActivityPicBean pic = new ActivityPicBean();
-		List<ActivityBean> list = service.selectAllActivities();
-		List<ActivityTypeBean> types = service.showAllTypes();
-		List<ActivityClassBean> categoryList = service.selectAllClasses();
-		List<ProvinceBean> provs = service.selectAllProvs();
-		model.addAttribute("activities",list);
-		model.addAttribute("allTypes",types);
-		model.addAttribute("categoryList",categoryList);
-		model.addAttribute("provs",provs);
-	    return "CreateNewActivity";
-	   }
-//-----------------------------------------新增活動↓-----------------------------------------
-	@PostMapping("/newActivities")
-	public String createNewAcitivity(HttpSession session, Model model, 
-			ActivityPicBean pic, @ModelAttribute("newform") ActivityBean newform) {
-		String account =  (String) session.getAttribute("account");
-		MemberBean member= (MemberBean) session.getAttribute("member");
-		Integer memberNo = member.getMemberNo();
-		String fileName = pic.getFileName();
-		MultipartFile mFile = pic.getUpdateImg();
-//		//取得檔案型態 令存檔名
-//		for (int i : mFile) {
-//			String original = mFile[i].getOriginalFilename();
-//			UUID uuid = UUID.randomUUID();
-//			String fileTyle = original.substring(original.lastIndexOf("."), original.length());
-//			albumn.setPicContent("Pet_" + uuid + "_" + service.MaxID() + fileTyle);
-//		}
-//		
-		if (mFile != null && !mFile.isEmpty()) {
-			byte[] b;
-			try {
-				b = mFile.getBytes();
-				Blob blob = new SerialBlob(b);
-				pic.setActivityPic(blob);
-			} catch (IOException | SQLException e) {
-				e.printStackTrace();
-				throw new RuntimeException("異常:" + e.getMessage());
-			}
-		}
-		String prov= newform.getProv();
-		System.out.println("controller prov:"+prov);
-		service.createActivity(memberNo, newform, pic);
-		memberService.updatePost(account);
-		
-	    return "redirect:/activities";
-	   }
-	
+
 //-----------------------------------------AJAX快篩↓-----------------------------------------		
 	@PostMapping("/ajax_checkedClass")
 	public String checkedClasses(Model model,
@@ -286,7 +294,8 @@ public class ActivitiesController {
 	@GetMapping("/ajax_ordered1")
 	public String startFromLatest(Model model) {
 		List<ActivityBean> beans = service.startFromLatest();
-		
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",beans);
 		return "ajax/activity lists";
 
@@ -295,6 +304,8 @@ public class ActivitiesController {
 	@GetMapping("/ajax_ordered2")
 	public String startFromEarlest(Model model) {
 		List<ActivityBean> beans = service.startFromEarlest();
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",beans);
 		return "ajax/activity lists";
 
@@ -303,6 +314,8 @@ public class ActivitiesController {
 	@GetMapping("/ajax_ordered3")
 	public String endFromLatest(Model model) {
 		List<ActivityBean> beans = service.endFromLatest();
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",beans);
 		return "ajax/activity lists";
 
@@ -311,6 +324,8 @@ public class ActivitiesController {
 	@GetMapping("/ajax_ordered4")
 	public String endFromEarlest(Model model) {
 		List<ActivityBean> beans = service.endFromEarlest();
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",beans);
 		return "ajax/activity lists";
 
@@ -319,6 +334,8 @@ public class ActivitiesController {
 	@GetMapping("/ajax_ordered5")
 	public String peopleFromFew(Model model) {
 		List<ActivityBean> beans = service.peopleFromFew();
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",beans);
 		return "ajax/activity lists";
 
@@ -327,6 +344,8 @@ public class ActivitiesController {
 	@GetMapping("/ajax_ordered6")
 	public String peopleFromMany(Model model) {
 		List<ActivityBean> beans = service.peopleFromMany();
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",beans);
 		return "ajax/activity lists";
 
@@ -335,6 +354,8 @@ public class ActivitiesController {
 	@GetMapping("/ajax_ordered7")
 	public String placeFromNorth(Model model) {
 		List<ActivityBean> beans = service.placeFromNorth();
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",beans);
 		return "ajax/activity lists";
 
@@ -343,6 +364,8 @@ public class ActivitiesController {
 	@GetMapping("/ajax_ordered8")
 	public String placeFromSouth(Model model) {
 		List<ActivityBean> beans = service.placeFromSouth();
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
 		model.addAttribute("activities",beans);
 		return "ajax/activity lists";
 
@@ -373,7 +396,6 @@ public class ActivitiesController {
 	
 	@GetMapping("/ajax_checktype")
 	public String classForCheckedType(Model model, @RequestParam String type) {
-		System.out.println("大類傳ajax:"+type);
 		List<ActivityClassBean> classes = service.classForCheckedType(type);
 //		int elementsNum = classes.size();
 		model.addAttribute("categoryList",classes);

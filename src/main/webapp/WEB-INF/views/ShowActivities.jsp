@@ -459,42 +459,45 @@
 				<div style="padding-bottom: 20px; overflow:hidden">
 					<img src="images/img02.jpg" alt=""/>
 				</div>
-				<div class="post newajaxlist"></div>
+				<div class="post newajaxlist">
 				
 				
 <!-- 活動列表 (活動名稱v/活動日期v/截止日期/活動類別/最高人數/發起人v/發起日期v) -->
-				<div id="oldajaxlist">
-					<div id="ifnolist" style="display:none">
-						<input id="num" type="text" value="${selectedNum}" style="display:none"/>
-						<span>似乎沒有符合條件的活動...</span>
-						<p>可以重新提供條件或是用快篩方式查詢喔!</p>
-					</div>
-					<c:forEach var="all" items="${activities}">
-						<div class="post">
-							<h2 class="title activitytitle">
-								<strong>${all.activityDate} </strong> (${all.prov})
-							</h2>
-							<h1 class="title">
-								<a href="<c:url value='/oneActivity/${all.activityNo}' />" class="more">${all.name}</a>
-							</h1>
-							<p class="byline">
-								<small><a href="#發起人的超連結" rel="nofollow" class="host"><strong>${all.memberBean.nickname}</strong></a>&nbsp;於
-									${all.createdDate} 發起</small>
-							</p>
-							<div class="entry">
-								<p>
-									本 <strong>${all.activityTypeName}</strong>
-									活動&nbsp;將於${all.finalDate}截止
-								</p>
-								<p>只要 ${all.minLimit}人即可成公開團! </p>
-								<p>本活動最高上限人數: ${all.maxLimit}</p>
-								<p class="links">
-									<a href="<c:url value='/oneActivity/${all.activityNo}' />" class="more"> (看詳細內容) </a> &nbsp;&nbsp;&nbsp;
-								</p>
+					<div id="oldajaxlist">
+						<div id="oldajaxlist">
+							<div id="ifnolist" style="display:none">
+								<input id="num" type="text" value="${selectedNum}" style="display:none"/>
+								<span>似乎沒有符合條件的活動...</span>
+								<p>可以重新提供條件或是用快篩方式查詢喔!</p>
 							</div>
+							<c:forEach var="all" items="${activities}">
+								<div class="post">
+									<h2 class="title activitytitle">
+										<strong>${all.activityDate} </strong> (${all.prov})
+									</h2>
+									<h1 class="title">
+										<a href="<c:url value='/oneActivity/${all.activityNo}' />" class="more">${all.name}</a>
+									</h1>
+									<p class="byline">
+										<small><a href="#發起人的超連結" rel="nofollow" class="host"><strong>${all.memberBean.nickname}</strong></a>&nbsp;於
+											${all.createdDate} 發起</small>
+									</p>
+									<div class="entry">
+										<p>
+											本 <strong>${all.activityTypeName}</strong>
+											活動&nbsp;將於${all.finalDate}截止
+										</p>
+										<p>只要 ${all.minLimit}人即可成公開團! </p>
+										<p>本活動最高上限人數: ${all.maxLimit}</p>
+										<p class="links">
+											<a href="<c:url value='/oneActivity/${all.activityNo}' />" class="more"> (看詳細內容) </a> &nbsp;&nbsp;&nbsp;
+										</p>
+									</div>
+								</div>
+							</c:forEach>
 						</div>
-					</c:forEach>
-				</div>
+					</div>
+				</div>	
 			</div>
 			<!-- end content -->
 			<!-- start sidebars -->
@@ -728,11 +731,12 @@ function showNext(){
 				  error:function(){
 					 	$(".newajaxlist").empty();
 			 			$(".newajaxlist").append(
-			 					'<c:forEach var="all" items="${activities}"><div class="post oldajaxlist"><h2 class="title"><strong>${all.activityDate} </strong> (${all.prov})</h2>'
+			 					'<c:forEach var="all" items="${activities}"><div class="post"><h2 class="title activitytitle"><strong>${all.activityDate} </strong> (${all.prov})</h2>'
 			 				        +'<h1 class="title"><a href="#">${all.name}</a></h1><p class="byline"><small><a href="#發起人的超連結" rel="nofollow">${all.memberBean.nickname}</a>於 ${all.createdDate} 發起</small></p>'
 			 				        +'<div class="entry"><p>本 <strong>${all.activityTypeName}</strong> 活動將於${all.finalDate}截止</p>'
-			 				        +'<p>只要 ${all.minLimit}人即可成公開團!     本活動最高上限人數:  ${all.maxLimit}</p>'
-			 				        +'<p class="links"><a href="#" class="more">(看詳細內容)</a> &nbsp;&nbsp;&nbsp;</p></div></div></c:forEach>'
+			 				        +'<p>只要 ${all.minLimit}人即可成公開團!  </p><p>本活動最高上限人數:  ${all.maxLimit}</p>'
+			 				        +'<p class="links"><a href="${pageContext.request.contextPath}/oneActivity/${all.activityNo}" '
+			 				        +'" class="more">(看詳細內容)</a> &nbsp;&nbsp;&nbsp;</p></div></div></c:forEach>'
 				 		);
 				  }
 		})

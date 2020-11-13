@@ -26,8 +26,6 @@
 	crossorigin="anonymous"></script>
 <!--  -----------------------------------------------------------  -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <script>
 	(function(i, s, o, g, r, a, m) {
@@ -86,6 +84,18 @@
 		background-color:#85AD90;
 		color:#fff;
 	}
+	.nofollow{
+		background-color:#85AD90;
+		color:#fff;
+	}
+	.msgbtn1{
+	 	position:relative;
+	 	
+	}
+	.msgbtn1{
+	 	position:relative;
+	 	top:5px;
+	}
 </style>
 </head>
 
@@ -122,15 +132,15 @@
 									</c:when>
 									<c:otherwise>
 										<a href="#" class="follow">
-				<%-- 						<img src="<c:url value='/icons/star.png'/>"/> --%>
-										<strong>✰關注本活動</strong></a>
+<%-- 										<img src="<c:url value='/icons/star.png'/>"/> --%>
+										<strong><span style="font-size:18px">✰</span>關注本活動</strong></a>
 									</c:otherwise>
 								</c:choose>
 							</c:if>
 							<c:if test="${isJoined == true}">
 								<a href="#" class="nofollow">
-		<%-- 						<img src="<c:url value='/icons/filled-star.png'/>" /> --%>
-								<strong>★取消關注</strong></a>
+<%-- 								<img src="<c:url value='/icons/filled-star.png'/>" /> --%>
+								<strong><span style="font-size:18px">★</span>取消關注</strong></a>
 							</c:if>
 						
 						<!--   點選後可在個人頁面擁有此活動之連結    -->
@@ -196,7 +206,7 @@
 									<h1 class="section-title">活動細項</h1>
 									<div class="info-block  ">
 											<div class="fortitle">主辦人</div>
-											<div class="forcontent"><a href="#">${member.nickname}</a></div>
+											<div class="forcontent"><a href="#">${one.memberBean.nickname}</a></div>
 									</div>
 									<div class="info-block  ">
 											<div class="fortitle">活動類型</div>
@@ -275,12 +285,6 @@
 <!-- 											<span class="sr-only">45% Complete</span> -->
 										</div>
 									</div>
-									
-									
-									
-											
-									
-									
 
 									<span class="goal-progress">
 									<strong><fmt:parseNumber integerOnly="true" value="${one.joinedNum / one.minLimit *100}" /> 
@@ -300,56 +304,19 @@
 									</c:if>
 								</div>
 							</div>
-<!-- 							<div role="tabpanel" class="tab-pane" id="updates"> -->
-<!-- 								<div class="update-information"> -->
-<!-- 								<h1 class="section-title">UPDATES</h1> -->
-<!-- 									update items -->
-<!-- 									<div class="update-post"> -->
-<!-- 										<h4 class="update-title">We've started shipping!</h4> -->
-<!-- 										<span class="update-date">Posted 2 days ago</span> -->
-<!-- 										<p>Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.</p> -->
-<!-- 									</div> -->
-<!-- 									<div class="update-post"> -->
-<!-- 										<h4 class="update-title">Launch begins manufacturing </h4> -->
-<!-- 										<span class="update-date">Posted 9 days ago</span> -->
-<!-- 										<p>Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.</p> -->
-<!-- 									</div> -->
-<!-- 									<div class="update-post"> -->
-<!-- 										<h4 class="update-title">Designs have now been finalized</h4> -->
-<!-- 										<span class="update-date">Posted 17 days ago</span> -->
-<!-- 										<p>Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.</p> -->
-<!-- 									</div> -->
-<!-- 									/update items -->
-<!-- 								</div> -->
-<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
 				<!--/tabs-->
 				<!--/main content-->
 				<!--sidebar-->
-				<div class="content col-md-4 col-sm-12 col-xs-12">
+				<div class="allmsg content col-md-4 col-sm-12 col-xs-12">
 					
 					<div class="section-block summary">
 						<h1 class="section-title">留言板</h1>
 						<div class="profile-contents">
 							<h2 class="position">參加人員歡迎在此留言板討論及詢問</h2>
-<!-- 							<img src="assets/img/profile-img.jpg" -->
-<!-- 								class="profile-image img responsive" alt="John Doe"> -->
-							<!--social links-->
-<!-- 							<ul class="list-inline"> -->
-<!-- 								<li><a href="#"><i class="fa fa-twitter"></i></a></li> -->
-<!-- 								<li><a href="#"><i class="fa fa-facebook"></i></a></li> -->
-<!-- 								<li><a href="#"><i class="fa fa-google-plus"></i></a></li> -->
-<!-- 								<li><a href="#"><i class="fa fa-linkedin"></i></a></li> -->
-<!-- 								<li><a href="#"><i class="fa fa-git"></i></a></li> -->
-<!-- 							</ul> -->
-							<!--/social links-->
 							<button class="btn btn-contact lookmsg">👇🏻看全部</button>
-
-<!-- 							  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> -->
-<!-- 							    Button with data-target -->
-<!-- 							  </button> -->
 							<button class="btn btn-contact addmsg" data-toggle="collapse" data-target="#collapseExample" style="display:none">我要留言</button>
 						</div>
 						
@@ -368,10 +335,12 @@
 						<p>目前還沒有人留言</p>
 						</c:if>
 						<c:if test="${msgNum != 0}">
+						<h1 class="section-title" >留言板</h1>
 						<c:forEach var="msg" items="${msgBox}">
 						<div class="credit-block sources ">
-							<div >
-								<img src="" class="userpic msgpic"/><span>&nbsp;${member.nickname}<a href="#"> ( ${account} ) </a></span>
+							<div>
+								<img src="" class="userpic msgpic"/><span>&nbsp;${nickname}<a href="#"> ( ${account} ) </a></span>
+								<button class="msgbtn1">編輯</button><button class="msgbtn2">刪除</button>
 							</div>
 							<div class="showmsg">
 								<textarea name="msg" cols="28" class="msgbox newmsg" readonly>${msg.msgContent}</textarea>
@@ -440,6 +409,9 @@
 	    </div>
 	  </div>
 	</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 <script>
 	$(document).ready(function(){
 		var persentage= ${one.joinedNum/one.minLimit*100};
@@ -450,32 +422,30 @@
 		var isJoined = ${isJoined}
 		if (!isJoined){
 			var text = $(this).text();
-			if (text == "取消關注"){
-				var url = "<c:url value='/icons/star.png'/>"
+			if (text == "★取消關注"){
 				$(".reminder").empty();
-				$(".reminder").append('<a href="#" class="follow"><img src="'+url+'"/><strong>關注本活動</strong></a>')
+				$(".reminder").append('<a href="#" class="follow"><strong><span style="font-size:18px">✰</span>關注本活動</strong></a>')
 //	 			$(this).css("background-color","#fff").css("color","#85AD90");
 			}else{
-				var url = "<c:url value='/icons/star-filled.png'/>"
 				$(".reminder").empty();
-				$(".reminder").append('<a href="#" class="nofollow"><img src="'+url+'"/><strong>取消關注</strong></a>')
+				$(".reminder").append('<a href="#" class="nofollow"><strong><span style="font-size:18px">★</span>取消關注</strong></a>')
 			}
 		}
 	})
 	
 	
 	$(".lookmsg").click(function(){
-		var isJoined = ${isJoined}
-		var host = ${one.memberBean.account}
-		var vsit = ${accout}
-		if (isJoined){
-			$(".msgboard").show();
-			$(".addmsg").show();
-		}else if(host == vsit){
-			$(".msgboard").show();
-			$(".addmsg").show();
+		var isJoined = ${isJoined};
+		var visit = "${account}";
+		var host = "${one.memberBean.account}";
+		console.log(visit + ";" + host)
+		if(!isJoined){
+			if(host != visit){
+				$('#msgModal').modal('show');
+			}
 		}else{
-			$('#msgModal').modal('show');
+			$(".msgboard").show();
+			$(".addmsg").show();
 		}
 		
 	})
@@ -497,8 +467,8 @@
 				  activityNo: parseInt(activityNo),
 				  },
 			  success:function(data){
-				  $(".msgboard").empty();
-				  $(".msgboard").append(data);
+				  $(".allmsg").empty();
+				  $(".allmsg").append(data);
 				}
 		})
 	})

@@ -52,7 +52,7 @@ a {
 	border-radius:4px;
 	text-decoration:none;
 }
-.goal-summary .reminder a:hover, .goal-summary .reminder a:focus {
+.goal-summary .reminder follow a:hover, .goal-summary .reminder a:focus {
 	background-color:#85AD90;
 	color:#fff;
 }
@@ -442,6 +442,7 @@ a {
 
 /*-Credits-*/
 .credit-block {
+	position:static;
 	padding: 5px;
 	background-color: #FFF;
 	border-radius: 4px;
