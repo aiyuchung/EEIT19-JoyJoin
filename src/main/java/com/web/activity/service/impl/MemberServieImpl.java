@@ -70,7 +70,7 @@ public class MemberServieImpl implements MemberService {
 		public void openType(String account) {
 			memberDao.openType(account);
 		}
-		
+
 		@Transactional
 		@Override
 		public void updateTime(String account, String time) {
