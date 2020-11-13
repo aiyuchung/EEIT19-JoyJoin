@@ -12,13 +12,13 @@
 <body>
 	<table width="70%" border="1" align="center">
 			<tr>
-				<td>類型</td>
-				<td>標題</td>
-				<td>評分</td>
-				<td>發文者</td>
-				<td>發文時間</td>
-				<td>地區</td>
-				<td>點閱率</td>
+				<td width="10%">類型</td>
+				<td width="30%">標題</td>
+				<td width="5%">評分</td>
+				<td width="15%">發文者</td>
+				<td width="20%">發文時間</td>
+				<td width="10%">地區</td>
+				<td width="10%">點閱率</td>
 			</tr>
 			 <c:forEach var="forum" items="${forumList}">
 			 		<form id>

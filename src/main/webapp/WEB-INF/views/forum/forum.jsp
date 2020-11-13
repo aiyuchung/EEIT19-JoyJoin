@@ -242,12 +242,13 @@ Released   : 20100501
 	<div id="menu-bg">
 		<div id="menu">
 			<ul id="main">
-				<li class="nav-item dropdown"><a href="#" name = "HIT" class="activeType">熱門 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "MOVIE" class="activeType">電影 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "SPORT" class="activeType">運動 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "FOOD" class="activeType">美食 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "HIPSTER" class="activeType">文青 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "TRAVEL" class="activeType">旅遊 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "熱門" class="activeType">熱門 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "電影" class="activeType">電影 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "運動" class="activeType">運動 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "美食" class="activeType">美食 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "旅遊" class="activeType">旅遊 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "音樂藝文 " class="activeType">音樂藝文 </a></li>
+				
 			</ul>
 		</div>
 		<!-- end header -->
@@ -268,7 +269,7 @@ Released   : 20100501
 	 <c:import url="../ajax/forumTable.jsp"></c:import> 
 </div>
 		<script>
-			$(".activeType").click(function(){ //以近期月份作為快速篩選
+			$(".activeType").click(function(){ //以活動類型作為快速篩選
 				var activeType = $(this).attr('name');
 		 		$.ajax({
 					  url:"ajax_forum",
