@@ -78,9 +78,9 @@ public class MemberController {
 				boolean checkEmail = memberService.cheakEmail(email);
 				if(checkAccount==true&&checkEmail==true) {
 					memberService.signUp(mb);		//====註冊====
+					System.out.println("======================>"+"註冊成功");
 					send2open(account, email);
-					model.addAttribute("level", "1");    //權限存入session
-	                model.addAttribute("account", account);    //帳號存入session
+					System.out.println("======================>"+"信件已發送");
 					return "redirect:/index";					
 				}else {
 					if(!checkEmail) {
@@ -128,8 +128,10 @@ public class MemberController {
 
 		  
 		  @GetMapping("/check")
-		  public String openType( Model model, String account) {  
+		  public String openType( Model model, String account) {  			  
 			memberService.openType(account);
+			model.addAttribute("level", "1");    //權限存入session
+            model.addAttribute("account", account);    //帳號存入session
 			return	"redirect:/index";	
 //要寄出		  http://localhost:8080/JoyJoin/check?account=A1234
 		  }
@@ -140,9 +142,9 @@ public class MemberController {
 			  String pwd = "jkwwrqowszlonefv";		//寄件者信箱密碼
 			  String to = mail;
 			  String from = "eeit19joinjoy@gmail.com";
-			  String host = "gmail.com";
+			  String host = "smtp.gmail.com";
 			  String subject = "歡迎加入JoyJoin的大家庭";
-			  String body = "http://localhost:8080/JoyJoin/check?account=" + account + "/r/n點選以開通帳號";
+			  String body = "http://localhost:8080/JoyJoin/check?account=" + account + "\r\n點選以開通帳號";
 			  
 			  Properties properties = System.getProperties();
 				properties.put("mail.smtp.starttls.enable", "true");
@@ -152,7 +154,11 @@ public class MemberController {
 				properties.put("mail.smtp.port", "25");
 				properties.put("mail.smtp.auth", "true");
 				properties.put("mail.mime.allowutf8", "true");
+				properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
 				Session session = Session.getDefaultInstance(properties);
+
+				System.out.println("======================>"+"成功設定信件發送");
 				try {
 					MimeMessage message = new MimeMessage(session);
 					message.setFrom(new InternetAddress(from));
@@ -163,6 +169,7 @@ public class MemberController {
 					Transport transport = session.getTransport("smtp");
 					transport.connect(host, from, pwd);
 					transport.sendMessage(message, message.getAllRecipients());
+		            System.out.println("發送成功");	
 					transport.close();
 				} catch (MessagingException mex) {
 					mex.printStackTrace();

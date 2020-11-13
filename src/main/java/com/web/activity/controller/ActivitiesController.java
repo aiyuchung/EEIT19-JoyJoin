@@ -1,11 +1,14 @@
 package com.web.activity.controller;
 
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +20,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityForm;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
+import com.web.activity.model.ActivityPicBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.ProvinceBean;
@@ -30,7 +35,7 @@ import com.web.activity.service.ActivityService;
 import com.web.activity.service.MemberService;
 
 @Controller
-@SessionAttributes({"level", "id"})
+@SessionAttributes({"level", "id","member","account"})
 public class ActivitiesController {
 
 	@Autowired
@@ -119,7 +124,7 @@ public class ActivitiesController {
 		return "redirect:/oneActivity/{id}";
 	}
 	
-//-----------------------------------------加入活動後跳轉單個頁面↓-----------------------------------------	
+//-----------------------------------------取消加入活動後跳轉單個頁面↓-----------------------------------------	
 	@GetMapping("/cancelActivity/{id}")
 	public String cancel(@PathVariable("id") int activityNo, HttpSession session, Model model) {
 		
@@ -146,6 +151,34 @@ public class ActivitiesController {
 		model.addAttribute("hitCount",hitCount);
 		return "redirect:/oneActivity/{id}";
 	}
+//-----------------------------------------更新活動跳轉頁面↓-----------------------------------------	
+	@GetMapping("/updateActivity/{id}")
+	public String update(@PathVariable("id") int activityNo, HttpSession session, Model model) {
+		
+//		ActivityBean activity = service.selectOneActivity(activityNo);
+//		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
+//		List<ActivityMsgBean> msgBox = service.showMsg(activityNo);
+//		
+//		MemberBean member= (MemberBean) session.getAttribute("member");
+//		Integer memberNo = member.getMemberNo();
+//		service.joinedOne(memberNo, activityNo);
+//		List<ActivityJoinedBean> joined = service.joinedMember(activityNo);
+//		List<String> joinedList = new ArrayList<>();
+//		for(ActivityJoinedBean ajb:joined) {
+//			String account = ajb.getMemberBean().getAccount();
+//			joinedList.add(account);
+//		}
+//		
+//		int msgNum = msgBox.size();
+//		model.addAttribute("joinedList",joinedList);
+//		model.addAttribute("joined",joined);
+//		model.addAttribute("msgBox",msgBox);
+//		model.addAttribute("msgNum",msgNum);
+//		model.addAttribute("one",activity);
+//		model.addAttribute("hitCount",hitCount);
+		return "CreateNewActivity";
+	}
+		
 //-----------------------------------------單個活動的留言板↓-----------------------------------------	
 	
 	@PostMapping("/msgSend")
@@ -190,28 +223,50 @@ public class ActivitiesController {
 //-----------------------------------------新增活動空的form表單↓-----------------------------------------		
 	@GetMapping("/newActivities")
 	
-	public String newAcitivity(Model model, 
-			@ModelAttribute("newform") ActivityBean newform) {
+	public String newAcitivity(Model model,@ModelAttribute("newform") ActivityBean newform
+			) {
+//		ActivityPicBean pic = new ActivityPicBean();
 		List<ActivityBean> list = service.selectAllActivities();
 		List<ActivityTypeBean> types = service.showAllTypes();
 		List<ActivityClassBean> categoryList = service.selectAllClasses();
 		List<ProvinceBean> provs = service.selectAllProvs();
-		
 		model.addAttribute("activities",list);
 		model.addAttribute("allTypes",types);
 		model.addAttribute("categoryList",categoryList);
 		model.addAttribute("provs",provs);
-	      return "CreateNewActivity";
+	    return "CreateNewActivity";
 	   }
-//-----------------------------------------新增活動↓-----------------------------------------		
+//-----------------------------------------新增活動↓-----------------------------------------
 	@PostMapping("/newActivities")
-	
 	public String createNewAcitivity(HttpSession session, Model model, 
-			@ModelAttribute("newform") ActivityBean newform) {
+			ActivityPicBean pic, @ModelAttribute("newform") ActivityBean newform) {
 		String account =  (String) session.getAttribute("account");
 		MemberBean member= (MemberBean) session.getAttribute("member");
 		Integer memberNo = member.getMemberNo();
-		service.createActivity(memberNo,newform);
+		String fileName = pic.getFileName();
+		MultipartFile mFile = pic.getUpdateImg();
+//		//取得檔案型態 令存檔名
+//		for (int i : mFile) {
+//			String original = mFile[i].getOriginalFilename();
+//			UUID uuid = UUID.randomUUID();
+//			String fileTyle = original.substring(original.lastIndexOf("."), original.length());
+//			albumn.setPicContent("Pet_" + uuid + "_" + service.MaxID() + fileTyle);
+//		}
+//		
+		if (mFile != null && !mFile.isEmpty()) {
+			byte[] b;
+			try {
+				b = mFile.getBytes();
+				Blob blob = new SerialBlob(b);
+				pic.setActivityPic(blob);
+			} catch (IOException | SQLException e) {
+				e.printStackTrace();
+				throw new RuntimeException("異常:" + e.getMessage());
+			}
+		}
+		String prov= newform.getProv();
+		System.out.println("controller prov:"+prov);
+		service.createActivity(memberNo, newform, pic);
 		memberService.updatePost(account);
 		
 	    return "redirect:/activities";

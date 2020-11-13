@@ -138,10 +138,10 @@ footer {
 
 				<ul class="nav nav-sidebar">
 					<li class="active"><a href="#">功能總覽</a></li>
-					<li><a href="">會員管理</a></li>
+					<li><a href="Javascript:;" class="allMembers">會員管理</a></li>
+					<li><a href="Javascript:;" class="allRoles">角色管理</a></li>
 					<li><a href="Javascript:;" class="allactives">活動管理</a></li>
 					<li><a href="https://www.investing.com/" target="_ext">前台管理</a></li>
-
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li class="active"><a href="#">圖表即時分析</a></li>
@@ -149,6 +149,11 @@ footer {
 					<li><a href="Javascript:;" id="counts">區域活動</a></li>
 					<li><a href="Javascript:;" id="gender">性別分析</a></li>
 					<li><a href="Javascript:;" id="starSign">星座比較</a></li>
+
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li class="active"><a href="#">後臺監控系統(暫定)</a></li>
+					<li><a href="Javascript:;" id="provStac">日誌</a></li>
 
 				</ul>
 
@@ -596,16 +601,16 @@ footer {
 				});
 			});
 		</script>
-		<script>
-			$(document).ready(function() {
-				$("#activehideshow").click(function() {
-					$("#activehideshow").hide(1000);
-				});
-			});
-		</script>
+<!-- 		<script> -->
+<!-- // 			$(document).ready(function() { -->
+<!-- // 				$("#activehideshow").click(function() { -->
+<!-- // 					$("#activehideshow").hide(1000); -->
+<!-- // 				}); -->
+<!-- // 			}); -->
+<!-- 		</script> -->
 
 
-
+<!-- 		活動部分 -->
 		<script>
 			$(".allactives").click(function() { //click event
 
@@ -622,6 +627,41 @@ footer {
 				})
 			})
 		</script>
+<!-- 		查詢成員-->
+		<script>
+			$(".allRoles").click(function() { //click event
+
+				$.ajax({
+					url : "ajax_selectAllRoles",
+					type : "GET",
+					dataType : "html", //server送回
+					contentType : 'application/json; charset=utf-8',
+					data : {}, //data空的代表沒任何參數
+					success : function(data) { //成功的話
+						$(".newajaxlist").empty();
+						$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
+					}
+				})
+			})
+		</script>
+		<script>
+			$(".allMembers").click(function() { //click event
+
+				$.ajax({
+					url : "ajax_selectAllMembers",
+					type : "GET",
+					dataType : "html", //server送回
+					contentType : 'application/json; charset=utf-8',
+					data : {}, //data空的代表沒任何參數
+					success : function(data) { //成功的話
+						$(".newajaxlist").empty();
+						$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
+					}
+				})
+			})
+		</script>
+<!-- 		修改會員 -->
+		
 </body>
 
 </html>
