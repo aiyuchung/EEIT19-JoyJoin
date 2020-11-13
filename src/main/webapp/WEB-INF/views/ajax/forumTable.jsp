@@ -8,10 +8,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+table {
+	font-size: 0.5cm;
+	font-family: 微軟正黑體;
+	font-weight: 900;
+}
+table thead tr{
+	background-color: #800080;
+	color: white;
+}
+
+table tbody tr:nth-child(odd) {
+	background-color: #FF30FF;
+	color: black
+}
+table tbody tr:nth-child(odd):hover{
+  background: #FFFF6E;
+}
+table tbody tr:nth-child(even) {
+	background-color: #FFC9FF;
+	color: black
+}
+table tbody tr:nth-child(even):hover{
+  background: #FFFF45;
+}
+
+table thead td:first-child {
+	border-radius: 20px 0 0 0;
+	
+}
+
+table thead td:last-child {
+	border-radius: 0 20px 0 0;
+	
+}
+
+table tbody tr:last-child td:first-child {
+	border-radius: 0 0 0 20px;
+}
+
+table tbody tr:last-child td:last-child {
+	border-radius: 0 0 20px 0;
+}
+</style>
 </head>
 <body>
 	<table width="70%" border="1" align="center">
-			<tr>
+	<thead>
+			<tr style="text-align: center" height="60px">
 				<td width="10%">類型</td>
 				<td width="30%">標題</td>
 				<td width="5%">評分</td>
@@ -20,12 +65,13 @@
 				<td width="10%">地區</td>
 				<td width="10%">點閱率</td>
 			</tr>
+		</thead>
 			 <c:forEach var="forum" items="${forumList}">
 			 		<form id>
 			 		<input type="hidden" name="forumSeq" value="${forum.forumSeq}"/>
 			 		<input type="hidden" name="code" value="${forum.type}${forum.forumSeq}"/>
 			</form>
-			 	<tr>
+			 	<tr style="text-align: center" height="60px">
 				<td><a id="to_detail">${forum.type}</a></td>
 				<td>${forum.title}</td>
 				<td>${forum.score}</td>
