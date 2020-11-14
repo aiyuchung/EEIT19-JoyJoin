@@ -22,8 +22,9 @@ public interface CMSDao {
 	Map<String, Long> getActivityProv();
 
 	// <活動部分>
+	List<ActivityBean> selectActivities(String keyWord);
+	
 	List<ActivityBean> selectAllActivities();
-
 	List<ActivityBean> selectAllActivitiesAtive();
 
 	List<ActivityBean> selectAllActivitiesInAtive();

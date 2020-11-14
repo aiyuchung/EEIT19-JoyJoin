@@ -12,8 +12,17 @@
 <body>
 <%-- 	<input id="num" type="text" value="${activitiesNum}" hidden /> --%>
 <!-- 	<span id="textSpan"></span> -->
-
+  <div class="post newajaxlist">
 	<h2 class="sub-header">活動概況</h2>
+	
+						<form id="searchform" method="get" action="#">
+							<h6>&nbsp;&nbsp;關鍵字搜尋</h6>
+							<div>
+								&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="s" id="s" size="20" value="" placeholder="EX: 瑜珈" /> 
+								<button type="button" class="btn btn-outline-light btn-sm">確認</button>
+							</div>
+						</form>
+  <div class="post newajaxlist">	
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<thead>
@@ -48,5 +57,27 @@
 			</c:forEach>
 		</table>
 	</div>
+  </div>
+<script>	
+	$(".btn-sm").click(function(){          //關鍵字篩選
+		var keywords = $("#s").val();
+		console.log(keywords);
+		$.ajax({
+			  url:"ajax_CM_keyWords",
+			  type: "get",
+			  dataType: "html",
+			  contentType: 'application/json; charset=utf-8',
+			  data: {
+				  keyword: keywords
+				},
+// 				  JSON.stringify(keywords),
+			  success:function(data){
+				  $(".post").empty();
+				  $(".newajaxlist").empty();
+				  $(".newajaxlist").append(data);
+					},
+		})
+	})
+</script>
 </body>
 </html>

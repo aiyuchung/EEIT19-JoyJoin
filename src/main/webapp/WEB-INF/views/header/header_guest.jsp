@@ -98,6 +98,7 @@ body{
 				<ul>
 					<li ><a href = "<c:url value = '/activities'/>">活動一覽</a></li>
 					<li><a href = "<c:url value = '/forum'/>">討論區</a></li>
+					<li><a href = "<c:url value = '/allactive'/>">後台管理暫時</a></li>
 					<c:choose>
 						<c:when test="${level == 1}">
 							

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -77,10 +78,18 @@ public class CMSController {
 
 	}
 
+	@GetMapping("/ajax_CM_keyWords")
+	public String selectactive(Model model,@RequestParam String keyword) {
+		List<ActivityBean> beans = service.selectActivities(keyword);
+		model.addAttribute("activities", beans);
+//		System.out.println("hello world");
+		return "ajax/CMSActives"; // 分配到ajax jsp
+	}
+	
 	@GetMapping("/ajax_selallactive")
 	public String selectallactive(Model model) {
-		List<ActivityBean> beans = service.selectAllActivities();
-		model.addAttribute("activities", beans);
+//		List<ActivityBean> beans = service.selectAllActivities();
+//		model.addAttribute("activities", beans);
 //		System.out.println("hello world");
 		return "ajax/CMSActives"; // 分配到ajax jsp
 	}

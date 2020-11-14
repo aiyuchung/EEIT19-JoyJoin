@@ -14,6 +14,8 @@ import com.web.activity.model.RoleBean;
 public interface CMSService {
 
 	//	<活動清單搜尋>
+	List<ActivityBean> selectActivities(String keyWord);//關鍵字搜尋
+	
 	List<ActivityBean> selectAllActivities();
 
 	List<ActivityBean> selectAllActivitiesAtive();

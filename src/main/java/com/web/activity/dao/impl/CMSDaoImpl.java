@@ -83,6 +83,14 @@ public class CMSDaoImpl implements CMSDao {
 		List<ActivityBean> cms = session.createQuery(hql).getResultList();
 		return cms;
 	}
+	
+	@Override
+	public List<ActivityBean> selectActivities(String keyWord) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityBean WHERE activityClass like '%"+keyWord+"%'  ";
+		List<ActivityBean> cms = session.createQuery(hql).getResultList();
+		return cms;
+	}
 
 	@Override
 	public List<ActivityBean> selectAllActivitiesAtive() {
