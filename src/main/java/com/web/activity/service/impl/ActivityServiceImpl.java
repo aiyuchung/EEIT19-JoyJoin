@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.activity.dao.ActivityDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityPicBean;
@@ -316,6 +317,16 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic) {
 		dao.createActivity(memberNo,newform,pic);
+	}
+
+	@Override
+	public void followActivity(Integer memberNo, ActivityFollowedBean follow) {
+		dao.followActivity(memberNo, follow);
+	}
+
+	@Override
+	public void unfollowActivity(Integer memberNo, String activityUrl) {
+		dao.unfollowActivity(memberNo, activityUrl);
 	}
 	
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.web.activity.dao.ActivityDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityPicBean;
@@ -465,6 +466,21 @@ public class ActivityDaoImpl implements ActivityDao {
 //			int no = list.getActivityNo();
 			pic.setActivityBean(session.get(ActivityBean.class,no));
 			session.save(pic);
+		}
+		
+		@Override
+		public void followActivity(Integer memberNo, ActivityFollowedBean follow) {
+			Session session = factory.getCurrentSession();
+			follow.setMemberBean(session.get(MemberBean.class, memberNo));
+			session.save(follow);
+		}
+		
+		@Override
+		public void unfollowActivity(Integer memberNo,String activityUrl) {
+			Session session = factory.getCurrentSession();
+			String hql = "DELETE FROM ActivityMsgBean WHERE activityUrl=:activityUrl AND memberNo=:no";
+			session.createQuery(hql).setParameter("activityUrl",activityUrl)
+									.setParameter("no",memberNo).executeUpdate();
 		}
 
 

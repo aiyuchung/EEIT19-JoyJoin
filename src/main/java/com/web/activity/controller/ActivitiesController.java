@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityForm;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
@@ -458,19 +459,27 @@ public class ActivitiesController {
 //			@RequestParam(value="userId"), required = false Integer id)
 	
 	
-//-----------------------------------------參加活動↓-----------------------------------------	
-//	@GetMapping("/ajax_joinOne")
-//	public String joinOne(Model model, HttpSession session,
-//			@RequestParam int activityNo) {
-//		Integer memberNo = (Integer) session.getAttribute("member.memberNo");
-//		Integer joinedNum = service.joinedOne(activityNo); //在活動的參加人數+1
-//		service.joinedMember(memberNo, activityNo ); //在參加活動的表格加入此會員
-//		
-//		ActivityBean activity = service.selectOneActivity(activityNo);
-//		model.addAttribute("one",activity);
-//		return "OneActivity";
-//		
-//	}
+//-----------------------------------------關注活動↓-----------------------------------------	
+	@PostMapping("/ajax_follow")
+	public void follow(Model model, HttpSession session, String activityUrl) {
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
+		Integer memberNo = member.getMemberNo();
+		
+		ActivityFollowedBean follow = new ActivityFollowedBean();
+		follow.setActivityUrl(activityUrl);
+		service.followActivity(memberNo, follow); 
+		
+	}
+//-----------------------------------------取消關注活動↓-----------------------------------------	
+	@PostMapping("/ajax_unfollow")
+	public void unfollow(Model model, HttpSession session, String activityUrl) {
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
+		Integer memberNo = member.getMemberNo();
+		service.unfollowActivity(memberNo, activityUrl); 
+	}	
+	
 	
 	@GetMapping("/wsendpoing")
 	public String chatbot(Model model) {

@@ -1,5 +1,7 @@
 package com.web.activity.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.web.activity.dao.MemberDao;
+import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
 
@@ -328,6 +331,14 @@ public class MemberDaoImpl implements MemberDao {
 												.setParameter("id", account)
 												.executeUpdate();
 
+	}
+
+	@Override
+	public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityFollowedBean WHERE memberNo = :no";
+		List<ActivityFollowedBean> urls = session.createQuery(hql).setParameter("no", memberNo).getResultList();
+		return urls;
 	}
 
 }

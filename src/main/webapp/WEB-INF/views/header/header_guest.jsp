@@ -14,6 +14,7 @@ body{
 	user-select:none;
 	background-size:cover; 
 	background-repeat: no-repeat;
+	background-color:black;
 }
 
 </style>

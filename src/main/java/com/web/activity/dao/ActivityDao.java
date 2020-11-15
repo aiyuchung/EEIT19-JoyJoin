@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityPicBean;
@@ -101,4 +102,10 @@ public interface ActivityDao {
 	
 	//新增活動
 	void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic);
+	
+	//關注活動
+	void followActivity(Integer memberNo, ActivityFollowedBean follow);
+
+	//取消關注活動
+	void unfollowActivity(Integer memberNo, String activityUrl);
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.service.MemberService;
@@ -244,13 +246,24 @@ public class MemberController {
 				}  
 		  }
 		  
+//---------------------------------------------▼取得活動連結▼---------------------------------------------//			
+		@GetMapping("/ajax_getFollowed")
+		public String getFollowedActivity(Model model, HttpSession session) {
+			MemberBean mb = (MemberBean) session.getAttribute("member");
+			Integer memberNo = mb.getMemberNo();
+			
+			List<ActivityFollowedBean> beans = memberService.getFollowedActivity(memberNo);
+			System.out.println("mbcontroller----------------"+beans);
+			model.addAttribute("followed",beans);
+			return "ajax/followedActivities";
+		}		  
 		  
 		  
 		  
 		  
 		  
 	}		
-		
+
 		
 //-----------------------------------------------------------------------
 		

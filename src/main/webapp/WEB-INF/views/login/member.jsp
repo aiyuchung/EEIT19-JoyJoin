@@ -9,7 +9,7 @@
 <title>${account}的個人頁面</title>
 <!-- 	<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' -->
 <!--         type='text/css'> -->
-<!--     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+    
 <!--     <script src="js/skel.min.js"></script> -->
 <!--     <script src="js/skel-panels.min.js"></script> -->
 <!--     <script src="js/init.js"></script> -->
@@ -45,12 +45,14 @@
   
 </style>
 </head>
-<body class="homepage" >
-	<div style="background-image: url(images/memberBack.jpg);background-size: 100% 100%;background-repeat: no-repeat;height: 1100px;">
-		<!-- Header -->
-		<!-- 	<div class="headerPage"> -->
-		<jsp:include page="../header/header_guest.jsp" />
-		<!-- 	</div> -->
+<!-- Header -->
+<body>
+<div>
+	<jsp:include page="../header/header_guest.jsp" />
+</div>
+
+	<div class="homepage" style="background-image: url(images/memberBack.jpg);background-size: 100%;background-repeat: no-repeat;height: 1100px;">
+		
 
 		<div id="infoArea">
 			<div id="info">
@@ -235,7 +237,7 @@
 	</div>
 
 
-	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script>
 	$(document)	.ready(	function() {
 		var str = "";
@@ -272,7 +274,17 @@
 		$('#trip-btn').on('click', function() {
 			str = '旅遊連結';
 			
-			$("#showArea").css("border", "0").addClass("animated").html(str);
+			$.ajax({
+				  url:"ajax_getFollowed",
+				  type: "GET",
+				  dataType: "html", //server送回
+				  contentType: 'application/json; charset=utf-8',
+				  data: {}, 
+				  success:function(data){
+					  $("#showAreaTop").css("border", "0").addClass("animated").html(str);
+					  $(".showAreaTop").append(data);
+					}
+			})
 		})
 
 		$('#showArea').on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",function() {

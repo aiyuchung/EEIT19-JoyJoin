@@ -470,18 +470,28 @@
 			if (text == "★取消關注"){ //關注改成不關注
 				$(".reminder").empty();
 				$(".reminder").append('<a href="#" class="follow"><strong><span style="font-size:18px">✰</span>關注本活動</strong></a>')
-//	 			
+	 			var curentUrl = location.href;
+				$.ajax({
+					  url:"<c:url value='/ajax_unfollow' />",
+					  type: "POST",
+					  dataType: "html", 
+					  data:  {
+						  activityUrl: curentUrl.toString(),
+						  },
+					  success:function(data){
+						}
+				})
 			}else{ //沒關注點後就關注
 				$(".reminder").empty();
 				$(".reminder").append('<div class="nofollow"><strong><span style="font-size:18px">★</span>取消關注</strong></div>')
 				$(".noclass").css("background-color","#85AD90").css("color","#fff");
 				var curentUrl = location.href;
 				$.ajax({
-					  url:"<c:url value='/likeThis' />",
+					  url:"<c:url value='/ajax_follow' />",
 					  type: "POST",
 					  dataType: "html", 
 					  data:  {
-						  curentUrl: curentUrl,
+						  activityUrl: curentUrl.toString(),
 						  },
 					  success:function(data){
 						}
