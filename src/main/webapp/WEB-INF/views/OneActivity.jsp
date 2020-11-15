@@ -50,6 +50,32 @@
 		height: 350px;
 		overflow:hidden;
 	}
+	.goal-summary .reminder a, .reminder .nofollow  {
+	
+	padding:8px;
+	margin:0px 0px 10px 0px;
+	display:table;
+	border-radius:4px;
+	text-decoration:none;
+	}
+	.follow{
+		background-color:#fff;
+		color:#85AD90;
+	}
+	a:not(.nofollow):hover{
+	}
+	.reminder a:not(.nofollow):hover, .reminder a:focus{
+		background-color:#85AD90;
+		color:#fff;
+	}
+	.nofollow{
+		background-color:#85AD90;
+		color:#fff;
+	}
+	.nofollow:hover{
+		cursor:pointer;
+	}
+	
 	.msgbox{
 		border:none;
 		resize : none;
@@ -84,17 +110,27 @@
 		background-color:#85AD90;
 		color:#fff;
 	}
-	.nofollow{
+	.btn-full{
 		background-color:#85AD90;
 		color:#fff;
 	}
-	.msgbtn1{
-	 	position:relative;
+	
+	.smbtn{
+		position:relative;
+	 	float:right;
+	 	padding:2px;
+	 	border:1px gray solid;
+	 	border-radius:3px;
+	 	background-color:dark-blue;
+	
+	}
+	.smbtn:hover{
+		border-radius:15px;
+	 	cursor: pointer;
 	 	
 	}
-	.msgbtn1{
-	 	position:relative;
-	 	top:5px;
+	.msgbtnEdit{
+	 	right:5px;
 	}
 </style>
 </head>
@@ -138,12 +174,13 @@
 								</c:choose>
 							</c:if>
 							<c:if test="${isJoined == true}">
-								<a href="#" class="nofollow">
+								<div class="nofollow">
 <%-- 								<img src="<c:url value='/icons/filled-star.png'/>" /> --%>
-								<strong><span style="font-size:18px">★</span>取消關注</strong></a>
+								<strong><span style="font-size:18px">★</span>取消關注</strong></div>
 							</c:if>
 						
 						<!--   點選後可在個人頁面擁有此活動之連結    -->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -294,6 +331,9 @@
 										<c:choose>
 											<c:when test="${one.memberBean.account == account}">
 											</c:when>
+											<c:when test="${one.maxLimit == 'one.joinedNum'}">
+												<button class="btn btn-full" disabled>已額滿</button>
+											</c:when>
 											<c:otherwise>
 												<button class="btn btn-launch">參加活動</button>
 											</c:otherwise>
@@ -338,12 +378,17 @@
 						<h1 class="section-title" >留言板</h1>
 						<c:forEach var="msg" items="${msgBox}">
 						<div class="credit-block sources ">
-							<div>
+							<div class="btnarea">
 								<img src="" class="userpic msgpic"/><span>&nbsp;${nickname}<a href="#"> ( ${account} ) </a></span>
-								<button class="msgbtn1">編輯</button><button class="msgbtn2">刪除</button>
+								<c:if test="${account == msg.memberBean.account}">
+									<img  class="smbtn msgbtnDelete" title="刪除" src="https://img.icons8.com/material-rounded/24/000000/delete-trash.png"/>
+									<img  class="smbtn msgbtnEdit" title="編輯" src="https://img.icons8.com/material-outlined/24/000000/edit.png"/>
+									<img hidden="true" class="smbtn msgbtnCancel" title="取消" src="https://img.icons8.com/material-outlined/24/000000/cancel.png"/>
+									<img hidden="true" class="smbtn msgbtnOkay" title="確認" src="https://img.icons8.com/material-outlined/24/000000/ok.png"/>
+								</c:if>
 							</div>
 							<div class="showmsg">
-								<textarea name="msg" cols="28" class="msgbox newmsg" readonly>${msg.msgContent}</textarea>
+								<textarea name="msg" cols="32" class="msgbox newmsg" readonly="readonly" id="${msg.msgNo}">${msg.msgContent}</textarea>
 							</div>
 						</div>
 						</c:forEach>
@@ -413,32 +458,43 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <script>
-	$(document).ready(function(){
+	$(document).ready(function(){ //幾人參加的長條顯示%
 		var persentage= ${one.joinedNum/one.minLimit*100};
 		$(".progress-bar").css("width", persentage+"%");
 		
 	})
-	$(".reminder").click(function(){
+	$(".reminder").click(function(){ //關注活動
 		var isJoined = ${isJoined}
 		if (!isJoined){
 			var text = $(this).text();
-			if (text == "★取消關注"){
+			if (text == "★取消關注"){ //關注改成不關注
 				$(".reminder").empty();
 				$(".reminder").append('<a href="#" class="follow"><strong><span style="font-size:18px">✰</span>關注本活動</strong></a>')
-//	 			$(this).css("background-color","#fff").css("color","#85AD90");
-			}else{
+//	 			
+			}else{ //沒關注點後就關注
 				$(".reminder").empty();
-				$(".reminder").append('<a href="#" class="nofollow"><strong><span style="font-size:18px">★</span>取消關注</strong></a>')
+				$(".reminder").append('<div class="nofollow"><strong><span style="font-size:18px">★</span>取消關注</strong></div>')
+				$(".noclass").css("background-color","#85AD90").css("color","#fff");
+				var curentUrl = location.href;
+				$.ajax({
+					  url:"<c:url value='/likeThis' />",
+					  type: "POST",
+					  dataType: "html", 
+					  data:  {
+						  curentUrl: curentUrl,
+						  },
+					  success:function(data){
+						}
+				})
 			}
 		}
 	})
 	
 	
-	$(".lookmsg").click(function(){
+	$(".lookmsg").click(function(){ //看留言
 		var isJoined = ${isJoined};
 		var visit = "${account}";
 		var host = "${one.memberBean.account}";
-		console.log(visit + ";" + host)
 		if(!isJoined){
 			if(host != visit){
 				$('#msgModal').modal('show');
@@ -447,21 +503,26 @@
 			$(".msgboard").show();
 			$(".addmsg").show();
 		}
-		
 	})
 	
 // 	$('textarea').autoResize();
+	$(".btn-launch").one("click", function(){ //參加活動(跳出確認框)
+		$('#joinModal').modal('show');
+		
+	})
 	
-	$(".sendmsg").click(function(){
+	$(".btn-cancel").one("click", function(){ //取消參加活動(跳出確認框)
+		$('#cancelModal').modal('show');
+		
+	})
+	$(".sendmsg").click(function(){ //新增留言
 		var msgContent = $(".newmsg").val();
 		var activityNo = ${one.activityNo};
-// 		var data ={msg: msgContent,No: activityNo};
 		$.ajax({
 			
 			  url:"<c:url value='/msgSend' />",
 			  type: "POST",
 			  dataType: "html", 
-// 			  contentType: 'application/json; charset=utf-8',
 			  data:  {
 				  msg: msgContent,
 				  activityNo: parseInt(activityNo),
@@ -472,17 +533,79 @@
 				}
 		})
 	})
-	$(".btn-launch").one("click", function(){
-		$('#joinModal').modal('show');
-		
-	})
 	
-	$(".btn-cancel").one("click", function(){
-		$('#cancelModal').modal('show');
+	$(".msgbtnDelete").click(function(){ //刪除留言
+		var activityNo = ${one.activityNo};
+		var msgNo = $(this).parents(".sources").find(".msgbox").attr("id");
+		$(this).parents(".credit-block").hide("500");
 		
-	})
-	
+		$.ajax({
+			
+			  url:"<c:url value='/msgDelete' />",
+			  type: "POST",
+			  dataType: "html", 
+			  data:  {
+				  msgNo:  parseInt(msgNo),
+				  activityNo: parseInt(activityNo),
+				  },
+			  success:function(data){
+				  setTimeout(function(){
+					  $(".allmsg").empty();
+					  $(".allmsg").append(data);
 
+	                },550);
+				  
+				  
+				}
+		})
+		
+		
+	})
+	
+	$(".msgbtnEdit").click(function(){  //press "msg edit btn"
+		var textarea = $(this).parents(".sources").find(".msgbox");
+		var btnarea =  $(this).parent("div");
+		textarea.prop("readonly",false);
+		textarea.css("border","2px grey solid");
+		btnarea.find(".msgbtnEdit, .msgbtnDelete").hide();
+		btnarea.find(".msgbtnCancel, .msgbtnOkay").attr("hidden",false);
+		
+	})
+	
+	$(".msgbtnOkay").click(function(){ //更新留言
+		var activityNo = ${one.activityNo};
+		var msgContent = $(this).parents(".sources").find(".msgbox").val();
+		var msgNo = $(this).parents(".sources").find(".msgbox").attr("id");
+		$.ajax({
+			
+			  url:"<c:url value='/msgUpdate' />",
+			  type: "POST",
+			  dataType: "html", 
+			  data:  {
+				  msg:msgContent,
+				  msgNo: msgNo,
+				  activityNo: parseInt(activityNo),
+				  },
+			  success:function(data){
+				  console.log("update fail");
+				  $(".allmsg").empty();
+				  $(".allmsg").append(data);
+				}
+		})
+	})
+	$(".msgbox").focus(function(){
+		var originalText = $(this).parents(".sources").find(".msgbox").val();
+		$(".msgbtnCancel").click(function(){
+			var textarea = $(this).parents(".sources").find(".msgbox");
+			var btnarea =  $(this).parent("div");
+			textarea.prop("readonly",true);
+			textarea.css("border","none");
+			btnarea.find(".msgbtnEdit, .msgbtnDelete").show();
+			btnarea.find(".msgbtnCancel, .msgbtnOkay").attr("hidden",true);
+			textarea.val(originalText);
+		})
+	})
+	
 	
 </script>
 </body>

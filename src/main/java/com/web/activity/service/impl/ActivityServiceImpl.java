@@ -277,7 +277,16 @@ public class ActivityServiceImpl implements ActivityService {
 	public List<ActivityMsgBean> showMsg(int activityNo) {
 		return dao.showMsg(activityNo);
 	}
+	
+	@Override
+	public void deleteMsg(int msgNo) {
+		dao.deleteMsg(msgNo);
+	}
 
+	@Override
+	public void updateMsg(String msg, Integer msgNo) {
+		dao.updateMsg(msg,msgNo);
+	}
 	@Override
 	public List<ProvinceBean> selectAllProvs() {
 		return dao.selectAllProvs();

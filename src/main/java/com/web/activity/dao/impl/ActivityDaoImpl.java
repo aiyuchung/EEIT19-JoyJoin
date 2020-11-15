@@ -341,8 +341,16 @@ public class ActivityDaoImpl implements ActivityDao {
 		List<ActivityMsgBean> list = session.createQuery(hql).setParameter("no",activityNo).getResultList();
 		return list;
 	}
+	
+	//----------------------------------------留言版的修改--------------------------------------------
+		@Override
+		public void updateMsg(String msg, Integer msgNo) {
+			Session session = factory.getCurrentSession();
+			String hql = "UPDATE ActivityMsgBean SET msgContent=:msg WHERE msgNo=:no";
+			session.createQuery(hql).setParameter("msg",msg).setParameter("no",msgNo).executeUpdate();
+		}
 
-	//----------------------------------------留言版的查詢--------------------------------------------
+	//----------------------------------------留言版的查詢----------------------------mjnhy---------------
 	@Override
 	public List<ActivityMsgBean> showMsg(int activityNo) {
 		Session session = factory.getCurrentSession();
@@ -350,6 +358,14 @@ public class ActivityDaoImpl implements ActivityDao {
 		List<ActivityMsgBean> list = session.createQuery(hql).setParameter("no",activityNo).getResultList();
 		return list;
 	}
+	
+	//----------------------------------------留言版的刪除--------------------------------------------
+		@Override
+		public void deleteMsg(int msgNo) {
+			Session session = factory.getCurrentSession();
+			String hql = "DELETE FROM ActivityMsgBean WHERE msgNo=:no";
+			session.createQuery(hql).setParameter("no",msgNo).executeUpdate();
+		}
 
 	//----------------------------------------查詢全部縣市--------------------------------------------
 	@Override

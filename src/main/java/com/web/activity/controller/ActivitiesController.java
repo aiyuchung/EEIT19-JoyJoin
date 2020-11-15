@@ -234,24 +234,7 @@ public class ActivitiesController {
 		
 	    return "redirect:/activities";
 	   }
-				
-//-----------------------------------------單個活動的留言板↓-----------------------------------------	
-	
-	@PostMapping("/msgSend")
-	public String saveMsg(Model model, HttpSession session,
-			String msg, Integer activityNo
-			) {
-		String account = (String) session.getAttribute("account");
-		MemberBean member = memberService.getMember(account);
-		Integer memberNo = member.getMemberNo();
-		String nickname = member.getNickname();
-		List<ActivityMsgBean> msgBox = service.saveMsg(msg,activityNo,memberNo);
-		model.addAttribute("nickname",nickname);
-		model.addAttribute("msgBox",msgBox);
-		return "ajax/msgBox";
-	}
-	
-	
+					
 //-----------------------------------------條件查詢form表單↓-----------------------------------------		
 	@PostMapping("/form")
 	public String form(Model model, @ModelAttribute("form") ActivityForm form) {
@@ -278,6 +261,58 @@ public class ActivitiesController {
 		model.addAttribute("recentOnes",recentOnes);
 		model.addAttribute("categoryList",categoryList);
 		return "ShowActivities";
+	}
+//-----------------------------------------單個活動的留言板-新增訊息↓-----------------------------------------	
+
+	@PostMapping("/msgSend")
+	public String saveMsg(Model model, HttpSession session,
+			String msg, Integer activityNo
+			) {
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
+		Integer memberNo = member.getMemberNo();
+		String nickname = member.getNickname();
+		List<ActivityMsgBean> msgBox = service.saveMsg(msg,activityNo,memberNo);
+		model.addAttribute("nickname",nickname);
+		model.addAttribute("msgBox",msgBox);
+		model.addAttribute("activityNo",activityNo);
+		return "ajax/msgBox";
+	}
+//-----------------------------------------單個活動的留言板-修改訊息↓-----------------------------------------	
+
+	@PostMapping("/msgUpdate")
+	public String updateMsg(Model model, HttpSession session,Integer activityNo, Integer msgNo, String msg) {
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
+		String nickname = member.getNickname();
+		service.updateMsg(msg, msgNo);
+		List<ActivityMsgBean> msgBox = service.showMsg(activityNo); //留言板內容
+		int msgNum = msgBox.size(); //留言板留言數量
+		model.addAttribute("nickname",nickname);
+		model.addAttribute("msgNum",msgNum);
+		model.addAttribute("msgBox",msgBox);
+		model.addAttribute("activityNo",activityNo);
+		return "ajax/msgBox";
+	}
+
+		
+//-----------------------------------------單個活動的留言板-刪除訊息↓-----------------------------------------	
+
+	@PostMapping("/msgDelete")
+	public String deleteMsg(Model model, HttpSession session,Integer activityNo, Integer msgNo) {
+		
+		System.out.println("controller--------------"+msgNo);
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
+		String nickname = member.getNickname();
+		service.deleteMsg(msgNo);
+		List<ActivityMsgBean> msgBox = service.showMsg(activityNo); //留言板內容
+		int msgNum = msgBox.size(); //留言板留言數量
+		model.addAttribute("nickname",nickname);
+		model.addAttribute("msgNum",msgNum);
+		model.addAttribute("msgBox",msgBox);
+		model.addAttribute("activityNo",activityNo);
+		return "ajax/msgBox";
 	}
 
 //-----------------------------------------AJAX快篩↓-----------------------------------------		

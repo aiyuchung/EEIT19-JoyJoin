@@ -109,6 +109,12 @@ public interface ActivityService {
 	//ajax
 	//查留言板
 	List<ActivityMsgBean> showMsg(int activityNo);
+
+	//刪除留言
+	void deleteMsg(int msgNo);
+
+	//修改留言
+	void updateMsg(String msg, Integer msgNo);
 		
 	//參加活動
 	void joinedOne(Integer memberNo, int activityNo);
