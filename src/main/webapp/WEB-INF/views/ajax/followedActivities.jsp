@@ -10,21 +10,49 @@
 <head>
 <style>
 	.links{
-	color:white;
+		color:white;
 	}
+	.showurl a{
+		
+		color:white;
+		
+	}
+	.showur {
+		list-style-type: none;
+		display:inline-block;
+		
+	}
+	.showur li{
+		float:left;
+		display:inline;
+	}
+	
 </style>
 </head>
 <body>
 
 <span id="textSpan"></span>
 		<div class="links">
-		<h1 style="color:white">HIHIHIHIH</h1>
-		<c:forEach var="followed" items="${followed}">
-			<ul>
-				<li><a href="${followed.activityUrl}"></a></li>
-
+		
+			
+			<c:forEach var="followed" items="${followed}">
+			
+			<ul class="showurl">
+				<li><a href="${followed.activityUrl}">${followed.activityBean.name}</a></li>
+				<c:if test="${followed.condition eq '關注'}">
+					<li><button type="button" class="btn btn-outline-light follow">取消關注</button></li>
+				</c:if>	
+				<c:if test="${followed.condition eq '舉辦'}">
+					<li><button type="button" class="btn btn-outline-danger hold">修改</button></li>
+				</c:if>
+				<c:if test="${followed.condition eq '參加'}">
+					<li><button type="button" class="btn btn-outline-success join">去留言</button></li>
+				</c:if>		
 			</ul>
-		</c:forEach>
+			</c:forEach>
+			
+			
+		
 		</div>
 		
 	
@@ -47,7 +75,40 @@
 // 			break;
 // 		}
 // 	}
-	
+	$(".follow").click(function(){
+		var url = $(this).parents("ul").find('a').attr('href');
+		var tokens = url.split("/");
+		var no = tokens[5];
+		
+		$.ajax({
+			  url:"ajax_unfollow",
+			  type: "GET",
+			  dataType: "html", //server送回
+			  contentType: 'application/json; charset=utf-8',
+			  data: {}, 
+			  success:function(data){
+				  $(this).parents("ul").hide("500");
+				}
+		})
+	})
+	$(".join").click(function(){
+		var url = $(this).parents("ul").find('a').attr('href');
+		var tokens = url.split("/");
+		console.log(tokens);
+		var no = tokens[5];
+		console.log(no);
+		var newurl = "oneActivity/"+ no +"?condition=join";
+		window.location.href = '<c:url value="'+newurl+'" />';
+		
+	})
+	$(".hold").click(function(){
+		var url = $(this).parents("ul").find('a').attr('href');
+		var tokens = url.split("/");
+		var no = tokens[5];
+		var newurl = "/updateActivity/"+no;
+		window.location.href = '<c:url value="'+ newurl +'"/>';
+		
+	})
 </script>
 </body>
 </html>

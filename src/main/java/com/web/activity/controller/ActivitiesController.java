@@ -72,8 +72,12 @@ public class ActivitiesController {
 //-----------------------------------------跳轉單個頁面↓-----------------------------------------	
 	@GetMapping("/oneActivity/{id}")
 	public String one(@PathVariable("id") int activityNo, Model model, 
-			HttpSession session, @ModelAttribute("msg") ActivityMsgBean msg) {
-		
+			HttpSession session, @ModelAttribute("msg") ActivityMsgBean msg,
+			@RequestParam (required=false) String condition) {
+		boolean frombtn = false;
+		if (condition != null) {
+			frombtn = true;
+		}
 		ActivityBean activity = service.selectOneActivity(activityNo); //活動內容
 		Map<String, Integer> hitCount = service.updateHitCount(activityNo); //點進來就增加一次點擊率
 		List<ActivityMsgBean> msgBox = service.showMsg(activityNo); //留言板內容
@@ -90,6 +94,7 @@ public class ActivitiesController {
 				break;
 			}
 		}
+		model.addAttribute("frombtn",frombtn);
 		model.addAttribute("nickname",nickname);
 		model.addAttribute("isJoined",isJoined);
 		model.addAttribute("joined",joined);
@@ -102,6 +107,7 @@ public class ActivitiesController {
 //-----------------------------------------加入活動後跳轉單個頁面↓-----------------------------------------	
 	@GetMapping("/addActivity/{id}")
 	public String add(@PathVariable("id") int activityNo, HttpSession session, Model model) {
+		
 		
 		ActivityBean activity = service.selectOneActivity(activityNo);
 		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
@@ -119,6 +125,7 @@ public class ActivitiesController {
 		}
 		
 		int msgNum = msgBox.size();
+		
 		model.addAttribute("joinedList",joinedList);
 		model.addAttribute("joined",joined);
 		model.addAttribute("msgBox",msgBox);
@@ -207,6 +214,7 @@ public class ActivitiesController {
 		String account =  (String) session.getAttribute("account");
 		MemberBean member= (MemberBean) session.getAttribute("member");
 		Integer memberNo = member.getMemberNo();
+		
 		String fileName = pic.getFileName();
 		MultipartFile mFile = pic.getUpdateImg();
 //			//取得檔案型態 令存檔名
@@ -461,14 +469,15 @@ public class ActivitiesController {
 	
 //-----------------------------------------關注活動↓-----------------------------------------	
 	@PostMapping("/ajax_follow")
-	public void follow(Model model, HttpSession session, String activityUrl) {
+	public void follow(Model model, HttpSession session, String activityUrl,Integer activityNo) {
+		System.out.println("controller------------------------->>>"+activityNo);
 		String account = (String) session.getAttribute("account");
 		MemberBean member = memberService.getMember(account);
 		Integer memberNo = member.getMemberNo();
 		
 		ActivityFollowedBean follow = new ActivityFollowedBean();
 		follow.setActivityUrl(activityUrl);
-		service.followActivity(memberNo, follow); 
+		service.followActivity(memberNo, follow, activityNo); 
 		
 	}
 //-----------------------------------------取消關注活動↓-----------------------------------------	

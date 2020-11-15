@@ -2,9 +2,8 @@ package com.web.activity.dao;
 
 import java.util.List;
 
-import org.hibernate.Session;
-
 import com.web.activity.model.ActivityFollowedBean;
+import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
 
@@ -65,5 +64,7 @@ public interface MemberDao {
 //---------------------------------------------▼其他▼---------------------------------------------//			
 		
 		public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo);
+			//取得會員關注活動連結
+		public List<ActivityJoinedBean> getJoinedActivity(Integer memberNo);
 			//取得會員關注活動連結
 }

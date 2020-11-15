@@ -461,10 +461,16 @@
 	$(document).ready(function(){ //幾人參加的長條顯示%
 		var persentage= ${one.joinedNum/one.minLimit*100};
 		$(".progress-bar").css("width", persentage+"%");
+		var frombtn = ${frombtn};
+		if (frombtn){
+			looksmg();
+		}
 		
 	})
+
 	$(".reminder").click(function(){ //關注活動
 		var isJoined = ${isJoined}
+		var activityNo = ${one.activityNo};
 		if (!isJoined){
 			var text = $(this).text();
 			if (text == "★取消關注"){ //關注改成不關注
@@ -492,6 +498,7 @@
 					  dataType: "html", 
 					  data:  {
 						  activityUrl: curentUrl.toString(),
+						  activityNo: parseInt(activityNo),
 						  },
 					  success:function(data){
 						}
@@ -502,6 +509,10 @@
 	
 	
 	$(".lookmsg").click(function(){ //看留言
+		looksmg();
+	})
+	
+	function looksmg(){
 		var isJoined = ${isJoined};
 		var visit = "${account}";
 		var host = "${one.memberBean.account}";
@@ -513,7 +524,7 @@
 			$(".msgboard").show();
 			$(".addmsg").show();
 		}
-	})
+	}
 	
 // 	$('textarea').autoResize();
 	$(".btn-launch").one("click", function(){ //參加活動(跳出確認框)

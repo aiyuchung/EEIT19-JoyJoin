@@ -1,10 +1,10 @@
 @charset "UTF-8";
 
-body{
-	-webkit-user-select:text;
-	-moz-user-select:text;
-	-o-user-select:text;
-	user-select:text;
+body:not(.showurl){
+/* 	-webkit-user-select:text; */
+/* 	-moz-user-select:text; */
+/* 	-o-user-select:text; */
+/* 	user-select:text; */
 	background-size:100% ;
 	background-repeat: no-repeat;
 	height:900px;
@@ -23,7 +23,7 @@ div::-webkit-scrollbar {
 }
 
 #showAreaTop {
-	background-color:transparent;
+/* 	background-color:transparent; */
 	margin:0 auto;
 	padding:5px;
 }

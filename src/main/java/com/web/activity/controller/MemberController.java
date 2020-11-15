@@ -3,6 +3,7 @@ package com.web.activity.controller;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -25,8 +26,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.web.activity.model.ActivityFollowedBean;
+import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
+import com.web.activity.service.ActivityService;
 import com.web.activity.service.MemberService;
 
 @Controller
@@ -35,6 +38,9 @@ public class MemberController {
 
 		@Autowired
 		MemberService memberService;
+		
+		@Autowired
+		ActivityService service;
 		
 //---------------------------------------------▼會員頁面&修改▼---------------------------------------------//	
 		
@@ -253,8 +259,16 @@ public class MemberController {
 			Integer memberNo = mb.getMemberNo();
 			
 			List<ActivityFollowedBean> beans = memberService.getFollowedActivity(memberNo);
-			System.out.println("mbcontroller----------------"+beans);
+//			List<ActivityJoinedBean> joined = memberService.getJoinedActivity(memberNo);//取得此會員參加的活動名單
+			
+//			List <Integer> joinedActivities = new ArrayList<>();
+//			for(ActivityJoinedBean ajb:joined) {
+//				int joinedActivity = ajb.getActivityBean().getActivityNo();
+//				joinedActivities.add(joinedActivity);
+//			}
+			
 			model.addAttribute("followed",beans);
+//			model.addAttribute("joinedActivities",joinedActivities);
 			return "ajax/followedActivities";
 		}		  
 		  

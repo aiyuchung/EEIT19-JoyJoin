@@ -3,6 +3,7 @@ package com.web.activity.service;
 import java.util.List;
 
 import com.web.activity.model.ActivityFollowedBean;
+import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
 
@@ -39,5 +40,7 @@ public interface MemberService {
 		public void updateFinish(String account);
 			//更新成行次數
 		public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo);
+			//取得會員關注活動連結
+		public List<ActivityJoinedBean> getJoinedActivity(Integer memberNo);
 			//取得會員關注活動連結
 }	

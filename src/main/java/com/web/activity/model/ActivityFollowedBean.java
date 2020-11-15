@@ -24,14 +24,23 @@ public class ActivityFollowedBean implements java.io.Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)	
 	private int urlNo;
 	private String activityUrl;
+	private String condition;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="memberNo") 	
     private MemberBean memberBean;
 	
-//	@ManyToOne(cascade=CascadeType.ALL)
-//	@JoinColumn(name="activityNo") 	
-//    private ActivityBean activityBean;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="activityNo") 	
+    private ActivityBean activityBean;
+
+	public String getCondition() {
+		return condition;
+	}
+
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
 
 	public int getUrlNo() {
 		return urlNo;
@@ -57,15 +66,15 @@ public class ActivityFollowedBean implements java.io.Serializable {
 		this.memberBean = memberBean;
 	}
 
-//	public ActivityBean getActivityBean() {
-//		return activityBean;
-//	}
-//
-//	public void setActivityBean(ActivityBean activityBean) {
-//		this.activityBean = activityBean;
-//	}
-//
-//	
+	public ActivityBean getActivityBean() {
+		return activityBean;
+	}
+
+	public void setActivityBean(ActivityBean activityBean) {
+		this.activityBean = activityBean;
+	}
+
+	
 
 
 	

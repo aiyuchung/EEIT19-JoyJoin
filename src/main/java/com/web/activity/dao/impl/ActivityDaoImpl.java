@@ -381,10 +381,18 @@ public class ActivityDaoImpl implements ActivityDao {
 	@Override
 	public void joinedOne(Integer memberNo, int activityNo) {
 		Session session = factory.getCurrentSession();
-		ActivityJoinedBean activityJoined = new ActivityJoinedBean();
+		ActivityJoinedBean activityJoined = new ActivityJoinedBean(); //存參加名單
 		activityJoined.setMemberBean(session.get(MemberBean.class,memberNo));
 		activityJoined.setActivityBean(session.get(ActivityBean.class, activityNo));
 		session.save(activityJoined);
+		
+		String url = "http://localhost:8080/JoyJoin/oneActivity/"+ activityNo;
+		ActivityFollowedBean follow = new ActivityFollowedBean(); //存連結
+		follow.setActivityUrl(url);
+		follow.setMemberBean(session.get(MemberBean.class, memberNo));
+		follow.setActivityBean(session.get(ActivityBean.class, activityNo));
+		follow.setCondition("參加");
+		session.save(follow);
 		
 		String hql = "FROM ActivityBean WHERE activityStatus = 'active' AND activityNo = :id ";
 		ActivityBean list = (ActivityBean) session.createQuery(hql).setParameter("id",activityNo).getSingleResult();
@@ -400,6 +408,10 @@ public class ActivityDaoImpl implements ActivityDao {
 			Session session = factory.getCurrentSession();
 			String hql = "DELETE ActivityJoinedBean WHERE memberNo =: memberNo AND activityNo = :id ";
 			session.createQuery(hql).setParameter("memberNo",memberNo)
+									.setParameter("id",activityNo).executeUpdate();
+			
+			String hql1 = "DELETE FROM ActivityFollowedBean WHERE memberNo =: memberNo AND activityNo = :id";
+			session.createQuery(hql1).setParameter("memberNo",memberNo)
 									.setParameter("id",activityNo).executeUpdate();
 			
 			hql = "FROM ActivityBean WHERE activityStatus = 'active' AND activityNo = :id ";
@@ -419,7 +431,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		return list;
 	}
 	
-	//----------------------------------------參加活動的會員--------------------------------------------
+	//----------------------------------------新增活動--------------------------------------------
 		@Override
 		public void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic) {
 			Session session = factory.getCurrentSession();
@@ -461,24 +473,37 @@ public class ActivityDaoImpl implements ActivityDao {
 			newform.setActivityClassBean(session.get(ActivityClassBean.class,activityClassNo));
 			session.save(newform);
 			
-			String hql4 = "SELECT MAX(activityNo) FROM ActivityBean ";
+			String hql4 = "SELECT MAX(activityNo) FROM ActivityBean "; //存照片
 			Integer no = (Integer) session.createQuery(hql4).getSingleResult();
 //			int no = list.getActivityNo();
 			pic.setActivityBean(session.get(ActivityBean.class,no));
 			session.save(pic);
-		}
-		
-		@Override
-		public void followActivity(Integer memberNo, ActivityFollowedBean follow) {
-			Session session = factory.getCurrentSession();
+			
+			String url = "http://localhost:8080/JoyJoin/oneActivity/"+ no;
+			ActivityFollowedBean follow = new ActivityFollowedBean(); //存連結
+			follow.setActivityUrl(url);
 			follow.setMemberBean(session.get(MemberBean.class, memberNo));
+			follow.setActivityBean(session.get(ActivityBean.class, no));
+			follow.setCondition("舉辦");
 			session.save(follow);
 		}
 		
+	//----------------------------------------關注活動存連結--------------------------------------------	
+		@Override
+		public void followActivity(Integer memberNo, ActivityFollowedBean follow,int activityNo) {
+			Session session = factory.getCurrentSession();
+			follow.setMemberBean(session.get(MemberBean.class, memberNo));
+			follow.setActivityBean(session.get(ActivityBean.class, activityNo));
+			follow.setCondition("關注");
+			session.save(follow);
+		}
+		
+	//----------------------------------------取消關注刪連結--------------------------------------------	
+				
 		@Override
 		public void unfollowActivity(Integer memberNo,String activityUrl) {
 			Session session = factory.getCurrentSession();
-			String hql = "DELETE FROM ActivityMsgBean WHERE activityUrl=:activityUrl AND memberNo=:no";
+			String hql = "DELETE FROM ActivityFollowedBean WHERE activityUrl=:activityUrl AND memberNo=:no";
 			session.createQuery(hql).setParameter("activityUrl",activityUrl)
 									.setParameter("no",memberNo).executeUpdate();
 		}

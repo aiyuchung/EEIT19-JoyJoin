@@ -282,7 +282,7 @@
 				  data: {}, 
 				  success:function(data){
 					  $("#showAreaTop").css("border", "0").addClass("animated").html(str);
-					  $(".showAreaTop").append(data);
+					  $("#showAreaTop").append(data);
 					}
 			})
 		})

@@ -320,8 +320,8 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public void followActivity(Integer memberNo, ActivityFollowedBean follow) {
-		dao.followActivity(memberNo, follow);
+	public void followActivity(Integer memberNo, ActivityFollowedBean follow,int activityNo) {
+		dao.followActivity(memberNo, follow,activityNo);
 	}
 
 	@Override

@@ -104,7 +104,7 @@ public interface ActivityDao {
 	void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic);
 	
 	//關注活動
-	void followActivity(Integer memberNo, ActivityFollowedBean follow);
+	void followActivity(Integer memberNo, ActivityFollowedBean follow,int activityNo);
 
 	//取消關注活動
 	void unfollowActivity(Integer memberNo, String activityUrl);
