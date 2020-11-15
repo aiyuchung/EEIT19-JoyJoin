@@ -77,7 +77,7 @@ public class CMSController {
 		return "CMS"; // 分配jsp
 
 	}
-
+	//關鍵字查詢
 	@GetMapping("/ajax_CM_keyWords")
 	public String selectactive(Model model,@RequestParam String keyword) {
 		List<ActivityBean> beans = service.selectActivities(keyword);
@@ -93,6 +93,22 @@ public class CMSController {
 //		System.out.println("hello world");
 		return "ajax/CMSActives"; // 分配到ajax jsp
 	}
+	
+	//單獨更新 activityStatus
+		 @GetMapping("/ajax_update_keyWords")
+		 public String updateActivityStatus(Model model , 
+		   @RequestParam String activityNo ,
+		   @RequestParam String activityStatus
+		//   @RequestParam String keyword
+		   ) 
+		 {
+		  int beans = service.updateActivityStatus(activityStatus,activityNo);
+		  List<ActivityBean> beanList = service.selectAllActivities();
+		  model.addAttribute("activities", beanList);
+		//  model.addAttribute("activities", beans);
+		  
+		  return "ajax/CMSActives";
+		 }
 
 //	<=========================================================================================>
 

@@ -83,7 +83,7 @@ public class CMSDaoImpl implements CMSDao {
 		List<ActivityBean> cms = session.createQuery(hql).getResultList();
 		return cms;
 	}
-	
+	//關鍵字搜尋
 	@Override
 	public List<ActivityBean> selectActivities(String keyWord) {
 		Session session = factory.getCurrentSession();
@@ -92,6 +92,15 @@ public class CMSDaoImpl implements CMSDao {
 		return cms;
 	}
 
+
+	//單獨更新activityStatus
+	@Override
+	public int updateActivityStatus(String activityStatus,String activityNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE ActivityBean SET activityStatus= :activityStatus WHERE activityNO = :id ";
+		return session.createQuery(hql).setParameter("activityStatus",activityStatus).setParameter("id",Integer.parseInt(activityNo)).executeUpdate();		 
+	}
+	
 	@Override
 	public List<ActivityBean> selectAllActivitiesAtive() {
 		Session session = factory.getCurrentSession();
