@@ -1,10 +1,14 @@
 package com.web.activity.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.event.ListSelectionEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.web.activity.Enum.ForumType;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityForm;
@@ -61,8 +66,17 @@ public class ForumController {
 	@GetMapping("/forumDetail")
 	public String getForumDetail(Model model,@ModelAttribute("form") ForumBean form) {
 		service.plusPopularity(form.getForumSeq());
+		form.setCode(String.valueOf(form.getForumSeq()));
 		List<ForumBean>forumList = service.selectForumDteailListByParam(form);
-		model.addAttribute("forumList",forumList);
+		ForumBean forumTitle = forumList.stream()
+				.filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()
+				.orElse(new ForumBean());
+		List<ForumBean> forumDetailList = forumList.stream()
+				.filter(f -> ForumType.DETAIL.equals(f.getForumType()))
+				.collect(Collectors.toList());
+		
+		model.addAttribute("forumTitle",forumTitle);
+		model.addAttribute("forumDetailList",forumDetailList);
 		return "forum/forumDetail";
 	}
 	
@@ -75,9 +89,34 @@ public class ForumController {
 	}
 	
 	@GetMapping("/forumNewArticle")
-	public String getforumNewArticle(HttpServletRequest request, Model model) {
-		HttpSession session = request.getSession();
-		String account = (String) session.getAttribute("id");
+	public String getforumNewArticle( Model model,@ModelAttribute("form") ForumBean form) {
+		model.addAttribute("forumBean",form);
 		return "forum/forumNewArticle";
+	}
+	
+	
+	@GetMapping("/forumUpdateArticle")
+	public String forumUpdateArticle( Model model,@ModelAttribute("form") ForumBean form) {
+		ForumBean forumRes = service.selectOneForum(form.getForumSeq());
+		model.addAttribute("forumBean",forumRes);
+		return "forum/forumNewArticle";
+	}
+	
+	
+	
+	
+	@PostMapping("/saveOrUpdateArticle")
+	public String saveOrUpdateArticle( Model model,@ModelAttribute("form") ForumBean form) {
+		List<ForumBean> forumList = service.saveOrUpdateArticle(form);
+		ForumBean forumTitle = forumList.stream()
+				.filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()
+				.orElse(new ForumBean());
+		List<ForumBean> forumDetailList = forumList.stream()
+				.filter(f -> ForumType.DETAIL.equals(f.getForumType()))
+				.collect(Collectors.toList());
+		
+		model.addAttribute("forumTitle",forumTitle);
+		model.addAttribute("forumDetailList",forumDetailList);
+		return "forum/forumDetail";
 	}
 }

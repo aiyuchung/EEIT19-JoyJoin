@@ -4,7 +4,9 @@ package com.web.activity.model;
 import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Column;
 //import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -60,6 +62,7 @@ public class ForumBean implements java.io.Serializable {
 	//討論發文 照片
 	private Blob photo;
 	//討論發文 文章
+	@Column(length=2048)
 	private String article;
 	
 	//討論區文章的型態
@@ -74,6 +77,11 @@ public class ForumBean implements java.io.Serializable {
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private Status status;
+	
+	//評分標籤---以[,]分隔
+	private String evaTag;
+	
+	//=========================以下為TRANSIENT=========================//
 	
 	@Transient
 	private String keyWord;
@@ -168,5 +176,11 @@ public class ForumBean implements java.io.Serializable {
 	}
 	public void setKeyWord(String keyWord) {
 		this.keyWord = keyWord;
+	}
+	public String getEvaTag() {
+		return evaTag;
+	}
+	public void setEvaTag(String evaTag) {
+		this.evaTag = evaTag;
 	}
 }

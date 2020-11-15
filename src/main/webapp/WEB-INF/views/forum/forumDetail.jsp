@@ -35,6 +35,11 @@ Released   : 20100501
 	crossorigin="anonymous"></script>
 
 <style>
+#menu-bb {
+	background: #E0E000;
+	height: 50px;
+	
+}
 #thiscap {
 	padding-top: .75rem;
 	padding-bottom: .75rem;
@@ -51,24 +56,24 @@ Released   : 20100501
 	border: none;
 	text-decoration: none;
 	text-transform: uppercase;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 微軟正黑體;
+	font-weight:900;
 	font-size: 20px;
-	color: #DDBB04;
+	color: BLACK;
 }
 
 #menu>ul>li>a:hover {
 	margin: 0 0 0 50px;
 	background: #191E1A;
-	border-bottom: 3px solid #DDBB04;
-	color: #FFFFFF;
+	border-bottom: 3px solid #FF30FF;
+	color: white;
 }
-
 
 #selectAll1>a:hover {
 	background: red;
 	margin: 0 0 0 70px;
 	background: #191E1A;
-	border-bottom: 3px solid #DDBB04;
+	border-bottom: 3px solid #FF30FF;
 	color: #FFFFFF;
 }
 
@@ -83,7 +88,7 @@ Released   : 20100501
 /* #dropdown-menu { */
 /*     position: absolute; */
 /*     top: 45px; */
-    
+
 /*     left: 0; */
 /*     z-index: 1000; */
 /*     display: none; */
@@ -100,7 +105,6 @@ Released   : 20100501
 /*     border: 1px solid rgba(0,0,0,.15); */
 /*     border-radius: .25rem; */
 /* } */
-
 .dropdown-item {
 	display: block;
 	float: left;
@@ -114,234 +118,220 @@ Released   : 20100501
 	color: #DDBB04;
 }
 
-
 .dropdown-menu {
-    position: absolute;
-    top: 44px;
-    left: 0;
-    z-index: 1000;
-    display: none;
-    float: left;
-    min-width: 10rem;
-    padding: .5rem 0;
-    margin: .125rem 0 0;
-    font-size: 1rem;
-    color: #212529;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: .25rem;
+	position: absolute;
+	top: 44px;
+	left: 0;
+	z-index: 1000;
+	display: none;
+	float: left;
+	min-width: 10rem;
+	padding: .5rem 0;
+	margin: .125rem 0 0;
+	font-size: 1rem;
+	color: #212529;
+	text-align: left;
+	list-style: none;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-radius: .25rem;
 }
 
 #menu ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
-#menu> .dropdown-checkbox:hover {
+#menu>.dropdown-checkbox:hover {
 	margin: 0 3px 0 0;
-	background: #191E1A;
+	background: #E0E0000;
 	border-bottom: 3px solid #DDBB04;
 	color: #FFFFFF;
 }
 
 .panel {
-  padding: 0.3px 15px 0px 15px;
-  background-color: dark-gray;
-  display: none;
-  overflow: hidden;
-  
-  vertical-align:middle;
-  line-height: 1.8rem;
+	padding: 0.3px 15px 0px 15px;
+	background-color: dark-gray;
+	display: none;
+	overflow: hidden;
+	vertical-align: middle;
+	line-height: 1.8rem;
 }
 
-.panel>label{
+.panel>label {
 	margin-bottom: 0rem;
 }
-.dropdown-item.active, .dropdown-item:active {
- 
-    text-decoration: none;
 
+.dropdown-item.active, .dropdown-item:active {
+	text-decoration: none;
 }
+
 .dropdown-item:focus, .dropdown-item:hover {
-    color: #16181b;
-    text-decoration: none;
-    background-color: #f8f9fa;
+	color: #16181b;
+	text-decoration: none;
+	background-color: yellow;
 }
+
 #searchform {
 	margin: 0;
 	padding: 20px 0;
 }
-.today{
+
+.today {
 	border: solid 2px lightblue;
 }
 
+#headernav {
+	position: absolute;
+	right: 0em;
+	top: 5em;
+}
 
-#headernav
-	{
-		position: absolute;
-		right: 0em;
-		top: 5em;
-	}
+#headernav>ul>li {
+	float: left !important;
+	list-style-type: none;
+}
 
-		#headernav > ul > li
-		{
-			float: left !important;
-			list-style-type: none;
-		}
-		
-			#headernav > ul > li:last-child
-			{
-				padding-right: 0 !important;
-			}
+#headernav>ul>li:last-child {
+	padding-right: 0 !important;
+}
 
-			#headernav > ul > li > a,
-			#headernav > ul > li > span
-			{
-				display: block !important;
-				margin-left: 0.7em !important;
-				padding: 0.80em 1.2em !important;
-				letter-spacing: 0.06em !important;
-				text-decoration: none !important;
-				font-size: 15px !important;
-				outline: 0;
-				color: #FFF;
-				border-radius:10px;  
-			}
-			#headernav > ul > li > a:hover,
-			#headernav > ul > li > span:hover
-			{
-				color:	#BBFFFF;
-				font-weight: 700;
-				box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
-			}
+#headernav>ul>li>a, #headernav>ul>li>span {
+	display: block !important;
+	margin-left: 0.7em !important;
+	padding: 0.80em 1.2em !important;
+	letter-spacing: 0.06em !important;
+	text-decoration: none !important;
+	font-size: 15px !important;
+	outline: 0;
+	color: #FFF;
+	border-radius: 10px;
+}
 
-			#headernav li.active a
-			{
-				background: #56c9d6;
-				border-radius: 5px;
-				color: #FFF;
-			}
+#headernav>ul>li>a:hover, #headernav>ul>li>span:hover {
+	color: #BBFFFF;
+	font-weight: 700;
+	box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
+}
 
-			#headernav > ul > li > ul
-			{
-				display: none;
-			}
-#headerdiv
-	{
-		position: relative;
-		height:150px;
-	}
+#headernav li.active a {
+	background: yellow;
+	border-radius: 5px;
+	color: #FFF;
+}
 
-		#headerdiv .headernav
-		{
-			position: relative;
-			padding: 6em 0em;
-		}
-		
+#headernav>ul>li>ul {
+	display: none;
+}
 
+#headerdiv {
+	position: relative;
+	height: 150px;
+}
+
+#headerdiv .headernav {
+	position: relative;
+	padding: 6em 0em;
+}
 </style>
 
 </head>
-    <!-- <script src="js/jquery-3.5.1.min.js"></script>
-    <script>
-        var score = 0;
-        $(".i").hover(function () {
-        	alert(1);
-            if (score == 0) {
-                $(this).attr("src", "images/chngstar.gif");
-                $(this).prevAll('img').attr("src", "images/chngstar.gif");
-                let num = $(this).index()+1;
-                $("#score").text("獲得"+num+"星星")
-                console.log($(".i").index($(this)))
-            }
-        },
-            function () {
-                if (score == 0) {
-                    $(this).attr("src", "images/star.gif");
-                    $(this).prevAll('img').attr("src", "images/star.gif");
-                    
-                    $("#score").text("獲得0星星")
-                }
-            });
 
-        $(".i").click(function () {
-
-            score = ($(this).index()) + 1;
-            console.log("score" + score);
-
-            $(this).attr("src", "images/chngstar.gif");
-            $(this).prevAll('img').attr("src", "images/chngstar.gif");
-            $("#score").text("獲得"+score+"星星")
-        });
-
-        $(".i").dblclick(function () {
-            $(".i").attr("src", "images/star.gif");
-            score = 0;
-            $("#score").text("獲得"+score+"星星")
-        });
-        
-        
-    </script> -->
 <body>
-<!---------- Header ------------>		
-		<div class="headerPage">
-			<jsp:include page="../header/header_guest.jsp"/>
-		</div>
+<!---------- Header ------------>
+	<div class="headerPage">
+		<jsp:include page="../header/header_guest.jsp" />
+	</div>
 
-		<div id="menu-bg">
-			<div id="menu">
-				<ul id="main">
-					<li class="nav-item dropdown"><a href="#">熱門 </a></li>
-					<li class="nav-item dropdown"><a href="#">電影 </a></li>
-					<li class="nav-item dropdown"><a href="#">運動 </a></li>
-					<li class="nav-item dropdown"><a href="#">美食 </a></li>
-					<li class="nav-item dropdown"><a href="#">文青 </a></li>
-					<li class="nav-item dropdown"><a href="#">旅遊 </a></li>
-				</ul>
-			</div>
+	<div id="menu-bb">
+		<div id="menu">
+			<ul id="main">
+				<li class="nav-item dropdown"><a href="#" name = "熱門" class="activeType">熱門 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "電影" class="activeType">電影 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "運動" class="activeType">運動 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "美食" class="activeType">美食 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "旅遊" class="activeType">旅遊 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "音樂藝文 " class="activeType">音樂藝文 </a></li>
+			</ul>
 		</div>
-	
-	<!-- end header -->
-	<br>
+	</div>
+		<!-- end header -->
+		
+		<div class="newajaxlist">
+	 <c:import url="../ajax/forumTable.jsp"></c:import> 
+</div>
+		<script>
+			$(".activeType").click(function(){ //以活動類型作為快速篩選
+				var activeType = $(this).attr('name');
+				var keyWord = $('#keyWord').val();
+		 		$.ajax({
+					  url:"ajax_forum",
+					  type: "GET",
+					  dataType: "html", //server送回
+					  contentType: 'application/json; charset=utf-8',
+					  data: {activeType: activeType,keyWord: keyWord},
+					  success:function(data){
+						  $(".newajaxlist").empty();
+						  $(".newajaxlist").append(data);
+						}
+				}) 
+			})
+			$(".submitBtn").click(function(){ //關鍵字搜尋
+				var keyWord = $('#keyWord').val();
+		 		$.ajax({
+					  url:"ajax_forum",
+					  type: "GET",
+					  dataType: "html", //server送回
+					  contentType: 'application/json; charset=utf-8',
+					  data: {keyWord: keyWord},
+					  success:function(data){
+						  $(".newajaxlist").empty();
+						  $(".newajaxlist").append(data);
+						}
+				}) 
+			})
+		</script>
 	
 	<table width="70%" border="1" align="center">
 		<tr>
-			<td>類型</td>
-			<td>標題</td>
-			<td>評分</td>
-			<td>發文者</td>
-			<td>發文時間</td>
-			<td>地區</td>
-			<td>點閱率</td>
-		</tr>
-		<tr>
-			<td>旅遊</td>
-			<td>粗乃玩啊</td>
-			<td>4.5</td>
-			<td>揪王之王</td>
-			<td>2020-11-11</td>
-			<td>台北市</td>
-			<td>20</td>
+			<td><c:out value="${forumTitle.type}" default="no values"/></td>
+			<td><c:out value="${forumTitle.title}" default="no values"/></td>
+			<td><c:out value="${forumTitle.score}" default="no values"/></td>
+			<td><c:out value="${forumTitle.author}" default="no values"/></td>
+			<td><fmt:formatDate value="${forumTitle.time}" type="both"/></td>
+			<td><c:out value="${forumTitle.location}" default="no values"/></td>
+			<td><c:out value="${forumTitle.popularity}" default="no values"/></td>
 		</tr>
 	</table>
 	
 	<table width="70%" border="1" align="center"  style="border-top: 5px #ff0000;" >
 
-		 <c:forEach var="forum" items="${forumList}">		
+		 <c:forEach var="forum" items="${forumDetailList}">
 		<tr>
 			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
 				<img width = "100%" src="images/img02.jpg" alt=""/>
 			</td>
 			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
-			深海異音<br /> hbl917070<br /> 稱號 未夠班的勇者<br /> 種族 妖精<br /> 巴幣 226632 <br />GP 7881<br />
+			深海異音<br /> 
+			hbl917070<br /> 
+			稱號 未夠班的勇者<br /> 
+			種族 妖精<br />
+			 巴幣 226632 <br />
+			 GP 7881<br />
 			</td>
 			<!-- <td width="20%"  height="100px" style="border-right: 0px;">	<img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/></td> -->
-			<td width="60%"  height="100px" style="border-left: 0px;">海詞詞典，<img width = "10%" src="images/img02.jpg" alt=""/><button>很讚</button>最權威的學習詞典，專業出版線上討論區的英文，線上討論區翻譯，線上討論區英語怎麼說等詳細講解。海詞詞典：學習變容易，記憶很深刻。</td>
+			<td width="60%"  height="100px" style="border-left: 0px;">
+		    <!----------------------------------內容開始------------------------------------ -->
+		    <table>
+		    <tr height="200px"><td><img width = "50%" src="images/img02.jpg" alt=""/></td></tr>
+		      <tr><td>${forum.article}</td></tr>
+		      <tr  height="50px"><td style="text-align :right"><input class = "forumEdit" type="button" name = "${forum.forumSeq}" value="編輯">&nbsp;</td></tr>
+		    </table>
+		  
+			<!-- --------------------------------內容結束------------------------------------ -->			
+			</td>
 		</tr>
 			
 				<tr>
@@ -350,14 +340,25 @@ Released   : 20100501
 					<tr>
 						<td width="25%">
 						    <div>
-						        <img id="img1" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img2" class="i" width = "33" src="images/chngstar.gif" />
+						  <c:forEach var="i" begin="1" end="${forum.score}">
+                                <img  class="i" width = "33" src="images/chngstar.gif" />
+                                 </c:forEach>
+
+	                          <c:forEach var="i" begin="1" end="${5-forum.score}">
+                               <img id="img5" class="i" width = "33" src="images/star.gif" />
+                                 </c:forEach>
+						       
+						      <!--   <img id="img2" class="i" width = "33" src="images/chngstar.gif" />
 						        <img id="img3" class="i" width = "33" src="images/chngstar.gif" />
 						        <img id="img4" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img5" class="i" width = "33" src="images/star.gif" />
+						        <img id="img5" class="i" width = "33" src="images/star.gif" /> -->
 						    </div>
     					</td>
-						<td width="75%">${forum.code}</td>
+						<td width="75%">
+						  <input type="hidden" name = "evaTag" id = "evaTag${forum.forumSeq}" value = "${forum.evaTag}" />
+						<div id="evaTagArea${forum.forumSeq}"></div>
+						
+						</td>
 					</tr>
 				</table>
 			</td>
@@ -365,18 +366,54 @@ Released   : 20100501
 			  </c:forEach>	
 		<tr>
 			<td height ="70" colspan="3" align="center">
-				<input type="submit" value="新增貼文" id="to_forumNewArticle">
-				<input type="reset" value="編輯">
+			<form method ="get" action="<%=request.getContextPath()%>/forumNewArticle">
+			 	    <input type = "hidden" name = "code" value = "${forumTitle.code}">
+		<input type = "hidden" name = "activityCode" value = "${forumTitle.activityCode}">
+		<input type = "hidden" name = "type" value = "${forumTitle.type}">
+		<input type = "hidden" name = "author" value = "${forumTitle.author}">
+		<input type = "hidden" name = "title" value = "${forumTitle.title}">
+		<input type = "hidden" name = "location" value = "${forumTitle.location}">
+			   <input type="submit" value="新增貼文" id="to_forumNewArticle">
+			</form>	
 			</td>
 		</tr>
+		
+		
+		<form  id = "updateForm" method ="get" action="<%=request.getContextPath()%>/forumUpdateArticle">
+			<input type = "text" id = "detailForumSeq" name = "forumSeq" >
+		</form>
 	</table>
 
 
 <script>	
-	document.getElementById("to_forumNewArticle").onclick = function(){
-		location.href = "<c:url value = '/forumNewArticle'/>";
-	}
+$(".forumEdit").click(function(){ //以活動類型作為快速篩選
+	var detailForumSeq = $(this).attr('name');
+	$("#detailForumSeq").val(detailForumSeq);
+	$("#updateForm").submit();
+})
+
+<c:forEach items="${forumDetailList}" var="forum">
+  var dataEvaTagStr =  $("#evaTag"+${forum.forumSeq}).val();
+  var combineHtml = "";
+  if(dataEvaTagStr !== null){
+  	var dataEvaTags =dataEvaTagStr.split(',');
+  	dataEvaTags.forEach(function(item, index, array) {
+  		if(item!=null && item != ''){
+  			combineHtml+="<button>"+item+"</button>";
+  		}
+  		});
+
+  		$("#evaTagArea"+${forum.forumSeq}).html(combineHtml);
+  }
+  
+</c:forEach>
+
+
+
+
 </script>
+
+
 
 
 </body>

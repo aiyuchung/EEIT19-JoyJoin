@@ -54,6 +54,9 @@ table tbody tr:last-child td:last-child {
 </style>
 </head>
 <body>
+	 <form id = "formToDetail" method ="get" action="<%=request.getContextPath()%>/forumDetail">
+			 		<input type="hidden" id = "forumSeqInput" name="forumSeq" />
+	</form>
 	<table width="70%" border="1" align="center">
 	<thead>
 			<tr style="text-align: center" height="60px">
@@ -67,11 +70,8 @@ table tbody tr:last-child td:last-child {
 			</tr>
 		</thead>
 			 <c:forEach var="forum" items="${forumList}">
-			 <form id = "form${forum.forumSeq}" method ="get" action="<%=request.getContextPath()%>/forumDetail">
-			 		<input type="hidden" name="forumSeq" value="${forum.forumSeq}"/>
-			</form>
-			 	<tr style="text-align: center" height="60px">
-				<td><a class="to_detail" name ="${forum.forumSeq}">${forum.type}</a></td>
+			 	<tr style="text-align: center" height="60px" class="to_detail" name ="${forum.forumSeq}">
+				<td>${forum.type}</td>
 				<td>${forum.title}</td>
 				<td>${forum.score}</td>
 				<td>${forum.author}</td>
@@ -116,7 +116,8 @@ table tbody tr:last-child td:last-child {
 <script type="text/javascript">
 $(".to_detail").click(function(){ //以活動類型作為快速篩選
 	var forumSeq = $(this).attr('name');
-	$("#form"+forumSeq).submit();
+	$("#forumSeqInput").val(forumSeq);
+	$("#formToDetail").submit();
 })
 </script>
 </body>

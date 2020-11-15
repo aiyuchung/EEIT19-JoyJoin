@@ -1,7 +1,7 @@
 package com.web.activity.dao.impl;
 
 import java.time.LocalDateTime;
-
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import com.web.activity.Enum.Status;
 import com.web.activity.dao.ForumDao;
 import com.web.activity.model.ForumBean;
 @SuppressWarnings("unchecked")
@@ -24,6 +25,8 @@ public class ForumDaoImpl implements ForumDao {
 	@Override
 	public List<ForumBean>  createForum(ForumBean forumBean) {
 		Session session = factory.getCurrentSession();
+		forumBean.setTime(new Date());
+		forumBean.setStatus(Status.ACTIVE);
 		session.save(forumBean);
 		String hql = "FROM ForumBean";
 		List<ForumBean> list = session.createQuery(hql).getResultList();
@@ -33,8 +36,10 @@ public class ForumDaoImpl implements ForumDao {
 	@Override
 	public ForumBean updateForum(int forumSeq,ForumBean forumBean) {
 		Session session = factory.getCurrentSession();
+		forumBean.setTime(new Date());
+		forumBean.setStatus(Status.ACTIVE);
 		forumBean.setForumSeq(forumSeq);
-		session.save(forumBean);
+		session.update(forumBean);
 		return this.selectOneForum(forumSeq);
 	}
 	

@@ -32,6 +32,12 @@ public interface ForumService {
 	 * @return 指定討論
 	 */
     public ForumBean selectOneForum(int forumSeq);
+    
+    public List<ForumBean> createNewArticle(ForumBean forumBean);
+    
+    
+    public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean);
+    
 	
         
 //	 * 建立一筆新的討論

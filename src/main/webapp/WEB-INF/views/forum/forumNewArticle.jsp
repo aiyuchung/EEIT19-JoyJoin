@@ -35,6 +35,11 @@ Released   : 20100501
 	crossorigin="anonymous"></script>
 
 <style>
+#menu-bb {
+	background: #E0E000;
+	height: 50px;
+	
+}
 #thiscap {
 	padding-top: .75rem;
 	padding-bottom: .75rem;
@@ -51,24 +56,24 @@ Released   : 20100501
 	border: none;
 	text-decoration: none;
 	text-transform: uppercase;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 微軟正黑體;
+	font-weight:900;
 	font-size: 20px;
-	color: #DDBB04;
+	color: BLACK;
 }
 
 #menu>ul>li>a:hover {
 	margin: 0 0 0 50px;
 	background: #191E1A;
-	border-bottom: 3px solid #DDBB04;
-	color: #FFFFFF;
+	border-bottom: 3px solid #FF30FF;
+	color: white;
 }
-
 
 #selectAll1>a:hover {
 	background: red;
 	margin: 0 0 0 70px;
 	background: #191E1A;
-	border-bottom: 3px solid #DDBB04;
+	border-bottom: 3px solid #FF30FF;
 	color: #FFFFFF;
 }
 
@@ -83,7 +88,7 @@ Released   : 20100501
 /* #dropdown-menu { */
 /*     position: absolute; */
 /*     top: 45px; */
-    
+
 /*     left: 0; */
 /*     z-index: 1000; */
 /*     display: none; */
@@ -100,7 +105,6 @@ Released   : 20100501
 /*     border: 1px solid rgba(0,0,0,.15); */
 /*     border-radius: .25rem; */
 /* } */
-
 .dropdown-item {
 	display: block;
 	float: left;
@@ -114,199 +118,150 @@ Released   : 20100501
 	color: #DDBB04;
 }
 
-
 .dropdown-menu {
-    position: absolute;
-    top: 44px;
-    left: 0;
-    z-index: 1000;
-    display: none;
-    float: left;
-    min-width: 10rem;
-    padding: .5rem 0;
-    margin: .125rem 0 0;
-    font-size: 1rem;
-    color: #212529;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: .25rem;
+	position: absolute;
+	top: 44px;
+	left: 0;
+	z-index: 1000;
+	display: none;
+	float: left;
+	min-width: 10rem;
+	padding: .5rem 0;
+	margin: .125rem 0 0;
+	font-size: 1rem;
+	color: #212529;
+	text-align: left;
+	list-style: none;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-radius: .25rem;
 }
 
 #menu ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
-#menu> .dropdown-checkbox:hover {
+#menu>.dropdown-checkbox:hover {
 	margin: 0 3px 0 0;
-	background: #191E1A;
+	background: #E0E0000;
 	border-bottom: 3px solid #DDBB04;
 	color: #FFFFFF;
 }
 
 .panel {
-  padding: 0.3px 15px 0px 15px;
-  background-color: dark-gray;
-  display: none;
-  overflow: hidden;
-  
-  vertical-align:middle;
-  line-height: 1.8rem;
+	padding: 0.3px 15px 0px 15px;
+	background-color: dark-gray;
+	display: none;
+	overflow: hidden;
+	vertical-align: middle;
+	line-height: 1.8rem;
 }
 
-.panel>label{
+.panel>label {
 	margin-bottom: 0rem;
 }
-.dropdown-item.active, .dropdown-item:active {
- 
-    text-decoration: none;
 
+.dropdown-item.active, .dropdown-item:active {
+	text-decoration: none;
 }
+
 .dropdown-item:focus, .dropdown-item:hover {
-    color: #16181b;
-    text-decoration: none;
-    background-color: #f8f9fa;
+	color: #16181b;
+	text-decoration: none;
+	background-color: yellow;
 }
+
 #searchform {
 	margin: 0;
 	padding: 20px 0;
 }
-.today{
+
+.today {
 	border: solid 2px lightblue;
 }
 
+#headernav {
+	position: absolute;
+	right: 0em;
+	top: 5em;
+}
 
-#headernav
-	{
-		position: absolute;
-		right: 0em;
-		top: 5em;
-	}
+#headernav>ul>li {
+	float: left !important;
+	list-style-type: none;
+}
 
-		#headernav > ul > li
-		{
-			float: left !important;
-			list-style-type: none;
-		}
-		
-			#headernav > ul > li:last-child
-			{
-				padding-right: 0 !important;
-			}
+#headernav>ul>li:last-child {
+	padding-right: 0 !important;
+}
 
-			#headernav > ul > li > a,
-			#headernav > ul > li > span
-			{
-				display: block !important;
-				margin-left: 0.7em !important;
-				padding: 0.80em 1.2em !important;
-				letter-spacing: 0.06em !important;
-				text-decoration: none !important;
-				font-size: 15px !important;
-				outline: 0;
-				color: #FFF;
-				border-radius:10px;  
-			}
-			#headernav > ul > li > a:hover,
-			#headernav > ul > li > span:hover
-			{
-				color:	#BBFFFF;
-				font-weight: 700;
-				box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
-			}
+#headernav>ul>li>a, #headernav>ul>li>span {
+	display: block !important;
+	margin-left: 0.7em !important;
+	padding: 0.80em 1.2em !important;
+	letter-spacing: 0.06em !important;
+	text-decoration: none !important;
+	font-size: 15px !important;
+	outline: 0;
+	color: #FFF;
+	border-radius: 10px;
+}
 
-			#headernav li.active a
-			{
-				background: #56c9d6;
-				border-radius: 5px;
-				color: #FFF;
-			}
+#headernav>ul>li>a:hover, #headernav>ul>li>span:hover {
+	color: #BBFFFF;
+	font-weight: 700;
+	box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
+}
 
-			#headernav > ul > li > ul
-			{
-				display: none;
-			}
-#headerdiv
-	{
-		position: relative;
-		height:150px;
-	}
+#headernav li.active a {
+	background: yellow;
+	border-radius: 5px;
+	color: #FFF;
+}
 
-		#headerdiv .headernav
-		{
-			position: relative;
-			padding: 6em 0em;
-		}
-		
+#headernav>ul>li>ul {
+	display: none;
+}
 
+#headerdiv {
+	position: relative;
+	height: 150px;
+}
+
+#headerdiv .headernav {
+	position: relative;
+	padding: 6em 0em;
+}
 </style>
 
 </head>
     <script src="js/jquery-3.5.1.min.js"></script>
     <script>
-        var score = 0;
-        $(".i").hover(function () {
-        	alert(1);
-            if (score == 0) {
-                $(this).attr("src", "images/chngstar.gif");
-                $(this).prevAll('img').attr("src", "images/chngstar.gif");
-                let num = $(this).index()+1;
-                $("#score").text("獲得"+num+"星星")
-                console.log($(".i").index($(this)))
-            }
-        },
-            function () {
-                if (score == 0) {
-                    $(this).attr("src", "images/star.gif");
-                    $(this).prevAll('img').attr("src", "images/star.gif");
-                    
-                    $("#score").text("獲得0星星")
-                }
-            });
 
-        $(".i").click(function () {
-
-            score = ($(this).index()) + 1;
-            console.log("score" + score);
-
-            $(this).attr("src", "images/chngstar.gif");
-            $(this).prevAll('img').attr("src", "images/chngstar.gif");
-            $("#score").text("獲得"+score+"星星")
-        });
-
-        $(".i").dblclick(function () {
-            $(".i").attr("src", "images/star.gif");
-            score = 0;
-            $("#score").text("獲得"+score+"星星")
-        });
-        
         
     </script>
 <body>
-<!---------- Header ------------>		
-		<div class="headerPage">
-			<jsp:include page="../header/header_guest.jsp"/>
-		</div>
+<!---------- Header ------------>
+	<div class="headerPage">
+		<jsp:include page="../header/header_guest.jsp" />
+	</div>
 
-		<div id="menu-bg">
-			<div id="menu">
-				<ul id="main">
-					<li class="nav-item dropdown"><a href="#">熱門 </a></li>
-					<li class="nav-item dropdown"><a href="#">電影 </a></li>
-					<li class="nav-item dropdown"><a href="#">運動 </a></li>
-					<li class="nav-item dropdown"><a href="#">美食 </a></li>
-					<li class="nav-item dropdown"><a href="#">文青 </a></li>
-					<li class="nav-item dropdown"><a href="#">旅遊 </a></li>
-				</ul>
-			</div>
+	<div id="menu-bb">
+		<div id="menu">
+			<ul id="main">
+				<li class="nav-item dropdown"><a href="#" name = "熱門" class="activeType">熱門 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "電影" class="activeType">電影 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "運動" class="activeType">運動 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "美食" class="activeType">美食 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "旅遊" class="activeType">旅遊 </a></li>
+				<li class="nav-item dropdown"><a href="#" name = "音樂藝文 " class="activeType">音樂藝文 </a></li>
+			</ul>
 		</div>
-	
-	<!-- end header -->
+	</div>
+		<!-- end header -->
 	<br>
 	
 	<table width="70%" border="1" align="center">
@@ -332,9 +287,15 @@ Released   : 20100501
 	
 	<center>
 	
-	
-	<h1>活動精華回顧</h1>
-	<form method="post" action="<%=request.getContextPath()%>/movie_controller">
+	<form method="post" action="<%=request.getContextPath()%>/saveOrUpdateArticle">
+	  <input type = "hidden" name = "forumSeq" value = "${forumBean.forumSeq}">
+	  <input type = "hidden" name = "code" value = "${forumBean.code}">
+      <input type = "hidden" name = "activityCode" value = "${forumBean.activityCode}">
+      <input type = "hidden" name = "type" value = "${forumBean.type}">
+      <input type = "hidden" name = "author" value = "${forumBean.author}">
+      <input type = "hidden" name = "title" value = "${forumBean.title}">
+      <input type = "hidden" name = "location" value = "${forumBean.location}">
+			             
 		<table width="70%" border="1" align="center"  style="border-top: 5px #ff0000;" >
 		<tr>
 			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
@@ -345,7 +306,8 @@ Released   : 20100501
 			</td>
 			<td width="60%"  height="100px" style="border-left: 0px;">
 			<button>上傳照片</button>
-			<textarea style="width:100%;height:100px;" ></textarea>
+			<textarea style="width:100%;height:100px;"  name ="article">${forumBean.article}</textarea>
+			
 			</td>
 		</tr>
 		<tr>
@@ -354,36 +316,111 @@ Released   : 20100501
 					<tr>
 						<td width="25%">
 						    <div>
-						        <img id="img1" class="i" width = "33" src="images/star.gif" />
-						        <img id="img2" class="i" width = "33" src="images/star.gif" />
-						        <img id="img3" class="i" width = "33" src="images/star.gif" />
-						        <img id="img4" class="i" width = "33" src="images/star.gif" />
-						        <img id="img5" class="i" width = "33" src="images/star.gif" />
+						    	  <c:forEach var="i" begin="1" end="${forumBean.score}">
+                                <img  class="star" width = "33" src="images/chngstar.gif" />
+                                 </c:forEach>
+
+	                          <c:forEach var="i" begin="1" end="${5-forumBean.score}">
+                               <img  class="star" width = "33" src="images/star.gif" />
+                                 </c:forEach>
 						    </div>
+						    <input type="hidden" name = "score" id = "score" value = "${forumBean.score}" />
     					</td>
-						<td width="75%"><button>Join無聊怪</button><button>太失望了...</button><button>太好玩了</button><button>壓在地上打</button>
-										<button>團長超帥</button><button>團長超正</button><button>團長風趣</button><button>超讚的服務</button></td>
+						<td width="75%">
+				<button type="button" class = "evaTag"  name="Join無聊怪" value="Join無聊怪">Join無聊怪</button>
+<button type="button" class = "evaTag"  name="太失望了.." value="太失望了..">太失望了...</button>
+<button type="button" class = "evaTag"  name="太好玩了" value="太好玩了">太好玩了</button>
+<button type="button" class = "evaTag"  name="壓在地上打" value="壓在地上打">壓在地上打</button>
+<button type="button" class = "evaTag"  name="團長超帥" value="團長超帥">團長超帥</button>
+<button type="button" class = "evaTag"  name="團長超正" value="團長超正">團長超正</button>
+<button type="button" class = "evaTag"  name="團長風趣" value="團長風趣">團長風趣</button>
+<button type="button" class = "evaTag"  name="超讚的服務" value="超讚的服務">超讚的服務</button>
+  <input type="hidden" name = "evaTag" id = "evaTag" value = "${forumBean.evaTag}" />
+						</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
 			<tr>
 				<td height ="70" colspan="3" align="center">
-					<input type="submit" value="新增貼文"> 
+					<input type="submit" value="儲存貼文"> 
 					<input type="reset" value="清除">
 				</td>
 			</tr>
 			
 		</table>
 	</form>
-	<form id = "listForm" method="get" action="<%=request.getContextPath()%>/movie_controller">
-		</form>
+
 
 
 <script>	
-	document.getElementById("to_newArticle").onclick = function(){
-		location.href = "<c:url value = '/forumDetail'/>";		//改成討論版的路徑
+
+//---------------處理SCORE SCRIPT START---------------//
+var score = 0;
+var scoreLock = $("#score").val() != 0;
+
+
+$(".star").hover(function () {
+    if (score == 0 && !scoreLock) {
+        $(this).attr("src", "images/chngstar.gif");
+        $(this).prevAll('img').attr("src", "images/chngstar.gif");
+        let num = $(this).index()+1;
+        $("#score").val(num);
+        console.log($(".i").index($(this)))
+    }
+},
+    function () {
+        if (score == 0 && !scoreLock) {
+            $(this).attr("src", "images/star.gif");
+            $(this).prevAll('img').attr("src", "images/star.gif");
+            $("#score").val(0);
+        }
+    });
+
+$(".star").click(function () {
+    score = ($(this).index()) + 1;
+    console.log("score" + score);
+    $(".star").attr("src", "images/star.gif");
+    $(this).attr("src", "images/chngstar.gif");
+    $(this).prevAll('img').attr("src", "images/chngstar.gif");
+    $("#score").val(score);
+    scoreLock = 0;
+});
+
+$(".star").dblclick(function () {
+    $(".star").attr("src", "images/star.gif");
+    score = 0;
+    $("#score").val(score);
+    scoreLock = 0;
+});
+//---------------處理SCORE SCRIPT END---------------//
+$(".evaTag").css('background-color','#E2C2DE');
+
+var dataEvaTagStr =  $("#evaTag").val();
+if(dataEvaTagStr !== null){
+	var dataEvaTags =dataEvaTagStr.split(',');
+	dataEvaTags.forEach(function(item, index, array) {
+			var evaName = "button[name='"+item+"']";
+			$(evaName).css('background-color','#FFFF77');
+			});
+}
+
+var fruits = [];
+var evaTagStr = "";
+$(".evaTag").click(function () {
+	var tagVal = $(this).val();
+	var pos = fruits.indexOf(tagVal);
+	//console.log('pos:',pos);
+	if(pos == -1){
+	   $(this).css('background-color','#FFFF77');
+	   fruits.push(tagVal);
+	}else{
+		fruits.splice(pos, 1);
+	   $(this).css('background-color','#E2C2DE');
 	}
+	$("#evaTag").val(fruits.join(','));
+})
+
 </script>
 
 

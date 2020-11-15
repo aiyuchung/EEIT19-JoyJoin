@@ -1,5 +1,6 @@
 package com.web.activity.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ public class ForumServiceImpl implements ForumService {
 	
 	// 查詢討論內容清單
 	public List<ForumBean> selectForumDteailListByParam(ForumBean forumBean) {
-		forumBean.setForumType(ForumType.DETAIL);
-		forumBean.setCode(String.valueOf(forumBean.getForumSeq()));
+		//forumBean.setForumType(ForumType.DETAIL);
+		//forumBean.setCode(String.valueOf(forumBean.getForumSeq()));
 		forumBean.setForumSeq(null);
 		return forumDao.selectAllForumByParam(forumBean);
 	}
@@ -43,6 +44,28 @@ public class ForumServiceImpl implements ForumService {
 		 ForumBean forumBean = forumDao.selectOneForum(forumSeq);
 		return forumBean;
 	}
-
-
+	
+	@Override
+	 public List<ForumBean> createNewArticle(ForumBean forumBean){
+		forumBean.setForumType(ForumType.DETAIL);
+		forumBean.setPopularity(0);
+		return forumDao.createForum(forumBean);
+	 }
+	
+	@Override
+	public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean){
+		//如果沒有key值，進行新增文章
+		List<ForumBean> resultList = new ArrayList<ForumBean>();
+		if(forumBean.getForumSeq() == null) {
+			resultList = this.createNewArticle(forumBean);
+		}else {
+		//若已存在key值，則進行文章更新
+			forumBean.setForumType(ForumType.DETAIL);
+			forumDao.updateForum(forumBean.getForumSeq(), forumBean);
+			ForumBean queryForum = new ForumBean();
+			queryForum.setCode(forumBean.getCode());
+			resultList = this.selectForumDteailListByParam(queryForum);
+		}
+		return resultList;
+	}
 }
