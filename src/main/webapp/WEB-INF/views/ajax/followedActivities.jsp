@@ -14,24 +14,36 @@
 	}
 	.links{
 		color:white;
+		margin-top:8px;
 	}
 	.showurl a{
-		
 		color:white;
-		
+		font-size:20px;
 	}
 	
 	li{
 	list-style-type: none;
+	
 		
 	}
 	.lititle{
 		text-align:left;
 		float:left;
 		list-style-type: none;
-		width:500px;
+		width:400px;
 		overflow : hidden;
  		text-overflow : ellipsis;
+	}
+	.litime{
+		font-family: Microsoft JhengHei;
+		font-size:15px;
+		text-align:left;
+		float:left;
+		width:170px;
+		display:inline;
+ 		padding:7px 0;
+		list-style-type: none;
+		vertical-align:bottom;
 	}
 </style>
 </head>
@@ -44,6 +56,7 @@
 			<c:forEach var="followed" items="${followed}">
 			
 			<ul class="showurl">
+				<li class="lititle litime">活動日期: ${followed.activityBean.activityDate}</li>
 				<li class="lititle"><a href="${followed.activityUrl}">${followed.activityBean.name}</a></li>
 				<c:if test="${followed.condition eq '關注'}">
 					<li><button type="button" class="btn btn-outline-light follow">取消關注</button></li>
@@ -85,15 +98,15 @@
 		var url = $(this).parents("ul").find('a').attr('href');
 		var tokens = url.split("/");
 		var no = tokens[5];
-		
+		$(this).parents(".showurl").hide("500");
 		$.ajax({
-			  url:"ajax_unfollow",
-			  type: "GET",
+			  url:"<c:url value='/ajax_unfollow' />",
+			  type: "POST",
 			  dataType: "html", //server送回
-			  contentType: 'application/json; charset=utf-8',
-			  data: {}, 
+			  data: {
+				  activityUrl:url.toString(),
+			  }, 
 			  success:function(data){
-				  $(this).parents("ul").hide("500");
 				}
 		})
 	})
