@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -72,7 +73,7 @@ public class MemberController {
 		
 		
 		@PostMapping("/login")
-		public String checkID(MemberBean mb, Model model) throws IOException {
+		public String checkID(MemberBean mb, Model model, @PathVariable String checkNo) throws IOException {
 			String nickname = mb.getNickname();	//如果只有帳密==>登入,有暱稱==>註冊
 			String account = mb.getAccount();
 			String password = mb.getPassword();
@@ -80,7 +81,20 @@ public class MemberController {
 			if( account == "" || password == "") {
 				model.addAttribute("errMsg", "請確實輸入資料");
 				return "login/login";
-			}			
+			}
+	//-----------------------------------------		
+			if(checkNo != null) {	//有驗證碼=忘記密碼
+				boolean flag = memberService.checkAccount(account);
+				  if(flag) {
+					  model.addAttribute("errMsg","此帳號沒有資料");
+					  return "login/login";
+				  }else {
+					  String mail = memberService.getMail(account);
+					  send2pwd(account, mail);
+				  }			  
+				  return "redirect:/login";
+			}
+	//---------------------------------------------------		
 			if( nickname != null) {					
 				boolean checkAccount = memberService.checkAccount(account);
 				boolean checkEmail = memberService.checkEmail(email);
@@ -186,18 +200,18 @@ public class MemberController {
 		  
 //---------------------------------------------▼忘記密碼▼---------------------------------------------//	
 		  
-		  @GetMapping("/missPwd")
-		  public String forgotPwd(String account, Model model) {
-			  boolean flag = memberService.checkAccount(account);
-			  if(flag) {
-				  model.addAttribute("errMsg","此帳號沒有資料");
-				  return "login/login";
-			  }else {
-				  String mail = memberService.getMail(account);
-				  send2pwd(account, mail);
-			  }			  
-			  return "redirect:/login";
-		  }
+//		  @GetMapping("/missPwd")
+//		  public String forgotPwd(String account, Model model) {
+//			  boolean flag = memberService.checkAccount(account);
+//			  if(flag) {
+//				  model.addAttribute("errMsg","此帳號沒有資料");
+//				  return "login/login";
+//			  }else {
+//				  String mail = memberService.getMail(account);
+//				  send2pwd(account, mail);
+//			  }			  
+//			  return "redirect:/login";
+//		  }
 		  
 		  @GetMapping("/getPwd")
 		  public String newPwd(Model model) {

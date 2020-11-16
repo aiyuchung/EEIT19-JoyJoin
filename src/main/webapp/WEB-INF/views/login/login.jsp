@@ -119,8 +119,10 @@
 	        </button>
 	      </div>
 	      <div class="modal-body" id="resultArea" style="height:380px;width:380px">
-				<form:form modelAttribute="memberBean">
+				<form:form modelAttribute="memberBean" style="position: absolute;top:80px;left:40px;margin:0 auto;">
 					<form:input type="text" class="form-control" id="missAccount" placeholder="請輸入帳號" path="account" required="required"/>
+					請輸入驗證碼<input type="text" size="4" maxlength="4" name="checkNo" id="checkNo"><input type="text" disabled="disabled" id="number" size="4" maxlength="4"/><br>
+					
 					<input type=button id="getPwd-btn" value="送出"/>
 				</form:form>
 	      </div>
@@ -185,21 +187,28 @@
 	
 	$("#missPwd-btn").on("click",function(){
 		$('#missPwd').modal('show');
+		
+		$("#number").val() =  Integer.toString(random.nextInt(9999));
 	})
+
 	
-	$("#missAccount").on("blur",function(){
-		if($(this).val()==""){
+	
+	$("#checkNo").on("blur",function(){
+		if($("#missAccount").val()!=""&&$("number").val()==$("checkNo").val()){
+			$("#getPwd-btn").attr("type","submit");
+			$("#getPwd-btn").on("click",function(){
+				alert("信件已送往註冊信箱")
+			})
+		}else if($("#missAccount").val()==""){
 			$("#getPwd-btn").attr("type","button");
 			alert("請輸入帳號");
 		}else{
-			$("#getPwd-btn").attr("type","submit");
-			alert("信件送往註冊信箱")
+			$("#getPwd-btn").attr("type","button");
+			alert("請輸入驗證碼");
 		}
 	})
-	
-	
-	
 		
+	
 	</script>
 </body>
 </html>
