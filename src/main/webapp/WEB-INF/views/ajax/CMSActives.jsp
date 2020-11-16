@@ -29,7 +29,7 @@
 				<!-- 	這邊可以用個迴圈拉資料出圈拉資料出 -->
 				<tr>
 					<th>activityClass</th>
-					<th>location</th>
+					<th>prov</th>
 					<th>activityStatus</th>
 					<th>price</th>
 					<th>name</th>
@@ -43,7 +43,7 @@
 				<tbody>
 					<tr><input type="hidden" id="activityNo${CMS.activityNo}"  value="${CMS.activityNo}" />	
 						<td>${CMS.activityClass}</td>
-						<td>${CMS.location}</td>
+						<td>${CMS.prov}</td>
 <%-- 						<td>${CMS.activityStatus}</td> --%>
 						<td>
 					        <select name="updateActivityStatus" id="updateActivityStatus${CMS.activityNo}" onchange="test(${CMS.activityNo})">

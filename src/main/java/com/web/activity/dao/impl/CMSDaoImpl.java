@@ -88,10 +88,19 @@ public class CMSDaoImpl implements CMSDao {
 	public List<ActivityBean> selectActivities(String keyWord) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ActivityBean WHERE activityClass like '%"+keyWord+"%'  ";
+		String[] keyWords =keyWord.split(" ");
+		String key ="";
+		for (int i = 0; i< keyWords.length; i++) {
+			key += "OR name LIKE '%"+ keyWords[i] +"%'";
+			key += "OR prov LIKE '%"+ keyWords[i] +"%'";
+			key += "OR finalDate LIKE '%"+ keyWords[i] +"%'";
+			key += "OR activityClass LIKE '%"+ keyWords[i] +"%'";
+		}
+		hql += key;
 		List<ActivityBean> cms = session.createQuery(hql).getResultList();
 		return cms;
 	}
-
+	
 
 	//單獨更新activityStatus
 	@Override

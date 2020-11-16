@@ -81,9 +81,10 @@ public class CMSController {
 	@GetMapping("/ajax_CM_keyWords")
 	public String selectactive(Model model,@RequestParam String keyword) {
 		List<ActivityBean> beans = service.selectActivities(keyword);
-		model.addAttribute("activities", beans);
-//		System.out.println("hello world");
-		return "ajax/CMSActives"; // 分配到ajax jsp
+			int elementsNum = beans.size();
+			model.addAttribute("activitiesNum",elementsNum);
+			model.addAttribute("activities", beans);
+	return "ajax/CMSActives"; // 分配到ajax jsp
 	}
 	
 	@GetMapping("/ajax_selallactive")
