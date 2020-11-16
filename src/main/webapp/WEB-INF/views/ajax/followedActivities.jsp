@@ -9,6 +9,9 @@
 <html>
 <head>
 <style>
+	body{
+		font-family: Microsoft JhengHei;
+	}
 	.links{
 		color:white;
 	}
@@ -17,16 +20,19 @@
 		color:white;
 		
 	}
-	.showur {
-		list-style-type: none;
-		display:inline-block;
+	
+	li{
+	list-style-type: none;
 		
 	}
-	.showur li{
+	.lititle{
+		text-align:left;
 		float:left;
-		display:inline;
+		list-style-type: none;
+		width:500px;
+		overflow : hidden;
+ 		text-overflow : ellipsis;
 	}
-	
 </style>
 </head>
 <body>
@@ -38,7 +44,7 @@
 			<c:forEach var="followed" items="${followed}">
 			
 			<ul class="showurl">
-				<li><a href="${followed.activityUrl}">${followed.activityBean.name}</a></li>
+				<li class="lititle"><a href="${followed.activityUrl}">${followed.activityBean.name}</a></li>
 				<c:if test="${followed.condition eq '關注'}">
 					<li><button type="button" class="btn btn-outline-light follow">取消關注</button></li>
 				</c:if>	
@@ -46,7 +52,7 @@
 					<li><button type="button" class="btn btn-outline-danger hold">修改</button></li>
 				</c:if>
 				<c:if test="${followed.condition eq '參加'}">
-					<li><button type="button" class="btn btn-outline-success join">去留言</button></li>
+					<li><button type="button" class="btn btn-outline-warning join">去留言</button></li>
 				</c:if>		
 			</ul>
 			</c:forEach>
@@ -108,6 +114,13 @@
 		var newurl = "/updateActivity/"+no;
 		window.location.href = '<c:url value="'+ newurl +'"/>';
 		
+	})
+	
+	$(".btn").mouseenter(function(){
+		$(this).parents(".showurl").find(".lititle").css("background-color","rgba(255, 255, 255, 0.3)");
+	})
+	$(".btn").mouseleave(function(){
+		$(this).parents(".showurl").find(".lititle").css("background-color","none");
 	})
 </script>
 </body>

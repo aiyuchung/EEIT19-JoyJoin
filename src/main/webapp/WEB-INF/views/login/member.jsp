@@ -43,6 +43,9 @@
 	background-image: linear-gradient(#545454, #373738);
   }
   
+  body{
+		font-family: Microsoft JhengHei;
+	}
 </style>
 </head>
 <!-- Header -->
