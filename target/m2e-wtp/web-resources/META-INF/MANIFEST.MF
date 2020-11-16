@@ -1,10 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
 Built-By: student
 Build-Jdk: 11.0.8
-=======
-Built-By: PaBYo
-Build-Jdk: 14.0.1
->>>>>>> 1cc23742b0f404884e6ec196d2115d7162e3210d
 Created-By: Maven Integration for Eclipse
 
