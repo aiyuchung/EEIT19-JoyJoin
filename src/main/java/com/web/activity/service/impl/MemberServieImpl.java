@@ -1,11 +1,15 @@
 package com.web.activity.service.impl;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.activity.dao.MemberDao;
+import com.web.activity.model.ActivityFollowedBean;
+import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.service.MemberService;
@@ -105,6 +109,18 @@ public class MemberServieImpl implements MemberService {
 		@Override
 		public void updateFinish(String account) {
 			memberDao.updateFinish(account);			
+		}
+
+		@Transactional
+		@Override
+		public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo) {
+			return memberDao.getFollowedActivity(memberNo);
+		}
+
+		@Transactional
+		@Override
+		public List<ActivityJoinedBean> getJoinedActivity(Integer memberNo) {
+			return memberDao.getJoinedActivity(memberNo);
 		}
 	
 		

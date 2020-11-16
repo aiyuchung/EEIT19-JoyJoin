@@ -18,7 +18,7 @@
 						<form id="searchform" method="get" action="#">
 							<h6>&nbsp;&nbsp;關鍵字搜尋</h6>
 							<div>
-								&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="s" id="s" size="20" value="" placeholder="EX: 瑜珈" /> 
+								&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="activityClass" id="activityClass" size="20" value="" placeholder="EX: 瑜珈" /> 
 								<button type="button" class="btn btn-outline-light btn-sm">確認</button>
 							</div>
 						</form>
@@ -41,10 +41,19 @@
 			</thead>
 			<c:forEach var="CMS" items="${activities}">
 				<tbody>
-					<tr>
+					<tr><input type="hidden" id="activityNo${CMS.activityNo}"  value="${CMS.activityNo}" />	
 						<td>${CMS.activityClass}</td>
 						<td>${CMS.location}</td>
-						<td>${CMS.activityStatus}</td>
+<%-- 						<td>${CMS.activityStatus}</td> --%>
+						<td>
+					        <select name="updateActivityStatus" id="updateActivityStatus${CMS.activityNo}" onchange="test(${CMS.activityNo})">
+					        <option value="0" selected="selected" style="display: none;"></option>
+					        <option class="area1" value="active"  ${CMS.activityStatus == "active"  ? 'selected' : ''}>active</option>
+					        <option class="area1" value="OK" ${CMS.activityStatus == "OK"  ? 'selected' : ''}>OK</option>
+					        <option class="area1" value="inactive" ${CMS.activityStatus == "inactive"  ? 'selected' : ''}>inactive</option>					      					       
+					        </select>
+					    </td>
+
 						<td>${CMS.price}</td>
 						<td>${CMS.name}</td>
 						<td>${CMS.activityDate}</td>
@@ -60,7 +69,7 @@
   </div>
 <script>	
 	$(".btn-sm").click(function(){          //關鍵字篩選
-		var keywords = $("#s").val();
+		var keywords = $("#activityClass").val();
 		console.log(keywords);
 		$.ajax({
 			  url:"ajax_CM_keyWords",
@@ -78,6 +87,31 @@
 					},
 		})
 	})
+	
+	//單獨更新 activityStatus 
+	 function test (x1) {
+	   var activityNo = $("#activityNo" + x1).val(); 
+//	   alert(activityNo);          
+	      var v=document.getElementById("updateActivityStatus"+ x1).value;   
+	    $.ajax({
+	       url:"ajax_update_keyWords",
+	       type: "get",
+	       dataType: "html",
+	       contentType: 'application/json; charset=utf-8',
+	       data: {
+	         activityNo: activityNo ,
+	         activityStatus: v,
+	     },
+	      success:function(data){
+	        $(".post").empty();
+	        $(".newajaxlist").empty();
+	        $(".newajaxlist").append(data);
+	       alert("活動狀態更新成功請重新查詢");
+	      $("#updateActivityStatus"+ x1).css("background-color"," #82D900");
+//	       console.log(data);
+	       },  
+	    })
+	 }
 </script>
 </body>
 </html>

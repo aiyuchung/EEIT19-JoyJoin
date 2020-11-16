@@ -81,6 +81,12 @@ public class ActivityBean implements java.io.Serializable {
 	@OneToMany(mappedBy="activityBean", cascade= {CascadeType.ALL})
 	private Set<ActivityMsgBean> activityMsgbean = new LinkedHashSet<>();
 	
+	@OneToMany(mappedBy="activityBean", cascade= {CascadeType.ALL})
+	private Set<ActivityFollowedBean> activityFollowedBean = new LinkedHashSet<>();
+	
+	@OneToMany(mappedBy="activityBean", cascade= {CascadeType.ALL})
+	private Set<ActivityJoinedBean> activityJoinedBean = new LinkedHashSet<>();
+	
 //	@ManyToMany(cascade=CascadeType.ALL)
 //	@JoinTable(name="ActivityJoin",
 //			joinColumns= {

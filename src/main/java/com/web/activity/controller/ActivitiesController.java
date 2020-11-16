@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityForm;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
@@ -71,8 +72,12 @@ public class ActivitiesController {
 //-----------------------------------------跳轉單個頁面↓-----------------------------------------	
 	@GetMapping("/oneActivity/{id}")
 	public String one(@PathVariable("id") int activityNo, Model model, 
-			HttpSession session, @ModelAttribute("msg") ActivityMsgBean msg) {
-		
+			HttpSession session, @ModelAttribute("msg") ActivityMsgBean msg,
+			@RequestParam (required=false) String condition) {
+		boolean frombtn = false;
+		if (condition != null) {
+			frombtn = true;
+		}
 		ActivityBean activity = service.selectOneActivity(activityNo); //活動內容
 		Map<String, Integer> hitCount = service.updateHitCount(activityNo); //點進來就增加一次點擊率
 		List<ActivityMsgBean> msgBox = service.showMsg(activityNo); //留言板內容
@@ -89,6 +94,7 @@ public class ActivitiesController {
 				break;
 			}
 		}
+		model.addAttribute("frombtn",frombtn);
 		model.addAttribute("nickname",nickname);
 		model.addAttribute("isJoined",isJoined);
 		model.addAttribute("joined",joined);
@@ -101,6 +107,7 @@ public class ActivitiesController {
 //-----------------------------------------加入活動後跳轉單個頁面↓-----------------------------------------	
 	@GetMapping("/addActivity/{id}")
 	public String add(@PathVariable("id") int activityNo, HttpSession session, Model model) {
+		
 		
 		ActivityBean activity = service.selectOneActivity(activityNo);
 		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
@@ -118,6 +125,7 @@ public class ActivitiesController {
 		}
 		
 		int msgNum = msgBox.size();
+		
 		model.addAttribute("joinedList",joinedList);
 		model.addAttribute("joined",joined);
 		model.addAttribute("msgBox",msgBox);
@@ -206,6 +214,7 @@ public class ActivitiesController {
 		String account =  (String) session.getAttribute("account");
 		MemberBean member= (MemberBean) session.getAttribute("member");
 		Integer memberNo = member.getMemberNo();
+		
 		String fileName = pic.getFileName();
 		MultipartFile mFile = pic.getUpdateImg();
 //			//取得檔案型態 令存檔名
@@ -234,24 +243,7 @@ public class ActivitiesController {
 		
 	    return "redirect:/activities";
 	   }
-				
-//-----------------------------------------單個活動的留言板↓-----------------------------------------	
-	
-	@PostMapping("/msgSend")
-	public String saveMsg(Model model, HttpSession session,
-			String msg, Integer activityNo
-			) {
-		String account = (String) session.getAttribute("account");
-		MemberBean member = memberService.getMember(account);
-		Integer memberNo = member.getMemberNo();
-		String nickname = member.getNickname();
-		List<ActivityMsgBean> msgBox = service.saveMsg(msg,activityNo,memberNo);
-		model.addAttribute("nickname",nickname);
-		model.addAttribute("msgBox",msgBox);
-		return "ajax/msgBox";
-	}
-	
-	
+					
 //-----------------------------------------條件查詢form表單↓-----------------------------------------		
 	@PostMapping("/form")
 	public String form(Model model, @ModelAttribute("form") ActivityForm form) {
@@ -278,6 +270,58 @@ public class ActivitiesController {
 		model.addAttribute("recentOnes",recentOnes);
 		model.addAttribute("categoryList",categoryList);
 		return "ShowActivities";
+	}
+//-----------------------------------------單個活動的留言板-新增訊息↓-----------------------------------------	
+
+	@PostMapping("/msgSend")
+	public String saveMsg(Model model, HttpSession session,
+			String msg, Integer activityNo
+			) {
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
+		Integer memberNo = member.getMemberNo();
+		String nickname = member.getNickname();
+		List<ActivityMsgBean> msgBox = service.saveMsg(msg,activityNo,memberNo);
+		model.addAttribute("nickname",nickname);
+		model.addAttribute("msgBox",msgBox);
+		model.addAttribute("activityNo",activityNo);
+		return "ajax/msgBox";
+	}
+//-----------------------------------------單個活動的留言板-修改訊息↓-----------------------------------------	
+
+	@PostMapping("/msgUpdate")
+	public String updateMsg(Model model, HttpSession session,Integer activityNo, Integer msgNo, String msg) {
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
+		String nickname = member.getNickname();
+		service.updateMsg(msg, msgNo);
+		List<ActivityMsgBean> msgBox = service.showMsg(activityNo); //留言板內容
+		int msgNum = msgBox.size(); //留言板留言數量
+		model.addAttribute("nickname",nickname);
+		model.addAttribute("msgNum",msgNum);
+		model.addAttribute("msgBox",msgBox);
+		model.addAttribute("activityNo",activityNo);
+		return "ajax/msgBox";
+	}
+
+		
+//-----------------------------------------單個活動的留言板-刪除訊息↓-----------------------------------------	
+
+	@PostMapping("/msgDelete")
+	public String deleteMsg(Model model, HttpSession session,Integer activityNo, Integer msgNo) {
+		
+		System.out.println("controller--------------"+msgNo);
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
+		String nickname = member.getNickname();
+		service.deleteMsg(msgNo);
+		List<ActivityMsgBean> msgBox = service.showMsg(activityNo); //留言板內容
+		int msgNum = msgBox.size(); //留言板留言數量
+		model.addAttribute("nickname",nickname);
+		model.addAttribute("msgNum",msgNum);
+		model.addAttribute("msgBox",msgBox);
+		model.addAttribute("activityNo",activityNo);
+		return "ajax/msgBox";
 	}
 
 //-----------------------------------------AJAX快篩↓-----------------------------------------		
@@ -423,19 +467,28 @@ public class ActivitiesController {
 //			@RequestParam(value="userId"), required = false Integer id)
 	
 	
-//-----------------------------------------參加活動↓-----------------------------------------	
-//	@GetMapping("/ajax_joinOne")
-//	public String joinOne(Model model, HttpSession session,
-//			@RequestParam int activityNo) {
-//		Integer memberNo = (Integer) session.getAttribute("member.memberNo");
-//		Integer joinedNum = service.joinedOne(activityNo); //在活動的參加人數+1
-//		service.joinedMember(memberNo, activityNo ); //在參加活動的表格加入此會員
-//		
-//		ActivityBean activity = service.selectOneActivity(activityNo);
-//		model.addAttribute("one",activity);
-//		return "OneActivity";
-//		
-//	}
+//-----------------------------------------關注活動↓-----------------------------------------	
+	@PostMapping("/ajax_follow")
+	public void follow(Model model, HttpSession session, String activityUrl,Integer activityNo) {
+		System.out.println("controller------------------------->>>"+activityNo);
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
+		Integer memberNo = member.getMemberNo();
+		
+		ActivityFollowedBean follow = new ActivityFollowedBean();
+		follow.setActivityUrl(activityUrl);
+		service.followActivity(memberNo, follow, activityNo); 
+		
+	}
+//-----------------------------------------取消關注活動↓-----------------------------------------	
+	@PostMapping("/ajax_unfollow")
+	public void unfollow(Model model, HttpSession session, String activityUrl) {
+		String account = (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
+		Integer memberNo = member.getMemberNo();
+		service.unfollowActivity(memberNo, activityUrl); 
+	}	
+	
 	
 	@GetMapping("/wsendpoing")
 	public String chatbot(Model model) {

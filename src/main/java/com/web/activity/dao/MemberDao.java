@@ -1,7 +1,9 @@
 package com.web.activity.dao;
 
-import org.hibernate.Session;
+import java.util.List;
 
+import com.web.activity.model.ActivityFollowedBean;
+import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
 
@@ -58,4 +60,11 @@ public interface MemberDao {
 			//直接更新貼文次數
 		public void updateFinish(String account);
 			//直接更新成行次數
+		
+//---------------------------------------------▼其他▼---------------------------------------------//			
+		
+		public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo);
+			//取得會員關注活動連結
+		public List<ActivityJoinedBean> getJoinedActivity(Integer memberNo);
+			//取得會員關注活動連結
 }

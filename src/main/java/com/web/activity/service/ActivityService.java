@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityPicBean;
@@ -109,6 +110,12 @@ public interface ActivityService {
 	//ajax
 	//查留言板
 	List<ActivityMsgBean> showMsg(int activityNo);
+
+	//刪除留言
+	void deleteMsg(int msgNo);
+
+	//修改留言
+	void updateMsg(String msg, Integer msgNo);
 		
 	//參加活動
 	void joinedOne(Integer memberNo, int activityNo);
@@ -120,5 +127,11 @@ public interface ActivityService {
 	List<ActivityJoinedBean> joinedMember(int activityNo);
 	
 	//新增活動-form表單
-	void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic );
+	void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic);
+
+	//關注活動
+	void followActivity(Integer memberNo, ActivityFollowedBean follow,int activityNo);
+
+	//取消關注活動
+	void unfollowActivity(Integer memberNo, String activityUrl);
 }

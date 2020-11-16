@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.activity.dao.ActivityDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityClassBean;
+import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityPicBean;
@@ -277,7 +278,16 @@ public class ActivityServiceImpl implements ActivityService {
 	public List<ActivityMsgBean> showMsg(int activityNo) {
 		return dao.showMsg(activityNo);
 	}
+	
+	@Override
+	public void deleteMsg(int msgNo) {
+		dao.deleteMsg(msgNo);
+	}
 
+	@Override
+	public void updateMsg(String msg, Integer msgNo) {
+		dao.updateMsg(msg,msgNo);
+	}
 	@Override
 	public List<ProvinceBean> selectAllProvs() {
 		return dao.selectAllProvs();
@@ -307,6 +317,16 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic) {
 		dao.createActivity(memberNo,newform,pic);
+	}
+
+	@Override
+	public void followActivity(Integer memberNo, ActivityFollowedBean follow,int activityNo) {
+		dao.followActivity(memberNo, follow,activityNo);
+	}
+
+	@Override
+	public void unfollowActivity(Integer memberNo, String activityUrl) {
+		dao.unfollowActivity(memberNo, activityUrl);
 	}
 	
 

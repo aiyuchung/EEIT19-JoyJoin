@@ -55,18 +55,29 @@
 	<button class="btn btn-contact sendmsg">送出</button>
 	<i class="fa fa-twitter"></i>
 </div>
-<div class="section-block msgboard" >
-<h1 class="section-title" >留言板</h1>
+<div class="section-block msgboard">
+	<c:if test="${msgNum == 0}">
+	<p>目前還沒有人留言</p>
+	</c:if>
+	<c:if test="${msgNum != 0}">
+	<h1 class="section-title" >留言板</h1>
 	<c:forEach var="msg" items="${msgBox}">
 	<div class="credit-block sources ">
-		<div class="">
-			<img src="" class="userpic msgpic"/><a href="#"><h5 style="display: inline-block">${nickname} ( ${account} )</h5></a>
+		<div class="btnarea">
+			<img src="" class="userpic msgpic"/><span>&nbsp;${nickname}<a href="#"> ( ${account} ) </a></span>
+			<c:if test="${account == msg.memberBean.account}">
+				<img  class="smbtn msgbtnDelete" title="刪除" src="https://img.icons8.com/material-rounded/24/000000/delete-trash.png"/>
+				<img  class="smbtn msgbtnEdit" title="編輯" src="https://img.icons8.com/material-outlined/24/000000/edit.png"/>
+				<img hidden="true" class="smbtn msgbtnCancel" title="取消" src="https://img.icons8.com/material-outlined/24/000000/cancel.png"/>
+				<img hidden="true" class="smbtn msgbtnOkay" title="確認" src="https://img.icons8.com/material-outlined/24/000000/ok.png"/>
+			</c:if>
 		</div>
 		<div class="showmsg">
-			<textarea rows="2" name="msg" cols="28" class="msgbox newmsg" readonly>${msg.msgContent}</textarea>
+			<textarea name="msg" cols="32" class="msgbox newmsg" readonly="readonly" id="${msg.msgNo}">${msg.msgContent}</textarea>
 		</div>
 	</div>
 	</c:forEach>
+	</c:if>
 </div>
 <script type="text/javascript">
 	var number = $("#num").val();
@@ -75,6 +86,100 @@
 	}else{
 		console.log("else")
 	}
+	
+	$(".sendmsg").click(function(){ //新增留言
+		var msgContent = $(".newmsg").val();
+		var activityNo = ${activityNo};
+		$.ajax({
+			
+			  url:"<c:url value='/msgSend' />",
+			  type: "POST",
+			  dataType: "html", 
+			  data:  {
+				  msg: msgContent,
+				  activityNo: parseInt(activityNo),
+				  },
+			  success:function(data){
+				  $(".allmsg").empty();
+				  $(".allmsg").append(data);
+				}
+		})
+	})
+	
+	$(".msgbtnDelete").click(function(){ //刪除留言
+		var activityNo = ${activityNo};
+		var msgNo = $(this).parents(".sources").find(".msgbox").attr("id");
+		$(this).parents(".credit-block").hide("500");
+		
+		$.ajax({
+			
+			  url:"<c:url value='/msgDelete' />",
+			  type: "POST",
+			  dataType: "html", 
+			  data:  {
+				  msgNo:  parseInt(msgNo),
+				  activityNo: parseInt(activityNo),
+				  },
+			  success:function(data){
+				  setTimeout(function(){
+					  $(".allmsg").empty();
+					  $(".allmsg").append(data);
+
+	                },550);
+				  
+				  
+				}
+		})
+		
+		
+	})
+	
+	$(".msgbtnEdit").click(function(){  //press "msg edit btn"
+		var textarea = $(this).parents(".sources").find(".msgbox");
+		var btnarea =  $(this).parent("div");
+		textarea.prop("readonly",false);
+		textarea.css("border","2px grey solid");
+		btnarea.find(".msgbtnEdit, .msgbtnDelete").hide();
+		btnarea.find(".msgbtnCancel, .msgbtnOkay").attr("hidden",false);
+		
+	})
+	
+	$(".msgbtnOkay").click(function(){ //更新留言
+		var activityNo = ${activityNo};
+		var msgContent = $(this).parents(".sources").find(".msgbox").val();
+		console.log(msgContent);
+		var msgNo = $(this).parents(".sources").find(".msgbox").attr("id");
+		console.log(msgNo);
+		$.ajax({
+			
+			  url:"<c:url value='/msgUpdate' />",
+			  type: "POST",
+			  dataType: "html", 
+			  data:  {
+				  msg:msgContent,
+				  msgNo:  parseInt(msgNo),
+				  activityNo: parseInt(activityNo),
+				  },
+			  success:function(data){
+				  console.log("ajax update fail")
+				  $(".allmsg").empty();
+				  $(".allmsg").append(data);
+				}
+		})
+	})
+	
+	$(".msgbox").focus(function(){
+		var originalText = $(this).parents(".sources").find(".msgbox").val();
+		$(".msgbtnCancel").click(function(){
+			var textarea = $(this).parents(".sources").find(".msgbox");
+			var btnarea =  $(this).parent("div");
+			textarea.prop("readonly",true);
+			textarea.css("border","none");
+			btnarea.find(".msgbtnEdit, .msgbtnDelete").show();
+			btnarea.find(".msgbtnCancel, .msgbtnOkay").attr("hidden",true);
+			textarea.val(originalText);
+		})
+	})
 	
 </script>
 </body>

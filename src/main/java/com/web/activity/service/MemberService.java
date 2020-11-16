@@ -1,5 +1,9 @@
 package com.web.activity.service;
 
+import java.util.List;
+
+import com.web.activity.model.ActivityFollowedBean;
+import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
 
@@ -18,7 +22,7 @@ public interface MemberService {
 		public Integer checkID(String account, String password);
 			//判斷帳密,同時判斷帳號狀態
 		public Integer checkLevel(String account);
-        //判斷帳號權限    
+        	//判斷帳號權限    
 		public void updateInfo(MemberBean mb);
 			//更新個人資料
 		 public boolean checkAccount(String account);
@@ -35,4 +39,8 @@ public interface MemberService {
 			//更新貼文次數
 		public void updateFinish(String account);
 			//更新成行次數
+		public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo);
+			//取得會員關注活動連結
+		public List<ActivityJoinedBean> getJoinedActivity(Integer memberNo);
+			//取得會員關注活動連結
 }	

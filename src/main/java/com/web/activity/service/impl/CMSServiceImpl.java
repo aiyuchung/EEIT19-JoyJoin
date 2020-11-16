@@ -28,11 +28,17 @@ public class CMSServiceImpl implements CMSService {
 	public List<ActivityBean> selectAllActivities() {
 		return dao.selectAllActivities();
 	}
-	
+	//關鍵字查詢
 	@Override
 	public List<ActivityBean> selectActivities(String keyWord) {
 		return dao.selectActivities(keyWord);
 	}
+	
+	//單獨更新activityStatus
+		@Override
+	public int updateActivityStatus(String activityStatus,String activityNo) {
+		return dao.updateActivityStatus(activityStatus,activityNo);
+		}
 
 	@Override
 	public List<ActivityBean> selectAllActivitiesAtive() {

@@ -16,8 +16,11 @@ public interface CMSService {
 	//	<活動清單搜尋>
 	List<ActivityBean> selectActivities(String keyWord);//關鍵字搜尋
 	
-	List<ActivityBean> selectAllActivities();
+	//單獨更新activityStatus
+	int updateActivityStatus(String activityStatus,String activityNo);
 
+	List<ActivityBean> selectAllActivities();
+	
 	List<ActivityBean> selectAllActivitiesAtive();
 
 	List<ActivityBean> selectAllActivitiesInAtive();

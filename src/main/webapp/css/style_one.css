@@ -30,7 +30,7 @@ a {
 	display: inline-block;
 	border-right: 1px solid rgba(255, 255, 255, 0.39);
 }
-.goal-summary .reminder.last {
+.goal-summary .reminder.last{
 	border:0;
 }
 .goal-summary .backers h3, .goal-summary .funded h3, .goal-summary .time-left h3 {
@@ -44,17 +44,7 @@ a {
 .goal-summary .backers span, .goal-summary .funded span, .goal-summary .time-left span {
 	color:#fff;
 }
-.goal-summary .reminder a {
-	background-color:#fff;
-	padding:8px;
-	margin:0px 0px 10px 0px;
-	display:table;
-	border-radius:4px;
-	text-decoration:none;
-}
-.goal-summary .reminder follow a:hover, .goal-summary .reminder a:focus {
-	background-color:#85AD90;
-	color:#fff;
+
 }
 @media (max-width: 767px) {
 	.goal-summary {
