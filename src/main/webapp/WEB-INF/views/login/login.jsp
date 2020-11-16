@@ -63,7 +63,7 @@
 	      <div class="modal-body" id="resultArea" style="height:380px;width:380px">
 				<div align="center" style="position: absolute;top:80px;left:40px;width:77%">
 				<span class="heading"></span>
-				<form:form method="POST"  modelAttribute="memberBean">
+				<form:form method="POST"  modelAttribute="formBean">
 					<div class="form-group">
                         <form:input type="text" class="form-control" id="inputAccount" placeholder="帳號 ( 必填 )" path="account" required="required"/>
                     </div>
@@ -88,20 +88,23 @@
 		
 	
 	
-	<form:form class="login-form" method="POST"  modelAttribute="memberBean">
+	<form:form class="login-form" method="POST"  modelAttribute="formBean">
 		<p class="login-text">
 			<span class="fa-stack fa-lg"> 
 				<i class="fa fa-circle fa-stack-2x"></i>
 				<i class="fa fa-lock fa-stack-1x"></i>
 			</span>
 		</p>
-		<form:input type="text" class="login-username" autofocus="true" placeholder="Account" name="account" id="account" path="account"/> 
-		<form:input type="password"	class="login-password" placeholder="Password" name="password"  path="password"/> 
+		<form:input type="text" class="login-username" autofocus="true" placeholder="Account"  id="account" path="account"/> 
+		<form:input type="password"	class="login-password" placeholder="Password" path="password"/> 
 		<table align='center'>
 			<tr>
 				<td><input type="submit" value="登入" name="Login" class="login-submit" id="login-btn" style="margin-right:10px"/></td>
 				<td><input type="button" value="返回" class="login-submit" id="back-btn" style="margin-left:10px"/></td>
 			</tr>
+<!-- 			<tr> -->
+<!-- 				<td><div class="fb-login-button" data-size="small" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width=""></div></td> -->
+<!-- 			</tr> -->
 		</table>
 		<span class="login-forgot-pass" style="bottom:35px" id="signup-btn">現在註冊</span><br>
 		<span class="login-forgot-pass" style="bottom:15px" id="missPwd-btn">忘記密碼</span>
@@ -119,7 +122,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-body" id="resultArea" style="height:380px;width:380px">
-				<form:form modelAttribute="memberBean" style="position: absolute;top:80px;left:40px;margin:0 auto;">
+				<form:form modelAttribute="formBean" style="position: absolute;top:80px;left:40px;margin:0 auto;">
 					<form:input type="text" class="form-control" id="missAccount" placeholder="請輸入帳號" path="account" required="required"/>
 					請輸入驗證碼<input type="text" size="4" maxlength="4" name="checkNo" id="checkNo"><input type="text" disabled="disabled" id="number" size="4" maxlength="4"/><br>
 					
@@ -213,8 +216,28 @@
 			alert("請輸入驗證碼");
 		}
 	})
-		
 	
-	</script>
+// ----------------------------------FB驗證-----------------------------------------------------------
+	
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '389574248905554',
+      xfbml      : true,
+      version    : 'v9.0'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/zh-TW/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+  
+//----------------------------------FB驗證-----------------------------------------------------------
+
+</script>
 </body>
 </html>

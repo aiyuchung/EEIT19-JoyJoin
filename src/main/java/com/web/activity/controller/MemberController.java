@@ -3,7 +3,6 @@ package com.web.activity.controller;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -20,15 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.web.activity.model.ActivityFollowedBean;
-import com.web.activity.model.ActivityJoinedBean;
+import com.web.activity.model.FormBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.service.ActivityService;
@@ -67,24 +64,45 @@ public class MemberController {
 		
 		@GetMapping("/login")
 		public String login(Model model) {
-			MemberBean mb = new MemberBean();
-			model.addAttribute("memberBean", mb);
+			FormBean fb = new FormBean();
+			model.addAttribute("formBean",fb);
 			return "login/login";
 		}
 		
 		
 		@PostMapping("/login")
-		public String checkID(MemberBean mb, Model model, @RequestParam String checkNo) throws IOException {
-			String nickname = mb.getNickname();	//如果只有帳密==>登入,有暱稱==>註冊
-			String account = mb.getAccount();
-			String password = mb.getPassword();
-			String email = mb.getMail();
-			if( account == "" || password == "") {
+		public String checkID(FormBean fb, Model model) throws IOException {
+			String nickname = fb.getNickname();	//如果只有帳密==>登入,有暱稱==>註冊
+			String account = fb.getAccount();
+			String password = fb.getPassword();
+			String email = fb.getMail();
+			String checkNo = fb.getCheckNo();
+			if( account == "" || password == "") { //確認帳密要輸入
 				model.addAttribute("errMsg", "請確實輸入資料");
 				return "login/login";
 			}
-	//-----------------------------------------		
-			if(checkNo != null) {	//有驗證碼=忘記密碼
+			
+			if( nickname != null) {			//有暱稱===>註冊		
+				boolean checkAccount = memberService.checkAccount(account);
+				boolean checkEmail = memberService.checkEmail(email);
+				if(checkAccount==true&&checkEmail==true) {
+					MemberBean mb = setAccount(account, password, email, nickname);
+					memberService.signUp(mb);		//====註冊====
+					System.out.println("======================>"+"註冊成功");
+					send2open(account, email);
+					System.out.println("======================>"+"信件已發送");
+					return "redirect:/index";					
+				}else {			//帳號或信箱有重複
+					if(!checkEmail) {
+						model.addAttribute("errMsg", "此信箱已被註冊");
+					}
+					if(!checkAccount) {
+						model.addAttribute("errMsg", "此帳號已被註冊");
+					}
+					return "login/login";
+				}
+			}else if(nickname==null&&checkNo!=null){			//沒暱稱,有驗證碼===>忘記密碼
+				
 				boolean flag = memberService.checkAccount(account);
 				  if(flag) {
 					  model.addAttribute("errMsg","此帳號沒有資料");
@@ -94,27 +112,9 @@ public class MemberController {
 					  send2pwd(account, mail);
 				  }			  
 				  return "redirect:/login";
-			}
-	//---------------------------------------------------		
-			if( nickname != null) {					
-				boolean checkAccount = memberService.checkAccount(account);
-				boolean checkEmail = memberService.checkEmail(email);
-				if(checkAccount==true&&checkEmail==true) {
-					memberService.signUp(mb);		//====註冊====
-					System.out.println("======================>"+"註冊成功");
-					send2open(account, email);
-					System.out.println("======================>"+"信件已發送");
-					return "redirect:/index";					
-				}else {
-					if(!checkEmail) {
-						model.addAttribute("errMsg", "此信箱已被註冊");
-					}
-					if(!checkAccount) {
-						model.addAttribute("errMsg", "此帳號已被註冊");
-					}
-					return "login/login";
-				}
-			}else {
+				  
+			}else if(nickname==null&&checkNo==null){			//沒暱稱,沒驗證碼===>登入
+		
 				int flag = memberService.checkID(account, password);
 	            int level = memberService.checkLevel(account);
 				//用Dao判斷帳密正確與權限
@@ -136,7 +136,18 @@ public class MemberController {
 					return "login/login";
 				}	            
 			}
+			return "redirect:/login";
 		}
+		
+		private MemberBean setAccount(String account, String password, String mail, String nickname) {
+			MemberBean mb = new MemberBean();
+			mb.setAccount(account);
+			mb.setPassword(password);
+			mb.setMail(mail);
+			mb.setNickname(nickname);
+			return mb;
+		}
+		
 		
 //---------------------------------------------▼會員登出▼---------------------------------------------//			
 		
@@ -181,7 +192,7 @@ public class MemberController {
 
 				Session session = Session.getDefaultInstance(properties);
 
-				System.out.println("======================>"+"成功設定信件發送");
+				System.out.println("======================>"+"註冊信成功設定信件發送");
 				try {
 					MimeMessage message = new MimeMessage(session);
 					message.setFrom(new InternetAddress(from));
@@ -236,7 +247,7 @@ public class MemberController {
 
 				Session session = Session.getDefaultInstance(properties);
 
-				System.out.println("======================>"+"成功設定信件發送");
+				System.out.println("======================>"+"尋找密碼信成功設定信件發送");
 				try {
 					MimeMessage message = new MimeMessage(session);
 					message.setFrom(new InternetAddress(from));
