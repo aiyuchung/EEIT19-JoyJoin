@@ -71,7 +71,8 @@
 				<br><a class='superBtn' id='memberInfo-btn'>個人資料</a><br>
 				<br><a class='superBtn' id='roleInfo-btn'>用戶資料</a><br> 
 				<br><a class='superBtn' id='trip-btn'>出遊資料</a><br>
-				<br><a class='superBtn' id='update-btn'>修改資料</a>
+				<br><a class='superBtn' id='update-btn'>修改資料</a><br>
+				<br><a class='superBtn' id='shop-btn'>點數購買</a><br>
 			</div>
 			<div id="showAreaTop" class="text-effect">
 				<div id="pushArea" class="text-effect">
@@ -322,6 +323,10 @@
 	        $('#dropdown-list').removeClass('animate');
 	        $('#drop-select').val(('#dropdown-list li').val());
 	    });
+	    
+	    $("#shop-btn").click(function(){
+	    	location.href="";
+	    })
 		
 	})
 	

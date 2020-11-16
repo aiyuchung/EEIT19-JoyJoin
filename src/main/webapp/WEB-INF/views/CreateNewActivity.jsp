@@ -78,14 +78,15 @@
 		<div class="container addNew">
 			<div class="row">
 				<div class="content" style="margin: auto">
-					<form method="POST" action="/newActivities" enctype="multipart/form-data" id="picform">
+					<form:form method="POST"  modelAttribute="newform" id="newform" enctype="multipart/form-data">
+<%-- 					<form method="POST" action="/newActivities" enctype="multipart/form-data" id="picform"> --%>
 					
 				 		<div class="section-block">
 							<div class="tab-content">
 								<div role="tabpanel" class="active" id="about">
 										<h1 class="section-title">活動封面照</h1>
 
-								<input type="file" name="updateImg" id="file"/>
+								<form:input type="file"  path="updateImg" id="file"/>
 								
 								
 								<div class="video-frame">
@@ -98,8 +99,8 @@
 							</div>
 						</div>
 					</div>
-					</form>
-					<form:form method="POST" modelAttribute="newform" id="newform">
+					
+					
 					
 					<div class="section-block">
 						<div class="tab-content">
@@ -123,7 +124,7 @@
 											<div class="forcontent">
 												<form:select path="activityTypeName" id="selecytType" class="form-control must">
 													<form:option value="" label="請選擇"/>
-													<c:forEach var="type" items="${allTypes}">
+													<c:forEach var="type" items="${types}">
 														<form:option value="${type.activityTypeName}" label="${type.activityTypeName}" class="${type.activityType}" />
 													</c:forEach>
 												</form:select>
@@ -316,7 +317,7 @@
 				window.location.href = "#";
 			}else{
 				$("#newform").submit();
-				$("#picform").submit();
+// 				$("#picform").submit();
 			}
 		})
 	})

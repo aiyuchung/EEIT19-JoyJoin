@@ -433,7 +433,7 @@ public class ActivityDaoImpl implements ActivityDao {
 	
 	//----------------------------------------新增活動--------------------------------------------
 		@Override
-		public void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic) {
+		public void createActivity(Integer memberNo, ActivityBean newform) {
 			Session session = factory.getCurrentSession();
 			Date today = new Date();
 			java.sql.Date sqltoday = new java.sql.Date(today.getTime());
@@ -475,9 +475,9 @@ public class ActivityDaoImpl implements ActivityDao {
 			
 			String hql4 = "SELECT MAX(activityNo) FROM ActivityBean "; //存照片
 			Integer no = (Integer) session.createQuery(hql4).getSingleResult();
-//			int no = list.getActivityNo();
-			pic.setActivityBean(session.get(ActivityBean.class,no));
-			session.save(pic);
+////			int no = list.getActivityNo();
+//			pic.setActivityBean(session.get(ActivityBean.class,no));
+//			session.save(pic);
 			
 			String url = "http://localhost:8080/JoyJoin/oneActivity/"+ no;
 			ActivityFollowedBean follow = new ActivityFollowedBean(); //存連結

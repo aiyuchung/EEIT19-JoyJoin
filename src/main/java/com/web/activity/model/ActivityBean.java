@@ -57,12 +57,42 @@ public class ActivityBean implements java.io.Serializable {
 	private Integer minLimit;
 	private Integer price;
 	private String introduction;
-	
+	private Blob activityPic;
 	private String activityStatus;
 	private Integer leftDays;
 	private Integer joinedNum;
 	private Integer hitCount;
 	private Integer levelLimit;
+	
+	@Transient
+	private MultipartFile updateImg;
+	
+	private String fileName;
+
+	
+	
+	
+	public MultipartFile getUpdateImg() {
+		return updateImg;
+	}
+	public void setUpdateImg(MultipartFile updateImg) {
+		this.updateImg = updateImg;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public Blob getActivityPic() {
+		return activityPic;
+	}
+	public void setActivityPic(Blob activityPic) {
+		this.activityPic = activityPic;
+	}
+	
+	
+	
 	
 	public Integer getHitCount() {
 		return hitCount;

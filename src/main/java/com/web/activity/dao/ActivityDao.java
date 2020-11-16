@@ -101,7 +101,7 @@ public interface ActivityDao {
 	List<ActivityJoinedBean> joinedMember(int activityNo);
 	
 	//新增活動
-	void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic);
+	void createActivity(Integer memberNo, ActivityBean newform);
 	
 	//關注活動
 	void followActivity(Integer memberNo, ActivityFollowedBean follow,int activityNo);

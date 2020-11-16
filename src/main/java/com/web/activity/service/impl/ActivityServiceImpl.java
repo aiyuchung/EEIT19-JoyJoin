@@ -315,8 +315,8 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Override
-	public void createActivity(Integer memberNo, ActivityBean newform, ActivityPicBean pic) {
-		dao.createActivity(memberNo,newform,pic);
+	public void createActivity(Integer memberNo, ActivityBean newform) {
+		dao.createActivity(memberNo,newform);
 	}
 
 	@Override

@@ -1,16 +1,24 @@
 package com.web.activity.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +53,8 @@ public class ActivitiesController {
 	@Autowired
 	MemberService memberService;
 
+	@Autowired
+	ServletContext servletContext;
 //-----------------------------------------跳轉活動總覽頁面↓-----------------------------------------		
 	@GetMapping("/activities")
 	public String list(Model model, @ModelAttribute("form") ActivityForm form) {
@@ -168,77 +178,89 @@ public class ActivitiesController {
 	public String update(@PathVariable("id") int activityNo, HttpSession session, Model model
 			,ActivityPicBean pic, @ModelAttribute("newform") ActivityBean newform) {
 		
-//		ActivityBean activity = service.selectOneActivity(activityNo);
-//		Map<String, Integer> hitCount = service.updateHitCount(activityNo);
-//		List<ActivityMsgBean> msgBox = service.showMsg(activityNo);
-//		
-//		MemberBean member= (MemberBean) session.getAttribute("member");
-//		Integer memberNo = member.getMemberNo();
-//		service.joinedOne(memberNo, activityNo);
-//		List<ActivityJoinedBean> joined = service.joinedMember(activityNo);
-//		List<String> joinedList = new ArrayList<>();
-//		for(ActivityJoinedBean ajb:joined) {
-//			String account = ajb.getMemberBean().getAccount();
-//			joinedList.add(account);
-//		}
-//		
-//		int msgNum = msgBox.size();
-//		model.addAttribute("joinedList",joinedList);
-//		model.addAttribute("joined",joined);
-//		model.addAttribute("msgBox",msgBox);
-//		model.addAttribute("msgNum",msgNum);
-//		model.addAttribute("one",activity);
-//		model.addAttribute("hitCount",hitCount);
-		return "CreateNewActivity";
-	}
-//-----------------------------------------新增活動空的form表單↓-----------------------------------------		
-	@GetMapping("/newActivities")
-	
-	public String newAcitivity(Model model,@ModelAttribute("newform") ActivityBean newform
-			) {
-//			ActivityPicBean pic = new ActivityPicBean();
 		List<ActivityBean> list = service.selectAllActivities();
 		List<ActivityTypeBean> types = service.showAllTypes();
 		List<ActivityClassBean> categoryList = service.selectAllClasses();
 		List<ProvinceBean> provs = service.selectAllProvs();
+		
+		ActivityBean bean = service.selectOneActivity(activityNo);
+		model.addAttribute("newform",bean);
 		model.addAttribute("activities",list);
 		model.addAttribute("allTypes",types);
 		model.addAttribute("categoryList",categoryList);
 		model.addAttribute("provs",provs);
+		
+		return "CreateNewActivity";
+	}
+//-----------------------------------------新增活動空的form表單↓-----------------------------------------	
+	@ModelAttribute("activities")
+	public List<ActivityBean> a1() {
+		List<ActivityBean> list = service.selectAllActivities();
+		return list;
+	}
+	
+	@ModelAttribute("types")
+	public List<ActivityTypeBean> a2() {
+		List<ActivityTypeBean> types = service.showAllTypes();
+		return types;
+	}
+	
+	@ModelAttribute("categoryList")
+	public List<ActivityClassBean> a3() {
+		List<ActivityClassBean> categoryList = service.selectAllClasses();
+		return categoryList;
+	}
+	
+	@ModelAttribute("provs")
+	public List<ProvinceBean> a4() {
+		List<ProvinceBean> provs = service.selectAllProvs();
+		return provs;
+	}
+	
+	@GetMapping("/newActivities")	
+	public String newAcitivity(Model model
+			) {
+		ActivityBean acb = new ActivityBean();
+		model.addAttribute("newform",acb);
 	    return "CreateNewActivity";
 	   }
 //-----------------------------------------新增活動↓-----------------------------------------
 	@PostMapping("/newActivities")
 	public String createNewAcitivity(HttpSession session, Model model, 
-			ActivityPicBean pic, @ModelAttribute("newform") ActivityBean newform) {
+			 @ModelAttribute("newform") ActivityBean newform) {
+		
 		String account =  (String) session.getAttribute("account");
 		MemberBean member= (MemberBean) session.getAttribute("member");
 		Integer memberNo = member.getMemberNo();
 		
-		String fileName = pic.getFileName();
-		MultipartFile mFile = pic.getUpdateImg();
-//			//取得檔案型態 令存檔名
-//			for (int i : mFile) {
-//				String original = mFile[i].getOriginalFilename();
-//				UUID uuid = UUID.randomUUID();
-//				String fileTyle = original.substring(original.lastIndexOf("."), original.length());
-//				albumn.setPicContent("Pet_" + uuid + "_" + service.MaxID() + fileTyle);
-//			}
-//			
+		MultipartFile mFile = newform.getUpdateImg();
+		System.out.println("controller file name-----------------------"+mFile);
+		
+			//取得檔案型態 令存檔名
+		String original = mFile.getOriginalFilename();
+		System.out.println("controller original -----------------------"+original);
+		newform.setFileName(original);
+//		UUID uuid = UUID.randomUUID();
+//		String fileTyle = original.substring(original.lastIndexOf("."), original.length());
+//		albumn.setPicContent("Pet_" + uuid + "_" + service.MaxID() + fileTyle);
+			
+			
 		if (mFile != null && !mFile.isEmpty()) {
 			byte[] b;
 			try {
 				b = mFile.getBytes();
 				Blob blob = new SerialBlob(b);
-				pic.setActivityPic(blob);
+				newform.setActivityPic(blob);
+				System.out.println("controller blob-----------------------"+blob);
 			} catch (IOException | SQLException e) {
 				e.printStackTrace();
 				throw new RuntimeException("異常:" + e.getMessage());
 			}
 		}
+		
 		String prov= newform.getProv();
 		System.out.println("controller prov:"+prov);
-		service.createActivity(memberNo, newform, pic);
+		service.createActivity(memberNo, newform);
 		memberService.updatePost(account);
 		
 	    return "redirect:/activities";
@@ -494,4 +516,60 @@ public class ActivitiesController {
 	public String chatbot(Model model) {
 		return "index00";
 	}
+	
+	@GetMapping("/getPicture/{id}")
+	  public ResponseEntity<byte[]> getPicture(
+	    @PathVariable("id") int activityNo) throws Exception{
+	   //用商品ID來抓取圖片的ID
+//	   System.out.println("commodityId="+ImageID);
+	   //先定義一下mimeType和InputStream
+	   InputStream is = null;
+	   String mimeType = null;
+	//   CommodityBean bean = service.getcommodityID(ImageID);
+	   //將得到的ImageID也就是透過商品ID 去查詢本方法在Imagebean裡設的外鍵欄位=商品id
+	   //所以list 會取得所有綁定這個外鍵id的圖片
+	   
+//	   List<ImageBean> list = service.getImageByCommodityID(ImageID);
+	   //定義blob
+	   Blob blob=null;
+	   //將取得的商品id所綁定的圖片抓出來
+	   ActivityBean bean = service.selectOneActivity(activityNo);
+	   if(bean != null) {
+		   blob = bean.getActivityPic();
+	   }
+	   if(blob != null) {
+		   is = blob.getBinaryStream();
+		   mimeType = servletContext.getMimeType(bean.getFileName());
+	   }
+	   
+	   ResponseEntity<byte[]> re = null;
+	//   if(list != null) {
+	//    
+	//   if(blob != null){
+//	    is = blob.getBinaryStream();
+//	    mimeType = servletContext.getMimeType(bean.getCommodityImagefilename());
+//	      
+//	    }
+	//   }
+	   //如果抓到的圖片為null值 給一個預設圖片
+	   if(is == null) {
+	    is = servletContext.getResourceAsStream("/images/noImage.jpg");
+	    mimeType = servletContext.getMimeType("noImage.jpg");
+	   }
+	   //將得到的mimeType塞進來
+	   MediaType mediaType = MediaType.valueOf(mimeType);
+	   HttpHeaders headers = new HttpHeaders();
+	   //再將剛得到的mimeType塞進回應headers的ContentType內
+	   headers.setContentType(mediaType);
+	   headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	   byte[] b = new byte[81920];
+	   int len = 0;
+	   while((len = is.read(b)) != -1) {
+	    baos.write(b,0,len);
+	   }
+	   byte[] content = baos.toByteArray();
+	   re = new ResponseEntity<byte[]>(content, headers, HttpStatus.OK);
+	   return re;
+	  }
 }
