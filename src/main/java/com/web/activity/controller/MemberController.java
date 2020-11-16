@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -27,6 +28,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.FormBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.MessageBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.service.ActivityService;
 import com.web.activity.service.MemberService;
@@ -270,18 +272,22 @@ public class MemberController {
 			public String getPair(Model model, HttpSession session) {
 				String pair = "";
 				while(pair == "") {				
-					int digit = (int) ((Math.random()*3)+1);
+					int digit = (int) ((Math.random()*4)+1);
 					switch(digit) {
 					case 1:pair = "starSign";break;
 					case 2:pair = "bloodType";break;
 					case 3:pair = "school";break;
 					case 4:pair = "hobby";break;
-						default:continue;
+						default:pair = "all";break;
 					}
 				}
 				String account = (String) session.getAttribute("account");
 				List<MemberBean> mbl = memberService.getPair(pair, account);
-				model.addAttribute("mblist",mbl);
+				if(mbl!=null) {
+					model.addAttribute("mblist",mbl);
+				}else {
+					getPair(model, session);
+				}
 				return "";
 			}
 
@@ -309,7 +315,19 @@ public class MemberController {
 		  
 		  
 		  
-		  
+//---------------------------------------------▼訊息系統▼---------------------------------------------//		
+		
+		@GetMapping("")
+		public String getAllMsg(Model model, HttpSession session) {
+			String account = (String) session.getAttribute("account");
+			List<MessageBean> list = memberService.getAllMsg(account);
+			model.addAttribute("allMsg",list);
+			return "login/member";
+		}
+		
+		
+		
+		
 	}		
 
 		

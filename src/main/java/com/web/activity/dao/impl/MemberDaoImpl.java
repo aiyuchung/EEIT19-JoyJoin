@@ -11,6 +11,7 @@ import com.web.activity.dao.MemberDao;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.MessageBean;
 import com.web.activity.model.RoleBean;
 
 @Repository
@@ -344,7 +345,12 @@ public class MemberDaoImpl implements MemberDao {
 			;
 		}
 		
-		String hql2 = "FROM MemberBean WHERE "+pair+" = :p";
+		String hql2 = "";
+		if(!pair.equals("all")) {
+			hql2 = "FROM MemberBean WHERE "+pair+" = :p";
+		}else {
+			hql2 = "FROM MemberBean";
+		}
 		@SuppressWarnings("unchecked")
 		List<MemberBean> mbl = session.createQuery(hql2).setParameter("p", val).getResultList();
 		if(mbl!=null) {
@@ -373,4 +379,33 @@ public class MemberDaoImpl implements MemberDao {
 		return list;
 	}
 
+	@Override
+	public List<MessageBean> getAllMsg(String account){
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MessageBean WHERE account = :id ORDER BY readStatus DESC, time DESC";
+		@SuppressWarnings("unchecked")
+		List<MessageBean> list = session.createQuery(hql).setParameter("id", account).getResultList();
+		return list;
+	}
+	
+	@Override
+	public MessageBean getMsg(int msgNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MessageBean WHERE msgNo = :no";
+		MessageBean mb = null;
+		try {
+			mb = (MessageBean) session.createQuery(hql).setParameter("no", msgNo).getSingleResult();
+		}catch(Exception e) {
+			;
+		}
+		return mb;
+	}
+	
+	@Override
+	public void sendMsg(MessageBean mb) {
+		Session session = factory.getCurrentSession();
+		session.save(mb);
+	}
+	
+	
 }

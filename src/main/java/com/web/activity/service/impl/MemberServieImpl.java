@@ -11,6 +11,7 @@ import com.web.activity.dao.MemberDao;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.MessageBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.service.MemberService;
 
@@ -129,6 +130,24 @@ public class MemberServieImpl implements MemberService {
 			return memberDao.getJoinedActivity(memberNo);
 		}
 	
+		@Transactional
+		@Override
+		public List<MessageBean> getAllMsg(String account){
+			return memberDao.getAllMsg(account);
+		}
+		
+		@Transactional
+		@Override
+		public MessageBean getMsg(int msgNo) {
+			return memberDao.getMsg(msgNo);
+		}
+		
+		@Transactional
+		@Override
+		public void sendMsg(MessageBean mb) {
+			memberDao.sendMsg(mb);
+		}
+		
 		
 		
 		
