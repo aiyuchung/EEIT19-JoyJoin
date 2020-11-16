@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -73,7 +74,7 @@ public class MemberController {
 		
 		
 		@PostMapping("/login")
-		public String checkID(MemberBean mb, Model model, @PathVariable String checkNo) throws IOException {
+		public String checkID(MemberBean mb, Model model, @RequestParam String checkNo) throws IOException {
 			String nickname = mb.getNickname();	//如果只有帳密==>登入,有暱稱==>註冊
 			String account = mb.getAccount();
 			String password = mb.getPassword();
@@ -200,19 +201,6 @@ public class MemberController {
 		  
 //---------------------------------------------▼忘記密碼▼---------------------------------------------//	
 		  
-//		  @GetMapping("/missPwd")
-//		  public String forgotPwd(String account, Model model) {
-//			  boolean flag = memberService.checkAccount(account);
-//			  if(flag) {
-//				  model.addAttribute("errMsg","此帳號沒有資料");
-//				  return "login/login";
-//			  }else {
-//				  String mail = memberService.getMail(account);
-//				  send2pwd(account, mail);
-//			  }			  
-//			  return "redirect:/login";
-//		  }
-		  
 		  @GetMapping("/getPwd")
 		  public String newPwd(Model model) {
 			  MemberBean mb = new MemberBean();
@@ -222,7 +210,7 @@ public class MemberController {
 		  
 		  
 		  @PostMapping("/getPwd")
-		  public String getNewPwd(String account, String password) {
+		  public String getNewPwd(MemberBean mb, String account, String password) {
 			  memberService.newPwd(account, password);
 			  return "redirect:/login";
 		  }

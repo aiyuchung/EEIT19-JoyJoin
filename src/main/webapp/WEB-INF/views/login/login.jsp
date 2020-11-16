@@ -187,8 +187,14 @@
 	
 	$("#missPwd-btn").on("click",function(){
 		$('#missPwd').modal('show');
-		
-		$("#number").val() =  Integer.toString(random.nextInt(9999));
+		var i = Math.random()*10000;
+		var passcode = "";
+		if(i<1000){
+			passcode = i*10;
+		}else{
+			passcode = i;
+		}
+		$("#number").attr("value",parseInt(passcode));
 	})
 
 	
