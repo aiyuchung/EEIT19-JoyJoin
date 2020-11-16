@@ -113,6 +113,12 @@ public class MemberServieImpl implements MemberService {
 
 		@Transactional
 		@Override
+		public List<MemberBean> getPair(String pair, String account) {
+			return memberDao.getPair(pair, account);
+		}
+		
+		@Transactional
+		@Override
 		public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo) {
 			return memberDao.getFollowedActivity(memberNo);
 		}

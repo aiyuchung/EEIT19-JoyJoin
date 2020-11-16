@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -333,11 +332,34 @@ public class MemberDaoImpl implements MemberDao {
 												.executeUpdate();
 
 	}
+	
+	@Override
+	public List<MemberBean> getPair(String pair, String account) {
+		String hql1 = "SELECT "+pair+" FROM MemberBean WHERE account = :id";
+		Session session = factory.getCurrentSession();
+		String val = "";
+		try {
+			val = (String) session.createQuery(hql1).setParameter("id", account).getSingleResult();
+		}catch(Exception e) {
+			;
+		}
+		
+		String hql2 = "FROM MemberBean WHERE "+pair+" = :p";
+		@SuppressWarnings("unchecked")
+		List<MemberBean> mbl = session.createQuery(hql2).setParameter("p", val).getResultList();
+		if(mbl!=null) {
+			return mbl;
+		}else {
+			return null;
+		}
+	}
+
 
 	@Override
 	public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ActivityFollowedBean WHERE memberNo = :no";
+		@SuppressWarnings("unchecked")
 		List<ActivityFollowedBean> urls = session.createQuery(hql).setParameter("no", memberNo).getResultList();
 		return urls;
 	}
@@ -346,6 +368,7 @@ public class MemberDaoImpl implements MemberDao {
 	public List<ActivityJoinedBean> getJoinedActivity(Integer memberNo) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM ActivityJoinedBean WHERE memberNo = :no";
+		@SuppressWarnings("unchecked")
 		List<ActivityJoinedBean> list = session.createQuery(hql).setParameter("no", memberNo).getResultList();
 		return list;
 	}

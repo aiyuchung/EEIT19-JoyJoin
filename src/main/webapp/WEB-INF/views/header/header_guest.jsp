@@ -80,6 +80,12 @@ body{
 			position: relative;
 			padding: 6em 0em;
 		}
+#logo img {
+   position:absolute;
+   top:35px;
+}
+
+
 		
 </style>
 </head>
@@ -89,8 +95,9 @@ body{
 
 			<!-- Logo -->
 			<div id="logo">
+			<img src="${pageContext.request.contextPath}/images/JoyJoin.png">
 				<h1>
-					<a href="<c:url value='/'/>">JOYJOIN LOGO</a>
+					
 				</h1>
 			</div>
 

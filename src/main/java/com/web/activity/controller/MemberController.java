@@ -251,6 +251,27 @@ public class MemberController {
 					mex.printStackTrace();
 				}  
 		  }
+
+//---------------------------------------------▼配對系統▼---------------------------------------------//			
+		  
+			public String getPair(Model model, HttpSession session) {
+				String pair = "";
+				while(pair == "") {				
+					int digit = (int) ((Math.random()*3)+1);
+					switch(digit) {
+					case 1:pair = "starSign";break;
+					case 2:pair = "bloodType";break;
+					case 3:pair = "school";break;
+					case 4:pair = "hobby";break;
+						default:continue;
+					}
+				}
+				String account = (String) session.getAttribute("account");
+				List<MemberBean> mbl = memberService.getPair(pair, account);
+				model.addAttribute("mblist",mbl);
+				return "";
+			}
+
 		  
 //---------------------------------------------▼取得活動連結▼---------------------------------------------//			
 		@GetMapping("/ajax_getFollowed")

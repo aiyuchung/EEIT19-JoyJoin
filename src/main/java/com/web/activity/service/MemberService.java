@@ -39,6 +39,8 @@ public interface MemberService {
 			//更新貼文次數
 		public void updateFinish(String account);
 			//更新成行次數
+		public List<MemberBean> getPair(String pair, String account);
+			//取得配對成員
 		public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo);
 			//取得會員關注活動連結
 		public List<ActivityJoinedBean> getJoinedActivity(Integer memberNo);

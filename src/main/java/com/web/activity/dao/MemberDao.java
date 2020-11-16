@@ -61,6 +61,12 @@ public interface MemberDao {
 		public void updateFinish(String account);
 			//直接更新成行次數
 		
+//---------------------------------------------▼配對系統▼---------------------------------------------//			
+
+		public List<MemberBean> getPair(String pair,String account);
+
+		
+		
 //---------------------------------------------▼其他▼---------------------------------------------//			
 		
 		public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo);
