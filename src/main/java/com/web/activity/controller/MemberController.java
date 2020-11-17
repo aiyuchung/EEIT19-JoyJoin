@@ -316,12 +316,13 @@ public class MemberController {
 		  
 		  
 //---------------------------------------------▼訊息系統▼---------------------------------------------//		
-		
+		//GGGGGGG
 		@GetMapping("/showAllMsg")
-		public @ResponseBody List<MessageBean> getAllMsg(Model model, HttpSession session) {
+		public String getAllMsg(Model model, HttpSession session) {
 			String account = (String) session.getAttribute("account");
-			List<MessageBean> msgList = memberService.getAllMsg(account);
-			return msgList;
+			List<MessageBean> list = memberService.getAllMsg(account);
+			model.addAttribute("msgList", list);
+			return "login/ajax_msg";
 		}
 		
 		

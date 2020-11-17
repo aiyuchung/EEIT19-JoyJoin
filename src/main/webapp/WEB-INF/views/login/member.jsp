@@ -50,6 +50,9 @@
 </head>
 <!-- Header -->
 <body>
+<!-- 	GGGGGGG<script src="https://code.jquery.com/jquery-3.5.1.js" -->
+<!-- 		integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" -->
+<!-- 		crossorigin="anonymous"></script> -->
 <div>
 	<jsp:include page="../header/header_guest.jsp" />
 </div>
@@ -82,7 +85,7 @@
 			</div>
 		</div>
 		
-<!-- 		Model UPDATE FORM     -->
+<!-- 		Model UPDATE FORM GGGGGGG    -->
 		<div class="modal fade" id="updateForm" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
@@ -276,31 +279,11 @@
 			$("#showArea").css("border", "0").addClass("animated").html(str);
 		})
 		
-		var id='${msg.msgNo}'
-		var from='${msg.account}'
-		var time='${msg.time}'
-		var msg='${msg.msg}'
-		var status='${msg.readStatus}'
-		
-		$('#msg-btn').on('click',function(){
-				$.ajax({
-					url : "ajax_selectAllRoles",
-					type : "GET",
-					dataType : "html", //server送回
-					contentType : 'application/json; charset=utf-8',
-					data : {}, //data空的代表沒任何參數
-					success : function(data) { //成功的話
-						$(".newajaxlist").empty();
-						$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
-					}
-				})
-		})
-		
 		$('#trip-btn').on('click', function() {
 			str = '旅遊連結';
 			
 			$.ajax({
-				  url:"ajax_getFollowed",
+				  url:"/",
 				  type: "GET",
 				  dataType: "html", //server送回
 				  contentType: 'application/json; charset=utf-8',
@@ -320,7 +303,7 @@
 			$("superBtn").css("color", "#0e0e0e");
 			$("#memberInfo-btn").css("color", ":#2af1fc");
 		})
-		
+		//GGGGGGG
 		$("#update-btn").on("click",function(){
 			 $('#updateForm').modal('show');
 		})
@@ -350,8 +333,28 @@
 	    })
 		
 	})
-	
 
+//--------------------GGGGGGG
+
+	$('#msg-btn').on('click',function(){
+				$.ajax({
+					url : "showAllMsg",
+					type : "GET",
+					dataType : "html", 
+					contentType : 'application/json; charset=utf-8',
+					data : {}, //data空的代表沒任何參數
+					success : function(data) { 
+						$("#showArea").empty();
+						$("#showArea").append(data); 
+					}
+				})
+		})
+		
+		
+		
+		
 	</script>
+	
+	
 </body>
 </html>
