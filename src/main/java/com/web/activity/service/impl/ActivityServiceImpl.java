@@ -75,15 +75,15 @@ public class ActivityServiceImpl implements ActivityService {
 		List<ActivityBean> list = dao.selectFinal();
 		Date today = new Date();
 	    List<ActivityBean> finalOnes = new ArrayList<ActivityBean>();
-	    System.out.println("today = " + today);
+//	    System.out.println("today = " + today);
 	    try {
 	    	for (ActivityBean bean : list) {
 	    		Date expiredDay;
 //	    		System.out.println("bean.getFinalDate() = " + bean.getFinalDate());
 //	    		SimpleDateFormat sdf = new SimpleDateFormat ("yyyy/MM/dd"); 
 				expiredDay = bean.getFinalDate();
-				System.out.println("expiredDay-->"+ expiredDay);
-				System.out.println("today-->"+ today);
+//				System.out.println("expiredDay-->"+ expiredDay);
+//				System.out.println("today-->"+ today);
 //				Date expiredDay = sdf.parse(bean.getFinalDate());
 //				System.out.println(expiredDay);
 				long diff = expiredDay.getTime() - today.getTime() ; //截止日跟今天差幾毫秒

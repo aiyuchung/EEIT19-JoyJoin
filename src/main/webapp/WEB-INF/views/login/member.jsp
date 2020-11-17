@@ -16,7 +16,6 @@
 
 <!--     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" -->
 <!--         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
-<script src="https://code.jquery.com/jquery-3.5.1.js"	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="	crossorigin="anonymous"></script>
 <!--     <link rel="stylesheet" href="css/style.css" /> -->
 <link rel="stylesheet" href="<c:url value='css/memberpage.css' />" />
 
@@ -24,8 +23,9 @@
 <!-- <link rel="stylesheet" type="text/css" -->
 <!-- 	href="path/to/css/bootstrap-directional-buttons.css"> -->
 <!-- ====================Modal特效======================= -->
+<script src="https://code.jquery.com/jquery-3.5.1.js"	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="	crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <!-- ====================文字特效======================= -->
 <%-- <link href="<c:url value='css/bootstrap.css' />" rel="stylesheet"> --%>
@@ -244,8 +244,9 @@
 		
 	</div>
 
-
-<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	
 	<script>
 	$(document)	.ready(	function() {
 		var str = "";
@@ -280,10 +281,10 @@
 		})
 		
 		$('#trip-btn').on('click', function() {
-			str = '旅遊連結';
+			str = '旅遊連結' ;
 			
 			$.ajax({
-				  url:"/",
+				  url:"ajax_getFollowed",
 				  type: "GET",
 				  dataType: "html", //server送回
 				  contentType: 'application/json; charset=utf-8',
@@ -328,13 +329,7 @@
 	        $('#drop-select').val(('#dropdown-list li').val());
 	    });
 	    
-	    $("#shop-btn").click(function(){
-	    	location.href="";
-	    })
-		
-	})
-	
-	   $("#shop-btn").click(function (){
+	     $("#shop-btn").click(function (){
         var str = "購買點數";
 	        $.ajax({
 	              url:"ajax_shop",
@@ -349,6 +344,10 @@
 	                }
 	        })
 	    })
+		
+	})
+	
+	  
 
 //--------------------GGGGGGG
 
