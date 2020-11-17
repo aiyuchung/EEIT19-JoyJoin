@@ -441,6 +441,11 @@ public class ActivityDaoImpl implements ActivityDao {
 //			Date sqltoday = sdf.(today);
 //			java.sql.Date sqlDate1 = new java.sql.Date(date1.getTime());
 			
+			Date expiredDay = newform.getFinalDate();
+			long diff = expiredDay.getTime() - today.getTime() ; //截止日跟今天差幾毫秒
+			long diffDays = diff / (24 * 60 * 60 * 1000); //截止日跟今天差幾天
+			newform.setLeftDays((int)diffDays);
+			
 			
 			String prov = newform.getProv();
 			System.out.println("prov="+prov);
@@ -459,6 +464,8 @@ public class ActivityDaoImpl implements ActivityDao {
 			String hql3 = "FROM ActivityClassBean WHERE activityClass = :classname ";
 			ActivityClassBean classes = (ActivityClassBean) session.createQuery(hql3).setParameter("classname",classname).getSingleResult();
 			String activityClassNo = classes.getActivityClassNo();
+			
+			
 			
 			newform.setCreatedDate(sqltoday);
 			newform.setActivityStatus("active");

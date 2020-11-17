@@ -265,7 +265,8 @@
 				+ '<span>職業</span><br>${member.job}<br><br>'
 				+ '<span>收入情況</span><br>${member.income}<br><br>';
 
-			$("#showArea").css("border", "0").addClass("animated").html(str);
+			$("#showAreaTop").empty();
+			$("#showAreaTop").css("border", "0").addClass("animated").html(str);
 		})
 
 		$('#roleInfo-btn').on('click', function() {
@@ -276,8 +277,9 @@
 					+ '<span>出行次數</span><br>${role.finishTrip}<br><br>'
 					+ '<span>簽名</span><br>${member.signature}<br><br>'
 					+ '<span>自我介紹</span><br>${member.introduction}<br><br>';
-
-			$("#showArea").css("border", "0").addClass("animated").html(str);
+					
+			$("#showAreaTop").empty();
+			$("#showAreaTop").css("border", "0").addClass("animated").html(str);
 		})
 		
 		$('#trip-btn').on('click', function() {
@@ -290,11 +292,27 @@
 				  contentType: 'application/json; charset=utf-8',
 				  data: {}, 
 				  success:function(data){
+					  $("#showAreaTop").empty();
 					  $("#showAreaTop").css("border", "2px solid white").addClass("animated").html(str);
 					  $("#showAreaTop").append(data);
 					}
 			})
 		})
+		 $("#shop-btn").click(function (){
+        	var str = "購買點數";
+	        $.ajax({
+	              url:"ajax_shop",
+	              type: "GET",
+	              dataType: "html", //server送回
+	              contentType: 'application/json; charset=utf-8',
+	              data: {}, 
+	              success:function(data){
+	                  $("#showAreaTop").empty();
+	                  $("#showAreaTop").css("border", "0").addClass("animated").html(str);
+	                  $("#showAreaTop").append(data);
+	                }
+	        })
+	    })
 
 		$('#showArea').on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",function() {
 			$(this).removeClass("animated");
@@ -329,21 +347,7 @@
 	        $('#drop-select').val(('#dropdown-list li').val());
 	    });
 	    
-	     $("#shop-btn").click(function (){
-        var str = "購買點數";
-	        $.ajax({
-	              url:"ajax_shop",
-	              type: "GET",
-	              dataType: "html", //server送回
-	              contentType: 'application/json; charset=utf-8',
-	              data: {}, 
-	              success:function(data){
-	                  $("#showAreaTop").empty();
-	                  $("#showAreaTop").css("border", "0").addClass("animated").html(str);
-	                  $("#showAreaTop").append(data);
-	                }
-	        })
-	    })
+	    
 		
 	})
 	

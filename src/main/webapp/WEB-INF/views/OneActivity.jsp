@@ -139,7 +139,6 @@
 	 max-width: 100%; 
 	 max-height: 100%;
 	 object-fit: cover;
-	 ;
 	}
 </style>
 </head>
@@ -212,7 +211,7 @@
 								<h4>活動封面照</h4>
 								<div align="center">
 								
-									<img src="<c:url value='/getPicture/${one.activityNo}' />" class="imgRange" alt="沒有圖片" />
+									<img src="<c:url value='/getPicture/${one.activityNo}' />" class="imgRange" alt="圖片" />
 								</div>
 							</div>
 						</div>

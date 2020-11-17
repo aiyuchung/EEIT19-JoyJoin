@@ -62,7 +62,11 @@
 	textarea{
 	  padding-right:0;
 	}
-		
+	img{
+	 max-width: 100%; 
+	 max-height: 100%;
+	 object-fit: cover;
+	}
 
 </style>
 </head>
@@ -91,8 +95,9 @@
 								
 								<div class="video-frame">
 									<div id="forimg" align="center">
-										<span> 未選取圖片</span>
-										<img src="<c:url value='/images/noImage.jpg' />"  />
+<!-- 										<span> 未選取圖片</span> -->
+<%-- 										<img src="<c:url value='/images/noImage.jpg' />"  /> --%>
+										<img src="<c:url value='/getPicture/${newform.activityNo}' />" class="imgRange" alt="圖片" />
 										<img id="demo" style="max-width: 100%; max-height: 100%;object-fit: cover"/>
 									</div>
 								</div>
