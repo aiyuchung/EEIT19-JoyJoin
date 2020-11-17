@@ -72,6 +72,7 @@
 				<br><a class='superBtn' id='roleInfo-btn'>用戶資料</a><br> 
 				<br><a class='superBtn' id='trip-btn'>出遊資料</a><br>
 				<br><a class='superBtn' id='update-btn'>修改資料</a><br>
+				<br><a class='superBtn' id='msg-btn'>站內信箱</a><br>
 				<br><a class='superBtn' id='shop-btn'>點數購買</a><br>
 			</div>
 			<div id="showAreaTop" class="text-effect">
@@ -241,7 +242,7 @@
 	</div>
 
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
 	<script>
 	$(document)	.ready(	function() {
 		var str = "";
@@ -274,7 +275,27 @@
 
 			$("#showArea").css("border", "0").addClass("animated").html(str);
 		})
-
+		
+		var id='${msg.msgNo}'
+		var from='${msg.account}'
+		var time='${msg.time}'
+		var msg='${msg.msg}'
+		var status='${msg.readStatus}'
+		
+		$('#msg-btn').on('click',function(){
+				$.ajax({
+					url : "ajax_selectAllRoles",
+					type : "GET",
+					dataType : "html", //server送回
+					contentType : 'application/json; charset=utf-8',
+					data : {}, //data空的代表沒任何參數
+					success : function(data) { //成功的話
+						$(".newajaxlist").empty();
+						$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
+					}
+				})
+		})
+		
 		$('#trip-btn').on('click', function() {
 			str = '旅遊連結';
 			
@@ -285,7 +306,7 @@
 				  contentType: 'application/json; charset=utf-8',
 				  data: {}, 
 				  success:function(data){
-					  $("#showAreaTop").css("border", "0").addClass("animated").html(str);
+					  $("#showAreaTop").css("border", "2px solid white").addClass("animated").html(str);
 					  $("#showAreaTop").append(data);
 					}
 			})

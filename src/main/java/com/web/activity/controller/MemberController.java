@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -22,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -317,12 +317,11 @@ public class MemberController {
 		  
 //---------------------------------------------▼訊息系統▼---------------------------------------------//		
 		
-		@GetMapping("")
-		public String getAllMsg(Model model, HttpSession session) {
+		@GetMapping("/showAllMsg")
+		public @ResponseBody List<MessageBean> getAllMsg(Model model, HttpSession session) {
 			String account = (String) session.getAttribute("account");
-			List<MessageBean> list = memberService.getAllMsg(account);
-			model.addAttribute("allMsg",list);
-			return "login/member";
+			List<MessageBean> msgList = memberService.getAllMsg(account);
+			return msgList;
 		}
 		
 		
