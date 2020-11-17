@@ -176,7 +176,7 @@ public class ActivitiesController {
 //-----------------------------------------更新活動跳轉頁面↓-----------------------------------------	
 	@GetMapping("/updateActivity/{id}")
 	public String update(@PathVariable("id") int activityNo, HttpSession session, Model model
-			,ActivityPicBean pic, @ModelAttribute("newform") ActivityBean newform) {
+			,@ModelAttribute("newform") ActivityBean newform) {
 		
 		List<ActivityBean> list = service.selectAllActivities();
 		List<ActivityTypeBean> types = service.showAllTypes();

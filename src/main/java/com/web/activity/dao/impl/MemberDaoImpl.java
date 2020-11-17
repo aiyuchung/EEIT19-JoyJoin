@@ -1,5 +1,6 @@
 package com.web.activity.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -12,6 +13,7 @@ import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
+import com.web.activity.model.OrderBean;
 import com.web.activity.model.RoleBean;
 
 @Repository
@@ -407,5 +409,19 @@ public class MemberDaoImpl implements MemberDao {
 		session.save(mb);
 	}
 	
-	
+	@Override
+    public OrderBean createOrder(Integer memberNo, OrderBean order) {
+        Session session = factory.getCurrentSession();
+        int i = (int) (new Date().getTime()/1000);
+        String orderNo = "J"+ Integer.toString(i);
+        order.setOrderNo(orderNo);
+        order.setMemberBean(session.get(MemberBean.class,memberNo));
+        System.out.println(order.getOrderItem()+";"+order.getOrderNo()+";"+order.getOrderPrice()+";"+order.getOrderNum());
+        session.save(order);
+        
+        String hql = "FROM OrderBean where orderNo = :no";
+        OrderBean thisorder = (OrderBean) session.createQuery(hql).setParameter("no", orderNo).getSingleResult();
+        return thisorder;
+        
+    }
 }

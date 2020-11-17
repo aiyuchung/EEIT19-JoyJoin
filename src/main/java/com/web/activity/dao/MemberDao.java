@@ -6,6 +6,7 @@ import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
+import com.web.activity.model.OrderBean;
 import com.web.activity.model.RoleBean;
 
 public interface MemberDao {
@@ -74,7 +75,8 @@ public interface MemberDao {
 			//取得會員關注活動連結
 		public List<ActivityJoinedBean> getJoinedActivity(Integer memberNo);
 			//取得會員關注活動連結
-		
+		public OrderBean createOrder(Integer memberNo, OrderBean order);
+        	//存訂單 並取出	
 //---------------------------------------------▼訊息系統▼---------------------------------------------//			
 		
 		public List<MessageBean> getAllMsg(String account);

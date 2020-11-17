@@ -6,6 +6,7 @@ import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
+import com.web.activity.model.OrderBean;
 import com.web.activity.model.RoleBean;
 
 public interface MemberService {
@@ -52,5 +53,7 @@ public interface MemberService {
 			//取得單一筆訊息
 		public void sendMsg(MessageBean mb);
 			//送出訊息
+		public OrderBean createOrder(Integer memberNo, OrderBean order);
+			//存訂單 並取出
 		
 }	

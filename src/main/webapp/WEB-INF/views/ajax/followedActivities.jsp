@@ -124,7 +124,7 @@
 		var url = $(this).parents("ul").find('a').attr('href');
 		var tokens = url.split("/");
 		var no = tokens[5];
-		var newurl = "/updateActivity/"+no;
+		var newurl = "updateActivity/"+no;
 		window.location.href = '<c:url value="'+ newurl +'"/>';
 		
 	})

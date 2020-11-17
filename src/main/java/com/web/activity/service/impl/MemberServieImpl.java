@@ -12,6 +12,7 @@ import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
+import com.web.activity.model.OrderBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.service.MemberService;
 
@@ -146,6 +147,12 @@ public class MemberServieImpl implements MemberService {
 		@Override
 		public void sendMsg(MessageBean mb) {
 			memberDao.sendMsg(mb);
+		}
+
+		@Transactional
+		@Override
+		public OrderBean createOrder(Integer memberNo, OrderBean order) {
+			return memberDao.createOrder(memberNo,order);
 		}
 		
 		

@@ -312,7 +312,11 @@ public class MemberController {
 			return "ajax/followedActivities";
 		}		  
 		  
-		  
+//---------------------------------------------▼購買點數畫面▼---------------------------------------------//            
+		@GetMapping("/ajax_shop")
+		public String shop(Model model, HttpSession session) {
+		    return "ajax/order";
+		}		  
 		  
 		  
 //---------------------------------------------▼訊息系統▼---------------------------------------------//		

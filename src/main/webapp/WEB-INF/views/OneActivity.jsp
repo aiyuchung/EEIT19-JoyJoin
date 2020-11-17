@@ -470,7 +470,8 @@
 					  success:function(data){
 						}
 				})
-			}else{ //沒關注 點後就關注
+			}
+			if (text == "✰關注本活動"){ //沒關注 點後就關注
 				$(".reminder").empty();
 				$(".reminder").append('<div class="nofollow"><strong><span style="font-size:18px">★</span>取消關注</strong></div>')
 				$(".noclass").css("background-color","#85AD90").css("color","#fff");

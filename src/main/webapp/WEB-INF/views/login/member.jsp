@@ -333,6 +333,22 @@
 	    })
 		
 	})
+	
+	   $("#shop-btn").click(function (){
+        var str = "購買點數";
+	        $.ajax({
+	              url:"ajax_shop",
+	              type: "GET",
+	              dataType: "html", //server送回
+	              contentType: 'application/json; charset=utf-8',
+	              data: {}, 
+	              success:function(data){
+	                  $("#showAreaTop").empty();
+	                  $("#showAreaTop").css("border", "0").addClass("animated").html(str);
+	                  $("#showAreaTop").append(data);
+	                }
+	        })
+	    })
 
 //--------------------GGGGGGG
 
