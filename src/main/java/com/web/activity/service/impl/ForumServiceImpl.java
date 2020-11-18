@@ -64,19 +64,25 @@ public class ForumServiceImpl implements ForumService {
 		forumDao.createForum(forumBean);
 	 }
 	
-	/*
-	 * @Override public void createForumTitle(Integer activityNo) { ActivityBean
-	 * activeBean = activityService.selectOneActivity(activityNo); MemberBean
-	 * memberBean = activeBean.getMemberBean(); ForumBean forumBean = new
-	 * ForumBean(); //邏輯上需要設定 forumBean.setActivityCode(activeBean.toString());
-	 * forumBean.setType(activeBean.getActivityTypeName());
-	 * forumBean.setTitle(activeBean.getName());
-	 * forumBean.setLocation(activeBean.getLocation());
-	 * forumBean.setAuthor(memberBean.getMemberNo().toString());
-	 * forumBean.setForumType(ForumType.TITLE); forumBean.setPopularity(0);
-	 * forumBean.setScore(BigDecimal.ZERO); //呼叫寫入討論的DAO
-	 * forumDao.createForum(forumBean); }
-	 */
+	
+	@Override
+	public Integer createForumTitle(Integer activityNo) {
+		ActivityBean activeBean = activityService.selectOneActivity(activityNo);
+		MemberBean memberBean = activeBean.getMemberBean();
+		ForumBean forumBean = new ForumBean(); // 邏輯上需要設定 forumBean.setActivityCode(activeBean.toString());
+		forumBean.setActivityCode(activityNo.toString());
+		forumBean.setType(activeBean.getActivityTypeName());
+		forumBean.setTitle(activeBean.getName());
+		forumBean.setLocation(activeBean.getProv());
+		forumBean.setAuthor(memberBean.getMemberNo().toString());
+		forumBean.setForumType(ForumType.TITLE);
+		forumBean.setPopularity(0);
+		forumBean.setScore(BigDecimal.ZERO); // 呼叫寫入討論的DAO
+		Integer forumSeq =  forumDao.createForum(forumBean);
+		forumBean.setCode(forumSeq.toString());
+		forumDao.updateForum(forumSeq, forumBean);
+		return forumSeq;
+	}
 	
 	@Override
 	public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean){

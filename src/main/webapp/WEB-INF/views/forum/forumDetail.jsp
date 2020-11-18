@@ -249,14 +249,14 @@ Released   : 20100501
 			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
 				<img width = "100%" src="images/img02.jpg" alt=""/>
 			</td>
-			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
-			深海異音<br /> 
-			hbl917070<br /> 
-			稱號 未夠班的勇者<br /> 
-			種族 妖精<br />
-			 巴幣 226632 <br />
-			 GP 7881<br />
-			
+				<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
+		<!-- 		String account =  (String) session.getAttribute("account");<br />
+				MemberBean member= (MemberBean) session.getAttribute("member");<br />
+				Integer memberNo = member.getMemberNo();<br /> -->
+				暱稱 ${forum.memberBean.nickname}<br />
+		  		帳號 ${forum.memberBean.account}<br /> 
+		 		等級 ${forum.memberBean.rolebean.level} <br />
+		  		經驗 ${forum.memberBean.rolebean.emp}<br />
 			</td>
 			<!-- <td width="20%"  height="100px" style="border-right: 0px;">	<img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/></td> -->
 			<td width="60%"  height="100px" style="border-left: 0px;">

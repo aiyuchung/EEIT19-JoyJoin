@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -87,10 +86,10 @@ public class ForumController {
 	public String getforumNewArticle(Model model,  HttpSession session,@ModelAttribute("form") ForumBean form) {
 		String account = (String) session.getAttribute("account");
 		MemberBean member = memberService.getMember(account);
-		Integer memberNo = member.getMemberNo();
-		ActivityBean activity = activityService.selectOneActivity(Integer.valueOf(form.getActivityCode()));
+		form.setMemberBean(member);
+		form.setAuthor(member.getMemberNo().toString());
 		model.addAttribute("forumBean",form);
-		model.addAttribute("activity",activity);
+		
 		return "forum/forumNewArticle";
 	}
 	
@@ -102,13 +101,9 @@ public class ForumController {
 		return "forum/forumNewArticle";
 	}
 	
-	
-	
-	
 	@PostMapping("/saveOrUpdateArticle")
 	public String saveOrUpdateArticle( Model model,@ModelAttribute("form") ForumBean form) {
-		
-		System.out.println("fuck!!!!!!!!!!!!!!!!!");
+		//service.createForumTitle(26);
 		List<ForumBean> forumList = service.saveOrUpdateArticle(form);
 		ForumBean forumBean = forumList.stream()
 				.filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()

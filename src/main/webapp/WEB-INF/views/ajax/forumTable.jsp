@@ -78,7 +78,7 @@ table tbody tr:last-child td:last-child {
 				<td>${forum.type}</td>
 				<td>${forum.title}</td>
 				<td>${forum.score}</td>
-				<td>${forum.author}</td>
+				<td>${forum.memberBean.nickname}</td>
 				<jsp:useBean id="now" class="java.util.Date" />
 				<td><fmt:formatDate value="${forum.time}" type="both" /></td>
 				<td>${forum.location}</td>

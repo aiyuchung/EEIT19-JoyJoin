@@ -258,13 +258,13 @@ Released   : 20100501
 				<img width = "100%" src="images/img02.jpg" alt=""/>
 			</td>
 			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
-				String account =  (String) session.getAttribute("account");<br />
+		<!-- 		String account =  (String) session.getAttribute("account");<br />
 				MemberBean member= (MemberBean) session.getAttribute("member");<br />
-				Integer memberNo = member.getMemberNo();<br />
-				稱號 未夠班的勇者<br />
-		  		種族 妖精<br /> 
-		 		巴幣 226632 <br />
-		  		GP 7881<br />
+				Integer memberNo = member.getMemberNo();<br /> -->
+				暱稱 ${forumBean.memberBean.nickname}<br />
+		  		帳號 ${forumBean.memberBean.account}<br /> 
+		 		等級 ${forumBean.memberBean.rolebean.level} <br />
+		  		經驗 ${forumBean.memberBean.rolebean.emp}<br />
 			</td>
 			<td width="60%"  height="100px" style="border-left: 0px;">
 			<button>上傳照片</button>

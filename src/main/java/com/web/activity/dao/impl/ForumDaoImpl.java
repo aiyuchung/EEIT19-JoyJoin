@@ -1,5 +1,6 @@
 package com.web.activity.dao.impl;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.util.StringUtils;
 import com.web.activity.Enum.Status;
 import com.web.activity.dao.ForumDao;
 import com.web.activity.model.ForumBean;
+import com.web.activity.model.MemberBean;
 @SuppressWarnings("unchecked")
 @Repository
 public class ForumDaoImpl implements ForumDao {
@@ -21,11 +23,13 @@ public class ForumDaoImpl implements ForumDao {
 	SessionFactory factory;
 	//----------------------------------------新增點擊率並回傳--------------------------------------------
 	@Override
-	public void createForum(ForumBean forumBean) {
+	public Integer createForum(ForumBean forumBean) {
 		Session session = factory.getCurrentSession();
 		forumBean.setTime(new Date());
 		forumBean.setStatus(Status.ACTIVE);
-		 session.save(forumBean);
+		forumBean.setMemberBean(session.get(MemberBean.class, Integer.valueOf(forumBean.getAuthor())));
+		Serializable forumSeqSerializable = session.save(forumBean);
+		return Integer.valueOf(forumSeqSerializable.toString());
 
 	}
 	
@@ -35,6 +39,7 @@ public class ForumDaoImpl implements ForumDao {
 		forumBean.setTime(new Date());
 		forumBean.setStatus(Status.ACTIVE);
 		forumBean.setForumSeq(forumSeq);
+		forumBean.setMemberBean(session.get(MemberBean.class, Integer.valueOf(forumBean.getAuthor())));
 		session.update(forumBean);
 		return this.selectOneForum(forumSeq);
 	}

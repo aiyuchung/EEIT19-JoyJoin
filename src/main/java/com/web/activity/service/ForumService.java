@@ -37,20 +37,21 @@ public interface ForumService {
 
 	public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean);
 
-	/*	*//**
-			 * 建立新的討論主題 根據傳入的活動編號
-			 * 
-			 * @param activityNo 活動編號
-			 * 
-			 *//*
-				 * public void createForumTitle(Integer activityNo);
-				 */
+	/**
+	 * 建立新的討論主題 根據傳入的活動編號
+	 * 
+	 * @param activityNo 活動編號
+	 * 
+	 */
+	public Integer createForumTitle(Integer activityNo);
 
-//	 * 建立一筆新的討論
-//	 * @param forumBean 討論物件
-//	 * @return 查詢新增結果
-//	 */
-//    public List<ForumBean> createForum(ForumBean forumBean);
+	/**
+	 * 建立一筆新的討論
+	 * 
+	 * @param forumBean 討論物件
+	 * @return 查詢新增結果
+	 */
+//	public List<ForumBean> createForum(ForumBean forumBean);
 //	
 //	//更新討論
 //    public ForumBean updateForum(int forumSeq,ForumBean forumBean);
