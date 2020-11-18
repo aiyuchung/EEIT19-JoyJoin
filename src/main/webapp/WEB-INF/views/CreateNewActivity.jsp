@@ -97,7 +97,14 @@
 									<div id="forimg" align="center">
 <!-- 										<span> 未選取圖片</span> -->
 <%-- 										<img src="<c:url value='/images/noImage.jpg' />"  /> --%>
-										<img src="<c:url value='/getPicture/${newform.activityNo}' />" class="imgRange" alt="圖片" />
+										<c:choose>
+											<c:when test="${newform.activityNo  == ''}">
+												<img src="<c:url value='/images/noImage.jpg' />"  />
+											</c:when>
+											<c:otherwise>
+												<img src="<c:url value='/getPicture/${newform.activityNo}' />" class="imgRange" alt="圖片" />
+											</c:otherwise>
+										</c:choose>
 										<img id="demo" style="max-width: 100%; max-height: 100%;object-fit: cover"/>
 									</div>
 								</div>

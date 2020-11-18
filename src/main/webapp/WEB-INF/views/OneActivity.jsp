@@ -50,7 +50,7 @@
 		height: 350px;
 		overflow:hidden;
 	}
-	.goal-summary .reminder .follow, .reminder .nofollow  {
+	.goal-summary .reminder .follow, .reminder .nofollow,  .reminder a  {
 	
 	padding:8px;
 	margin:0px 0px 10px 0px;
@@ -456,11 +456,9 @@
 		if (!isJoined){
 			var text = $(this).text();
 			var classname = $(this).find("div").attr("class")
-// 			console.log(text);
-			console.log(classname);
 			if (classname == "unfollow"){ //關注改成不關注
 				$(".reminder").empty();
-				$(".reminder").append('<a href="Javascript:;" class="follow"><strong><span style="font-size:18px">✰</span>關注本活動</strong></a>')
+				$(".reminder").append('<div class="follow"><strong><span style="font-size:18px">✰</span>關注本活動</strong></div>')
 	 			var curentUrl = location.href;
 				$.ajax({
 					  url:"<c:url value='/ajax_unfollow' />",

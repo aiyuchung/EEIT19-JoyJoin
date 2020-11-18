@@ -91,6 +91,9 @@ footer {
 .main .page-header {
 	margin-top: 0;
 }
+img{
+	width:60%;
+}
 </style>
 <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
 
@@ -113,11 +116,11 @@ footer {
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">JoinJoy</a>
+				<img src="${pageContext.request.contextPath}/images/JoyJoin.png">
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="${pageContext.request.contextPath}/..">前台</a></li>
+					<li><a href="<c:url value='/' />" >前台</a></li>
 					<li><a href="#">前台設定</a></li>
 					<li><a href="#">還沒想到</a></li>
 					<li><a href="#">還沒想到</a></li>
