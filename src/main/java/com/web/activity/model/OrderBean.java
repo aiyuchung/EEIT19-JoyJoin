@@ -1,5 +1,7 @@
 package com.web.activity.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +13,8 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="Order")
-public class OrderBean implements java.io.Serializable {
+@Table(name="[Order]")
+public class OrderBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -28,53 +30,94 @@ public class OrderBean implements java.io.Serializable {
 	@JoinColumn(name="memberNo") 	
     private MemberBean memberBean;
 	
+	public OrderBean() {}
 	
-	public Integer getOrderPrice() {
-		return orderPrice;
-	}
-
-	public void setOrderPrice(Integer orderPrice) {
+	
+	
+	public OrderBean(Integer orderId, String orderNo, Integer orderPrice, String orderItem, Integer orderNum,
+			MemberBean memberBean) {
+		super();
+		this.orderId = orderId;
+		this.orderNo = orderNo;
 		this.orderPrice = orderPrice;
-	}
-
-	public String getOrderItem() {
-		return orderItem;
-	}
-
-	public void setOrderItem(String orderItem) {
 		this.orderItem = orderItem;
-	}
-
-	public Integer getOrderNum() {
-		return orderNum;
-	}
-
-	public void setOrderNum(Integer orderNum) {
 		this.orderNum = orderNum;
+		this.memberBean = memberBean;
 	}
+
+
+
+	public Integer getOrderId() {
+		return orderId;
+	}
+
+
 
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
 
-	public int getOrderId() {
-		return orderId;
-	}
+
 
 	public String getOrderNo() {
 		return orderNo;
 	}
 
+
+
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
+
+
+
+	public Integer getOrderPrice() {
+		return orderPrice;
+	}
+
+
+
+	public void setOrderPrice(Integer orderPrice) {
+		this.orderPrice = orderPrice;
+	}
+
+
+
+	public String getOrderItem() {
+		return orderItem;
+	}
+
+
+
+	public void setOrderItem(String orderItem) {
+		this.orderItem = orderItem;
+	}
+
+
+
+	public Integer getOrderNum() {
+		return orderNum;
+	}
+
+
+
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
+	}
+
+
 
 	public MemberBean getMemberBean() {
 		return memberBean;
 	}
 
+
+
 	public void setMemberBean(MemberBean memberBean) {
 		this.memberBean = memberBean;
 	}
+
+	
+
 	
 }

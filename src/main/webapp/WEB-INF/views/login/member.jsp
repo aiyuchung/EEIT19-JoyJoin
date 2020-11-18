@@ -62,7 +62,7 @@
 		<div id="infoArea">
 			<div id="info">
 				<div id="pictureArea">
-					<img src="<c:url value='/getPicture/' />" class="imgRange" alt="圖片" style="width:100%;height:100%;border-radius:99em;" />
+					<img src="<c:url value='/getMemberPicture/${account}' />" class="imgRange" alt="圖片" style="width:100%" />
 				</div>
 				<div id="nicknameArea" class="text-effect">
 					<p>
@@ -74,8 +74,8 @@
 			<div id="btnArea">
 				<br><a class='superBtn' id='memberInfo-btn'>個人資料</a><br>
 				<br><a class='superBtn' id='roleInfo-btn'>用戶資料</a><br> 
-				<br><a class='superBtn' id='trip-btn'>出遊資料</a><br>
 				<br><a class='superBtn' id='update-btn'>修改資料</a><br>
+				<br><a class='superBtn' id='trip-btn'>出遊資料</a><br>
 				<br><a class='superBtn' id='msg-btn'>站內信箱</a><br>
 				<br><a class='superBtn' id='shop-btn'>點數購買</a><br>
 			</div>

@@ -31,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,14 +74,13 @@ public class MemberController {
 		}
 		
 		@PostMapping("/member")
-		public String updateInfo(@ModelAttribute("memberBean") MemberBean mb  ) {
-			
-			MultipartFile mFile = mb.getUpdateImg();
-			System.out.println(mb.getUpdateImg());
-			String original = mFile.getOriginalFilename();
-			mb.setFileName(original);
-			if (mFile != null && !mFile.isEmpty()) {
-				byte[] b;
+        public String updateInfo(@ModelAttribute("memberBean") MemberBean mb  ,HttpSession httpsession) {
+            
+            MultipartFile mFile = mb.getUpdateImg();
+            String original = mFile.getOriginalFilename();
+            mb.setFileName(original);
+            if (mFile != null && !mFile.isEmpty()) {
+                byte[] b;
 				try {
 					b = mFile.getBytes();
 					Blob blob = new SerialBlob(b);
@@ -90,6 +90,7 @@ public class MemberController {
 					throw new RuntimeException("異常:" + e.getMessage());
 				}
 			}
+            mb.setAccount((String)httpsession.getAttribute("account"));
 			memberService.updateInfo(mb);
 			return "redirect:/member";
 		}
@@ -375,26 +376,31 @@ public class MemberController {
 		
 
 //---------------------------------------------▼前端讀圖片▼---------------------------------------------//
-		@GetMapping("/getPicture")
-		public ResponseEntity<byte[]> getPicture(
-				HttpSession session) throws Exception{
-		 InputStream is = null;
-		 String mimeType = null;
-		 Blob blob=null;
-		 String account = (String) session.getAttribute("account");
-		 MemberBean bean = memberService.getMember(account);
-		 if(bean != null) {
-			   blob = bean.getPicture();
-		 }
-		 if(blob != null) {
-			   is = blob.getBinaryStream();
-			   mimeType = servletContext.getMimeType(bean.getFileName());
-		 }
-		 
-		 ResponseEntity<byte[]> re = null;
-		 if(is == null) {
-		  is = servletContext.getResourceAsStream("/images/noImage.jpg");
-		  mimeType = servletContext.getMimeType("noImage.jpg");
+		@GetMapping("/getMemberPicture/{account}")
+        public ResponseEntity<byte[]> getPicture(
+                @PathVariable String account,
+                HttpSession session) throws Exception{
+         InputStream is = null;
+         String mimeType = null;
+         Blob blob=null;
+//         String account = (String) session.getAttribute("account");
+//         String sessionccount = (String) session.getAttribute("account");
+//         account = sessionccount;
+         MemberBean bean = memberService.getMember(account);
+         if(bean != null) {
+             blob = bean.getPicture();
+             System.out.println(blob);
+	       }
+	       if(blob != null) {
+	             is = blob.getBinaryStream();
+	             mimeType = servletContext.getMimeType(bean.getFileName());
+	       }
+	       System.out.println("allget");
+	       ResponseEntity<byte[]> re = null;
+	       if(is == null) {
+	       is = servletContext.getResourceAsStream("/images/noImage.jpg"); 
+	       mimeType = servletContext.getMimeType("noImage.jpg");
+		  
 		 }
 		 //將得到的mimeType塞進來
 		 MediaType mediaType = MediaType.valueOf(mimeType);

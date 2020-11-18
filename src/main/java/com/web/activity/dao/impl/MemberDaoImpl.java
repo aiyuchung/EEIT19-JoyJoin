@@ -58,6 +58,7 @@ public class MemberDaoImpl implements MemberDao {
 				+ ", nickname = :nickname, phone = :phone, birthYear = :year, birthMonth = :month, starSign = :star, bloodType = :blood"
 				+ ", country = :country, address = :address, hobby = :hobby, education = :education, school = :school"
 				+ ", company = :company, job = :job, income = :income, signature = :signature, introduction = :introduction"
+				+ ", fileName = :filename"
 				+ " WHERE account = :id";
 		session.createQuery(hql).setParameter("id", mb.getAccount())
 											  .setParameter("password", mb.getPassword())
@@ -79,6 +80,7 @@ public class MemberDaoImpl implements MemberDao {
 											  .setParameter("income", mb.getIncome())
 											  .setParameter("signature", mb.getSignature())
 											  .setParameter("introduction", mb.getIntroduction())
+											  .setParameter("filename", mb.getFileName())
 											 .executeUpdate();		
 		}
 
