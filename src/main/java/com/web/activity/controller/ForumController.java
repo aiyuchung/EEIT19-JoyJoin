@@ -1,6 +1,7 @@
 package com.web.activity.controller;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
@@ -44,19 +45,18 @@ public class ForumController {
 	
 	
 	@GetMapping("/forum")
-	public String selectAllForum(HttpServletRequest request, Model model) {
-		HttpSession session = request.getSession();
-		ForumBean forumBean = new ForumBean();
-		List<ForumBean>forumList = service.selectForumTitleListByParam(forumBean);
+	public String selectAllForum(Model model,@ModelAttribute("form") ForumBean form) {
+		List<ForumBean>forumList = service.selectForumTitleListByParam(form);
 		model.addAttribute("forumList", forumList);
 		return "forum/forum";
 	}
 	
 	@GetMapping("/ajax_forum")
-	public String selectRecentMon(Model model, String activeType, String keyWord) {
+	public String selectRecentMon(Model model, String activeType, String keyWord,String code) {
 		ForumBean forumBean = new ForumBean();
 		forumBean.setType(activeType);
 		forumBean.setKeyWord(keyWord);
+		forumBean.setCode(code);
 		List<ForumBean>forumList = service.selectForumTitleListByParam(forumBean);
 		model.addAttribute("forumList",forumList);
 		return "ajax/forumTable";
@@ -68,14 +68,15 @@ public class ForumController {
 		service.plusPopularity(form.getForumSeq());
 		form.setCode(String.valueOf(form.getForumSeq()));
 		List<ForumBean>forumList = service.selectForumDteailListByParam(form);
-		ForumBean forumTitle = forumList.stream()
+		ForumBean forumBean = forumList.stream()
 				.filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()
 				.orElse(new ForumBean());
 		List<ForumBean> forumDetailList = forumList.stream()
+				.sorted(Comparator.comparing(ForumBean::getForumSeq))
 				.filter(f -> ForumType.DETAIL.equals(f.getForumType()))
 				.collect(Collectors.toList());
-		
-		model.addAttribute("forumTitle",forumTitle);
+
+		model.addAttribute("forumBean",forumBean);
 		model.addAttribute("forumDetailList",forumDetailList);
 		return "forum/forumDetail";
 	}
@@ -108,14 +109,14 @@ public class ForumController {
 	@PostMapping("/saveOrUpdateArticle")
 	public String saveOrUpdateArticle( Model model,@ModelAttribute("form") ForumBean form) {
 		List<ForumBean> forumList = service.saveOrUpdateArticle(form);
-		ForumBean forumTitle = forumList.stream()
+		ForumBean forumBean = forumList.stream()
 				.filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()
 				.orElse(new ForumBean());
 		List<ForumBean> forumDetailList = forumList.stream()
 				.filter(f -> ForumType.DETAIL.equals(f.getForumType()))
 				.collect(Collectors.toList());
 		
-		model.addAttribute("forumTitle",forumTitle);
+		model.addAttribute("forumBean",forumBean);
 		model.addAttribute("forumDetailList",forumDetailList);
 		return "forum/forumDetail";
 	}

@@ -238,55 +238,11 @@ Released   : 20100501
 </style>
 
 </head>
-    <script src="js/jquery-3.5.1.min.js"></script>
-    <script>
 
-        
-    </script>
 <body>
 <!---------- Header ------------>
-	<div class="headerPage">
-		<jsp:include page="../header/header_guest.jsp" />
-	</div>
-
-	<div id="menu-bb">
-		<div id="menu">
-			<ul id="main">
-				<li class="nav-item dropdown"><a href="#" name = "熱門" class="activeType">熱門 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "電影" class="activeType">電影 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "運動" class="activeType">運動 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "美食" class="activeType">美食 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "旅遊" class="activeType">旅遊 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "音樂藝文 " class="activeType">音樂藝文 </a></li>
-			</ul>
-		</div>
-	</div>
+ <c:import url="forumHeader.jsp"></c:import> 
 		<!-- end header -->
-	<br>
-	
-	<table width="70%" border="1" align="center">
-		<tr>
-			<td>類型</td>
-			<td>標題</td>
-			<td>評分</td>
-			<td>發文者</td>
-			<td>發文時間</td>
-			<td>地區</td>
-			<td>點閱率</td>
-		</tr>
-		<tr>
-			<td>旅遊</td>
-			<td>粗乃玩啊</td>
-			<td>4.5</td>
-			<td>揪王之王</td>
-			<td>2020-11-11</td>
-			<td>台北市</td>
-			<td>20</td>
-		</tr>
-	</table>
-	
-	<center>
-	
 	<form method="post" action="<%=request.getContextPath()%>/saveOrUpdateArticle">
 	  <input type = "hidden" name = "forumSeq" value = "${forumBean.forumSeq}">
 	  <input type = "hidden" name = "code" value = "${forumBean.code}">
@@ -344,7 +300,7 @@ Released   : 20100501
 			<tr>
 				<td height ="70" colspan="3" align="center">
 					<input type="submit" value="儲存貼文"> 
-					<input type="reset" value="清除">
+					<input type="reset" value="復原">
 				</td>
 			</tr>
 			
@@ -396,16 +352,17 @@ $(".star").dblclick(function () {
 //---------------處理SCORE SCRIPT END---------------//
 $(".evaTag").css('background-color','#E2C2DE');
 
+var fruits = [];
 var dataEvaTagStr =  $("#evaTag").val();
 if(dataEvaTagStr !== null){
 	var dataEvaTags =dataEvaTagStr.split(',');
 	dataEvaTags.forEach(function(item, index, array) {
 			var evaName = "button[name='"+item+"']";
 			$(evaName).css('background-color','#FFFF77');
+			  fruits.push(item);
 			});
 }
 
-var fruits = [];
 var evaTagStr = "";
 $(".evaTag").click(function () {
 	var tagVal = $(this).val();

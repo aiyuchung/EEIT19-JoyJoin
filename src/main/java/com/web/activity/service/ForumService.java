@@ -33,7 +33,7 @@ public interface ForumService {
 	 */
     public ForumBean selectOneForum(int forumSeq);
     
-    public List<ForumBean> createNewArticle(ForumBean forumBean);
+    public void createNewArticle(ForumBean forumBean);
     
     
     public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean);
