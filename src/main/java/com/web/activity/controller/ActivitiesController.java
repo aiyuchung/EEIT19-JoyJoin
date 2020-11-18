@@ -492,7 +492,6 @@ public class ActivitiesController {
 //-----------------------------------------關注活動↓-----------------------------------------	
 	@PostMapping("/ajax_follow")
 	public void follow(Model model, HttpSession session, String activityUrl,Integer activityNo) {
-		System.out.println("controller------------------------->>>"+activityNo);
 		String account = (String) session.getAttribute("account");
 		MemberBean member = memberService.getMember(account);
 		Integer memberNo = member.getMemberNo();
@@ -516,7 +515,7 @@ public class ActivitiesController {
 	public String chatbot(Model model) {
 		return "index00";
 	}
-	
+//-----------------------------------------前端讀圖片↓-----------------------------------------		
 	@GetMapping("/getPicture/{id}")
 	  public ResponseEntity<byte[]> getPicture(
 	    @PathVariable("id") int activityNo) throws Exception{

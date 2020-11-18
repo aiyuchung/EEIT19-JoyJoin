@@ -17,6 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.web.multipart.MultipartFile;
+
 @Entity
 @Table(name = "member")
 public class MemberBean implements Serializable {
@@ -52,8 +54,21 @@ public class MemberBean implements Serializable {
 	private String income;					//收入情形
 	private String signature;				//自定義簽名
 	private String introduction;			//自我介紹
+	
+	private String fileName;
+	@Transient
+	private MultipartFile updateImg;
 
-//	@JsonIgnoreProperties("member")
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	//	@JsonIgnoreProperties("member")
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "roleNo")		//FK為RoleBean的roleNo
 	private RoleBean rolebean;
@@ -106,6 +121,14 @@ public class MemberBean implements Serializable {
 		this.introduction = introduction;
 	}
 
+	public MultipartFile getUpdateImg() {
+		return updateImg;
+	}
+
+	public void setUpdateImg(MultipartFile updateImg) {
+		this.updateImg = updateImg;
+	}
+	
 	public Integer getMemberNo() {
 		return memberNo;
 	}

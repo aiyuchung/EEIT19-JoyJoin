@@ -57,7 +57,9 @@
 
 		<div id="infoArea">
 			<div id="info">
-				<div id="pictureArea">${member.picture }</div>
+				<div id="pictureArea">
+					<img src="<c:url value='/getPicture/' />" class="imgRange" alt="圖片" />
+				</div>
 				<div id="nicknameArea" class="text-effect">
 					<p>
 						<span>${member.nickname}</span> ( ${account} )
@@ -90,7 +92,7 @@
 <!-- 		        </button> -->
 		      </div>
 		      <div class="modal-body" style="">
-						<form:form modelAttribute = "memberBean" method = "POST" >
+						<form:form modelAttribute = "memberBean" method = "POST"  enctype="multipart/form-data">
 							<div id = "update-header" class="text-effect1">
 								<h3>${account}的個人資料</h3><hr>
 								<td><form:input path = "account" type = "hidden" placeholder = "${account}"/>
@@ -210,7 +212,7 @@
 								</tr>
 								<tr>
 									<td><form:label path = "picture">頭像</form:label></td>
-						<%-- 			<form:input path = "picture" type = ""/> --%>
+									<td><form:input type="file"  path="updateImg" id="file"/></td>
 								</tr>
 								<tr>
 									<td><form:label path = "signature">簽名</form:label></td>
