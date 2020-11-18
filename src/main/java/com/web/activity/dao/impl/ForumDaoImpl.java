@@ -1,5 +1,6 @@
 package com.web.activity.dao.impl;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -23,14 +24,11 @@ public class ForumDaoImpl implements ForumDao {
 
 
 	@Override
-	public List<ForumBean>  createForum(ForumBean forumBean) {
+	public void createForum(ForumBean forumBean) {
 		Session session = factory.getCurrentSession();
 		forumBean.setTime(new Date());
 		forumBean.setStatus(Status.ACTIVE);
 		session.save(forumBean);
-		String hql = "FROM ForumBean";
-		List<ForumBean> list = session.createQuery(hql).getResultList();
-		return list;
 	}
 	
 	@Override

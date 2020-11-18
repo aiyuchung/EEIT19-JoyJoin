@@ -241,71 +241,7 @@ Released   : 20100501
 
 <body>
 <!---------- Header ------------>
-	<div class="headerPage">
-		<jsp:include page="../header/header_guest.jsp" />
-	</div>
-
-	<div id="menu-bb">
-		<div id="menu">
-			<ul id="main">
-				<li class="nav-item dropdown"><a href="#" name = "熱門" class="activeType">熱門 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "電影" class="activeType">電影 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "運動" class="activeType">運動 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "美食" class="activeType">美食 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "旅遊" class="activeType">旅遊 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "音樂藝文 " class="activeType">音樂藝文 </a></li>
-			</ul>
-		</div>
-	</div>
-		<!-- end header -->
-		
-		<div class="newajaxlist">
-	 <c:import url="../ajax/forumTable.jsp"></c:import> 
-</div>
-		<script>
-			$(".activeType").click(function(){ //以活動類型作為快速篩選
-				var activeType = $(this).attr('name');
-				var keyWord = $('#keyWord').val();
-		 		$.ajax({
-					  url:"ajax_forum",
-					  type: "GET",
-					  dataType: "html", //server送回
-					  contentType: 'application/json; charset=utf-8',
-					  data: {activeType: activeType,keyWord: keyWord},
-					  success:function(data){
-						  $(".newajaxlist").empty();
-						  $(".newajaxlist").append(data);
-						}
-				}) 
-			})
-			$(".submitBtn").click(function(){ //關鍵字搜尋
-				var keyWord = $('#keyWord').val();
-		 		$.ajax({
-					  url:"ajax_forum",
-					  type: "GET",
-					  dataType: "html", //server送回
-					  contentType: 'application/json; charset=utf-8',
-					  data: {keyWord: keyWord},
-					  success:function(data){
-						  $(".newajaxlist").empty();
-						  $(".newajaxlist").append(data);
-						}
-				}) 
-			})
-		</script>
-	
-	<table width="70%" border="1" align="center">
-		<tr>
-			<td><c:out value="${forumTitle.type}" default="no values"/></td>
-			<td><c:out value="${forumTitle.title}" default="no values"/></td>
-			<td><c:out value="${forumTitle.score}" default="no values"/></td>
-			<td><c:out value="${forumTitle.author}" default="no values"/></td>
-			<td><fmt:formatDate value="${forumTitle.time}" type="both"/></td>
-			<td><c:out value="${forumTitle.location}" default="no values"/></td>
-			<td><c:out value="${forumTitle.popularity}" default="no values"/></td>
-		</tr>
-	</table>
-	
+ <c:import url="forumHeader.jsp"></c:import> 
 	<table width="70%" border="1" align="center"  style="border-top: 5px #ff0000;" >
 
 		 <c:forEach var="forum" items="${forumDetailList}">
@@ -320,14 +256,17 @@ Released   : 20100501
 			種族 妖精<br />
 			 巴幣 226632 <br />
 			 GP 7881<br />
+			
 			</td>
 			<!-- <td width="20%"  height="100px" style="border-right: 0px;">	<img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/></td> -->
 			<td width="60%"  height="100px" style="border-left: 0px;">
 		    <!----------------------------------內容開始------------------------------------ -->
-		    <table>
+		    <table width = "100%">
 		    <tr height="200px"><td><img width = "50%" src="images/img02.jpg" alt=""/></td></tr>
 		      <tr><td>${forum.article}</td></tr>
-		      <tr  height="50px"><td style="text-align :right"><input class = "forumEdit" type="button" name = "${forum.forumSeq}" value="編輯">&nbsp;</td></tr>
+		      <tr  height="50px"><td style="text-align :right"><fmt:formatDate value="${forum.time}" type="both"/>
+		      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		      <input class = "forumEdit" type="button" name = "${forum.forumSeq}" value="編輯">&nbsp;</td></tr>
 		    </table>
 		  
 			<!-- --------------------------------內容結束------------------------------------ -->			
@@ -347,11 +286,6 @@ Released   : 20100501
 	                          <c:forEach var="i" begin="1" end="${5-forum.score}">
                                <img id="img5" class="i" width = "33" src="images/star.gif" />
                                  </c:forEach>
-						       
-						      <!--   <img id="img2" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img3" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img4" class="i" width = "33" src="images/chngstar.gif" />
-						        <img id="img5" class="i" width = "33" src="images/star.gif" /> -->
 						    </div>
     					</td>
 						<td width="75%">
@@ -367,21 +301,21 @@ Released   : 20100501
 		<tr>
 			<td height ="70" colspan="3" align="center">
 			<form method ="get" action="<%=request.getContextPath()%>/forumNewArticle">
-			 	    <input type = "hidden" name = "code" value = "${forumTitle.code}">
-		<input type = "hidden" name = "activityCode" value = "${forumTitle.activityCode}">
-		<input type = "hidden" name = "type" value = "${forumTitle.type}">
-		<input type = "hidden" name = "author" value = "${forumTitle.author}">
-		<input type = "hidden" name = "title" value = "${forumTitle.title}">
-		<input type = "hidden" name = "location" value = "${forumTitle.location}">
-			   <input type="submit" value="新增貼文" id="to_forumNewArticle">
+			 	    <input type = "hidden" name = "code" value = "${forumBean.code}">
+					<input type = "hidden" name = "activityCode" value = "${forumBean.activityCode}">
+					<input type = "hidden" name = "type" value = "${forumBean.type}">
+					<input type = "hidden" name = "author" value = "${forumBean.author}">
+					<input type = "hidden" name = "title" value = "${forumBean.title}">
+					<input type = "hidden" name = "location" value = "${forumBean.location}">
+			   		<input type="submit" value="新增貼文" id="to_forumNewArticle">
 			</form>	
 			</td>
 		</tr>
 		
 		
-		<form  id = "updateForm" method ="get" action="<%=request.getContextPath()%>/forumUpdateArticle">
-			<input type = "text" id = "detailForumSeq" name = "forumSeq" >
-		</form>
+		 <form  id = "updateForm" method ="get" action="<%=request.getContextPath()%>/forumUpdateArticle">
+			<input type = "hidden" id = "detailForumSeq" name = "forumSeq" >
+		</form> 
 	</table>
 
 
@@ -407,9 +341,6 @@ $(".forumEdit").click(function(){ //以活動類型作為快速篩選
   }
   
 </c:forEach>
-
-
-
 
 </script>
 

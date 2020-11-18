@@ -34,7 +34,10 @@
 						<td>寄件人:${msg.account}</td>
 						<td>收件人:${msg.account2}</td>
 						<td>時間:${msg.time}</td>
-						<td>閱讀狀態:${msg.readStatus}</td>
+						<td>
+							<c:if test="${msg.readStatus == 0}">未讀</c:if>
+							<c:if test="${msg.readStatus == 1}">已讀</c:if>						
+						</td>
 					</tr>
 
 

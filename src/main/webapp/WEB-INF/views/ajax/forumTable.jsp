@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +14,8 @@ table {
 	font-family: 微軟正黑體;
 	font-weight: 900;
 }
-table thead tr{
+
+table thead tr {
 	background-color: #800080;
 	color: white;
 }
@@ -23,25 +24,26 @@ table tbody tr:nth-child(odd) {
 	background-color: #FF30FF;
 	color: black
 }
-table tbody tr:nth-child(odd):hover{
-  background: #FFFF6E;
+
+table tbody tr:nth-child(odd):hover {
+	background: #FFFF6E;
 }
+
 table tbody tr:nth-child(even) {
 	background-color: #FFC9FF;
 	color: black
 }
-table tbody tr:nth-child(even):hover{
-  background: #FFFF45;
+
+table tbody tr:nth-child(even):hover {
+	background: #FFFF45;
 }
 
 table thead td:first-child {
 	border-radius: 20px 0 0 0;
-	
 }
 
 table thead td:last-child {
 	border-radius: 0 20px 0 0;
-	
 }
 
 table tbody tr:last-child td:first-child {
@@ -54,11 +56,12 @@ table tbody tr:last-child td:last-child {
 </style>
 </head>
 <body>
-	 <form id = "formToDetail" method ="get" action="<%=request.getContextPath()%>/forumDetail">
-			 		<input type="hidden" id = "forumSeqInput" name="forumSeq" />
+	<form id="formToDetail" method="get"
+		action="<%=request.getContextPath()%>/forumDetail">
+		<input type="hidden" id="forumSeqInput" name="forumSeq" />
 	</form>
 	<table width="70%" border="1" align="center">
-	<thead>
+		<thead>
 			<tr style="text-align: center" height="60px">
 				<td width="10%">類型</td>
 				<td width="30%">標題</td>
@@ -69,56 +72,27 @@ table tbody tr:last-child td:last-child {
 				<td width="10%">點閱率</td>
 			</tr>
 		</thead>
-			 <c:forEach var="forum" items="${forumList}">
-			 	<tr style="text-align: center" height="60px" class="to_detail" name ="${forum.forumSeq}">
+		<c:forEach var="forum" items="${forumList}">
+			<tr style="text-align: center" height="60px" class="to_detail"
+				name="${forum.forumSeq}">
 				<td>${forum.type}</td>
 				<td>${forum.title}</td>
 				<td>${forum.score}</td>
 				<td>${forum.author}</td>
-				<jsp:useBean id="now" class="java.util.Date"  />
-				<td><fmt:formatDate value="${forum.time}" type="both"/></td>
+				<jsp:useBean id="now" class="java.util.Date" />
+				<td><fmt:formatDate value="${forum.time}" type="both" /></td>
 				<td>${forum.location}</td>
 				<td>${forum.popularity}</td>
 			</tr>
-			  </c:forEach>
-			
-			
-	<!-- 		<tr>
-				<td><a id="to_detail">旅遊xxxx</a></td>
-				<td>粗乃玩啊</td>
-				<td>4.5</td>
-				<td>揪王之王</td>
-				<td>2020-11-11</td>
-				<td>台北市</td>
-				<td>20</td>
-			</tr>
+		</c:forEach>
+	</table>
 
-			<tr>
-				<td><a id="">電影</a></td>
-				<td>粗乃看啊</td>
-				<td>4.5</td>
-				<td>揪王之王</td>
-				<td>2020-11-11</td>
-				<td>台東縣</td>
-				<td>20</td>
-			</tr>
-
-			<tr>
-				<td><a id="">美食</a></td>
-				<td>粗乃吃啊</td>
-				<td>4.5</td>
-				<td>揪王之王</td>
-				<td>2020-11-11</td>
-				<td>高雄市</td>
-				<td>20</td>
-			</tr> -->
-		</table>
-<script type="text/javascript">
-$(".to_detail").click(function(){ //以活動類型作為快速篩選
-	var forumSeq = $(this).attr('name');
-	$("#forumSeqInput").val(forumSeq);
-	$("#formToDetail").submit();
-})
-</script>
+	<script type="text/javascript">
+		$(".to_detail").click(function() { //以活動類型作為快速篩選
+			var forumSeq = $(this).attr('name');
+			$("#forumSeqInput").val(forumSeq);
+			$("#formToDetail").submit();
+		})
+	</script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.web.activity.model;
 
 
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -45,7 +46,7 @@ public class ForumBean implements java.io.Serializable {
 	private String title;
 	//討論區 評分
 	@NotNull
-	private float score;
+	private BigDecimal score;
 	//討論區 發文者
 	@NotNull
 	private String author;
@@ -111,10 +112,10 @@ public class ForumBean implements java.io.Serializable {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public float getScore() {
+	public BigDecimal getScore() {
 		return score;
 	}
-	public void setScore(float score) {
+	public void setScore(BigDecimal score) {
 		this.score = score;
 	}
 	public String getAuthor() {

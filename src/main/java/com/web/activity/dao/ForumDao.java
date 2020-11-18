@@ -12,7 +12,7 @@ public interface ForumDao {
 	 * @param forumBean 討論物件
 	 * @return 查詢新增結果
 	 */
-    public List<ForumBean> createForum(ForumBean forumBean);
+    public void createForum(ForumBean forumBean);
 	
 	//更新討論
     public ForumBean updateForum(int forumSeq,ForumBean forumBean);

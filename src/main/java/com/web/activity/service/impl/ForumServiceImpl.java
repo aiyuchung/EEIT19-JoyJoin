@@ -1,9 +1,15 @@
 package com.web.activity.service.impl;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,10 +52,10 @@ public class ForumServiceImpl implements ForumService {
 	}
 	
 	@Override
-	 public List<ForumBean> createNewArticle(ForumBean forumBean){
+	 public void createNewArticle(ForumBean forumBean){
 		forumBean.setForumType(ForumType.DETAIL);
 		forumBean.setPopularity(0);
-		return forumDao.createForum(forumBean);
+		forumDao.createForum(forumBean);
 	 }
 	
 	@Override
@@ -57,15 +63,36 @@ public class ForumServiceImpl implements ForumService {
 		//如果沒有key值，進行新增文章
 		List<ForumBean> resultList = new ArrayList<ForumBean>();
 		if(forumBean.getForumSeq() == null) {
-			resultList = this.createNewArticle(forumBean);
+			 this.createNewArticle(forumBean);
 		}else {
 		//若已存在key值，則進行文章更新
 			forumBean.setForumType(ForumType.DETAIL);
 			forumDao.updateForum(forumBean.getForumSeq(), forumBean);
-			ForumBean queryForum = new ForumBean();
-			queryForum.setCode(forumBean.getCode());
-			resultList = this.selectForumDteailListByParam(queryForum);
 		}
+		ForumBean queryForum = new ForumBean();
+		queryForum.setCode(forumBean.getCode());
+		resultList = this.selectForumDteailListByParam(queryForum);
+		this.updateScore(resultList);
 		return resultList;
 	}
+	
+	private void updateScore(List<ForumBean> forumList){	
+		ForumBean forumBean = forumList.stream()
+				.filter(f -> ForumType.TITLE.equals(f.getForumType()))
+				.findAny()
+				.orElse(new ForumBean());
+		List<ForumBean> forumDetailList = forumList.stream()
+				.sorted(Comparator.comparing(ForumBean::getForumSeq))
+				.filter(f -> ForumType.DETAIL.equals(f.getForumType()))
+				.collect(Collectors.toList());
+		BigDecimal averageNumber = forumDetailList.stream().map(ForumBean::getScore)
+				.reduce(BigDecimal::add).orElse(BigDecimal.ZERO)
+				.divide(new BigDecimal(forumDetailList.size()),1,RoundingMode.CEILING);
+		
+		forumBean.setScore(averageNumber);
+		forumDao.updateForum(forumBean.getForumSeq(), forumBean);
+
+	}
+	
+	
 }
