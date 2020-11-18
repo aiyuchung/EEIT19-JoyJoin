@@ -389,13 +389,11 @@ public class MemberController {
          MemberBean bean = memberService.getMember(account);
          if(bean != null) {
              blob = bean.getPicture();
-             System.out.println(blob);
 	       }
 	       if(blob != null) {
 	             is = blob.getBinaryStream();
 	             mimeType = servletContext.getMimeType(bean.getFileName());
 	       }
-	       System.out.println("allget");
 	       ResponseEntity<byte[]> re = null;
 	       if(is == null) {
 	       is = servletContext.getResourceAsStream("/images/noImage.jpg"); 

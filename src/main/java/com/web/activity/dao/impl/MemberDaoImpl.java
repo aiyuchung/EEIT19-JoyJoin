@@ -432,7 +432,6 @@ public class MemberDaoImpl implements MemberDao {
         String orderNo = "J"+ Integer.toString(i);
         order.setOrderNo(orderNo);
         order.setMemberBean(session.get(MemberBean.class,memberNo));
-        System.out.println(order.getOrderItem()+";"+order.getOrderNo()+";"+order.getOrderPrice()+";"+order.getOrderNum());
         session.save(order);
         
         String hql = "FROM OrderBean where orderNo = :no";
