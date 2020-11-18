@@ -80,12 +80,17 @@ body{
 			position: relative;
 			padding: 6em 0em;
 		}
+#logo{
+	top:0;
+}
 #logo img {
    position:absolute;
    top:35px;
 }
 
-
+#logoimg:hover{
+	cursor:pointer;
+}
 		
 </style>
 </head>
@@ -95,7 +100,7 @@ body{
 
 			<!-- Logo -->
 			<div id="logo">
-			<img src="${pageContext.request.contextPath}/images/JoyJoin.png">
+			<img src="${pageContext.request.contextPath}/images/JoyJoin.png" id="logoimg">
 				<h1>
 					
 				</h1>
@@ -126,9 +131,11 @@ body{
 			</nav>
 		</div>
 	</div>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
-
+	$("#logoimg").click(function(){
+		location.href="${pageContext.request.contextPath}/";
+	})
 </script>
 </body>
 </html>
