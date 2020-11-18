@@ -362,8 +362,39 @@
 					$("#showAreaTop").append(data);
 				}
 			})
-	})
+		})
 	    
+		$('#trip-btn').on('click', function() {
+			str = '旅遊連結' ;
+			
+			$.ajax({
+				  url:"ajax_getFollowed",
+				  type: "GET",
+				  dataType: "html", //server送回
+				  contentType: 'application/json; charset=utf-8',
+				  data: {}, 
+				  success:function(data){
+					  $("#showAreaTop").css("border", "2px solid white").addClass("animated").html(str);
+					  $("#showAreaTop").append(data);
+					}
+			})
+		})
+		
+		$("#shop-btn").click(function (){
+        var str = "購買點數";
+	        $.ajax({
+	              url:"ajax_shop",
+	              type: "GET",
+	              dataType: "html", //server送回
+	              contentType: 'application/json; charset=utf-8',
+	              data: {}, 
+	              success:function(data){
+	                  $("#showArea").empty();
+	                  $("#showArea").css("border", "0").addClass("animated").html(str);
+	                  $("#showArea").append(data);
+	                }
+	        })
+	    })
 	    
 	    
 	})
@@ -385,37 +416,6 @@
 // 				})
 // 		})
 		
-		$('#trip-btn').on('click', function() {
-			str = '旅遊連結' ;
-			
-			$.ajax({
-				  url:"ajax_getFollowed",
-				  type: "GET",
-				  dataType: "html", //server送回
-				  contentType: 'application/json; charset=utf-8',
-				  data: {}, 
-				  success:function(data){
-					  $("#showAreaTop").css("border", "2px solid white").addClass("animated").html(str);
-					  $("#showAreaTop").append(data);
-					}
-			})
-		})
-		
-		 $("#shop-btn").click(function (){
-        var str = "購買點數";
-	        $.ajax({
-	              url:"ajax_shop",
-	              type: "GET",
-	              dataType: "html", //server送回
-	              contentType: 'application/json; charset=utf-8',
-	              data: {}, 
-	              success:function(data){
-	                  $("#showArea").empty();
-	                  $("#showArea").css("border", "0").addClass("animated").html(str);
-	                  $("#showArea").append(data);
-	                }
-	        })
-	    })
 		
 		
 	</script>
