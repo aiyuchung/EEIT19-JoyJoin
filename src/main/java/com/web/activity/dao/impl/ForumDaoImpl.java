@@ -1,6 +1,5 @@
 package com.web.activity.dao.impl;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -21,14 +20,13 @@ public class ForumDaoImpl implements ForumDao {
 	@Autowired
 	SessionFactory factory;
 	//----------------------------------------新增點擊率並回傳--------------------------------------------
-
-
 	@Override
 	public void createForum(ForumBean forumBean) {
 		Session session = factory.getCurrentSession();
 		forumBean.setTime(new Date());
 		forumBean.setStatus(Status.ACTIVE);
-		session.save(forumBean);
+		 session.save(forumBean);
+
 	}
 	
 	@Override
@@ -89,7 +87,7 @@ public class ForumDaoImpl implements ForumDao {
 		}
 		if(forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType())) {
 			if(forumBean.getType().equals("熱門")) {
-				sb.append(" AND popularity > 10");
+				sb.append(" AND popularity > 60");
 			}else {
 				sb.append(" AND type = :type");
 			}

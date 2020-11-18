@@ -15,7 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.activity.Enum.ForumType;
 import com.web.activity.dao.ForumDao;
+import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ForumBean;
+import com.web.activity.model.MemberBean;
+import com.web.activity.service.ActivityService;
 import com.web.activity.service.ForumService;
 @Transactional
 @Service
@@ -23,6 +26,9 @@ public class ForumServiceImpl implements ForumService {
 
 	@Autowired
 	ForumDao forumDao;
+	
+	@Autowired
+	ActivityService activityService;
 
 	// 查詢討論標題清單
 	public List<ForumBean> selectForumTitleListByParam(ForumBean forumBean) {
@@ -58,6 +64,20 @@ public class ForumServiceImpl implements ForumService {
 		forumDao.createForum(forumBean);
 	 }
 	
+	/*
+	 * @Override public void createForumTitle(Integer activityNo) { ActivityBean
+	 * activeBean = activityService.selectOneActivity(activityNo); MemberBean
+	 * memberBean = activeBean.getMemberBean(); ForumBean forumBean = new
+	 * ForumBean(); //邏輯上需要設定 forumBean.setActivityCode(activeBean.toString());
+	 * forumBean.setType(activeBean.getActivityTypeName());
+	 * forumBean.setTitle(activeBean.getName());
+	 * forumBean.setLocation(activeBean.getLocation());
+	 * forumBean.setAuthor(memberBean.getMemberNo().toString());
+	 * forumBean.setForumType(ForumType.TITLE); forumBean.setPopularity(0);
+	 * forumBean.setScore(BigDecimal.ZERO); //呼叫寫入討論的DAO
+	 * forumDao.createForum(forumBean); }
+	 */
+	
 	@Override
 	public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean){
 		//如果沒有key值，進行新增文章
@@ -72,6 +92,7 @@ public class ForumServiceImpl implements ForumService {
 		ForumBean queryForum = new ForumBean();
 		queryForum.setCode(forumBean.getCode());
 		resultList = this.selectForumDteailListByParam(queryForum);
+		//更新TITLE的平均分數
 		this.updateScore(resultList);
 		return resultList;
 	}

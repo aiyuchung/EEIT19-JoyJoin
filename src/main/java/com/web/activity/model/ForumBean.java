@@ -19,6 +19,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.sun.istack.NotNull;
 import com.web.activity.Enum.ForumType;
 import com.web.activity.Enum.Status;
@@ -82,10 +84,20 @@ public class ForumBean implements java.io.Serializable {
 	//評分標籤---以[,]分隔
 	private String evaTag;
 	
+	
+	
 	//=========================以下為TRANSIENT=========================//
 	
 	@Transient
 	private String keyWord;
+	
+//	===========================因為加入照片要用===========================
+	
+	/*
+	 * @Transient private MultipartFile updateImg;
+	 * 
+	 * private String fileName;
+	 */
 	
 
 	public Integer getForumSeq() {

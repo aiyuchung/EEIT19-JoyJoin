@@ -258,10 +258,22 @@ Released   : 20100501
 				<img width = "100%" src="images/img02.jpg" alt=""/>
 			</td>
 			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
-			深海異音<br /> hbl917070<br /> 稱號 未夠班的勇者<br /> 種族 妖精<br /> 巴幣 226632 <br />GP 7881<br />
+				String account =  (String) session.getAttribute("account");<br />
+				MemberBean member= (MemberBean) session.getAttribute("member");<br />
+				Integer memberNo = member.getMemberNo();<br />
+				稱號 未夠班的勇者<br />
+		  		種族 妖精<br /> 
+		 		巴幣 226632 <br />
+		  		GP 7881<br />
 			</td>
 			<td width="60%"  height="100px" style="border-left: 0px;">
 			<button>上傳照片</button>
+			<!---------- 抓照片 ------------>
+			<%-- <c:otherwise>
+					<img src="<c:url value='/getPicture/${newform.activityNo}' />" class="imgRange" alt="圖片" />
+			</c:otherwise> --%>
+			
+			
 			<textarea style="width:100%;height:100px;"  name ="article">${forumBean.article}</textarea>
 			
 			</td>

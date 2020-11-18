@@ -83,14 +83,12 @@ public class ForumController {
 		return "forum/forumDetail";
 	}
 	
-	@GetMapping("/forumNewArticle/{id}")
-	public String getforumNewArticle(@PathVariable("id") int activityNo, 
-			Model model,  HttpSession session,
-			@ModelAttribute("form") ForumBean form) {
+	@GetMapping("/forumNewArticle")
+	public String getforumNewArticle(Model model,  HttpSession session,@ModelAttribute("form") ForumBean form) {
 		String account = (String) session.getAttribute("account");
 		MemberBean member = memberService.getMember(account);
 		Integer memberNo = member.getMemberNo();
-		ActivityBean activity = activityService.selectOneActivity(activityNo);
+		ActivityBean activity = activityService.selectOneActivity(Integer.valueOf(form.getActivityCode()));
 		model.addAttribute("forumBean",form);
 		model.addAttribute("activity",activity);
 		return "forum/forumNewArticle";
@@ -109,6 +107,8 @@ public class ForumController {
 	
 	@PostMapping("/saveOrUpdateArticle")
 	public String saveOrUpdateArticle( Model model,@ModelAttribute("form") ForumBean form) {
+		
+		System.out.println("fuck!!!!!!!!!!!!!!!!!");
 		List<ForumBean> forumList = service.saveOrUpdateArticle(form);
 		ForumBean forumBean = forumList.stream()
 				.filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()
