@@ -88,7 +88,9 @@ body{
    position:absolute;
    top:35px;
 }
-
+#logo{
+	top:0;
+}
 
 		
 </style>

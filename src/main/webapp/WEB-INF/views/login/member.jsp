@@ -72,12 +72,12 @@
 				</div>
 			</div>
 			<div id="btnArea">
-				<br><a class='superBtn' id='memberInfo-btn'>個人資料</a><br>
-				<br><a class='superBtn' id='roleInfo-btn'>用戶資料</a><br> 
-				<br><a class='superBtn' id='update-btn'>修改資料</a><br>
-				<br><a class='superBtn' id='trip-btn'>出遊資料</a><br>
-				<br><a class='superBtn' id='msg-btn'>站內信箱</a><br>
-				<br><a class='superBtn' id='shop-btn'>點數購買</a><br>
+				<br><a href="#" class='superBtn' id='memberInfo-btn'>個人資料</a><br>
+				<br><a href="#" class='superBtn' id='roleInfo-btn'>用戶資料</a><br> 
+				<br><a href="#" class='superBtn' id='update-btn'>修改資料</a><br>
+				<br><a href="#" class='superBtn' id='trip-btn'>出遊資料</a><br>
+				<br><a href="#" class='superBtn' id='msg-btn'>站內信箱</a><br>
+				<br><a href="#"class='superBtn' id='shop-btn'>點數購買</a><br>
 			</div>
 			<div id="showAreaTop" class="text-effect">
 				<div id="pushArea" class="text-effect">

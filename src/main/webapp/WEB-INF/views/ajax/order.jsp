@@ -29,28 +29,28 @@
 			<label for="200p">200點</label>
 			<input type="text" name="orderPrice" value="100" hidden="true">
 			<span>(新台幣 100 元)</span>
-			<input type="text" name="orderNum" value="1" hidden="true" style="width:15px">
+			<input type="text" name="orderNum" value="1" hidden="true" style="width:45px">
 		</li>
 		<li>
 			<input type="radio" name="orderItem" id="700p" class="buy" value="700點">
 			<input type="text" name="orderPrice" value="300" hidden="true">
 			<label for="700p">700點</label>
 			<span>(新台幣 300 元)</span>
-			<input type="text" name="orderNum" value="1" hidden="true" style="width:15px">
+			<input type="text" name="orderNum" value="1" hidden="true" style="width:45px">
 		</li>
 		<li>
 			<input type="radio" name="orderItem" id="1200p" class="buy" value="1200點">
 			<input type="text" name="orderPrice" value="500" hidden="true">
 			<label for="1200p">1200點</label>
 			<span>(新台幣 500 元)</span>
-			<input type="text" name="orderNum" value="1" hidden="true" style="width:15px">
+			<input type="text" name="orderNum" value="1" hidden="true" style="width:45px">
 		</li>
 		<li>
 			<input type="radio" name="orderItem" id="2300p" class="buy" value="2500點">
 			<input type="text" name="orderPrice" value="1000" hidden="true">
 			<label for="100p">2500點</label>
 			<span>(新台幣 1000 元)</span>
-			<input type="text" name="orderNum" value="1" hidden="true" style="width:15px">
+			<input type="text" name="orderNum" value="1" hidden="true" style="width:45px">
 		</li>
 		<li>
 			<input type="submit" value="信用卡購買">
@@ -64,6 +64,7 @@
 <script type="text/javascript">
 	$("input[name=orderItem]").click(function(){
 		$(this).siblings("input[name=orderNum]").attr("hidden",false);
+		$(this).parent().find("input[name=orderNum]").attr("hidden",true);
 	})
 	
 </script>
