@@ -21,12 +21,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.FormBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.MessageBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.service.ActivityService;
 import com.web.activity.service.MemberService;
@@ -270,18 +272,22 @@ public class MemberController {
 			public String getPair(Model model, HttpSession session) {
 				String pair = "";
 				while(pair == "") {				
-					int digit = (int) ((Math.random()*3)+1);
+					int digit = (int) ((Math.random()*4)+1);
 					switch(digit) {
 					case 1:pair = "starSign";break;
 					case 2:pair = "bloodType";break;
 					case 3:pair = "school";break;
 					case 4:pair = "hobby";break;
-						default:continue;
+						default:pair = "all";break;
 					}
 				}
 				String account = (String) session.getAttribute("account");
 				List<MemberBean> mbl = memberService.getPair(pair, account);
-				model.addAttribute("mblist",mbl);
+				if(mbl!=null) {
+					model.addAttribute("mblist",mbl);
+				}else {
+					getPair(model, session);
+				}
 				return "";
 			}
 
@@ -306,10 +312,26 @@ public class MemberController {
 			return "ajax/followedActivities";
 		}		  
 		  
+//---------------------------------------------▼購買點數畫面▼---------------------------------------------//            
+		@GetMapping("/ajax_shop")
+		public String shop(Model model, HttpSession session) {
+		    return "ajax/order";
+		}		  
 		  
 		  
-		  
-		  
+//---------------------------------------------▼訊息系統▼---------------------------------------------//		
+		//GGGGGGG
+		@GetMapping("/showAllMsg")
+		public String getAllMsg(Model model, HttpSession session) {
+			String account = (String) session.getAttribute("account");
+			List<MessageBean> list = memberService.getAllMsg(account);
+			model.addAttribute("msgList", list);
+			return "login/ajax_msg";
+		}
+		
+		
+		
+		
 	}		
 
 		

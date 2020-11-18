@@ -132,6 +132,15 @@
 	.msgbtnEdit{
 	 	right:5px;
 	}
+	.btn.btn-contact:hover{
+		background-color: #779A81
+	}
+	img{
+	 max-width: 100%; 
+	 max-height: 100%;
+	 object-fit: cover;
+	 ;
+	}
 </style>
 </head>
 
@@ -163,7 +172,7 @@
 							<c:if test="${isJoined == false}">
 								<c:choose>
 									<c:when test="${one.memberBean.account == account}">
-										<a href="<c:url value='/updateActivity/${one.activityNo}'/>" >
+										<a href="<c:url value='/updateActivity/${one.activityNo}'/>" class="btn btn-contact">
 										<strong>修改活動</strong></a>
 									</c:when>
 									<c:otherwise>
@@ -174,7 +183,7 @@
 								</c:choose>
 							</c:if>
 							<c:if test="${isJoined == true}">
-								<div class="nofollow">
+								<div class="nofollow" >
 <%-- 								<img src="<c:url value='/icons/filled-star.png'/>" /> --%>
 								<strong><span style="font-size:18px">★</span>取消關注</strong></div>
 							</c:if>
@@ -201,39 +210,13 @@
 														
 							<div class="video-frame">
 								<h4>活動封面照</h4>
-								<div>
-									<img src="<c:url value='/images/pics01.jpg' />" class="imgRange" alt="沒有圖片" />
-	<!-- 							<iframe src="https://player.vimeo.com/video/67938315" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+								<div align="center">
+								
+									<img src="<c:url value='/getPicture/${one.activityNo}' />" class="imgRange" alt="沒有圖片" />
 								</div>
 							</div>
 						</div>
 					</div>
-					<!--signup-->
-<!-- 					<div class="section-block signup"> -->
-<!-- 						<div class="sign-up-form"> -->
-<%-- 							<form> --%>
-<!-- 								<p>Sign up now for updates and a chance to win a free -->
-<!-- 									version of launch!</p> -->
-<!-- 								<input class="signup-input" type="text" name="email" -->
-<!-- 									placeholder="Email Address"> -->
-<!-- 								<button class="btn btn-signup" type="submit"> -->
-<!-- 									<i class="fa fa-paper-plane"></i> -->
-<!-- 								</button> -->
-<%-- 							</form> --%>
-<!-- 						</div> -->
-<!-- 					</div> -->
-					<!--/signup-->
-					<!--tabs-->
-<!-- 					<div class="section-block"> -->
-<!-- 						<div class="section-tabs"> -->
-<!-- 							<ul class="nav nav-tabs" role="tablist"> -->
-<!-- 								<li role="presentation" class="active"><a href="#about" -->
-<!-- 									aria-controls="about" role="tab" data-toggle="tab">About</a></li> -->
-<!-- 								<li role="presentation"><a href="#updates" -->
-<!-- 									aria-controls="updates" role="tab" data-toggle="tab">Updates</a></li> -->
-<!-- 							</ul> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
 					<!--/tabs-->
 					<!--tab panes-->
 					<div class="section-block">
@@ -487,7 +470,8 @@
 					  success:function(data){
 						}
 				})
-			}else{ //沒關注點後就關注
+			}
+			if (text == "✰關注本活動"){ //沒關注 點後就關注
 				$(".reminder").empty();
 				$(".reminder").append('<div class="nofollow"><strong><span style="font-size:18px">★</span>取消關注</strong></div>')
 				$(".noclass").css("background-color","#85AD90").css("color","#fff");

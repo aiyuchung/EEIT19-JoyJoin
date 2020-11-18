@@ -5,6 +5,8 @@ import java.util.List;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.MessageBean;
+import com.web.activity.model.OrderBean;
 import com.web.activity.model.RoleBean;
 
 public interface MemberDao {
@@ -73,4 +75,16 @@ public interface MemberDao {
 			//取得會員關注活動連結
 		public List<ActivityJoinedBean> getJoinedActivity(Integer memberNo);
 			//取得會員關注活動連結
+		public OrderBean createOrder(Integer memberNo, OrderBean order);
+        	//存訂單 並取出	
+//---------------------------------------------▼訊息系統▼---------------------------------------------//			
+		
+		public List<MessageBean> getAllMsg(String account);
+			//獲得收件人為此帳號的所有訊息,以時間為判斷降冪排列,以閱讀狀態為判斷GROUP BY
+		public MessageBean getMsg(int msgNo);
+			//獲得單筆訊息
+		public void sendMsg(MessageBean mb);
+			//寄出訊息
+		
+		
 }

@@ -1,5 +1,6 @@
 package com.web.activity.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -11,6 +12,8 @@ import com.web.activity.dao.MemberDao;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.MessageBean;
+import com.web.activity.model.OrderBean;
 import com.web.activity.model.RoleBean;
 
 @Repository
@@ -344,7 +347,12 @@ public class MemberDaoImpl implements MemberDao {
 			;
 		}
 		
-		String hql2 = "FROM MemberBean WHERE "+pair+" = :p";
+		String hql2 = "";
+		if(!pair.equals("all")) {
+			hql2 = "FROM MemberBean WHERE "+pair+" = :p";
+		}else {
+			hql2 = "FROM MemberBean";
+		}
 		@SuppressWarnings("unchecked")
 		List<MemberBean> mbl = session.createQuery(hql2).setParameter("p", val).getResultList();
 		if(mbl!=null) {
@@ -373,4 +381,48 @@ public class MemberDaoImpl implements MemberDao {
 		return list;
 	}
 
+	@Override
+	public List<MessageBean> getAllMsg(String account){
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MessageBean WHERE account2 = :id ORDER BY readStatus DESC, time DESC";
+		@SuppressWarnings("unchecked")
+		List<MessageBean> list = session.createQuery(hql).setParameter("id", account).getResultList();
+		System.out.println("id=======>"+account);
+		return list;
+	}
+	
+	@Override
+	public MessageBean getMsg(int msgNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MessageBean WHERE msgNo = :no";
+		MessageBean mb = null;
+		try {
+			mb = (MessageBean) session.createQuery(hql).setParameter("no", msgNo).getSingleResult();
+		}catch(Exception e) {
+			;
+		}
+		return mb;
+	}
+	
+	@Override
+	public void sendMsg(MessageBean mb) {
+		Session session = factory.getCurrentSession();
+		session.save(mb);
+	}
+	
+	@Override
+    public OrderBean createOrder(Integer memberNo, OrderBean order) {
+        Session session = factory.getCurrentSession();
+        int i = (int) (new Date().getTime()/1000);
+        String orderNo = "J"+ Integer.toString(i);
+        order.setOrderNo(orderNo);
+        order.setMemberBean(session.get(MemberBean.class,memberNo));
+        System.out.println(order.getOrderItem()+";"+order.getOrderNo()+";"+order.getOrderPrice()+";"+order.getOrderNum());
+        session.save(order);
+        
+        String hql = "FROM OrderBean where orderNo = :no";
+        OrderBean thisorder = (OrderBean) session.createQuery(hql).setParameter("no", orderNo).getSingleResult();
+        return thisorder;
+        
+    }
 }

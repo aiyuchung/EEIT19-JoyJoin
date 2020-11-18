@@ -76,7 +76,7 @@
                     <div class="form-group">
                         <form:input type="text" class="form-control" id="inputNickname" placeholder="暱稱 ( 必填 )" path="nickname" required="required"/>
                     </div>
-					<input type="button" class="btn btn-default" value="快速註冊" id="signUp-btn" style="color:black;box-shadow:none;background-color:	#7B7B7B"/>
+					<input type="submit" class="btn btn-default" value="快速註冊" id="signUpnow-btn" style="color:black;box-shadow:none;background-color:	#7B7B7B"/>
 				</form:form>
 				</div>
 	      </div>
@@ -102,9 +102,13 @@
 				<td><input type="submit" value="登入" name="Login" class="login-submit" id="login-btn" style="margin-right:10px"/></td>
 				<td><input type="button" value="返回" class="login-submit" id="back-btn" style="margin-left:10px"/></td>
 			</tr>
-<!-- 			<tr> -->
-<!-- 				<td><div class="fb-login-button" data-size="small" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width=""></div></td> -->
-<!-- 			</tr> -->
+			<tr>
+				<td>
+<!-- 					<div class="fb-login-button" data-size="small" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false" data-width="" onclick="FBLogin();"></div> -->
+					<input type="button" value="登入" onclick="FBLogin();" />
+<!-- 				<fb:login-button scope="public_profile" onlogin="checkLoginState();"></fb:login-button> -->
+				</td>
+			</tr>
 		</table>
 		<span class="login-forgot-pass" style="bottom:35px" id="signup-btn">現在註冊</span><br>
 		<span class="login-forgot-pass" style="bottom:15px" id="missPwd-btn">忘記密碼</span>
@@ -137,8 +141,11 @@
 	
 	
 	
+
+	<div id="content" style="background-color:white"></div>
 	<div class="underlay-photo"></div>
 	<div class="underlay-black"></div>
+	<div id="fb-root"></div>
 	<script>
 	if( "${errMsg}" != "" ){
 		$(window).on('load',function(){
@@ -151,6 +158,7 @@
 	})
 	
 	$("#signup-btn").on("click",function(){
+		$("#signUpnow-btn").attr("type","button")
 		$('#signupArea').modal('show');
 	})
 	
@@ -182,9 +190,9 @@
 
 	function  gogo(idUp,pwdUp,emailUp,nameUp){
 		if ( idUp !="" && pwdUp !=""&& emailUp !=""&& nameUp !="" ){
-			$("#signUp-btn").attr("type","submit").css("color","#33FFFF").css("box-shadow","#33FFFF 0px 0px 15px")
+			$("#signUpnow-btn").attr("type","submit").css("color","#33FFFF").css("box-shadow","#33FFFF 0px 0px 15px")
 		} else {
-			$("#signUp-btn").attr("type","button").css("color","black").css("box-shadow","none")
+			$("#signUpnow-btn").attr("type","button").css("color","black").css("box-shadow","none")
 		}
 	}
 	
@@ -218,26 +226,111 @@
 	})
 	
 // ----------------------------------FB驗證-----------------------------------------------------------
-	
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '389574248905554',
-      xfbml      : true,
-      version    : 'v9.0'
-    });
-    FB.AppEvents.logPageView();
-  };
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/zh-TW/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
+//應用程式編號，進入 https://developers.facebook.com/apps/ 即可看到
+        let FB_appID = "389574248905554";
+
+        // Load the Facebook Javascript SDK asynchronously
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: FB_appID,//FB appID
+                cookie: true,  // enable cookies to allow the server to access the session
+                xfbml: true,  // parse social plugins on this page
+                version: 'v8.0' // use graph api version
+            });
+            FB.AppEvents.logPageView();
+
+        };
+
+        //使用自己客製化的按鈕來登入
+        function FBLogin() {
+            FB.getLoginStatus(function (res) {
+                console.log(`status:${res.status}`);//Debug
+
+                if (res.status === "connected") { 
+                    let userID = res["authResponse"]["userID"];
+                    console.log("用戶已授權您的App，用戶須先revoke撤除App後才能再重新授權你的App");
+                    console.log(`已授權App登入FB 的 userID:${userID}`);
+                    GetProfile();
+                } else if (res.status === 'not_authorized' || res.status === "unknown") {
+                    //App未授權或用戶登出FB網站才讓用戶執行登入動作
+                    FB.login(function (response) {
+
+                        //console.log(response);
+                        if (response.status === 'connected') {
+                            //user已登入FB
+                            //抓userID
+                            let userID = response["authResponse"]["userID"];
+                            console.log(`已授權App登入FB 的 userID:${userID}`);
+                            GetProfile();
+// 							location.href ="../index"
+							
+
+                        } else {
+                            // user FB取消授權
+                            alert("Facebook帳號無法登入");
+                        }
+                        //"public_profile"可省略，仍然可以取得name、userID
+                    }, { scope: 'email' }); 
+                }
+            });
+        }
+
+		//取得用戶姓名、email
+        function GetProfile() {
+            document.getElementById('content').innerHTML = "";//先清空顯示結果
+
+            //FB.api()使用說明：https://developers.facebook.com/docs/javascript/reference/FB.api
+            //取得用戶個資
+            FB.api("/me", "GET", { fields: 'name,email' }, function (user) {
+                //user物件的欄位：https://developers.facebook.com/docs/graph-api/reference/user
+                if (user.error) {
+                    console.log(response);
+                } else {
+                    
+//                     document.getElementById('content').innerHTML = JSON.stringify(user);
+//                     document.getElementById('content').innerHTML += user['name'];
+//                     document.getElementById('content').innerHTML += user['email'];
+				
+						$("#inputAccount").attr("value",user['email']);
+						$("#inputPassword").attr("value","12345678");
+						$("#inputEmail").attr("value",user['email']);
+						$("#inputNickname").attr("value",user['name']);
+						$("#fb-in").attr("value",user['name']);
+
+							$("#signUpnow-btn").submit();
+	
+
+                }
+            });
+        }
+  //------------------------
+
+//   {
+//       status: 'connected',
+//       authResponse: {
+//           accessToken: '...',
+//           expiresIn:'...',
+//           signedRequest:'...',
+//           userID:'...'
+//       }
+//   }
+  
+
+
+  
   
 //----------------------------------FB驗證-----------------------------------------------------------
 
 </script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&autoLogAppEvents=1&version=v9.0&appId=389574248905554" nonce="Ygm7YWIX"></script>
 </body>
 </html>

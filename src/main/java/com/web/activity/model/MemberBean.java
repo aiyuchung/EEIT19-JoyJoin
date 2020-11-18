@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -64,6 +63,13 @@ public class MemberBean implements Serializable {
 
 	@OneToMany(mappedBy="memberBean", cascade= {CascadeType.ALL})
 	private Set<ActivityMsgBean> activityMsg = new LinkedHashSet<>();
+	
+	@OneToMany(cascade= {CascadeType.ALL})
+	@JoinColumn(name="msgNo") 	
+	private Set<MessageBean> message = new LinkedHashSet<>();
+	
+	@OneToMany(mappedBy="memberBean", cascade= {CascadeType.ALL})
+    private Set<OrderBean> order = new LinkedHashSet<>();
 
 //	@ManyToMany(mappedBy="joinedMembers")
 //	private Set<ActivityBean> joinedActivities = new LinkedHashSet<>(0) ;

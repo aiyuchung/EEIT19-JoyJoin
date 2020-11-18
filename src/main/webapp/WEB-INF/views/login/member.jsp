@@ -9,23 +9,21 @@
 <title>${account}的個人頁面</title>
 <!-- 	<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' -->
 <!--         type='text/css'> -->
-    
 <!--     <script src="js/skel.min.js"></script> -->
 <!--     <script src="js/skel-panels.min.js"></script> -->
 <!--     <script src="js/init.js"></script> -->
-
 <!--     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" -->
 <!--         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
-<script src="https://code.jquery.com/jquery-3.5.1.js"	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="	crossorigin="anonymous"></script>
 <!--     <link rel="stylesheet" href="css/style.css" /> -->
-<link rel="stylesheet" href="<c:url value='css/memberpage.css' />" />
-
 <!--     <link rel="stylesheet" type="text/css" href="path/to/css/bootstrap.min.css"> -->
 <!-- <link rel="stylesheet" type="text/css" -->
 <!-- 	href="path/to/css/bootstrap-directional-buttons.css"> -->
+
+<link rel="stylesheet" href="<c:url value='css/memberpage.css' />" />
 <!-- ====================Modal特效======================= -->
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+<script src="https://code.jquery.com/jquery-3.5.1.js"	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <!-- ====================文字特效======================= -->
 <%-- <link href="<c:url value='css/bootstrap.css' />" rel="stylesheet"> --%>
@@ -71,7 +69,9 @@
 				<br><a class='superBtn' id='memberInfo-btn'>個人資料</a><br>
 				<br><a class='superBtn' id='roleInfo-btn'>用戶資料</a><br> 
 				<br><a class='superBtn' id='trip-btn'>出遊資料</a><br>
-				<br><a class='superBtn' id='update-btn'>修改資料</a>
+				<br><a class='superBtn' id='update-btn'>修改資料</a><br>
+				<br><a class='superBtn' id='msg-btn'>站內信箱</a><br>
+				<br><a class='superBtn' id='shop-btn'>點數購買</a><br>
 			</div>
 			<div id="showAreaTop" class="text-effect">
 				<div id="pushArea" class="text-effect">
@@ -239,8 +239,9 @@
 		
 	</div>
 
-
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	
 	<script>
 	$(document)	.ready(	function() {
 		var str = "";
@@ -274,22 +275,6 @@
 			$("#showArea").css("border", "0").addClass("animated").html(str);
 		})
 
-		$('#trip-btn').on('click', function() {
-			str = '旅遊連結';
-			
-			$.ajax({
-				  url:"ajax_getFollowed",
-				  type: "GET",
-				  dataType: "html", //server送回
-				  contentType: 'application/json; charset=utf-8',
-				  data: {}, 
-				  success:function(data){
-					  $("#showAreaTop").css("border", "0").addClass("animated").html(str);
-					  $("#showAreaTop").append(data);
-					}
-			})
-		})
-
 		$('#showArea').on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",function() {
 			$(this).removeClass("animated");
 		});
@@ -298,7 +283,7 @@
 			$("superBtn").css("color", "#0e0e0e");
 			$("#memberInfo-btn").css("color", ":#2af1fc");
 		})
-		
+	
 		$("#update-btn").on("click",function(){
 			 $('#updateForm').modal('show');
 		})
@@ -323,9 +308,78 @@
 	        $('#drop-select').val(('#dropdown-list li').val());
 	    });
 		
+	    $('#msg-btn').on('click',function(){
+			$.ajax({
+				url : "showAllMsg",
+				type : "GET",
+				dataType : "html", 
+				contentType : 'application/json; charset=utf-8',
+				data : {}, //data空的代表沒任何參數
+				success : function(data) { 
+					$("#showAreaTop").empty();
+//						$("#showAreaTop").append(data); 
+					$("#showAreaTop").css("border", "2px solid white").addClass("animated");
+					$("#showAreaTop").append(data);
+				}
+			})
+	})
+	    
+	    
+	    
 	})
 	
 
+// 	$('#msg-btn').on('click',function(){
+// 				$.ajax({
+// 					url : "showAllMsg",
+// 					type : "GET",
+// 					dataType : "html", 
+// 					contentType : 'application/json; charset=utf-8',
+// 					data : {}, //data空的代表沒任何參數
+// 					success : function(data) { 
+// 						$("#showAreaTop").empty();
+// // 						$("#showAreaTop").append(data); 
+// 						$("#showAreaTop").css("border", "2px solid white").addClass("animated");
+// 						$("#showAreaTop").append(data);
+// 					}
+// 				})
+// 		})
+		
+		$('#trip-btn').on('click', function() {
+			str = '旅遊連結' ;
+			
+			$.ajax({
+				  url:"ajax_getFollowed",
+				  type: "GET",
+				  dataType: "html", //server送回
+				  contentType: 'application/json; charset=utf-8',
+				  data: {}, 
+				  success:function(data){
+					  $("#showAreaTop").css("border", "2px solid white").addClass("animated").html(str);
+					  $("#showAreaTop").append(data);
+					}
+			})
+		})
+		
+		 $("#shop-btn").click(function (){
+        var str = "購買點數";
+	        $.ajax({
+	              url:"ajax_shop",
+	              type: "GET",
+	              dataType: "html", //server送回
+	              contentType: 'application/json; charset=utf-8',
+	              data: {}, 
+	              success:function(data){
+	                  $("#showArea").empty();
+	                  $("#showArea").css("border", "0").addClass("animated").html(str);
+	                  $("#showArea").append(data);
+	                }
+	        })
+	    })
+		
+		
 	</script>
+	
+	
 </body>
 </html>
