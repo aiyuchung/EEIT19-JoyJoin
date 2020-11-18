@@ -50,7 +50,7 @@
 		height: 350px;
 		overflow:hidden;
 	}
-	.goal-summary .reminder a, .reminder .nofollow  {
+	.goal-summary .reminder .follow, .reminder .nofollow,  .reminder a  {
 	
 	padding:8px;
 	margin:0px 0px 10px 0px;
@@ -62,9 +62,9 @@
 		background-color:#fff;
 		color:#85AD90;
 	}
-	a:not(.nofollow):hover{
+	.follow:not(.nofollow):hover{
 	}
-	.reminder a:not(.nofollow):hover, .reminder a:focus{
+	.reminder .follow:not(.nofollow):hover, .reminder .follow:focus{
 		background-color:#85AD90;
 		color:#fff;
 	}
@@ -175,9 +175,9 @@
 										<strong>修改活動</strong></a>
 									</c:when>
 									<c:otherwise>
-										<a href="#" class="follow">
+										<div class="follow">
 <%-- 										<img src="<c:url value='/icons/star.png'/>"/> --%>
-										<strong><span style="font-size:18px">✰</span>關注本活動</strong></a>
+										<strong><span style="font-size:18px">✰</span>關注本活動</strong></div>
 									</c:otherwise>
 								</c:choose>
 							</c:if>
@@ -455,9 +455,10 @@
 		var activityNo = ${one.activityNo};
 		if (!isJoined){
 			var text = $(this).text();
-			if (text == "★取消關注"){ //關注改成不關注
+			var classname = $(this).find("div").attr("class")
+			if (classname == "unfollow"){ //關注改成不關注
 				$(".reminder").empty();
-				$(".reminder").append('<a href="#" class="follow"><strong><span style="font-size:18px">✰</span>關注本活動</strong></a>')
+				$(".reminder").append('<div class="follow"><strong><span style="font-size:18px">✰</span>關注本活動</strong></div>')
 	 			var curentUrl = location.href;
 				$.ajax({
 					  url:"<c:url value='/ajax_unfollow' />",
@@ -470,7 +471,7 @@
 						}
 				})
 			}
-			if (text == "✰關注本活動"){ //沒關注 點後就關注
+			else if (classname == "follow"){ //沒關注 點後就關注
 				$(".reminder").empty();
 				$(".reminder").append('<div class="nofollow"><strong><span style="font-size:18px">★</span>取消關注</strong></div>')
 				$(".noclass").css("background-color","#85AD90").css("color","#fff");
