@@ -276,7 +276,6 @@
 			$("#showAreaTop").empty();
 			$("#showAreaTop").css("border", "0").addClass("animated").html(str);
 		})
-<<<<<<< HEAD
 		
 		$('#trip-btn').on('click', function() {
 			str = '旅遊連結' ;
@@ -309,8 +308,6 @@
 	                }
 	        })
 	    })
-=======
->>>>>>> 93ea75cc6034f578cdd27e9554f45541d9f39f40
 
 		$('#showArea').on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",function() {
 			$(this).removeClass("animated");
@@ -363,9 +360,6 @@
 	    
 	    
 	    
-<<<<<<< HEAD
-	    
-=======
 	})
 	
 
@@ -416,7 +410,6 @@
 	                }
 	        })
 	    })
->>>>>>> 93ea75cc6034f578cdd27e9554f45541d9f39f40
 		
 		
 	</script>
