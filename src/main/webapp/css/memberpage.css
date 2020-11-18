@@ -71,6 +71,7 @@ div::-webkit-scrollbar {
 /* ==========================================按鈕樣式========================================================= */
 
 a {
+	color:white;
 	text-align: center;
 	display: inline-block;
 	text-decoration: none;
@@ -81,7 +82,7 @@ a {
 /* ==========================================按鈕特效========================================================= */
 
 a.superBtn {
-		color: #0e0e0e;
+		color: white;
 		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
 		font-weight: bold;
 		letter-spacing: .08em;

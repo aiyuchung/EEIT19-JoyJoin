@@ -392,6 +392,19 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	@Override
+	public boolean checkStatus(String account) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM MessageBean WHERE account2 = :id and readStatus = :status";
+		@SuppressWarnings("unchecked")
+		List<MessageBean> list = session.createQuery(hql).setParameter("id", account)
+														.setParameter("status", 0).getResultList();
+		if(list.size()>0) {
+			return true;
+		}else
+			return false;
+	}
+	
+	@Override
 	public MessageBean getMsg(int msgNo) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM MessageBean WHERE msgNo = :no";

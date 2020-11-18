@@ -81,6 +81,8 @@ public interface MemberDao {
 		
 		public List<MessageBean> getAllMsg(String account);
 			//獲得收件人為此帳號的所有訊息,以時間為判斷降冪排列,以閱讀狀態為判斷GROUP BY
+		public boolean checkStatus(String account);
+			//確認有無未讀信件
 		public MessageBean getMsg(int msgNo);
 			//獲得單筆訊息
 		public void sendMsg(MessageBean mb);

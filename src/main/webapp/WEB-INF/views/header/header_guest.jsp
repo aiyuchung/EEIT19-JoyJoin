@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Header what Guest can see</title>
+<script src="https://code.jquery.com/jquery-3.5.1.js"	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="	crossorigin="anonymous"></script>
 <style>
 body{
 	-webkit-user-select:none;
@@ -17,6 +18,9 @@ body{
 	background-color:black;
 }
 
+.neverRead{
+	box-shadow: 0 0 15px 5px #f3d42e;
+}
 </style>
 <style>
 #headernav
@@ -80,17 +84,12 @@ body{
 			position: relative;
 			padding: 6em 0em;
 		}
-#logo{
-	top:0;
-}
 #logo img {
    position:absolute;
    top:35px;
 }
 
-#logoimg:hover{
-	cursor:pointer;
-}
+
 		
 </style>
 </head>
@@ -100,7 +99,7 @@ body{
 
 			<!-- Logo -->
 			<div id="logo">
-			<img src="${pageContext.request.contextPath}/images/JoyJoin.png" id="logoimg">
+			<img src="${pageContext.request.contextPath}/images/JoyJoin.png">
 				<h1>
 					
 				</h1>
@@ -111,19 +110,19 @@ body{
 				<ul>
 					<li ><a href = "<c:url value = '/activities'/>">活動一覽</a></li>
 					<li><a href = "<c:url value = '/forum'/>">討論區</a></li>
-					<li><a href = "<c:url value = '/allactive'/>">後台管理暫時</a></li>
+<%-- 					<li><a href = "<c:url value = '/allactive'>">後台管理暫時</a></li> --%>
 					<c:choose>
 						<c:when test="${level == 1}">
-							
+							<li><a href = "<c:url value = '/showAllMsg'/>" id="mailbox">信箱</a></li>
 							<li><a href = "<c:url value = '/member'/>">${account}</a></li>
 							<li><a href = "<c:url value = '/out'/>">登出</a></li>
 						</c:when>
 						<c:when test="${level == 4}">
-							<li><a href = "<c:url value = '/'/>">後台管理</a></li>
+							<li><a href = "<c:url value = '/allactive'/>">後台管理</a></li>
 							<li><a href = "<c:url value = '/out'/>">登出</a></li>
 						</c:when>
 						<c:when test="${empty level}">
-							<li><a href = "<c:url value = '/check'/>">測試</a></li>
+<%-- 							<li><a href = "<c:url value = '/check'/>">測試</a></li> --%>
 							<li><a href = "<c:url value = '/login'/>">會員登入</a></li>
 						</c:when>
 					</c:choose>
@@ -131,10 +130,24 @@ body{
 			</nav>
 		</div>
 	</div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
 <script>
-	$("#logoimg").click(function(){
-		location.href="${pageContext.request.contextPath}/";
+	$(document).ready(function(){
+		$.ajax({
+			  url:"checkStatus",
+			  type: "GET",
+			  dataType: "text", //server送回
+			  contentType: 'application/json; charset=utf-8',
+			  data: {}, 
+			  success:function(data){
+				  console.log(data)
+				  if(data=="yes"){
+					  $("#mailbox").addClass("neverRead").text("你有未讀信件");
+				  }else{
+					  $("#mailbox").removeClass("neverRead").text("信箱");
+				  }
+				}
+		})
 	})
 </script>
 </body>

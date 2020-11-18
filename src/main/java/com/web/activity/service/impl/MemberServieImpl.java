@@ -139,6 +139,12 @@ public class MemberServieImpl implements MemberService {
 		
 		@Transactional
 		@Override
+		public boolean checkStatus(String account) {
+			return memberDao.checkStatus(account);
+		}
+		
+		@Transactional
+		@Override
 		public MessageBean getMsg(int msgNo) {
 			return memberDao.getMsg(msgNo);
 		}

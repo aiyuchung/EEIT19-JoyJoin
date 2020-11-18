@@ -30,6 +30,10 @@
 <link	href="https://fonts.googleapis.com/css?family=Cabin+Sketch:700&display=swap"rel="stylesheet">
 
 <style>
+  a.superBtn{
+  	color:white;
+  }
+
   a.superBtn:hover {
 	color: #2af1fc;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8);
@@ -58,7 +62,7 @@
 		<div id="infoArea">
 			<div id="info">
 				<div id="pictureArea">
-					<img src="<c:url value='/getPicture/' />" class="imgRange" alt="圖片" />
+					<img src="<c:url value='/getPicture/' />" class="imgRange" alt="圖片" style="width:100%;height:100%;border-radius:99em;" />
 				</div>
 				<div id="nicknameArea" class="text-effect">
 					<p>

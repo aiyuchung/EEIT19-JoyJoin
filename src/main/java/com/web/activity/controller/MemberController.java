@@ -31,14 +31,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.FormBean;
 import com.web.activity.model.MemberBean;
@@ -353,14 +352,26 @@ public class MemberController {
 		  
 		  
 //---------------------------------------------▼訊息系統▼---------------------------------------------//		
-		//GGGGGGG
+
 		@GetMapping("/showAllMsg")
 		public String getAllMsg(Model model, HttpSession session) {
 			String account = (String) session.getAttribute("account");
 			List<MessageBean> list = memberService.getAllMsg(account);
 			model.addAttribute("msgList", list);
-			return "login/ajax_msg";
+			return "login/mailbox";
 		}
+		
+		@GetMapping("/checkStatus")
+		public @ResponseBody String checkReadStatus(Model model, HttpSession session) {
+			String account = (String) session.getAttribute("account");
+			boolean flag = memberService.checkStatus(account);
+			if(flag) {
+				return "yes";
+			}else {
+				return "no";
+			}
+		}
+		
 		
 
 //---------------------------------------------▼前端讀圖片▼---------------------------------------------//
