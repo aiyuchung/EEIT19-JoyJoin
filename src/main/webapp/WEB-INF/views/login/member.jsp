@@ -48,9 +48,6 @@
 </head>
 <!-- Header -->
 <body>
-<!-- 	GGGGGGG<script src="https://code.jquery.com/jquery-3.5.1.js" -->
-<!-- 		integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" -->
-<!-- 		crossorigin="anonymous"></script> -->
 <div>
 	<jsp:include page="../header/header_guest.jsp" />
 </div>
@@ -83,7 +80,7 @@
 			</div>
 		</div>
 		
-<!-- 		Model UPDATE FORM GGGGGGG    -->
+<!-- 		Model UPDATE FORM     -->
 		<div class="modal fade" id="updateForm" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
@@ -277,22 +274,6 @@
 
 			$("#showArea").css("border", "0").addClass("animated").html(str);
 		})
-		
-		$('#trip-btn').on('click', function() {
-			str = '旅遊連結' ;
-			
-			$.ajax({
-				  url:"ajax_getFollowed",
-				  type: "GET",
-				  dataType: "html", //server送回
-				  contentType: 'application/json; charset=utf-8',
-				  data: {}, 
-				  success:function(data){
-					  $("#showAreaTop").css("border", "2px solid white").addClass("animated").html(str);
-					  $("#showAreaTop").append(data);
-					}
-			})
-		})
 
 		$('#showArea').on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",function() {
 			$(this).removeClass("animated");
@@ -302,7 +283,7 @@
 			$("superBtn").css("color", "#0e0e0e");
 			$("#memberInfo-btn").css("color", ":#2af1fc");
 		})
-		//GGGGGGG
+	
 		$("#update-btn").on("click",function(){
 			 $('#updateForm').modal('show');
 		})
@@ -326,8 +307,61 @@
 	        $('#dropdown-list').removeClass('animate');
 	        $('#drop-select').val(('#dropdown-list li').val());
 	    });
+		
+	    $('#msg-btn').on('click',function(){
+			$.ajax({
+				url : "showAllMsg",
+				type : "GET",
+				dataType : "html", 
+				contentType : 'application/json; charset=utf-8',
+				data : {}, //data空的代表沒任何參數
+				success : function(data) { 
+					$("#showAreaTop").empty();
+//						$("#showAreaTop").append(data); 
+					$("#showAreaTop").css("border", "2px solid white").addClass("animated");
+					$("#showAreaTop").append(data);
+				}
+			})
+	})
 	    
-	     $("#shop-btn").click(function (){
+	    
+	    
+	})
+	
+
+// 	$('#msg-btn').on('click',function(){
+// 				$.ajax({
+// 					url : "showAllMsg",
+// 					type : "GET",
+// 					dataType : "html", 
+// 					contentType : 'application/json; charset=utf-8',
+// 					data : {}, //data空的代表沒任何參數
+// 					success : function(data) { 
+// 						$("#showAreaTop").empty();
+// // 						$("#showAreaTop").append(data); 
+// 						$("#showAreaTop").css("border", "2px solid white").addClass("animated");
+// 						$("#showAreaTop").append(data);
+// 					}
+// 				})
+// 		})
+		
+		$('#trip-btn').on('click', function() {
+			str = '旅遊連結' ;
+			
+			$.ajax({
+				  url:"ajax_getFollowed",
+				  type: "GET",
+				  dataType: "html", //server送回
+				  contentType: 'application/json; charset=utf-8',
+				  data: {}, 
+				  success:function(data){
+					  $("#showAreaTop").css("border", "2px solid white").addClass("animated").html(str);
+					  $("#showAreaTop").append(data);
+					}
+			})
+		})
+		
+		 $("#shop-btn").click(function (){
         var str = "購買點數";
 	        $.ajax({
 	              url:"ajax_shop",
@@ -336,34 +370,12 @@
 	              contentType: 'application/json; charset=utf-8',
 	              data: {}, 
 	              success:function(data){
-	                  $("#showAreaTop").empty();
-	                  $("#showAreaTop").css("border", "0").addClass("animated").html(str);
-	                  $("#showAreaTop").append(data);
+	                  $("#showArea").empty();
+	                  $("#showArea").css("border", "0").addClass("animated").html(str);
+	                  $("#showArea").append(data);
 	                }
 	        })
 	    })
-		
-	})
-	
-	  
-
-//--------------------GGGGGGG
-
-	$('#msg-btn').on('click',function(){
-				$.ajax({
-					url : "showAllMsg",
-					type : "GET",
-					dataType : "html", 
-					contentType : 'application/json; charset=utf-8',
-					data : {}, //data空的代表沒任何參數
-					success : function(data) { 
-						$("#showArea").empty();
-						$("#showArea").append(data); 
-					}
-				})
-		})
-		
-		
 		
 		
 	</script>
