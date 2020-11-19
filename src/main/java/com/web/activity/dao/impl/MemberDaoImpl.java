@@ -338,6 +338,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MemberBean> getPair(String pair, String account) {
 		String hql1 = "SELECT "+pair+" FROM MemberBean WHERE account = :id";
@@ -350,13 +351,14 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		
 		String hql2 = "";
+		List<MemberBean> mbl = null;
 		if(!pair.equals("all")) {
 			hql2 = "FROM MemberBean WHERE "+pair+" = :p";
+			mbl = session.createQuery(hql2).setParameter("p", val).getResultList();
 		}else {
 			hql2 = "FROM MemberBean";
+			mbl = session.createQuery(hql2).getResultList();
 		}
-		@SuppressWarnings("unchecked")
-		List<MemberBean> mbl = session.createQuery(hql2).setParameter("p", val).getResultList();
 		if(mbl!=null) {
 			return mbl;
 		}else {

@@ -7,6 +7,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -33,7 +34,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -303,31 +303,47 @@ public class MemberController {
 
 //---------------------------------------------▼配對系統▼---------------------------------------------//			
 		  
-			public String getPair(Model model, HttpSession session) {
-				String pair = "";
-				while(pair == "") {				
-					int digit = (int) ((Math.random()*4)+1);
-					switch(digit) {
-					case 1:pair = "starSign";break;
-					case 2:pair = "bloodType";break;
-					case 3:pair = "school";break;
-					case 4:pair = "hobby";break;
-						default:pair = "all";break;
-					}
-				}
+		  @GetMapping("/getPair")	
+		  public String getPair(Model model, HttpSession session) {
 				String account = (String) session.getAttribute("account");
-				List<MemberBean> mbl = memberService.getPair(pair, account);
-				if(mbl!=null) {
-					model.addAttribute("mblist",mbl);
-				}else {
-					getPair(model, session);
-				}
-				return "";
+				System.out.println("START OK=======>");
+				List<MemberBean> mbl = getList(account);
+				System.out.println("GET LIST OK=======>"+mbl);
+				int max = mbl.size();
+				int posi = (int) (Math.random()*(max-0.1))+1;
+				System.out.println("POSITION=======>"+posi);
+				MemberBean luckyguy = mbl.get(posi);
+				System.out.println("GET ONE GUY=======>"+luckyguy);
+				model.addAttribute("member", luckyguy);
+				return "ajax_getpair";
 			}
 
+		  private List<MemberBean> getList(String account){			
+			  List<MemberBean> list = new ArrayList<>();
+			  do {
+				  String pair = "";
+			  			while(pair == "") {				
+			  				int digit = (int) ((Math.random()*4.9)+1);
+			  				switch(digit) {
+			  				case 1:pair = "starSign";break;
+			  				case 2:pair = "bloodType";break;
+			  				case 3:pair = "school";break;
+			  				case 4:pair = "hobby";break;
+			  				default:pair = "all";break;
+			  				}
+						list = memberService.getPair(pair, account);	
+					}						
+			  	}while(list==null);
+			  System.out.println("FINISH LIST=======>"+list);
+			  return list;
+		  }
+		  
+		  
+		  
 		  
 //---------------------------------------------▼取得活動連結▼---------------------------------------------//			
-		@GetMapping("/ajax_getFollowed")
+		
+		  @GetMapping("/ajax_getFollowed")
 		public String getFollowedActivity(Model model, HttpSession session) {
 			MemberBean mb = (MemberBean) session.getAttribute("member");
 			Integer memberNo = mb.getMemberNo();

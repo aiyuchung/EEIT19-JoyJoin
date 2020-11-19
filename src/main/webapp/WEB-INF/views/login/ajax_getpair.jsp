@@ -8,12 +8,7 @@
 </head>
 <body>
 <div>
-	<p>${msgOne.msgNo }</p>
-	<p>${msgOne.account }</p>
-	<p>${msgOne.fromAccount }</p>
-	<p>${msgOne.subject }</p>
-	<p>${msgOne.msg }</p>
-	<p>${msgOne.time }</p>
+<h5>555555</h5>
 </div>
 </body>
 </html>
