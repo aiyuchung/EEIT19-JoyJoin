@@ -401,6 +401,14 @@ public class MemberController {
 			//未讀便已讀
 		}
 		
+//---------------------------------------------▼名片▼---------------------------------------------//
+		
+		@GetMapping
+		public @ResponseBody String getOne(Model model, String account) {
+			MemberBean mb = memberService.getMember(account);
+			model.addAttribute("mbcard", mb);
+			return "";
+		}
 		
 
 //---------------------------------------------▼前端讀圖片▼---------------------------------------------//

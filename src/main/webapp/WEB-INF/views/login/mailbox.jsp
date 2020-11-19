@@ -91,18 +91,21 @@
 	
 	<div class="modal" tabindex="-1" role="dialog" id="letterArea">
 	     <div class="modal-dialog" role="document"> 
-	        <div class="modal-content"  style="position:relative;top:100px">
+	        <div class="modal-content"  style="position:relative;top:100px;color:black">
+	            <form:form modelAttribute="msgBean">
 	            <div class="modal-header">
-	                <h4 class="modal-title" style="color:black">發送給 <input type="text" id="account-sendTo"/></h4>
-	                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button> 
+	                發送給: <form:input path="account" type="text" id="account-sendTo"/>
+	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button> 
 	            </div>
 	            <div class="modal-body">
-	                                <p></p> 
+	            	主旨: <form:input path="subject" type="text"/>
+	            	<form:textarea path="msg" style="resize: none" rows="3" cols="29"/>	        
 	            </div>
 	            <div class="modal-footer">
 	                <input type="button" class="btn btn-secondary" data-dismiss="modal" value="返回">
 	                <input type="button" class="btn btn-primary" value="發送">
 	            </div>
+	            </form:form>
 	       </div>
 	   </div>
 	</div>
@@ -127,6 +130,7 @@
 	})
 	
 	$("#returnLetter-btn").on("click",function(){
+		var strAccount = $(this).find('h5').text().substring(2);
 		$("#showMsgArea").modal('hide');
 		$('#letterArea').modal('show');
 	})

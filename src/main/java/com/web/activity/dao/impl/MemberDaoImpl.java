@@ -386,7 +386,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<MessageBean> getAllMsg(String account){
 		Session session = factory.getCurrentSession();
-		String hql = "FROM MessageBean WHERE account2 = :id ORDER BY readStatus DESC, time DESC";
+		String hql = "FROM MessageBean WHERE account = :id ORDER BY readStatus DESC, time DESC";
 		@SuppressWarnings("unchecked")
 		List<MessageBean> list = session.createQuery(hql).setParameter("id", account).getResultList();
 		System.out.println("id=======>"+account);
@@ -396,7 +396,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean checkStatus(String account) {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM MessageBean WHERE account2 = :id and readStatus = :status";
+		String hql = "FROM MessageBean WHERE account = :id and readStatus = :status";
 		@SuppressWarnings("unchecked")
 		List<MessageBean> list = session.createQuery(hql).setParameter("id", account)
 														.setParameter("status", 0).getResultList();
