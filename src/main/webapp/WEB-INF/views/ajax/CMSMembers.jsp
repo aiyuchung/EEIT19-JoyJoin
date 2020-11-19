@@ -22,12 +22,12 @@
 				<thead>
 					<!-- 	這邊可以用個迴圈拉資料出圈拉資料出 -->
 					<tr>
-						<th>account</th>
-						<th>gender</th>
-						<th>mail</th>
-						<th>fullName</th>
-						<th>nickname</th>
-						<th>starSign</th>
+						<th>帳號</th>
+						<th>性別</th>
+						<th>信箱</th>
+						<th>姓名</th>
+						<th>暱稱</th>
+						<th>星座</th>
 						<!-- 						<th>update</th> -->
 					</tr>
 				</thead>

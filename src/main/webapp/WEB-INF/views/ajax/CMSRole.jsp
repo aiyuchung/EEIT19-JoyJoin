@@ -21,11 +21,11 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>account</th>
-						<th>level</th>
+						<th>帳號</th>
+						<th>會員等級</th>
 <!-- 						<th>emp</th> -->
-						<th>accountType</th>
-						<th>noticeType</th>
+						<th>帳號狀態</th>
+						<th>注意狀態</th>
 					</tr>
 				</thead>
 				<c:forEach var="CMS" items="${Roles}">
