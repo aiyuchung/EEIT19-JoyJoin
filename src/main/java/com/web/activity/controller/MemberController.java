@@ -7,6 +7,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -302,31 +303,47 @@ public class MemberController {
 
 //---------------------------------------------▼配對系統▼---------------------------------------------//			
 		  
-			public String getPair(Model model, HttpSession session) {
-				String pair = "";
-				while(pair == "") {				
-					int digit = (int) ((Math.random()*4)+1);
-					switch(digit) {
-					case 1:pair = "starSign";break;
-					case 2:pair = "bloodType";break;
-					case 3:pair = "school";break;
-					case 4:pair = "hobby";break;
-						default:pair = "all";break;
-					}
-				}
+		  @GetMapping("/getPair")	
+		  public String getPair(Model model, HttpSession session) {
 				String account = (String) session.getAttribute("account");
-				List<MemberBean> mbl = memberService.getPair(pair, account);
-				if(mbl!=null) {
-					model.addAttribute("mblist",mbl);
-				}else {
-					getPair(model, session);
-				}
-				return "";
+				System.out.println("START OK=======>");
+				List<MemberBean> mbl = getList(account);
+				System.out.println("GET LIST OK=======>"+mbl);
+				int max = mbl.size();
+				int posi = (int) (Math.random()*(max-0.1))+1;
+				System.out.println("POSITION=======>"+posi);
+				MemberBean luckyguy = mbl.get(posi);
+				System.out.println("GET ONE GUY=======>"+luckyguy);
+				model.addAttribute("luckyguy", luckyguy);
+				return "ajax_getpair";
 			}
 
+		  private List<MemberBean> getList(String account){			
+			  List<MemberBean> list = new ArrayList<>();
+			  do {
+				  String pair = "";
+			  			while(pair == "") {				
+			  				int digit = (int) ((Math.random()*4.9)+1);
+			  				switch(digit) {
+			  				case 1:pair = "starSign";break;
+			  				case 2:pair = "bloodType";break;
+			  				case 3:pair = "school";break;
+			  				case 4:pair = "hobby";break;
+			  				default:pair = "all";break;
+			  				}
+						list = memberService.getPair(pair, account);	
+					}						
+			  	}while(list==null);
+			  System.out.println("FINISH LIST=======>"+list);
+			  return list;
+		  }
+		  
+		  
+		  
 		  
 //---------------------------------------------▼取得活動連結▼---------------------------------------------//			
-		@GetMapping("/ajax_getFollowed")
+		
+		  @GetMapping("/ajax_getFollowed")
 		public String getFollowedActivity(Model model, HttpSession session) {
 			MemberBean mb = (MemberBean) session.getAttribute("member");
 			Integer memberNo = mb.getMemberNo();
@@ -346,21 +363,43 @@ public class MemberController {
 		}		  
 		  
 //---------------------------------------------▼購買點數畫面▼---------------------------------------------//            
+		
 		@GetMapping("/ajax_shop")
 		public String shop(Model model, HttpSession session) {
 		    return "ajax/order";
 		}		  
 		  
-		  
 //---------------------------------------------▼訊息系統▼---------------------------------------------//		
 
-		@GetMapping("/showAllMsg")
-		public String getAllMsg(Model model, HttpSession session) {
+		@GetMapping("/mailMsg")
+		public String gotoMailBox(Model model, HttpSession session) {
 			String account = (String) session.getAttribute("account");
+			MessageBean mb = new MessageBean();
 			List<MessageBean> list = memberService.getAllMsg(account);
+			model.addAttribute("msgBean",mb);
 			model.addAttribute("msgList", list);
 			return "login/mailbox";
 		}
+		
+		@PostMapping("/mailMsg")
+		public String sendMail(@ModelAttribute("msgBean") MessageBean mb, Model model,HttpSession session) {
+			String fromId = (String) session.getAttribute("account");
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd,hh:mm:ss");
+   		 	String time = dateFormat.format(new Date());//抓時間
+			mb.setfromAccount(fromId);
+			mb.setTime(time);
+			mb.setReadStatus(0);
+			memberService.sendMsg(mb);
+			System.out.println("OK=============>");
+			return "redirect:/mailMsg";
+		}
+//		
+//		@GetMapping("/showMsg")
+//		public @ResponseBody MessageBean getMsg(Model model, int msgNo) {
+//			MessageBean mb = memberService.getMsg(msgNo);
+//			model.addAttribute("msgOne", mb);
+//			return mb;
+//		}
 		
 		@GetMapping("/checkStatus")
 		public @ResponseBody String checkReadStatus(Model model, HttpSession session) {
@@ -373,6 +412,31 @@ public class MemberController {
 			}
 		}
 		
+		@GetMapping("/changeStatus")
+		public String changeStatus(int msgNo, Model model,  HttpSession session) {
+			memberService.readMsg(msgNo);
+			String account = (String) session.getAttribute("account");
+			MessageBean mb = new MessageBean();
+			List<MessageBean> list = memberService.getAllMsg(account);
+			model.addAttribute("msgBean",mb);
+			model.addAttribute("msgList", list);
+			return "login/ajax_msg";
+		}
+		
+		@GetMapping("/delMsg/{msgNo}")
+		public String deleteMsg(@PathVariable int msgNo) {
+			memberService.delMsg(msgNo);
+			return "redirect:/mailMsg";
+		}
+		
+//---------------------------------------------▼名片▼---------------------------------------------//
+		
+		@GetMapping("/detailCard/{account}")
+		public String getOne(Model model, @PathVariable String account) {
+			MemberBean mb = memberService.getMember(account);
+			model.addAttribute("mbcard", mb);
+			return "ajax_membercard.jsp";
+		}
 		
 
 //---------------------------------------------▼前端讀圖片▼---------------------------------------------//

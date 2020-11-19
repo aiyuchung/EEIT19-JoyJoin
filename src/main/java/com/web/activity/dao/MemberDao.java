@@ -87,6 +87,17 @@ public interface MemberDao {
 			//獲得單筆訊息
 		public void sendMsg(MessageBean mb);
 			//寄出訊息
+		public void readMsg(int msgNo);
+			//讀取訊息
+		public void delMsg(int msgNo);
+			//刪除訊息
+		
+//---------------------------------------------▼黑名單判斷▼---------------------------------------------//		
+
+		public Integer checkType2Back(String account);
+			//回傳帳號狀態 0為未開通 1為正常 2為黑名單
+		public void changeType2Back(String account, int type);
+			//後臺改變帳號狀態
 		
 		
 }

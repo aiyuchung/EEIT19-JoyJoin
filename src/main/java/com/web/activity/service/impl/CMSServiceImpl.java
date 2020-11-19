@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.activity.dao.CMSDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.Menubean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.service.CMSService;
 
@@ -28,6 +29,12 @@ public class CMSServiceImpl implements CMSService {
 	public List<ActivityBean> selectAllActivities() {
 		return dao.selectAllActivities();
 	}
+	
+//左邊標頭
+	@Override
+	public List<Menubean>  getMenuName(String classId){ 
+	return dao.getMenuName(classId);}
+	
 	//關鍵字查詢
 	@Override
 	public List<ActivityBean> selectActivities(String keyWord) {
@@ -67,6 +74,11 @@ public class CMSServiceImpl implements CMSService {
 	}
 	
 	
+	@Override
+	public Map<String, Long> getstarSignCounts(){
+		return dao.getstarSignCounts();
+	}
+	
 	
 	//<會員部分>
 	public List<MemberBean> selectAllMembers(){
@@ -76,6 +88,16 @@ public class CMSServiceImpl implements CMSService {
 		return dao.selectAllRoles();
 	}
 	
+	@Transactional
+	@Override
+	public void updateRole(RoleBean RoleB) {
+		dao.updateRole(RoleB);
+//		System.out.println("ro="+ro);
+	}
+	
+	public RoleBean getRole(Integer roleNo) {
+		return dao.getRole(roleNo);
+	}
 	
 
 }

@@ -115,7 +115,7 @@ body{
 <%-- 					<li><a href = "<c:url value = '/allactive'>">後台管理暫時</a></li> --%>
 					<c:choose>
 						<c:when test="${level == 1}">
-							<li><a href = "<c:url value = '/showAllMsg'/>" id="mailbox">信箱</a></li>
+							<li><a href = "<c:url value = '/mailMsg'/>" id="mailbox">信箱</a></li>
 							<li><a href = "<c:url value = '/member'/>">${account}</a></li>
 							<li><a href = "<c:url value = '/out'/>">登出</a></li>
 						</c:when>

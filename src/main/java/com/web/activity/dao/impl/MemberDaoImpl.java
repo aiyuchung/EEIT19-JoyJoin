@@ -338,6 +338,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MemberBean> getPair(String pair, String account) {
 		String hql1 = "SELECT "+pair+" FROM MemberBean WHERE account = :id";
@@ -350,13 +351,14 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		
 		String hql2 = "";
+		List<MemberBean> mbl = null;
 		if(!pair.equals("all")) {
 			hql2 = "FROM MemberBean WHERE "+pair+" = :p";
+			mbl = session.createQuery(hql2).setParameter("p", val).getResultList();
 		}else {
 			hql2 = "FROM MemberBean";
+			mbl = session.createQuery(hql2).getResultList();
 		}
-		@SuppressWarnings("unchecked")
-		List<MemberBean> mbl = session.createQuery(hql2).setParameter("p", val).getResultList();
 		if(mbl!=null) {
 			return mbl;
 		}else {
@@ -386,7 +388,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<MessageBean> getAllMsg(String account){
 		Session session = factory.getCurrentSession();
-		String hql = "FROM MessageBean WHERE account2 = :id ORDER BY readStatus DESC, time DESC";
+		String hql = "FROM MessageBean WHERE account = :id ORDER BY readStatus DESC, time DESC";
 		@SuppressWarnings("unchecked")
 		List<MessageBean> list = session.createQuery(hql).setParameter("id", account).getResultList();
 		System.out.println("id=======>"+account);
@@ -396,7 +398,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean checkStatus(String account) {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM MessageBean WHERE account2 = :id and readStatus = :status";
+		String hql = "FROM MessageBean WHERE account = :id and readStatus = :status";
 		@SuppressWarnings("unchecked")
 		List<MessageBean> list = session.createQuery(hql).setParameter("id", account)
 														.setParameter("status", 0).getResultList();
@@ -426,6 +428,20 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	@Override
+	public void readMsg(int msgNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE MessageBean SET readStatus = :status WHERE msgNo = :no";
+		session.createQuery(hql).setParameter("status", 1).setParameter("no", msgNo).executeUpdate();
+	}
+	
+	@Override
+	public void delMsg(int msgNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "DELETE FROM MessageBean WHERE msgNo = :no";
+		session.createQuery(hql).setParameter("no", msgNo).executeUpdate();
+	}
+	
+	@Override
     public OrderBean createOrder(Integer memberNo, OrderBean order) {
         Session session = factory.getCurrentSession();
         int i = (int) (new Date().getTime()/1000);
@@ -439,4 +455,28 @@ public class MemberDaoImpl implements MemberDao {
         return thisorder;
         
     }
+	
+	@Override
+	public Integer checkType2Back(String account) {
+		Session session = factory.getCurrentSession();
+		String hql = "SELECT accountType FROM RoleBean WHERE account = :id";
+		Integer result = null;
+		try {
+			result = (Integer) session.createQuery(hql).setParameter("id", account).getSingleResult();
+		}catch(Exception e) {
+			;
+		}
+		return result;
+	}
+	
+	@Override
+	public void changeType2Back(String account, int type) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE RoleBean SET accountType = :type WHERE account = :id ";
+		session.createQuery(hql).setParameter("type", type).setParameter("id", account).executeUpdate();
+	}
+
+	
+	
+	
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.web.activity.dao.CMSDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.Menubean;
 //import com.web.activity.model.RoleBean;
 import com.web.activity.model.RoleBean;
 
@@ -23,6 +24,27 @@ public class CMSDaoImpl implements CMSDao {
 	@Autowired
 	SessionFactory factory;
 
+	
+	// 星座次數
+		@Override
+
+		public Map<String, Long> getstarSignCounts() {
+			Session session = factory.getCurrentSession();
+			Map<String, Long> map = new HashMap<>();
+			String[] arrayGender = { "白羊座", "金牛座", "雙子座", "巨蟹座", "獅子座", "處女座", "天秤座", "天蠍座", "射手座", "摩羯座", "水瓶座", "雙魚座" };
+			for (String starSign : arrayGender) {
+				String hqls = "select count(*) FROM MemberBean Where starSign=:starSign";
+				Long star = (Long) session.createQuery(hqls).setParameter("starSign", starSign).uniqueResult();
+				map.put(starSign, star);// KEY:VALUE
+				System.out.println("map =>>>>>>>>>>>>>>>" + map);
+				System.out.println("您好");
+			}
+
+			return map;
+
+		}
+	
+	
 	@Override
 	public Map<String, Long> getGenderCounts() {
 		Session session = factory.getCurrentSession();
@@ -32,7 +54,7 @@ public class CMSDaoImpl implements CMSDao {
 			String hqlg = "select count(*) FROM MemberBean Where gender=:gender";
 			Long gen = (Long) session.createQuery(hqlg).setParameter("gender", gender).uniqueResult();
 			map.put(gender, gen);// KEY:VALUE
-			System.out.println("map =>>>>>>>>>>>>>>>" + map);
+//			System.out.println("map =>>>>>>>>>>>>>>>" + map);
 		}
 
 		return map;
@@ -68,7 +90,7 @@ public class CMSDaoImpl implements CMSDao {
 			String hqlp = "select count(*) FROM ActivityBean where prov =:prov";
 			Long pro = (Long) session.createQuery(hqlp).setParameter("prov", prov).uniqueResult();
 			map.put(prov, pro);// KEY VALUEpro
-			System.out.println("map =>>>>>>>>>>>>>>>" + map);
+//			System.out.println("map =>>>>>>>>>>>>>>>" + map);
 		}
 		return map;
 
@@ -83,6 +105,14 @@ public class CMSDaoImpl implements CMSDao {
 		List<ActivityBean> cms = session.createQuery(hql).getResultList();
 		return cms;
 	}
+//	左邊標頭
+	@Override
+	public List<Menubean> getMenuName(String classId) {
+		Session session = factory.getCurrentSession();
+		String hql ="FROM Menubean WHERE classId = '"+classId+"'  ";
+		List<Menubean> cms = session.createQuery(hql).getResultList();
+		return cms;
+	}
 	//關鍵字搜尋
 	@Override
 	public List<ActivityBean> selectActivities(String keyWord) {
@@ -94,13 +124,14 @@ public class CMSDaoImpl implements CMSDao {
 			key += "OR name LIKE '%"+ keyWords[i] +"%'";
 			key += "OR prov LIKE '%"+ keyWords[i] +"%'";
 			key += "OR finalDate LIKE '%"+ keyWords[i] +"%'";
+			key += "OR activityStatus LIKE '%"+ keyWords[i] +"%'";
 			key += "OR activityClass LIKE '%"+ keyWords[i] +"%'";
 		}
 		hql += key;
 		List<ActivityBean> cms = session.createQuery(hql).getResultList();
 		return cms;
 	}
-	
+
 
 	//單獨更新activityStatus
 	@Override
@@ -132,7 +163,7 @@ public class CMSDaoImpl implements CMSDao {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM MemberBean";
 		List<MemberBean> mb = session.createQuery(hql).getResultList();
-		System.out.println(mb);
+//		System.out.println(mb);
 		return mb;
 
 	}
@@ -141,9 +172,39 @@ public class CMSDaoImpl implements CMSDao {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM RoleBean";
 		List<RoleBean> mb = session.createQuery(hql).getResultList();
-		System.out.println(mb);
+//		System.out.println(mb);
 		return mb;
 		
 	}
+	
+	//更新虛擬角色
+		@Override
+		public void updateRole(RoleBean RoleB) {
+			System.out.println(RoleB.getRoleNo());
+			System.out.println(RoleB.getLevel());
+			
+			Session session = factory.getCurrentSession();
+			String hqlr = "UPDATE RoleBean SET level = :level, "
+					+ "Emp = :Emp, "
+					+ "accountType = :accountType, "
+					+ "noticeType = :noticeType "
+					+ "WHERE roleNo = :roleNo ";
+			int num =  session.createQuery(hqlr).setParameter("level", RoleB.getLevel())
+									 .setParameter("Emp", RoleB.getEmp())
+									 .setParameter("accountType", RoleB.getAccountType())
+									 .setParameter("noticeType", RoleB.getNoticeType())
+									 .setParameter("roleNo", RoleB.getRoleNo())
+									 .executeUpdate();
+			System.out.println(num);
+			System.out.println("hello BABY");
+		}
+		
+		//搜尋單筆虛擬角色
+		public RoleBean getRole(Integer roleNo) {
+			Session session = factory.getCurrentSession();
+			RoleBean ro = session.get(RoleBean.class,roleNo);
+			return ro;
+		}
+
 
 }

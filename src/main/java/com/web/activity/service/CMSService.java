@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.Menubean;
 import com.web.activity.model.RoleBean;
 
 //import java.util.List;
@@ -21,6 +22,9 @@ public interface CMSService {
 
 	List<ActivityBean> selectAllActivities();
 	
+	//左邊標頭
+	List<Menubean>  getMenuName(String classId); 
+	
 	List<ActivityBean> selectAllActivitiesAtive();
 
 	List<ActivityBean> selectAllActivitiesInAtive();
@@ -32,7 +36,13 @@ public interface CMSService {
 
 	Map<String, Long> getActivityProv();
 	
+	public Map<String, Long> getstarSignCounts();
+	
 	//	<會員部分>	
 	List<MemberBean> selectAllMembers();
 	List<RoleBean> selectAllRoles();
+	
+	public void updateRole(RoleBean RoleB);
+	//搜尋單筆角色
+	public RoleBean getRole(Integer roleNo);
 }

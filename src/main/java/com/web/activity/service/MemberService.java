@@ -55,7 +55,15 @@ public interface MemberService {
 			//取得單一筆訊息
 		public void sendMsg(MessageBean mb);
 			//送出訊息
+		public void readMsg(int msgNo);
+			//閱讀訊息
+		public void delMsg(int msgNo);
+			//刪除訊息
 		public OrderBean createOrder(Integer memberNo, OrderBean order);
 			//存訂單 並取出
-		
+		public Integer checkType2Back(String account);
+			//後臺檢查會員帳號狀態
+		public void changeType2Back(String account, int type);
+			//後台改變會員帳號狀態
+
 }	

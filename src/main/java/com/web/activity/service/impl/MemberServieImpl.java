@@ -157,12 +157,33 @@ public class MemberServieImpl implements MemberService {
 
 		@Transactional
 		@Override
+		public void readMsg(int msgNo) {
+			memberDao.readMsg(msgNo);
+		}
+		
+		@Transactional
+		@Override
+		public void delMsg(int msgNo) {
+			memberDao.delMsg(msgNo);
+		}
+		
+		@Transactional
+		@Override
 		public OrderBean createOrder(Integer memberNo, OrderBean order) {
 			return memberDao.createOrder(memberNo,order);
 		}
 		
+		@Transactional
+		@Override
+		public Integer checkType2Back(String account) {
+			return memberDao.checkType2Back(account);
+		}
 		
-		
+		@Transactional
+		@Override
+		public void changeType2Back(String account, int type) {
+			memberDao.changeType2Back(account, type);
+		}
 		
 		
 }

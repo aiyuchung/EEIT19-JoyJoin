@@ -91,11 +91,11 @@ footer {
 .main .page-header {
 	margin-top: 0;
 }
-img{
-	width:60%;
+
+img {
+	width: 60%;
 }
 </style>
-<script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
 
 </head>
 
@@ -120,7 +120,7 @@ img{
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="<c:url value='/' />" >前台</a></li>
+					<li><a href="<c:url value='/' />">前台</a></li>
 					<li><a href="#">前台設定</a></li>
 					<li><a href="#">還沒想到</a></li>
 					<li><a href="#">還沒想到</a></li>
@@ -139,29 +139,41 @@ img{
 			<div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar"
 				role="navigation">
 
-				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">功能總覽</a></li>
-					<li><a href="Javascript:;" class="allMembers">會員管理</a></li>
-					<li><a href="Javascript:;" class="allRoles">角色管理</a></li>
-					<li><a href="Javascript:;" class="allactives">活動管理</a></li>
-					<li><a href="https://www.investing.com/" target="_ext">前台管理</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">圖表即時分析</a></li>
-					<li><a href="Javascript:;" id="provStac">縣市統計</a></li>
-					<li><a href="Javascript:;" id="counts">區域活動</a></li>
-					<li><a href="Javascript:;" id="gender">性別分析</a></li>
-					<li><a href="Javascript:;" id="starSign">星座比較</a></li>
+				<!-- 			左邊項目 -->
+				<c:forEach var="Menu" items="${allactive}">
+					<ul class="nav nav-sidebar">
+						<li class="active"><a href="#" id="parentId${Menu.parentId}">>${Menu.menuName}</a></li>
+						<c:forEach var="Menu1" items="${allactive2}">
+							<c:if test="${Menu1.parentId == Menu.menuId}">
+								<li><a href="Javascript:;" id="parentId${Menu1.classId}"
+									class="${Menu1.path}">${Menu1.menuName}</a></li>
 
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">後臺監控系統(暫定)</a></li>
-					<li><a href="Javascript:;" id="provStac">日誌</a></li>
+							</c:if>
 
-				</ul>
-
-
+						</c:forEach>
+					</ul>
+				</c:forEach>
 			</div>
+			<!-- 				<ul class="nav nav-sidebar"> -->
+			<%-- 					<li><a href="Javascript:;" class="allMembers" id="parentId${Menu.parentId}">${Menu.menuName}</a></li> --%>
+			<!-- 					<li><a href="Javascript:;" class="allRoles">角色管理</a></li> -->
+			<!-- 					<li><a href="Javascript:;" class="allactives">活動管理</a></li> -->
+			<!-- 					<li><a href="https://www.investing.com/" target="_ext">前台管理</a></li> -->
+			<!-- 				</ul> -->
+			<!-- 				<ul class="nav nav-sidebar"> -->
+			<!-- 					<li class="active"><a href="#">圖表即時分析</a></li> -->
+			<!-- 					<li><a href="Javascript:;" id="provStac">縣市統計</a></li> -->
+			<!-- 					<li><a href="Javascript:;" id="counts">區域活動</a></li> -->
+			<!-- 					<li><a href="Javascript:;" id="gender">性別分析</a></li> -->
+			<!-- 					<li><a href="Javascript:;" id="starSign">星座比較</a></li> -->
+
+			<!-- 				</ul> -->
+			<!-- 				<ul class="nav nav-sidebar"> -->
+			<!-- 					<li class="active"><a href="#">後臺監控系統(暫定)</a></li> -->
+			<!-- 					<li><a href="Javascript:;" id="provStac">日誌</a></li> -->
+
+			<!-- 				</ul> -->
+
 			<!--/span-->
 
 
@@ -196,8 +208,25 @@ img{
 								style="position: absolute; left: 0px; top: 0px; width: 1024px; height: 444px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
 						</div>
 						<div
-							style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px/21px&amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; quot; Microsoft YaHei&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; quot;; padding: 5px; left: 286px; top: 114px; pointer-events: none;">
+							style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px/21px&amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; quot; Microsoft YaHei&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; quot;; padding: 5px; left: 286px; top: 114px; pointer-events: none;">
 							各縣市舉辦活動數<br> <span
+								style="display: inline-block; margin-right: 5px; border-radius: 10px; width: 10px; height: 10px; background-color: #c23531;"></span>最新:
+							<br>
+						</div>
+					</div>
+					
+					<div id="starstatic" class="showhide"
+						style="width: 800px; height: 600px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;"
+						_echarts_instance_="ec_1605095908050">
+
+						<div
+							style="position: relative; width: 1024px; height: 444px; padding: 0px; margin: 0px; border-width: 0px; cursor: pointer;">
+							<canvas data-zr-dom-id="zr_0" width="1920" height="832"
+								style="position: absolute; left: 0px; top: 0px; width: 1024px; height: 444px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
+						</div>
+						<div
+							style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px/21px&amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; quot; Microsoft YaHei&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; quot;; padding: 5px; left: 286px; top: 114px; pointer-events: none;">
+							註冊人口星座數分析<br> <span
 								style="display: inline-block; margin-right: 5px; border-radius: 10px; width: 10px; height: 10px; background-color: #c23531;"></span>最新:
 							<br>
 						</div>
@@ -207,9 +236,15 @@ img{
 				</div>
 
 				<!-- <<START AJAX>><<=====================================================================================>> -->
-			
-				<div id="activehideshow" class="post newajaxlist">
-			
+
+
+
+
+				<div id="activehideshow" class="post newajaxlist"></div>
+				<div id="activehideshow" class="post oldajaxlist"></div>
+				<div id="activehideshow" class="post midjaxlist"></div>
+
+
 				<!-- <<END>>====================================================================================================> -->
 				<!-- end content -->
 				<input type="text" id="userAccount" value="${account}" hidden>
@@ -317,7 +352,8 @@ img{
 			var SouthSet = 0;
 			var EastSet = 0;
 
-			document.getElementById("counts").onclick = function() { //事件觸發
+//			document.getElementById("counts").onclick = function() 
+			$(".counts").click(function(){ //事件觸發
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET", "<c:url value='/ajax_counts' />", true); //抓到CONTROLLER路徑
 				xhr.send();
@@ -337,7 +373,7 @@ img{
 						myChart(NorthSet, WestSet, SouthSet, EastSet);
 					}
 				}
-			}
+			});
 
 			function myChart(North, West, South, East) {
 				// 準備好的dom，初始化echarts
@@ -360,7 +396,7 @@ img{
 						data : [ '舉辦次數' ]
 					},
 					xAxis : {
-						data : [ "north", "west", "south", "east" ]
+						data : [ "北部", "西部", "南部", "東部" ]
 					},
 					yAxis : {},
 					series : [ {
@@ -390,7 +426,8 @@ img{
 			var FemaleSet = 0;
 			var NoSet = 0;
 
-			document.getElementById("gender").onclick = function() { //事件觸發
+//			document.getElementById("gender").onclick = function() 
+			$(".gender").click(function(){ //事件觸發
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET", "<c:url value='/ajax_gender' />", true); //抓到CONTROLLER路徑
 				xhr.send();
@@ -468,7 +505,7 @@ img{
 						myChart.setOption(option, true);
 					}
 				}
-			}
+			});
 		</script>
 
 		<!-- 	start<========================================縣市比較========================================================> -->
@@ -498,7 +535,8 @@ img{
 			var KMNSet = 0; //金門市
 			var LNNSet = 0; //連江縣
 
-			document.getElementById("provStac").onclick = function() { //事件觸發
+//			document.getElementById("provStac").onclick = function() 
+			$(".provStac").click(function(){ //事件觸發
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET", "<c:url value='/ajax_prov' />", true); //抓到CONTROLLER路徑
 				xhr.send();
@@ -576,8 +614,8 @@ img{
 							type : 'category',
 							data : [ '基隆市', '台北市', '新北市', '桃園縣', '新竹市', '新竹縣',
 									'宜蘭縣', '苗栗縣', '台中市', '彰化縣', '南投縣', '雲林縣',
-									'嘉義市', '嘉義縣 ', '台南市', '高雄市 ', '屏東縣', '台東縣',
-									'花蓮縣', '澎湖縣 ', '金門縣', '連江縣  ' ]
+									'嘉義市', '嘉義縣', '台南市', '高雄市', '屏東縣', '台東縣',
+									'花蓮縣', '澎湖縣', '金門縣', '連江縣' ]
 						},
 						series : [ {
 							name : '最新',
@@ -592,8 +630,111 @@ img{
 						myChart.setOption(option, true);
 					}
 				}
-			}
+			});
 		</script>
+
+
+		<!-- 		星座 -->
+		<script>
+		$("#starstatic").hide();
+		var Aries = 0; //"白羊座
+		var Taurus = 0; //金牛座
+		var Gemini = 0; //雙子座
+		var Cancer = 0; //巨蟹座
+		var Leo = 0; //獅子座
+		var Virgo = 0; //處女座
+		var Libra = 0; //天秤座
+		var Scorpio = 0; //天蠍座
+		var Sagittarius = 0; //射手座
+		var Capricorn = 0; //魔羯座
+		var Aquarius = 0; //水瓶座
+		var Pisces = 0; //雙魚座"
+
+		
+
+// 		document.getElementById("starSign").onclick = function() { //事件觸發
+			$(".starSign").click(function(){ 
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "<c:url value='/ajax_starSign' />", true); //抓到CONTROLLER路徑
+			xhr.send();
+			var message = "";
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var result = JSON.parse(xhr.responseText);
+					$("#starstatic").show();
+					Aries = result["白羊座"];
+					Taurus = result["金牛座"];
+					Gemini = result["雙子座"];
+					Cancer = result["巨蟹座"];
+					Leo = result["獅子座"];
+					Virgo = result["處女座"];
+					Libra = result["天秤座"];
+					Scorpio = result["天蠍座"];
+					Sagittarius = result["射手座"];
+					Capricorn = result["摩羯座"];
+					Aquarius = result["水瓶座"];
+					Pisces = result["雙魚座"];
+
+					console.log("Pisces = " + Pisces);
+					console.log("Cancer = " + Cancer);
+					myChart(Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra,
+							Scorpio, Sagittarius, Capricorn, Aquarius, Pisces);
+				}
+			}
+
+			function myChart(Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra,
+					Scorpio, Sagittarius, Capricorn, Aquarius, Pisces) {
+				var dom = document.getElementById("starstatic");
+				var myChart = echarts.init(dom);
+				var app = {};
+				option = null;
+				option = {
+					title : {
+						text : '註冊人口星座數分析',
+						subtext : '數據來自註冊會員資料'
+					},
+					tooltip : {
+						trigger : 'axis',
+						axisPointer : {
+							type : 'shadow'
+						}
+					},
+					legend : {
+						data : [ '最新' ]
+					},
+					grid : {
+						left : '3%',
+						right : '4%',
+						bottom : '3%',
+						containLabel : true
+					},
+					xAxis : {
+						type : 'value',
+						boundaryGap : [ 0, 0.01 ]
+					},
+					yAxis : {
+						type : 'category',
+						data : [ '白羊座', '金牛座', '雙子座', '巨蟹座', '獅子座', '處女座',
+								'天秤座', '天蠍座', '射手座', '摩羯座', '水瓶座', '雙魚座' ]
+					},
+					series : [ {
+						name : '最新',
+						type : 'bar',
+						data : [ Aries, Taurus, Gemini, Cancer, Leo, Virgo,
+								Libra, Scorpio, Sagittarius, Capricorn,
+								Aquarius, Pisces ]
+					} ]
+				};
+				;
+				if (option && typeof option === "object") {
+					myChart.setOption(option, true);
+				}
+			}
+		})
+	</script>
+
+
+
 
 		<!-- 	end<========================================縣市比較========================================================> -->
 
@@ -604,19 +745,15 @@ img{
 				});
 			});
 		</script>
-<!-- 		<script> -->
-<!-- // 			$(document).ready(function() { -->
-<!-- // 				$("#activehideshow").click(function() { -->
-<!-- // 					$("#activehideshow").hide(1000); -->
-<!-- // 				}); -->
-<!-- // 			}); -->
-<!-- 		</script> -->
 
 
-<!-- 		活動部分 -->
+
+		<!-- 		活動部分 -->
 		<script>
 			$(".allactives").click(function() { //click event
-
+				$("#provstatic").hide();  //可隱藏
+				$("#locBarChart").hide();//可隱藏
+ 				$("#genderPie").hide();
 				$.ajax({
 					url : "ajax_selallactive",
 					type : "GET",
@@ -628,14 +765,14 @@ img{
 						$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
 					}
 				})
-			})
-		</script>
-<!-- 		查詢成員-->
-		<script>
-			$(".allRoles").click(function() { //click event
-
+			});
+			<!-- 		權限管理 -->
+			$(".rights").click(function() { //click event
+				$("#provstatic").hide();  //可隱藏
+				$("#locBarChart").hide();//可隱藏
+				$("#genderPie").hide();
 				$.ajax({
-					url : "ajax_selectAllRoles",
+					url : "ajax_rights",
 					type : "GET",
 					dataType : "html", //server送回
 					contentType : 'application/json; charset=utf-8',
@@ -645,26 +782,43 @@ img{
 						$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
 					}
 				})
-			})
+			});
+			
+			
 		</script>
-		<script>
-			$(".allMembers").click(function() { //click event
-
-				$.ajax({
-					url : "ajax_selectAllMembers",
-					type : "GET",
-					dataType : "html", //server送回
-					contentType : 'application/json; charset=utf-8',
-					data : {}, //data空的代表沒任何參數
-					success : function(data) { //成功的話
-						$(".newajaxlist").empty();
-						$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
-					}
-				})
-			})
-		</script>
-<!-- 		修改會員 -->
+		<!-- 		查詢成員-->
 		
+
+
+		<script>
+		$(".allMembers").unbind('click').bind('click', function() { //click event
+
+			$.ajax({
+				url : "ajax_selectAllMembers",
+				type : "GET",
+				dataType : "html", //server送回
+				contentType : 'application/json; charset=utf-8',
+				data : {}, //data空的代表沒任何參數
+				success : function(data) { //成功的話
+					$(".oldajaxlist").empty();
+					$(".oldajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
+				}
+			})
+			$.ajax({
+				url : "ajax_selectAllRoles",
+				type : "GET",
+				dataType : "html", //server送回
+				contentType : 'application/json; charset=utf-8',
+				data1 : {}, //data空的代表沒任何參數
+				success : function(data1) { //成功的話
+					$(".newajaxlist").empty();
+					$(".newajaxlist").append(data1); //透過導向的URL到ajax方法 div class裝東西
+				}
+			})
+		})
+		$(".oldajaxlist").show();
+		$(".newajaxlist").show();
+	</script>
 </body>
 
 </html>

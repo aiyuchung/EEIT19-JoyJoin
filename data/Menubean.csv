@@ -1,0 +1,10 @@
+1,1,功能總覽,0,1,NULL
+2,2,會員管理,1,2,allMembers
+3,3,活動管理,1,2,allactives
+4,4,權限管理,1,2,rights
+5,5,圖表即時分析,0,1,NULL
+6,6,縣市統計,5,2,provStac
+7,7,區域活動,5,2,counts
+8,8,性別分析,5,2,gender
+9,9,星座比較,5,2,starSign
+10,10,日誌,5,2,provStac
