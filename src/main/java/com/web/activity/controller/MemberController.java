@@ -347,11 +347,11 @@ public class MemberController {
 		}		  
 		  
 //---------------------------------------------▼購買點數畫面▼---------------------------------------------//            
+		
 		@GetMapping("/ajax_shop")
 		public String shop(Model model, HttpSession session) {
 		    return "ajax/order";
 		}		  
-		  
 		  
 //---------------------------------------------▼訊息系統▼---------------------------------------------//		
 
@@ -370,22 +370,20 @@ public class MemberController {
 			String fromId = (String) session.getAttribute("account");
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd,hh:mm:ss");
    		 	String time = dateFormat.format(new Date());//抓時間
-//   		 	System.out.println("SendTime=============>"+time);
 			mb.setfromAccount(fromId);
 			mb.setTime(time);
 			mb.setReadStatus(0);
 			memberService.sendMsg(mb);
 			System.out.println("OK=============>");
-			model.addAttribute("mailMsg", "站內信已寄出");
 			return "redirect:/mailMsg";
 		}
-		
-		@GetMapping("/showMsg")
-		public @ResponseBody MessageBean getMsg(Model model, int msgNo) {
-			MessageBean mb = memberService.getMsg(msgNo);
-			model.addAttribute("msgOne", mb);
-			return mb;
-		}
+//		
+//		@GetMapping("/showMsg")
+//		public @ResponseBody MessageBean getMsg(Model model, int msgNo) {
+//			MessageBean mb = memberService.getMsg(msgNo);
+//			model.addAttribute("msgOne", mb);
+//			return mb;
+//		}
 		
 		@GetMapping("/checkStatus")
 		public @ResponseBody String checkReadStatus(Model model, HttpSession session) {
@@ -412,7 +410,7 @@ public class MemberController {
 		@GetMapping("/delMsg/{msgNo}")
 		public String deleteMsg(@PathVariable int msgNo) {
 			memberService.delMsg(msgNo);
-			return "redirect:/mailbox";
+			return "redirect:/mailMsg";
 		}
 		
 //---------------------------------------------▼名片▼---------------------------------------------//

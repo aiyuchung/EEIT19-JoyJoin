@@ -63,6 +63,14 @@ body .right {
 	left:20px
 }
 
+#mailFeatures{
+	width:50px;
+	position:relative;
+	top:20px;
+	left:120px;
+	
+}
+
 /*  ====================信箱效果=======================  */
 
 #mailBox{
@@ -73,6 +81,7 @@ body .right {
 	box-shadow: 0 0 25px 15px #9F5000;
 	overflow-y: auto;
 	-ms-overflow-style: none;
+
 	
 }
 

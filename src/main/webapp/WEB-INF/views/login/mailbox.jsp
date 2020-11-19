@@ -21,8 +21,8 @@
 		<jsp:include page="../header/header_guest.jsp" />
 	</div>
 	<div id="back-div">
-		<div id="mailFeatures">
-			<table>
+		<div id="mailFeatures" style="width:50px;	position:relative;top:20px;left:120px;">
+			<table id="boxbox">
 				<tr>
 					<td><input type="button" value="撰寫新信" id="writeNewLetter-btn"></td>
 				</tr>
@@ -31,12 +31,14 @@
 		<div id="mailBox">
 			<c:forEach var="msg" items="${msgList}">
 				<div class	="mail" id="${msg.msgNo}">
-					<c:if test="${msg.readStatus == 1}">
-						<h2>${msg.subject}</h2>
-					</c:if>
-					<c:if test="${msg.readStatus == 0}">
-						<h2><img src="${pageContext.request.contextPath}/images/notRead.png">${msg.subject}</h2>
-					</c:if>				
+					<div id="ajax_subject">
+						<c:if test="${msg.readStatus == 1}">
+							<h2>${msg.subject}</h2>
+						</c:if>
+						<c:if test="${msg.readStatus == 0}">
+							<h2><img src="${pageContext.request.contextPath}/images/notRead.png">${msg.subject}</h2>
+						</c:if>
+					</div>					
 					<span id="keepread">繼續閱讀...</span><br>
 					<div id="mailTime">
 						<h5>寄件人:${msg.fromAccount}</h5>
@@ -61,7 +63,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-body" id="resultArea" style="height:380px;width:380px">
-				<h2 id='msg'>${mailMsg}</h2><span id='msg2'>點選空白處返回</span>
+<%-- 				<h2 id='msg'>${mailMsg}</h2><span id='msg2'>點選空白處返回</span> --%>
 	      </div>
 	      <div class="modal-footer1">
 	      </div>
@@ -94,7 +96,7 @@
 	<div class="modal" tabindex="-1" role="dialog" id="letterArea">
 	     <div class="modal-dialog" role="document"> 
 	        <div class="modal-content"  style="position:relative;top:100px;color:black">
-	            <form:form modelAttribute="msgBean">
+	            <form:form modelAttribute="msgBean" method="POST">
 	            <div class="modal-header">
 	                發送給: <form:input path="account" type="text" id="account-sendTo"/>
 	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button> 
@@ -157,8 +159,8 @@
             data:{msgNo:no},
             timeout:1000,
             success:function(msg){
-            	$("#mailBox").empty();
-            	$("#mailBox").append(msg);
+            	$("#ajax_subject").empty();
+            	$("#ajax_subject").append(msg);
             	
             }
 		 })
