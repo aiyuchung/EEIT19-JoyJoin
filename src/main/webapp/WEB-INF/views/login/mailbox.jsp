@@ -151,12 +151,16 @@
 		//AJAX的部分
 		 $.ajax({
             url:"changeStatus",
-            type:"Put",
-            contentType:"application/json",
-            dataType:"json",
+            type:"GET",
+//             contentType:"application/json",
+            dataType:"html",
             data:{msgNo:no},
             timeout:1000,
-            success:function(msg){}
+            success:function(msg){
+            	$("#mailBox").empty();
+            	$("#mailBox").append(msg);
+            	
+            }
 		 })
 		//SHOW的部分
 		var textMsg = $(this).find('input').val();

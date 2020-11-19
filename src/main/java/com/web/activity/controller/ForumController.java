@@ -103,7 +103,7 @@ public class ForumController {
 	
 	@PostMapping("/saveOrUpdateArticle")
 	public String saveOrUpdateArticle( Model model,@ModelAttribute("form") ForumBean form) {
-		//service.createForumTitle(26);
+		service.createForumTitle(26);
 		List<ForumBean> forumList = service.saveOrUpdateArticle(form);
 		ForumBean forumBean = forumList.stream()
 				.filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()

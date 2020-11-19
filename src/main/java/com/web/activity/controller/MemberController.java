@@ -366,17 +366,18 @@ public class MemberController {
 		}
 		
 		@PostMapping("/mailMsg")
-		public String sendMail(MessageBean mb, Model model,HttpSession session) {
+		public String sendMail(@ModelAttribute("msgBean") MessageBean mb, Model model,HttpSession session) {
 			String fromId = (String) session.getAttribute("account");
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd,hh:mm:ss");
    		 	String time = dateFormat.format(new Date());//抓時間
-   		 	System.out.println("SendTime=============>"+time);
+//   		 	System.out.println("SendTime=============>"+time);
 			mb.setfromAccount(fromId);
 			mb.setTime(time);
 			mb.setReadStatus(0);
 			memberService.sendMsg(mb);
+			System.out.println("OK=============>");
 			model.addAttribute("mailMsg", "站內信已寄出");
-			return "login/mailbox";
+			return "redirect:/mailMsg";
 		}
 		
 		@GetMapping("/showMsg")
@@ -397,10 +398,15 @@ public class MemberController {
 			}
 		}
 		
-		@PutMapping("/changeStatus")
-		public @ResponseBody String changeStatus(int msgNo) {
+		@GetMapping("/changeStatus")
+		public String changeStatus(int msgNo, Model model,  HttpSession session) {
 			memberService.readMsg(msgNo);
-			return "";
+			String account = (String) session.getAttribute("account");
+			MessageBean mb = new MessageBean();
+			List<MessageBean> list = memberService.getAllMsg(account);
+			model.addAttribute("msgBean",mb);
+			model.addAttribute("msgList", list);
+			return "login/ajax_msg";
 		}
 		
 		@GetMapping("/delMsg/{msgNo}")
