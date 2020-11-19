@@ -314,7 +314,7 @@ public class MemberController {
 				System.out.println("POSITION=======>"+posi);
 				MemberBean luckyguy = mbl.get(posi);
 				System.out.println("GET ONE GUY=======>"+luckyguy);
-				model.addAttribute("member", luckyguy);
+				model.addAttribute("luckyguy", luckyguy);
 				return "ajax_getpair";
 			}
 

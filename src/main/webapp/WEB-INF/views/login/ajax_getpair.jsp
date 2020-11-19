@@ -8,7 +8,23 @@
 </head>
 <body>
 <div>
-<h5>555555</h5>
+	<div>${luckyguy.picture}</div>
+	<div style="color:white">
+		<table>
+			<tr>
+				<td></td>
+				<td>${luckyguy.account}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>${luckyguy.nickname}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>${luckyguy.mail}</td>
+			</tr>
+		</table>
+	</div>
 </div>
 </body>
 </html>
