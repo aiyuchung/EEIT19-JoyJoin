@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.Menubean;
 import com.web.activity.model.RoleBean;
 
 //import java.util.List;
@@ -20,6 +21,9 @@ public interface CMSService {
 	int updateActivityStatus(String activityStatus,String activityNo);
 
 	List<ActivityBean> selectAllActivities();
+	
+	//左邊標頭
+	List<Menubean>  getMenuName(String classId); 
 	
 	List<ActivityBean> selectAllActivitiesAtive();
 

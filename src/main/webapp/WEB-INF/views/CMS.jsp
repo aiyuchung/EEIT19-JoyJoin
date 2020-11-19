@@ -95,7 +95,6 @@ img{
 	width:60%;
 }
 </style>
-<script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
 
 </head>
 
@@ -136,32 +135,42 @@ img{
 
 		<div class="row row-offcanvas row-offcanvas-left">
 
-			<div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar"
+		<div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar"
 				role="navigation">
-
+				
+<!-- 			左邊項目 -->
+			<c:forEach var="Menu" items="${allactive}" >
 				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">功能總覽</a></li>
-					<li><a href="Javascript:;" class="allMembers">會員管理</a></li>
-					<li><a href="Javascript:;" class="allRoles">角色管理</a></li>
-					<li><a href="Javascript:;" class="allactives">活動管理</a></li>
-					<li><a href="https://www.investing.com/" target="_ext">前台管理</a></li>
+					<li class="active"><a href="#" id="parentId${Menu.parentId}">>${Menu.menuName}</a></li>
+						<c:forEach var="Menu1" items="${allactive2}" ><c:if test="${Menu1.parentId == Menu.menuId}">
+							<li><a href="Javascript:;" id="parentId${Menu1.classId}" class="${Menu1.path}">${Menu1.menuName}</a></li>
+												
+						</c:if>
+				
+			</c:forEach>
 				</ul>
-				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">圖表即時分析</a></li>
-					<li><a href="Javascript:;" id="provStac">縣市統計</a></li>
-					<li><a href="Javascript:;" id="counts">區域活動</a></li>
-					<li><a href="Javascript:;" id="gender">性別分析</a></li>
-					<li><a href="Javascript:;" id="starSign">星座比較</a></li>
+			</c:forEach>
+		</div>
+<!-- 				<ul class="nav nav-sidebar"> -->
+<%-- 					<li><a href="Javascript:;" class="allMembers" id="parentId${Menu.parentId}">${Menu.menuName}</a></li> --%>
+<!-- 					<li><a href="Javascript:;" class="allRoles">角色管理</a></li> -->
+<!-- 					<li><a href="Javascript:;" class="allactives">活動管理</a></li> -->
+<!-- 					<li><a href="https://www.investing.com/" target="_ext">前台管理</a></li> -->
+<!-- 				</ul> -->
+<!-- 				<ul class="nav nav-sidebar"> -->
+<!-- 					<li class="active"><a href="#">圖表即時分析</a></li> -->
+<!-- 					<li><a href="Javascript:;" id="provStac">縣市統計</a></li> -->
+<!-- 					<li><a href="Javascript:;" id="counts">區域活動</a></li> -->
+<!-- 					<li><a href="Javascript:;" id="gender">性別分析</a></li> -->
+<!-- 					<li><a href="Javascript:;" id="starSign">星座比較</a></li> -->
 
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#">後臺監控系統(暫定)</a></li>
-					<li><a href="Javascript:;" id="provStac">日誌</a></li>
+<!-- 				</ul> -->
+<!-- 				<ul class="nav nav-sidebar"> -->
+<!-- 					<li class="active"><a href="#">後臺監控系統(暫定)</a></li> -->
+<!-- 					<li><a href="Javascript:;" id="provStac">日誌</a></li> -->
 
-				</ul>
+<!-- 				</ul> -->
 
-
-			</div>
 			<!--/span-->
 
 
@@ -317,7 +326,8 @@ img{
 			var SouthSet = 0;
 			var EastSet = 0;
 
-			document.getElementById("counts").onclick = function() { //事件觸發
+//			document.getElementById("counts").onclick = function() 
+			$(".counts").click(function(){ //事件觸發
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET", "<c:url value='/ajax_counts' />", true); //抓到CONTROLLER路徑
 				xhr.send();
@@ -337,7 +347,7 @@ img{
 						myChart(NorthSet, WestSet, SouthSet, EastSet);
 					}
 				}
-			}
+			});
 
 			function myChart(North, West, South, East) {
 				// 準備好的dom，初始化echarts
@@ -390,7 +400,8 @@ img{
 			var FemaleSet = 0;
 			var NoSet = 0;
 
-			document.getElementById("gender").onclick = function() { //事件觸發
+//			document.getElementById("gender").onclick = function() 
+			$(".gender").click(function(){ //事件觸發
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET", "<c:url value='/ajax_gender' />", true); //抓到CONTROLLER路徑
 				xhr.send();
@@ -468,7 +479,7 @@ img{
 						myChart.setOption(option, true);
 					}
 				}
-			}
+			});
 		</script>
 
 		<!-- 	start<========================================縣市比較========================================================> -->
@@ -498,7 +509,8 @@ img{
 			var KMNSet = 0; //金門市
 			var LNNSet = 0; //連江縣
 
-			document.getElementById("provStac").onclick = function() { //事件觸發
+//			document.getElementById("provStac").onclick = function() 
+			$(".provStac").click(function(){ //事件觸發
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET", "<c:url value='/ajax_prov' />", true); //抓到CONTROLLER路徑
 				xhr.send();
@@ -592,7 +604,7 @@ img{
 						myChart.setOption(option, true);
 					}
 				}
-			}
+			});
 		</script>
 
 		<!-- 	end<========================================縣市比較========================================================> -->
@@ -616,7 +628,9 @@ img{
 <!-- 		活動部分 -->
 		<script>
 			$(".allactives").click(function() { //click event
-
+				$("#provstatic").hide();  //可隱藏
+				$("#locBarChart").hide();//可隱藏
+ 				$("#genderPie").hide();
 				$.ajax({
 					url : "ajax_selallactive",
 					type : "GET",
@@ -628,7 +642,26 @@ img{
 						$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
 					}
 				})
-			})
+			});
+			<!-- 		權限管理 -->
+			$(".rights").click(function() { //click event
+				$("#provstatic").hide();  //可隱藏
+				$("#locBarChart").hide();//可隱藏
+				$("#genderPie").hide();
+				$.ajax({
+					url : "ajax_rights",
+					type : "GET",
+					dataType : "html", //server送回
+					contentType : 'application/json; charset=utf-8',
+					data : {}, //data空的代表沒任何參數
+					success : function(data) { //成功的話
+						$(".newajaxlist").empty();
+						$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
+					}
+				})
+			});
+			
+			
 		</script>
 <!-- 		查詢成員-->
 		<script>
@@ -645,7 +678,7 @@ img{
 						$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
 					}
 				})
-			})
+			});
 		</script>
 		<script>
 			$(".allMembers").click(function() { //click event
@@ -659,12 +692,13 @@ img{
 					success : function(data) { //成功的話
 						$(".newajaxlist").empty();
 						$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
+						$("#provstatic").hide();
 					}
 				})
-			})
+			});
 		</script>
 <!-- 		修改會員 -->
 		
 </body>
-
+		
 </html>

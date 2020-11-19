@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.Menubean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.service.CMSService;
 import com.web.activity.service.MemberService;
@@ -39,7 +40,7 @@ public class CMSController {
 		Map<String, Long> loc = new HashMap<>(); // 宣告一個map物件loc
 		loc = service.getActiveLocation(); // LOC使用getActiveLocation
 
-		System.out.println("hello world"); // 測試有沒有通過
+//		System.out.println("hello world"); // 測試有沒有通過
 
 		return loc; // 全部放到LOC 也是回傳 JSP的意思
 
@@ -51,7 +52,7 @@ public class CMSController {
 		Map<String, Long> gen = new HashMap<>(); // 宣告一個map物件gen
 		gen = service.getGenderCounts(); // gen使用getActiveLocation
 
-		System.out.println("hello world"); // 測試有沒有通過
+//		System.out.println("hello world"); // 測試有沒有通過
 
 		return gen; // 全部放到gen 也是回傳 JSP的意思
 
@@ -62,7 +63,7 @@ public class CMSController {
 	public @ResponseBody Map<String, Long> prov() { // 設定@ResponseBody 伺服器回應JSON檔案
 		Map<String, Long> pro = new HashMap<>(); // 宣告一個map物件gen
 		pro = service.getActivityProv(); // gen使用getActiveLocation
-		System.out.println(pro); // 測試有沒有通過
+//		System.out.println(pro); // 測試有沒有通過
 		return pro; // 全部放到gen 也是回傳 JSP的意思
 	}
 
@@ -72,21 +73,31 @@ public class CMSController {
 	@GetMapping("/allactive") // 請求路徑
 	public String list(Model model) {
 		List<ActivityBean> list = service.selectAllActivities(); // 宣告list物件 "list" 用selectAllActivies 方法
+		List<Menubean> Menubean =service.getMenuName("1");//外層迴圈
+		List<Menubean> Menubean2 =service.getMenuName("2");//內層迴圈
+		model.addAttribute("allactive", Menubean);//外層迴圈
+		model.addAttribute("allactive2", Menubean2);//內層迴圈
 		model.addAttribute("activities", list); // model 裝進去東西 識別字串 activities
 //		System.out.println("hello world");
 		return "CMS"; // 分配jsp
-
 	}
+
+	//權限管理
+	@GetMapping("/ajax_rights")
+	public String rights(Model model) {
+		return "ajax/rights";
+	}
+	
 	//關鍵字查詢
 	@GetMapping("/ajax_CM_keyWords")
 	public String selectactive(Model model,@RequestParam String keyword) {
 		List<ActivityBean> beans = service.selectActivities(keyword);
-			int elementsNum = beans.size();
-			model.addAttribute("activitiesNum",elementsNum);
-			model.addAttribute("activities", beans);
-	return "ajax/CMSActives"; // 分配到ajax jsp
+		int elementsNum = beans.size();
+		model.addAttribute("activitiesNum",elementsNum);
+		model.addAttribute("activities", beans);
+		return "ajax/CMSActives"; // 分配到ajax jsp
 	}
-	
+	//	活動部分  一開始先不搜尋
 	@GetMapping("/ajax_selallactive")
 	public String selectallactive(Model model) {
 //		List<ActivityBean> beans = service.selectAllActivities();
@@ -119,14 +130,14 @@ public class CMSController {
 	public String selectAllMembers(Model model) {
 		List<RoleBean> ro = service.selectAllRoles();
 		model.addAttribute("Roles", ro);
-		System.out.println("hello world");
+	//	System.out.println("hello world");
 		return "ajax/CMSRole"; // 分配到ajax jsp
 	}
 //	 修改會員資料
 	@PostMapping("/ajax_updateAllMembers")
 	public String updateAllMembers(MemberBean mb) {
 		memberService.updateInfo(mb);
-		System.out.println("hello SkyWalker");
+//	System.out.println("hello SkyWalker");
 		return "ajax/CMSUpdatemember"; // 分配到ajax jsp
 	}
 

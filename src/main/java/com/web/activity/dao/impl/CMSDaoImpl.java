@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.web.activity.dao.CMSDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.Menubean;
 //import com.web.activity.model.RoleBean;
 import com.web.activity.model.RoleBean;
 
@@ -32,7 +33,7 @@ public class CMSDaoImpl implements CMSDao {
 			String hqlg = "select count(*) FROM MemberBean Where gender=:gender";
 			Long gen = (Long) session.createQuery(hqlg).setParameter("gender", gender).uniqueResult();
 			map.put(gender, gen);// KEY:VALUE
-			System.out.println("map =>>>>>>>>>>>>>>>" + map);
+//			System.out.println("map =>>>>>>>>>>>>>>>" + map);
 		}
 
 		return map;
@@ -68,7 +69,7 @@ public class CMSDaoImpl implements CMSDao {
 			String hqlp = "select count(*) FROM ActivityBean where prov =:prov";
 			Long pro = (Long) session.createQuery(hqlp).setParameter("prov", prov).uniqueResult();
 			map.put(prov, pro);// KEY VALUEpro
-			System.out.println("map =>>>>>>>>>>>>>>>" + map);
+//			System.out.println("map =>>>>>>>>>>>>>>>" + map);
 		}
 		return map;
 
@@ -83,6 +84,14 @@ public class CMSDaoImpl implements CMSDao {
 		List<ActivityBean> cms = session.createQuery(hql).getResultList();
 		return cms;
 	}
+//	左邊標頭
+	@Override
+	public List<Menubean> getMenuName(String classId) {
+		Session session = factory.getCurrentSession();
+		String hql ="FROM Menubean WHERE classId = '"+classId+"'  ";
+		List<Menubean> cms = session.createQuery(hql).getResultList();
+		return cms;
+	}
 	//關鍵字搜尋
 	@Override
 	public List<ActivityBean> selectActivities(String keyWord) {
@@ -94,13 +103,14 @@ public class CMSDaoImpl implements CMSDao {
 			key += "OR name LIKE '%"+ keyWords[i] +"%'";
 			key += "OR prov LIKE '%"+ keyWords[i] +"%'";
 			key += "OR finalDate LIKE '%"+ keyWords[i] +"%'";
+			key += "OR activityStatus LIKE '%"+ keyWords[i] +"%'";
 			key += "OR activityClass LIKE '%"+ keyWords[i] +"%'";
 		}
 		hql += key;
 		List<ActivityBean> cms = session.createQuery(hql).getResultList();
 		return cms;
 	}
-	
+
 
 	//單獨更新activityStatus
 	@Override
@@ -132,7 +142,7 @@ public class CMSDaoImpl implements CMSDao {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM MemberBean";
 		List<MemberBean> mb = session.createQuery(hql).getResultList();
-		System.out.println(mb);
+//		System.out.println(mb);
 		return mb;
 
 	}
@@ -141,9 +151,10 @@ public class CMSDaoImpl implements CMSDao {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM RoleBean";
 		List<RoleBean> mb = session.createQuery(hql).getResultList();
-		System.out.println(mb);
+//		System.out.println(mb);
 		return mb;
 		
 	}
+
 
 }

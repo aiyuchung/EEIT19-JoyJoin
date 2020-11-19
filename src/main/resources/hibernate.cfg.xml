@@ -34,5 +34,6 @@
 		<mapping class="com.web.activity.model.ProvinceBean"></mapping>
 		<mapping class="com.web.activity.model.ActivityMsgBean"></mapping>
 		<mapping class="com.web.activity.model.ForumBean"></mapping>
+		<mapping class="com.web.activity.model.Menubean"></mapping>
 	</session-factory>
 </hibernate-configuration>
