@@ -29,7 +29,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -404,8 +403,8 @@ public class MemberController {
 			return "";
 		}
 		
-		@GetMapping("/delMsg")
-		public String deleteMsg(int msgNo) {
+		@GetMapping("/delMsg/{msgNo}")
+		public String deleteMsg(@PathVariable int msgNo) {
 			memberService.delMsg(msgNo);
 			return "redirect:/mailbox";
 		}

@@ -76,6 +76,7 @@
 	        <div class="modal-content" style="position:relative;top:100px">
 	            <div class="modal-header">
 	                <h4 class="modal-title" id="account-from" style="color:black"></h4>
+	                <input type="hidden" id="number-hid">
 	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button> 
 	            </div>
 	            <div class="modal-body" id="msgArea"  style="padding:15px;margin:0 auto;color:black;font-size:30px;height:220px">
@@ -160,9 +161,12 @@
 		//SHOW的部分
 		var textMsg = $(this).find('input').val();
 		var textFrom = $(this).find('h5').text();
-		console.log(textFrom)
+		var textNo = $('div').find('.mail').prop('id')
+		console.log("No======>"+textNo)
 		$("#msgArea").text(textMsg)
 		$("#account-from").text(textFrom)
+		$("#number-hid").val(textNo)
+		console.log("number==========>"+$("#number-hid").val())
 		$("#showMsgArea").modal("show")
 		var aa1 = $("#msgArea").text()
 		console.log(aa1)
@@ -172,7 +176,9 @@
 // ===================刪信=======================
 	
 		$("#delMsg-btn").on("click",function(){
-			location.href = "<c:url value='/delMsg'/>";
+			var number = $("#number-hid").val()
+			console.log("number==========>"+number)
+			location.href = "<c:url value='/delMsg/"+number+"'/>";
 		})
 		
 	
