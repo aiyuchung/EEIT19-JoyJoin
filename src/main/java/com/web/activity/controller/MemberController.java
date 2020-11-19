@@ -431,11 +431,11 @@ public class MemberController {
 		
 //---------------------------------------------▼名片▼---------------------------------------------//
 		
-		@GetMapping
-		public @ResponseBody String getOne(Model model, String account) {
+		@GetMapping("/detailCard/{account}")
+		public String getOne(Model model, @PathVariable String account) {
 			MemberBean mb = memberService.getMember(account);
 			model.addAttribute("mbcard", mb);
-			return "";
+			return "ajax_membercard.jsp";
 		}
 		
 
