@@ -61,5 +61,9 @@ public interface MemberService {
 			//刪除訊息
 		public OrderBean createOrder(Integer memberNo, OrderBean order);
 			//存訂單 並取出
-		
+		public Integer checkType2Back(String account);
+			//後臺檢查會員帳號狀態
+		public void changeType2Back(String account, int type);
+			//後台改變會員帳號狀態
+
 }	

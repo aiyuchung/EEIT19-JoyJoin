@@ -455,4 +455,28 @@ public class MemberDaoImpl implements MemberDao {
         return thisorder;
         
     }
+	
+	@Override
+	public Integer checkType2Back(String account) {
+		Session session = factory.getCurrentSession();
+		String hql = "SELECT accountType FROM RoleBean WHERE account = :id";
+		Integer result = null;
+		try {
+			result = (Integer) session.createQuery(hql).setParameter("id", account).getSingleResult();
+		}catch(Exception e) {
+			;
+		}
+		return result;
+	}
+	
+	@Override
+	public void changeType2Back(String account, int type) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE RoleBean SET accountType = :type WHERE account = :id ";
+		session.createQuery(hql).setParameter("type", type).setParameter("id", account).executeUpdate();
+	}
+
+	
+	
+	
 }

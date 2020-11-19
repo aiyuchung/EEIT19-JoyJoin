@@ -173,8 +173,17 @@ public class MemberServieImpl implements MemberService {
 			return memberDao.createOrder(memberNo,order);
 		}
 		
+		@Transactional
+		@Override
+		public Integer checkType2Back(String account) {
+			return memberDao.checkType2Back(account);
+		}
 		
-		
+		@Transactional
+		@Override
+		public void changeType2Back(String account, int type) {
+			memberDao.changeType2Back(account, type);
+		}
 		
 		
 }
