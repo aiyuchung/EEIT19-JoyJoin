@@ -9,50 +9,59 @@
 <html>
 <head>
 <style>
-table {
-	font-size: 0.5cm;
+#ccc {
+ 	font-size: 0.5cm;
 	font-family: 微軟正黑體;
-	font-weight: 900;
+	font-weight: 900;	
 }
+#ccc tbody{
+border:none;
 
-table thead tr {
+
+}
+#ccc thead tr {
 	background-color: #800080;
 	color: white;
 }
 
-table tbody tr:nth-child(odd) {
-	background-color: #FF30FF;
-	color: black
+#ccc tbody tr:nth-child(odd) {
+	background-color: white;
+	color: black;
 }
 
-table tbody tr:nth-child(odd):hover {
-	background: #FFFF6E;
+#ccc tbody tr:nth-child(odd):hover {
+	background:#FFFFB5;
 }
 
-table tbody tr:nth-child(even) {
-	background-color: #FFC9FF;
-	color: black
+#ccc tbody tr:nth-child(even) {
+	background-color: #FFD4FF;
+	color: black;
 }
 
-table tbody tr:nth-child(even):hover {
-	background: #FFFF45;
+#ccc tbody tr:nth-child(even):hover {
+	background: #FFFFB5	;
 }
 
-table thead td:first-child {
+#ccc thead td:first-child {
 	border-radius: 20px 0 0 0;
+	outline:0;
 }
 
-table thead td:last-child {
+#ccc thead td:last-child {
 	border-radius: 0 20px 0 0;
+	outline:0;
 }
 
-table tbody tr:last-child td:first-child {
+#ccc tbody tr:last-child td:first-child {
 	border-radius: 0 0 0 20px;
+	outline:0;
 }
 
-table tbody tr:last-child td:last-child {
+#ccc tbody tr:last-child td:last-child {
 	border-radius: 0 0 20px 0;
+	outline:0;
 }
+
 </style>
 </head>
 <body>
@@ -60,7 +69,7 @@ table tbody tr:last-child td:last-child {
 		action="<%=request.getContextPath()%>/forumDetail">
 		<input type="hidden" id="forumSeqInput" name="forumSeq" />
 	</form>
-	<table width="70%" border="1" align="center">
+	<table  id="ccc" width="70%" border="1" align="center" >
 		<thead>
 			<tr style="text-align: center" height="60px">
 				<td width="10%">類型</td>
@@ -73,7 +82,7 @@ table tbody tr:last-child td:last-child {
 			</tr>
 		</thead>
 		<c:forEach var="forum" items="${forumList}">
-			<tr style="text-align: center" height="60px" class="to_detail"
+			<tr  style="text-align: center" height="60px" class="to_detail"
 				name="${forum.forumSeq}">
 				<td>${forum.type}</td>
 				<td>${forum.title}</td>
@@ -86,6 +95,8 @@ table tbody tr:last-child td:last-child {
 			</tr>
 		</c:forEach>
 	</table>
+	
+	
 
 	<script type="text/javascript">
 		$(".to_detail").click(function() { //以活動類型作為快速篩選

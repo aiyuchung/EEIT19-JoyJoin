@@ -35,6 +35,7 @@ Released   : 20100501
 	crossorigin="anonymous"></script>
 
 <style>
+
 #menu-bb {
 	background: #E0E000;
 	height: 50px;
@@ -85,6 +86,19 @@ Released   : 20100501
 	color: #FFFFFF;
 }
 
+
+.bot{border:0;
+  background-color:#003C9D;
+  color:#fff;
+  border:2px #003C9D solid;
+
+  cursor:pointer;}
+
+.bot:hover{
+  color:#003C9D;
+  background-color:#fff;
+  border:2px #003C9D solid;
+}
 /* #dropdown-menu { */
 /*     position: absolute; */
 /*     top: 45px; */
@@ -235,6 +249,20 @@ Released   : 20100501
 	position: relative;
 	padding: 6em 0em;
 }
+
+.tbdetail{
+
+border-radius: 30px ;
+outline:0;
+background:	#FFFFBF	;
+color:black;
+font-size:0.5cm;
+font-weight:900;
+font-familye:微軟正黑體;
+}
+
+
+
 </style>
 
 </head>
@@ -242,6 +270,7 @@ Released   : 20100501
 <body>
 <!---------- Header ------------>
  <c:import url="forumHeader.jsp"></c:import> 
+ <div style="background-color:black;padding:10px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA"></div>
 		<!-- end header -->
 	<form method="post" action="<%=request.getContextPath()%>/saveOrUpdateArticle">
 	  <input type = "hidden" name = "forumSeq" value = "${forumBean.forumSeq}">
@@ -252,7 +281,7 @@ Released   : 20100501
       <input type = "hidden" name = "title" value = "${forumBean.title}">
       <input type = "hidden" name = "location" value = "${forumBean.location}">
 			             
-		<table width="70%" border="1" align="center"  style="border-top: 5px #ff0000;" >
+		<table width="70%" border="1" align="center"  class="tbdetail"; >
 		<tr>
 			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
 				<img width = "100%" src="images/img02.jpg" alt=""/>
@@ -267,7 +296,7 @@ Released   : 20100501
 		  		經驗 ${forumBean.memberBean.rolebean.emp}<br />
 			</td>
 			<td width="60%"  height="100px" style="border-left: 0px;">
-			<button>上傳照片</button>
+			<button class ="bot">上傳照片</button>
 			<!---------- 抓照片 ------------>
 			<%-- <c:otherwise>
 					<img src="<c:url value='/getPicture/${newform.activityNo}' />" class="imgRange" alt="圖片" />
@@ -295,8 +324,8 @@ Released   : 20100501
 						    <input type="hidden" name = "score" id = "score" value = "${forumBean.score}" />
     					</td>
 						<td width="75%">
-				<button type="button" class = "evaTag"  name="Join無聊怪" value="Join無聊怪">Join無聊怪</button>
-<button type="button" class = "evaTag"  name="太失望了.." value="太失望了..">太失望了...</button>
+<button type="button" class ="evaTag"  name="Join無聊怪" value="Join無聊怪">Join無聊怪</button>
+<button type="button" class="evaTag"  name="太失望了.." value="太失望了..">太失望了...</button>
 <button type="button" class = "evaTag"  name="太好玩了" value="太好玩了">太好玩了</button>
 <button type="button" class = "evaTag"  name="壓在地上打" value="壓在地上打">壓在地上打</button>
 <button type="button" class = "evaTag"  name="團長超帥" value="團長超帥">團長超帥</button>
@@ -362,7 +391,16 @@ $(".star").dblclick(function () {
     scoreLock = 0;
 });
 //---------------處理SCORE SCRIPT END---------------//
-$(".evaTag").css('background-color','#E2C2DE');
+/* $(".evaTag").css('background-color','white');  */
+$(".evaTag").css('outline','0');
+$(".evaTag").css('border','0');
+$(".evaTag").css('border-radius','20px');
+$(".evaTag").css('cursor','pointer');
+$("button").css('font-family','微軟正黑體');
+$("button").css('font-weight','900');
+$("input").css('font-family','微軟正黑體');
+$("input").css('font-weight','900');
+
 
 var fruits = [];
 var dataEvaTagStr =  $("#evaTag").val();
@@ -370,7 +408,8 @@ if(dataEvaTagStr !== null){
 	var dataEvaTags =dataEvaTagStr.split(',');
 	dataEvaTags.forEach(function(item, index, array) {
 			var evaName = "button[name='"+item+"']";
-			$(evaName).css('background-color','#FFFF77');
+			$(evaName).css('background-color','black');
+			$(evaName).css('color','white');
 			  fruits.push(item);
 			});
 }
@@ -381,17 +420,20 @@ $(".evaTag").click(function () {
 	var pos = fruits.indexOf(tagVal);
 	//console.log('pos:',pos);
 	if(pos == -1){
-	   $(this).css('background-color','#FFFF77');
+	   $(this).css('background-color','black');
+	   $(this).css('color','white');
 	   fruits.push(tagVal);
 	}else{
 		fruits.splice(pos, 1);
-	   $(this).css('background-color','#E2C2DE');
+	   $(this).css('background-color','white');
+	   $(this).css('color','black')
 	}
 	$("#evaTag").val(fruits.join(','));
 })
 
 </script>
 
-
+<div style="background-color:black;padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA">揪in 祝您約會愉快!!!</div>
+	
 </body>
 </html>

@@ -37,8 +37,9 @@ Released   : 20100501
 
 <style>
 #menu-bb {
-	background: #E0E000;
-	height: 50px;
+	background:#FFFF33;
+	height: 55px;
+	
 	
 }
 #thiscap {
@@ -59,7 +60,7 @@ Released   : 20100501
 	text-transform: uppercase;
 	font-family: 微軟正黑體;
 	font-weight:900;
-	font-size: 20px;
+	font-size: 22px;
 	color: BLACK;
 }
 
@@ -278,6 +279,7 @@ Released   : 20100501
 	 <c:import url="../ajax/forumTable.jsp"></c:import> 
 </div>
 		<script>
+		
 		var code = '${forumBean.code}';
 		var isCodeExists = code != null && code != '';
 		console.log('是否存在主要標題代碼',isCodeExists);

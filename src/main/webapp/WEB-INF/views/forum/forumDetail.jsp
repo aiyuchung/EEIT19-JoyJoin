@@ -235,6 +235,18 @@ Released   : 20100501
 	position: relative;
 	padding: 6em 0em;
 }
+
+.tbdetail{
+
+border-radius: 30px ;
+outline:0;
+background:	#FFFFBF	;
+color:black;
+font-size:0.5cm;
+font-weight:900;
+font-familye:微軟正黑體;
+}
+
 </style>
 
 </head>
@@ -242,7 +254,10 @@ Released   : 20100501
 <body>
 <!---------- Header ------------>
  <c:import url="forumHeader.jsp"></c:import> 
-	<table width="70%" border="1" align="center"  style="border-top: 5px #ff0000;" >
+ <div style="background-color:black;padding:10px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA"></div>
+
+ 
+	<table width="70%" border="1" align="center" class="tbdetail">
 
 		 <c:forEach var="forum" items="${forumDetailList}">
 		<tr>
@@ -250,21 +265,19 @@ Released   : 20100501
 				<img width = "100%" src="images/img02.jpg" alt=""/>
 			</td>
 				<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
-		<!-- 		String account =  (String) session.getAttribute("account");<br />
-				MemberBean member= (MemberBean) session.getAttribute("member");<br />
-				Integer memberNo = member.getMemberNo();<br /> -->
+		
 				暱稱 ${forum.memberBean.nickname}<br />
 		  		帳號 ${forum.memberBean.account}<br /> 
 		 		等級 ${forum.memberBean.rolebean.level} <br />
 		  		經驗 ${forum.memberBean.rolebean.emp}<br />
 			</td>
-			<!-- <td width="20%"  height="100px" style="border-right: 0px;">	<img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/><img width = "50%" src="images/img02.jpg" alt=""/></td> -->
+			
 			<td width="60%"  height="100px" style="border-left: 0px;">
 		    <!----------------------------------內容開始------------------------------------ -->
 		    <table width = "100%">
 		    <tr height="200px"><td><img width = "50%" src="images/img02.jpg" alt=""/></td></tr>
 		      <tr><td>${forum.article}</td></tr>
-		      <tr  height="50px"><td style="text-align :right"><fmt:formatDate value="${forum.time}" type="both"/>
+		      <tr  height="50px"><td style="text-align :right; color:purple"><fmt:formatDate value="${forum.time}" type="both"/>
 		      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		      <input class = "forumEdit" type="button" name = "${forum.forumSeq}" value="編輯">&nbsp;</td></tr>
 		    </table>
@@ -320,6 +333,18 @@ Released   : 20100501
 
 
 <script>	
+
+
+$("button").css('outline','0');
+$("button").css('border','0');
+$("button").css('border-radius','20px');
+$("button").css('cursor','pointer');
+$("button").css('font-family','微軟正黑體');
+$("button").css('font-weight','900');
+$("input").css('font-family','微軟正黑體');
+$("input").css('font-weight','900');
+  
+
 $(".forumEdit").click(function(){ //以活動類型作為快速篩選
 	var detailForumSeq = $(this).attr('name');
 	$("#detailForumSeq").val(detailForumSeq);
@@ -333,7 +358,7 @@ $(".forumEdit").click(function(){ //以活動類型作為快速篩選
   	var dataEvaTags =dataEvaTagStr.split(',');
   	dataEvaTags.forEach(function(item, index, array) {
   		if(item!=null && item != ''){
-  			combineHtml+="<button>"+item+"</button>";
+  			combineHtml+="<button style='background-color:black; color:white; outline:0; border:0; border-radius:20px; font-family:微軟正黑體;'>"+item+"</button>";
   		}
   		});
 
@@ -342,10 +367,12 @@ $(".forumEdit").click(function(){ //以活動類型作為快速篩選
   
 </c:forEach>
 
+
 </script>
 
 
 
-
+<div style="background-color:black;padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA">揪in 祝您約會愉快!!!</div>
+	
 </body>
 </html>
