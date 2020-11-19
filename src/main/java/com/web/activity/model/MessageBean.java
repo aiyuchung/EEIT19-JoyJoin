@@ -19,7 +19,7 @@ public class MessageBean implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int msgNo;				//訊息編號 PK
 	private String account;			//收件人Account,關聯MemberBean
-	private String account2;		//寄件人
+	private String fromAccount;				//寄件人
 	private String subject;			//主旨
 	private String time;				//發送時間
 	private String msg;				//訊息內容
@@ -30,10 +30,10 @@ public class MessageBean implements Serializable {
 	
 	public MessageBean() {}
 	
-	public MessageBean(int msgNo, String account, String account2, String subject, String time, String msg, int readStatus) {
+	public MessageBean(int msgNo, String account, String fromAccount, String subject, String time, String msg, int readStatus) {
 		this.msgNo = msgNo;
 		this.account = account;
-		this.account2 = account2;
+		this.fromAccount = fromAccount;
 		this.subject = subject;
 		this.time = time;
 		this.msg = msg;
@@ -56,12 +56,12 @@ public class MessageBean implements Serializable {
 		this.account = account;
 	}
 
-	public String getAccount2() {
-		return account2;
+	public String getfromAccount() {
+		return fromAccount;
 	}
 
-	public void setAccount2(String account2) {
-		this.account2 = account2;
+	public void setfromAccount(String fromAccount) {
+		this.fromAccount = fromAccount;
 	}
 
 	public String getSubject() {

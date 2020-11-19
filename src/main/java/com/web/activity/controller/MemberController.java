@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -354,12 +355,34 @@ public class MemberController {
 		  
 //---------------------------------------------▼訊息系統▼---------------------------------------------//		
 
-		@GetMapping("/showAllMsg")
-		public String getAllMsg(Model model, HttpSession session) {
+		@GetMapping("/mailMsg")
+		public String gotoMailBox(Model model, HttpSession session) {
 			String account = (String) session.getAttribute("account");
+			MessageBean mb = new MessageBean();
 			List<MessageBean> list = memberService.getAllMsg(account);
+			model.addAttribute("msgBean",mb);
 			model.addAttribute("msgList", list);
 			return "login/mailbox";
+		}
+		
+		@PostMapping("/mailMsg")
+		public String sendMail(MessageBean mb, Model model,HttpSession session) {
+			String fromId = (String) session.getAttribute("account");
+			//抓時間
+			String time="";
+			mb.setfromAccount(fromId);
+			mb.setTime(time);
+			mb.setReadStatus(0);
+			memberService.sendMsg(mb);
+			model.addAttribute("mailMsg", "站內信已寄出");
+			return "redirect:/mailbox";
+		}
+		
+		@GetMapping("/showMsg")
+		public @ResponseBody MessageBean getMsg(Model model, int msgNo) {
+			MessageBean mb = memberService.getMsg(msgNo);
+			model.addAttribute("msgOne", mb);
+			return mb;
 		}
 		
 		@GetMapping("/checkStatus")
@@ -371,6 +394,11 @@ public class MemberController {
 			}else {
 				return "no";
 			}
+		}
+		
+		@PutMapping("/changeStatus")
+		public void changeStatus(int msgNo) {
+			//未讀便已讀
 		}
 		
 		

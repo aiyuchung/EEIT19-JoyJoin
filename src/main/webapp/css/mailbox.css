@@ -1,0 +1,109 @@
+@charset "UTF-8";
+/*  ====================匯入=======================  */
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block;}audio,canvas,video{display:inline-block;}audio:not([controls]){display:none;height:0;}[hidden]{display:none;}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}body{margin:0;}a:focus{outline:thin dotted;}a:active,a:hover{outline:0;}h1{font-size:2em;margin:0.67em 0;}abbr[title]{border-bottom:1px dotted;}b,strong{font-weight:bold;}dfn{font-style:italic;}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0;}mark{background:#ff0;color:#000;}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em;}pre{white-space:pre-wrap;}q{quotes:"\201C" "\201D" "\2018" "\2019";}small{font-size:80%;}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}sup{top:-0.5em;}sub{bottom:-0.25em;}img{border:0;}svg:not(:root){overflow:hidden;}figure{margin:0;}fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:0.35em 0.625em 0.75em;}legend{border:0;padding:0;}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0;}button,input{line-height:normal;}button,select{text-transform:none;}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer;}button[disabled],html input[disabled]{cursor:default;}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0;}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none;}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}textarea{overflow:auto;vertical-align:top;}table{border-collapse:collapse;border-spacing:0;}
+
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot?rretjt');
+	src:url('../fonts/icomoon.eot?#iefixrretjt') format('embedded-opentype'),
+		url('../fonts/icomoon.woff?rretjt') format('woff'),
+		url('../fonts/icomoon.ttf?rretjt') format('truetype'),
+		url('../fonts/icomoon.svg?rretjt#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body, html { font-size: 100%; 	padding: 0; margin: 0; color: white;}
+
+
+/*  ====================頁面樣式=======================  */
+body {
+  overflow: hidden;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+body .right {
+  float: right;
+  position: relative;
+  width: 50%;
+  height: 100vh;
+}
+
+#back-div{
+	width:100%
+}
+
+
+/*  ====================信箱樣式=======================  */
+.app {
+  border-radius: 10px;
+  width: 340px;
+  margin: 0 auto;
+  height: 414px;
+  position: absolute;
+  left: 0;
+  top: 35%;
+  box-shadow: 4px 5px 0px rgba(0, 0, 0, 0.11);
+  -webkit-animation: intro 0.34s 0.4s cubic-bezier(1, 1.4, 0.41, 1.01) forwards;
+          animation: intro 0.34s 0.4s cubic-bezier(1, 1.4, 0.41, 1.01) forwards;
+  -webkit-transform: translateY(-50%) scale(0) rotateX(10deg) rotateY(10deg) rotateZ(10deg);
+          transform: translateY(-50%) scale(0) rotateX(10deg) rotateY(10deg) rotateZ(10deg);
+  margin: auto;
+  overflow: hidden;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+#keepread{
+	color:	#46A3FF;
+	border-bottom-style:solid;
+	border-width:	thin;
+	border-color:	#46A3FF;
+	position:relative;
+	left:20px
+}
+
+/*  ====================信箱效果=======================  */
+
+#mailBox{
+	margin:0 auto;
+	padding:10px;
+	width:60%;
+	border:4px solid #9F5000;
+	box-shadow: 0 0 25px 15px #9F5000;
+	
+}
+
+.mail{
+	border-bottom-style:double;
+	border-width:medium;
+	border-color:white;
+}
+
+.mail:hover{
+	box-shadow: 0 0 15px 5px #f3d42e;
+}
+
+#mailTime{
+	position:relative;
+	left:700px;
+}
+
+/*  ====================MODAL樣式=======================  */
+
+.modal-content{
+	width:500px;
+	height:380px;
+}
+
+div.modal-body {
+	padding:15px;
+	margin:0 auto;
+	color:black;
+	font-size:30px;
+	height:220px;
+}
+
+
+
+
+

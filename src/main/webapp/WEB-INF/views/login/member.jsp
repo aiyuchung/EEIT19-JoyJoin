@@ -76,7 +76,7 @@
 				<br><a href="#" class='superBtn' id='roleInfo-btn'>用戶資料</a><br> 
 				<br><a href="#" class='superBtn' id='update-btn'>修改資料</a><br>
 				<br><a href="#" class='superBtn' id='trip-btn'>出遊資料</a><br>
-				<br><a href="#" class='superBtn' id='msg-btn'>站內信箱</a><br>
+<!-- 				<br><a href="#" class='superBtn' id='msg-btn'>站內信箱</a><br> -->
 				<br><a href="#"class='superBtn' id='shop-btn'>點數購買</a><br>
 			</div>
 			<div id="showAreaTop" class="text-effect">
@@ -348,21 +348,21 @@
 	        $('#drop-select').val(('#dropdown-list li').val());
 	    });
 		
-	    $('#msg-btn').on('click',function(){
-			$.ajax({
-				url : "showAllMsg",
-				type : "GET",
-				dataType : "html", 
-				contentType : 'application/json; charset=utf-8',
-				data : {}, //data空的代表沒任何參數
-				success : function(data) { 
-					$("#showAreaTop").empty();
-//						$("#showAreaTop").append(data); 
-					$("#showAreaTop").css("border", "2px solid white").addClass("animated");
-					$("#showAreaTop").append(data);
-				}
-			})
-		})
+// 	    $('#msg-btn').on('click',function(){
+// 			$.ajax({
+// 				url : "showAllMsg",
+// 				type : "GET",
+// 				dataType : "html", 
+// 				contentType : 'application/json; charset=utf-8',
+// 				data : {}, //data空的代表沒任何參數
+// 				success : function(data) { 
+// 					$("#showAreaTop").empty();
+// //						$("#showAreaTop").append(data); 
+// 					$("#showAreaTop").css("border", "2px solid white").addClass("animated");
+// 					$("#showAreaTop").append(data);
+// 				}
+// 			})
+// 		})
 	    
 		$('#trip-btn').on('click', function() {
 			str = '旅遊連結' ;

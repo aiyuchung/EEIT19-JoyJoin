@@ -8,47 +8,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
 	<%-- 	<input id="num" type="text" value="${activitiesNum}" hidden /> --%>
 	<!-- 	<span id="textSpan"></span> -->
 
-	<h2 class="sub-header">站內信箱</h2>
 	<div class="post newajaxlist">
-		<div class="table-responsive">
-			<table class="table table-striped" style="color:white">
-<!-- 				<thead> -->
-<!-- 						這邊可以用個迴圈拉資料出圈拉資料出 -->
-<!-- 					<tr> -->
-<!-- 						<th>account</th> -->
-<!-- 						<th>level</th> -->
-<!-- 						<th>emp</th> -->
-<!-- 						<th>accountType</th> -->
-<!-- 						<th>noticeType</th> -->
-<!-- 												<th>update</th> -->
-<!-- 					</tr> -->
-<!-- 				</thead> -->
-				<c:forEach var="msg" items="${msgList}">
+		<table>
+				<tr><td>FROM${msgOne.account}</td></tr>
+				<tr><td>Subject${msgOne.subject}</td></tr>
+					<td>TIME${msgOne.time}</td>
+					
+					
+				
 
-					<tr id="${msg.msgNo}">
-						<td>寄件人:${msg.account}</td>
-						<td>收件人:${msg.account2}</td>
-						<td>時間:${msg.time}</td>
-						<td>
-							<c:if test="${msg.readStatus == 0}">未讀</c:if>
-							<c:if test="${msg.readStatus == 1}">已讀</c:if>						
-						</td>
-					</tr>
-
-
-				</c:forEach>
-			</table>
-		</div>
+		</table>
 	</div>
 	
 	<script>
-			console.log("${msg.msgNo}")
-			console.log("${msg.readStatus}")
+
+			
 	</script>
 
 </body>
