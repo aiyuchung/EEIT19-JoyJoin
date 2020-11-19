@@ -36,7 +36,13 @@ public interface CMSService {
 
 	Map<String, Long> getActivityProv();
 	
+	public Map<String, Long> getstarSignCounts();
+	
 	//	<會員部分>	
 	List<MemberBean> selectAllMembers();
 	List<RoleBean> selectAllRoles();
+	
+	public void updateRole(RoleBean RoleB);
+	//搜尋單筆角色
+	public RoleBean getRole(Integer roleNo);
 }

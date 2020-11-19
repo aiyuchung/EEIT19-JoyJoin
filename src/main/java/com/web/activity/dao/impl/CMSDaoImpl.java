@@ -24,6 +24,27 @@ public class CMSDaoImpl implements CMSDao {
 	@Autowired
 	SessionFactory factory;
 
+	
+	// 星座次數
+		@Override
+
+		public Map<String, Long> getstarSignCounts() {
+			Session session = factory.getCurrentSession();
+			Map<String, Long> map = new HashMap<>();
+			String[] arrayGender = { "白羊座", "金牛座", "雙子座", "巨蟹座", "獅子座", "處女座", "天秤座", "天蠍座", "射手座", "摩羯座", "水瓶座", "雙魚座" };
+			for (String starSign : arrayGender) {
+				String hqls = "select count(*) FROM MemberBean Where starSign=:starSign";
+				Long star = (Long) session.createQuery(hqls).setParameter("starSign", starSign).uniqueResult();
+				map.put(starSign, star);// KEY:VALUE
+				System.out.println("map =>>>>>>>>>>>>>>>" + map);
+				System.out.println("您好");
+			}
+
+			return map;
+
+		}
+	
+	
 	@Override
 	public Map<String, Long> getGenderCounts() {
 		Session session = factory.getCurrentSession();
@@ -155,6 +176,35 @@ public class CMSDaoImpl implements CMSDao {
 		return mb;
 		
 	}
+	
+	//更新虛擬角色
+		@Override
+		public void updateRole(RoleBean RoleB) {
+			System.out.println(RoleB.getRoleNo());
+			System.out.println(RoleB.getLevel());
+			
+			Session session = factory.getCurrentSession();
+			String hqlr = "UPDATE RoleBean SET level = :level, "
+					+ "Emp = :Emp, "
+					+ "accountType = :accountType, "
+					+ "noticeType = :noticeType "
+					+ "WHERE roleNo = :roleNo ";
+			int num =  session.createQuery(hqlr).setParameter("level", RoleB.getLevel())
+									 .setParameter("Emp", RoleB.getEmp())
+									 .setParameter("accountType", RoleB.getAccountType())
+									 .setParameter("noticeType", RoleB.getNoticeType())
+									 .setParameter("roleNo", RoleB.getRoleNo())
+									 .executeUpdate();
+			System.out.println(num);
+			System.out.println("hello BABY");
+		}
+		
+		//搜尋單筆虛擬角色
+		public RoleBean getRole(Integer roleNo) {
+			Session session = factory.getCurrentSession();
+			RoleBean ro = session.get(RoleBean.class,roleNo);
+			return ro;
+		}
 
 
 }

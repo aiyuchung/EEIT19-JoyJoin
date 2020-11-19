@@ -74,6 +74,11 @@ public class CMSServiceImpl implements CMSService {
 	}
 	
 	
+	@Override
+	public Map<String, Long> getstarSignCounts(){
+		return dao.getstarSignCounts();
+	}
+	
 	
 	//<會員部分>
 	public List<MemberBean> selectAllMembers(){
@@ -83,6 +88,16 @@ public class CMSServiceImpl implements CMSService {
 		return dao.selectAllRoles();
 	}
 	
+	@Transactional
+	@Override
+	public void updateRole(RoleBean RoleB) {
+		dao.updateRole(RoleB);
+//		System.out.println("ro="+ro);
+	}
+	
+	public RoleBean getRole(Integer roleNo) {
+		return dao.getRole(roleNo);
+	}
 	
 
 }
