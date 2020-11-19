@@ -39,7 +39,7 @@
 					</c:if>				
 					<span id="keepread">繼續閱讀...</span><br>
 					<div id="mailTime">
-						<h5>寄件人:${msg.account}</h5>
+						<h5>寄件人:${msg.fromAccount}</h5>
 						<h6>時間:${msg.time}</h6>
 					</div>
 					<input type="hidden" value="${msg.msg}"/>
@@ -103,7 +103,7 @@
 	            </div>
 	            <div class="modal-footer">
 	                <input type="button" class="btn btn-secondary" data-dismiss="modal" value="返回">
-	                <input type="button" class="btn btn-primary" value="發送">
+	                <input type="submit" class="btn btn-primary" value="發送">
 	            </div>
 	            </form:form>
 	       </div>
@@ -120,17 +120,23 @@
 	if("${mailMsg}" != ""){
 		$(window).load(function(){
 			$('#successMsgArea').modal('show')
+			setTimeout(function(){
+				window.location.reload();//刷新當前頁面
+			},2000)
 		})
 	}
 	
 // ===================寄信=======================	
 	
 	$("#writeNewLetter-btn").on("click",function(){
+		$("#account-sendTo").attr("value", "")
 		$('#letterArea').modal('show');
 	})
 	
 	$("#returnLetter-btn").on("click",function(){
-		var strAccount = $(this).find('h5').text().substring(2);
+		var strAccount = $("#account-from").text().substring(4);
+		console.log("=================>"+strAccount)
+		$("#account-sendTo").attr("value", strAccount)
 		$("#showMsgArea").modal('hide');
 		$('#letterArea').modal('show');
 	})
@@ -138,6 +144,19 @@
 // ===================看信=======================	
 	
 	$(".mail").on("click",function(){
+		console.log("msgid4====>"+$(this).prop("id"))
+		var no = $(this).prop("id")
+		//AJAX的部分
+		 $.ajax({
+            url:"changeStatus",
+            type:"Put",
+            contentType:"application/json",
+            dataType:"json",
+            data:{msgNo:no},
+            timeout:1000,
+            success:function(msg){}
+		 })
+		//SHOW的部分
 		var textMsg = $(this).find('input').val();
 		var textFrom = $(this).find('h5').text();
 		console.log(textFrom)

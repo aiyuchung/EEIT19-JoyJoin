@@ -70,6 +70,8 @@ body .right {
 	width:60%;
 	border:4px solid #9F5000;
 	box-shadow: 0 0 25px 15px #9F5000;
+	overflow-x: auto;
+	-ms-overflow-style: none;
 	
 }
 

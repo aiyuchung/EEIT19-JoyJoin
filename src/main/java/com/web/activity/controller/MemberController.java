@@ -368,14 +368,15 @@ public class MemberController {
 		@PostMapping("/mailMsg")
 		public String sendMail(MessageBean mb, Model model,HttpSession session) {
 			String fromId = (String) session.getAttribute("account");
-			//抓時間
-			String time="";
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd,hh:mm:ss");
+   		 	String time = dateFormat.format(new Date());//抓時間
+   		 	System.out.println("SendTime=============>"+time);
 			mb.setfromAccount(fromId);
 			mb.setTime(time);
 			mb.setReadStatus(0);
 			memberService.sendMsg(mb);
 			model.addAttribute("mailMsg", "站內信已寄出");
-			return "redirect:/mailbox";
+			return "login/mailbox";
 		}
 		
 		@GetMapping("/showMsg")
@@ -397,8 +398,9 @@ public class MemberController {
 		}
 		
 		@PutMapping("/changeStatus")
-		public void changeStatus(int msgNo) {
-			//未讀便已讀
+		public String changeStatus(int msgNo) {
+			memberService.readMsg(msgNo);
+			return "";
 		}
 		
 //---------------------------------------------▼名片▼---------------------------------------------//

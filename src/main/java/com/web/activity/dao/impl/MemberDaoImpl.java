@@ -426,6 +426,13 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	@Override
+	public void readMsg(int msgNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE MessageBean SET readStatus = :status WHERE msgNO = :no";
+		session.createQuery(hql).setParameter("status", 1).setParameter("no", msgNo).executeUpdate();
+	}
+	
+	@Override
     public OrderBean createOrder(Integer memberNo, OrderBean order) {
         Session session = factory.getCurrentSession();
         int i = (int) (new Date().getTime()/1000);

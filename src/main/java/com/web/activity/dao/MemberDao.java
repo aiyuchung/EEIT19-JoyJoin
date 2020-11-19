@@ -87,6 +87,8 @@ public interface MemberDao {
 			//獲得單筆訊息
 		public void sendMsg(MessageBean mb);
 			//寄出訊息
+		public void readMsg(int msgNo);
+			//讀取訊息
 		
 		
 }

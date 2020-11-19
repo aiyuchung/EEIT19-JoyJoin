@@ -25,8 +25,8 @@ public class MessageBean implements Serializable {
 	private String msg;				//訊息內容
 	private int readStatus;			//閱讀狀態
 	
-	@ManyToOne(cascade=CascadeType.ALL)	
-	private MemberBean memberBean;
+//	@ManyToOne(cascade=CascadeType.ALL)	
+//	private MemberBean memberBean;
 	
 	public MessageBean() {}
 	
