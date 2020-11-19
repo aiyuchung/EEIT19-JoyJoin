@@ -9,7 +9,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -350,12 +352,25 @@ public class MemberController {
 			
 			List<ActivityFollowedBean> beans = memberService.getFollowedActivity(memberNo);
 //			List<ActivityJoinedBean> joined = memberService.getJoinedActivity(memberNo);//取得此會員參加的活動名單
-			
 //			List <Integer> joinedActivities = new ArrayList<>();
-//			for(ActivityJoinedBean ajb:joined) {
-//				int joinedActivity = ajb.getActivityBean().getActivityNo();
-//				joinedActivities.add(joinedActivity);
-//			}
+			for(ActivityFollowedBean afb:beans) {
+				String statusa = afb.getCondition();
+				System.out.println("urlnO: "+ afb.getUrlNo());
+				if (statusa.equalsIgnoreCase("舉辦") ) {
+//					
+					Date date = afb.getActivityBean().getActivityDate();
+					Date today = new Date();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					String sttoday = dateFormat.format(today);
+					String stdate = dateFormat.format(date);
+//					System.out.println(date+"  --date");
+//					System.out.println(today+"  --today");
+					if (sttoday.equals(stdate)) {
+						System.out.println("staus will change");
+						afb.setCondition("可發討論");
+					}
+				}
+			}
 			
 			model.addAttribute("followed",beans);
 //			model.addAttribute("joinedActivities",joinedActivities);

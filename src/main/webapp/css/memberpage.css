@@ -77,7 +77,8 @@ a {
 	display: inline-block;
 	text-decoration: none;
 	cursor: pointer;
-	font-family: 'Trebuchet MS', Helvetica, sans-serif;
+/* 	font-family: 'Trebuchet MS', Helvetica, sans-serif; */
+	font-family: Microsoft JhengHei;
   }
 
 /* ==========================================按鈕特效========================================================= */
@@ -206,7 +207,8 @@ p.detail {
 
 .text-effect{
     /* color: #ffff00; */
-    font-family: 'Cabin Sketch', cursive;
+/*     font-family: 'Cabin Sketch', cursive; */
+    font-family: Microsoft JhengHei;
     font-size: 25px;
     text-align: center;
     text-transform: uppercase;
@@ -221,6 +223,7 @@ p.detail {
 }
 
 .text-effect span{
+	 font-family: Microsoft JhengHei;
     display: inline-block;
     animation: animate 0.5s linear infinite both;
     margin-left:15px;

@@ -1,6 +1,7 @@
 package com.web.activity.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +54,10 @@ public class ActivityDaoImpl implements ActivityDao {
 		String hql1 = "UPDATE ActivityBean SET activityStatus = 'inactive' WHERE finalDate = :now AND joinedNum < minLimit ";
 		String hql1s = "FROM ActivityBean WHERE activityStatus = 'inactive' AND finalDate = :now";
 		Date today = new Date();
-		session.createQuery(hql).setParameter("now",today).executeUpdate();
+		Calendar cal = Calendar.getInstance();
+		int date = cal.get(Calendar.DATE);
+		int tomorrow = date + 1;
+		session.createQuery(hql).setParameter("now",tomorrow).executeUpdate();
 		List<ActivityBean> OKLists = session.createQuery(hqls).setParameter("now",today).getResultList();
 		session.createQuery(hql1).setParameter("now",today).executeUpdate();
 		List<ActivityBean> inactiveLists = session.createQuery(hql1s).setParameter("now",today).getResultList();
