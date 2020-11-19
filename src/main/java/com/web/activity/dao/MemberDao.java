@@ -89,6 +89,8 @@ public interface MemberDao {
 			//寄出訊息
 		public void readMsg(int msgNo);
 			//讀取訊息
+		public void delMsg(int msgNo);
+			//刪除訊息
 		
 		
 }

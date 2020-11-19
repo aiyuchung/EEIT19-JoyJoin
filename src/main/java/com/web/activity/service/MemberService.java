@@ -57,6 +57,8 @@ public interface MemberService {
 			//送出訊息
 		public void readMsg(int msgNo);
 			//閱讀訊息
+		public void delMsg(int msgNo);
+			//刪除訊息
 		public OrderBean createOrder(Integer memberNo, OrderBean order);
 			//存訂單 並取出
 		

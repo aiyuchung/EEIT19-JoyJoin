@@ -81,6 +81,7 @@
 	            <div class="modal-body" id="msgArea"  style="padding:15px;margin:0 auto;color:black;font-size:30px;height:220px">
 	            </div>
 	            <div class="modal-footer">
+	           		<input type="button" class="btn btn-primary" id="delMsg-btn" value="刪除信件">
 	                <input type="button" class="btn btn-primary" id="returnLetter-btn" value="回覆信件">
 	            </div>
 	       </div>
@@ -168,7 +169,13 @@
 		
 	})
 	
-
+// ===================刪信=======================
+	
+		$("#delMsg-btn").on("click",function(){
+			location.href = "<c:url value='/delMsg'/>";
+		})
+		
+	
 // 	$(document).ready(function(){
 // 		$('#msg-btn').on('click',function(){
 // 			$.ajax({

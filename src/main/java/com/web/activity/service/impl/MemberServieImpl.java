@@ -163,6 +163,12 @@ public class MemberServieImpl implements MemberService {
 		
 		@Transactional
 		@Override
+		public void delMsg(int msgNo) {
+			memberDao.delMsg(msgNo);
+		}
+		
+		@Transactional
+		@Override
 		public OrderBean createOrder(Integer memberNo, OrderBean order) {
 			return memberDao.createOrder(memberNo,order);
 		}
