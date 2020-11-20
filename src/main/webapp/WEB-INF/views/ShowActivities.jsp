@@ -320,7 +320,8 @@
 						<form id="searchform" method="get" action="#">
 							<h6>&nbsp;&nbsp;關鍵字搜尋</h6>
 							<div>
-								&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="s" id="s" size="20" value="" placeholder="EX: 瑜珈" /> <br />
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="text" name="s" id="s" size="20" value="" placeholder="EX: 瑜珈" /> <br />
 								<button type="button" class="btn btn-outline-light btn-sm">確認</button>
 							</div>
 						</form>
@@ -328,8 +329,10 @@
 <!-- tags未寫 -->					
 					<li>
 						<h2>Tags</h2>
-						<p>
-							<a href="#">dolor</a> <a href="#">ipsum</a> <a href="#">lorem</a>
+						<p class="forcookie">
+							<c:forEach var="keyword" items="${keywords}">
+							 <a href="#">${keyword}</a>
+							</c:forEach>
 							
 						</p>
 					</li>
@@ -864,6 +867,17 @@ function showNext(){
 	$(".btn-sm").click(function(){          //關鍵字篩選
 		var keywords = $("#s").val();
 		console.log(keywords);
+		$.ajax({
+			  url:"checkCookie",
+			  type: "GET",
+			  dataType: "html", //server送回
+			  contentType: 'application/json; charset=utf-8',
+			  data: {keyword: keywords},
+			  success:function(data){
+				  $(".forcookie").empty();
+				  $(".forcookie").append(data);
+				}
+		})
 		$.ajax({
 			  url:"ajax_keyWords",
 			  type: "get",

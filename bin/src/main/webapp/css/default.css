@@ -269,7 +269,7 @@ img.right {
 
 .sidebar li li {
 	padding: 8px 0 8px 0px;
-	background: url(images/img01.jpg) repeat-x left bottom;
+/* 	background: url(images/img01.jpg) repeat-x left bottom; */
 }
 
 .sidebar li li a:hover {

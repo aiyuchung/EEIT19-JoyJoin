@@ -101,8 +101,9 @@ body{
 
 			<!-- Logo -->
 			<div id="logo">
-			<img src="${pageContext.request.contextPath}/images/JoyJoin.png">
-				<h1>
+			<a href="<c:url value='/' />">
+			<img src="${pageContext.request.contextPath}/images/JoyJoin.png"></a>			
+			<h1>
 					
 				</h1>
 			</div>

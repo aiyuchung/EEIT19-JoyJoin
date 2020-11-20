@@ -515,21 +515,39 @@ public class ActivitiesController {
 
 	}
 	
-	
+	List<String> cookies = new ArrayList<>();
 	@RequestMapping(value = "checkCookie")
-    public String checkCookie(String s, HttpServletResponse response){
+    public String checkCookie(HttpSession httpsession,String keyword, HttpServletResponse response, Model model){
         // 新建Cookie
-        Cookie keywords_cookie = new Cookie("keyword", s);
         // 輸出到客戶端
-        response.addCookie(keywords_cookie);
-        return "redirect:getCookie";
+		if(cookies.size() == 0) {
+			cookies.add(keyword);
+		}else {
+			for(int i =0; i <cookies.size(); i++) {
+				if (!cookies.get(i).equals(keyword)) {
+					cookies.add(keyword);
+					break;
+					
+				}else {
+					break;
+				}
+			}if (cookies.size()>10) {
+				cookies.remove(0);
+			}
+		}
+		
+		httpsession.setAttribute("keywords", cookies);
+		model.addAttribute("keywords",cookies);
+		
+        return "ajax/cookie";
 	}
 	
 	@RequestMapping(value = "getCookie")
-    public String getCookie(@CookieValue("keyword") String keyword){
+    public String getCookie(HttpSession httpsession, Model model){
         // 控制檯輸出
-        System.out.println("keyword: " + keyword);
-        return "success";
+//        System.out.println("keyword: " + keyword);
+        
+        return "ajax/cookie";
     }
 
 //	@ModelAttribute
