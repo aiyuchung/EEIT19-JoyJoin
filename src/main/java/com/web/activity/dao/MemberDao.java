@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
+import com.web.activity.model.FriendBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
 import com.web.activity.model.OrderBean;
@@ -98,6 +99,24 @@ public interface MemberDao {
 			//回傳帳號狀態 0為未開通 1為正常 2為黑名單
 		public void changeType2Back(String account, int type);
 			//後臺改變帳號狀態
+				
+//---------------------------------------------▼好友功能▼---------------------------------------------//		
+		
+		public List<String> getFriendListA(String account);
+			//搜尋好友清單
+		public List<String> getFriendListB(String account);
+			//搜尋好友清單		
+		public boolean hostAndFriend();
+			//判斷使用者和對方是不是朋友
+		public boolean friendPostReady();
+			//判斷是否已有交友申請
+		public void friendWithMe();
+			//申請好友
+		public Integer friendStatus();
+			//判斷回應 ( A1預設值為1 所以只看A2回應)
+		public void changeStatus();
+			//更改交友狀態
+		
 		
 		
 }

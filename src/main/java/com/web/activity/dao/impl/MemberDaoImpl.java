@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.web.activity.dao.MemberDao;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
+import com.web.activity.model.FriendBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
 import com.web.activity.model.OrderBean;
@@ -476,7 +477,43 @@ public class MemberDaoImpl implements MemberDao {
 		session.createQuery(hql).setParameter("type", type).setParameter("id", account).executeUpdate();
 	}
 
+	//---------------------------------------------▼好友功能▼---------------------------------------------//		
 	
+			public List<String> getFriendListA(String account){
+				Session session = factory.getCurrentSession();
+				String hql = "SELECT accountTwo FROM FriendBean WHERE accountOne = :id";
+				@SuppressWarnings("unchecked")
+				List<String> friend = (List<String>) session.createQuery(hql).setParameter("id", account);
+				return friend;
+			}
+
+			public List<String> getFriendListB(String account){
+				Session session = factory.getCurrentSession();
+				String hql = "SELECT accountOne FROM FriendBean WHERE accountTwo = :id";
+				@SuppressWarnings("unchecked")
+				List<String> friend = (List<String>) session.createQuery(hql).setParameter("id", account);
+				return friend;
+			}
+			public boolean hostAndFriend() {
+				
+			}
+
+			public boolean friendPostReady() {
+				
+			}
+			
+			public void friendWithMe() {
+				
+			}
+				
+			public Integer friendStatus() {
+				
+			}
+			
+			public void changeStatus() {
+				
+			}
+				//更改交友狀態
 	
 	
 }
