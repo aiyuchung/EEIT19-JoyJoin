@@ -317,7 +317,7 @@ public class MemberController {
 				MemberBean luckyguy = mbl.get(posi);
 				System.out.println("GET ONE GUY=======>"+luckyguy);
 				model.addAttribute("luckyguy", luckyguy);
-				return "ajax_getpair";
+				return "ajax_membercard";
 			}
 
 		  private List<MemberBean> getList(String account){			
