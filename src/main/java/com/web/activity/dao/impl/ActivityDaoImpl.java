@@ -500,14 +500,7 @@ public class ActivityDaoImpl implements ActivityDao {
 			follow.setCondition("舉辦");
 			session.save(follow);
 		}
-	//----------------------------------------留言版的刪除--------------------------------------------
-			@Override
-			public void inactiveActivity(int activityNo) {
-				Session session = factory.getCurrentSession();
-				String hql = "UPDATE ActivityBean SET activityStatus = 'inactive' WHERE activityNo=:no";
-				session.createQuery(hql).setParameter("no",activityNo).executeUpdate();
-			}
-
+		
 	//----------------------------------------關注活動存連結--------------------------------------------	
 		@Override
 		public void followActivity(Integer memberNo, ActivityFollowedBean follow,int activityNo) {

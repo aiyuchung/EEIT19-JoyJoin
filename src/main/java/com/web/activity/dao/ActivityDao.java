@@ -103,13 +103,9 @@ public interface ActivityDao {
 	//新增活動
 	void createActivity(Integer memberNo, ActivityBean newform);
 	
-	//刪除活動(下架)
-	void inactiveActivity(int activityNo);
-	
 	//關注活動
 	void followActivity(Integer memberNo, ActivityFollowedBean follow,int activityNo);
 
 	//取消關注活動
 	void unfollowActivity(Integer memberNo, String activityUrl);
-	
 }
