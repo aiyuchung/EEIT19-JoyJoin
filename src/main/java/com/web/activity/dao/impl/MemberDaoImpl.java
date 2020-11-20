@@ -502,8 +502,9 @@ public class MemberDaoImpl implements MemberDao {
 				
 			}
 			
-			public void friendWithMe() {
-				
+			public void friendWithMe(FriendBean fb) {
+				Session session = factory.getCurrentSession();
+				String hql = 
 			}
 				
 			public Integer friendStatus() {

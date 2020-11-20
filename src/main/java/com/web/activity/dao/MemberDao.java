@@ -110,7 +110,7 @@ public interface MemberDao {
 			//判斷使用者和對方是不是朋友
 		public boolean friendPostReady();
 			//判斷是否已有交友申請
-		public void friendWithMe();
+		public void friendWithMe(FriendBean fb);
 			//申請好友
 		public Integer friendStatus();
 			//判斷回應 ( A1預設值為1 所以只看A2回應)

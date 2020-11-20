@@ -42,6 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.FormBean;
+import com.web.activity.model.FriendBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
 import com.web.activity.model.RoleBean;
@@ -502,16 +503,24 @@ public class MemberController {
 //---------------------------------------------▼好友系統▼---------------------------------------------//		
 
 		@GetMapping("/friendList")
-		public String getFriendList(Model model) {		//傳送friend資料到jsp ajax呼叫
-			//抓HOST為A1的LIST
-			//抓HOST為A2的LIST
-			//將值放入新的STRING LIST
-			//MODEL
-			//回傳
+		public String getFriendList(Model model, HttpSession session) {		//傳送friend資料到jsp ajax呼叫
+			String account = (String) session.getAttribute("account");
+			List<String> friendList = memberService.getFriendList(account);
+			model.addAttribute("friend", friendList);
+			return "";
 		}
 		
-		public String makeFriend() {		//跟我做朋友
-			
+		public String makeFriend(FriendBean fb) {		//跟我做朋友
+			fb.setOneType(1);
+			fb.setTwoType(0);
+			fb.setStatus(0);
+			memberService.friendWithMe(fb);
+			return "redirect:/member";
+		}
+		
+		public String checkFriend(HttpSession session) {
+			String account = (String) session.getAttribute("account");
+
 		}
 		
 		public String delFriend(Model model, String account, HttpSession session) {		//刪除好友,傳入對象Account和自己帳號

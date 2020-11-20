@@ -18,13 +18,13 @@ public class FriendBean implements Serializable {
 	private Integer friendNo;
 	private String accountOne;
 	private String accountTwo;
-	private String oneType;
-	private String twoType;
+	private Integer oneType;
+	private Integer twoType;
 	private Integer status;
 	
 	public FriendBean() {}
 	
-	public FriendBean(Integer friendNo, String accountOne, String accountTwo, String oneType, String twoType, Integer status) {
+	public FriendBean(Integer friendNo, String accountOne, String accountTwo, Integer oneType, Integer twoType, Integer status) {
 		this.friendNo = friendNo;
 		this.accountOne = accountOne;
 		this.accountTwo = accountTwo;
@@ -57,19 +57,19 @@ public class FriendBean implements Serializable {
 		this.accountTwo = accountTwo;
 	}
 
-	public String getOneType() {
+	public Integer getOneType() {
 		return oneType;
 	}
 
-	public void setOneType(String oneType) {
+	public void setOneType(Integer oneType) {
 		this.oneType = oneType;
 	}
 
-	public String getTwoType() {
+	public Integer getTwoType() {
 		return twoType;
 	}
 
-	public void setTwoType(String twoType) {
+	public void setTwoType(Integer twoType) {
 		this.twoType = twoType;
 	}
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
+import com.web.activity.model.FriendBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
 import com.web.activity.model.OrderBean;
@@ -67,5 +68,5 @@ public interface MemberService {
 			//後台改變會員帳號狀態	
 		public List<String> getFriendList(String account);
 			//抓取好友列表
-		public void friendWithMe();
+		public void friendWithMe(FriendBean fb);
 }	

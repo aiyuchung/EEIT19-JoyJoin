@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.web.activity.dao.MemberDao;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
+import com.web.activity.model.FriendBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
 import com.web.activity.model.OrderBean;
@@ -200,4 +201,13 @@ public class MemberServieImpl implements MemberService {
 			}
 			return list3;
 		}
+		
+		@Transactional
+		@Override
+		public void friendWithMe(FriendBean fb) {
+			memberDao.friendWithMe(fb);
+		}
+		
+		
+		
 }
