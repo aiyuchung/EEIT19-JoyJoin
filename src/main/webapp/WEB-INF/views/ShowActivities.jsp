@@ -330,9 +330,7 @@
 						<h2>Tags</h2>
 						<p>
 							<a href="#">dolor</a> <a href="#">ipsum</a> <a href="#">lorem</a>
-							<a href="#">sit amet</a> <a href="#">dolor</a> <a href="#">ipsum</a>
-							<a href="#">lorem</a> <a href="#">sit amet, integer nisl
-								risus, sagittis convallis, rutrum id, elementum congue</a>
+							
 						</p>
 					</li>
 <!-- 日曆 -->

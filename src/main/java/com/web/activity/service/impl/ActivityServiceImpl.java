@@ -86,7 +86,12 @@ public class ActivityServiceImpl implements ActivityService {
 //				System.out.println("today-->"+ today);
 //				Date expiredDay = sdf.parse(bean.getFinalDate());
 //				System.out.println(expiredDay);
-				long diff = expiredDay.getTime() - today.getTime() ; //截止日跟今天差幾毫秒
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(expiredDay);
+				cal.add(Calendar.DAY_OF_MONTH, +1);
+				Date realexpiredDay = cal.getTime();
+				
+				long diff = realexpiredDay.getTime() - today.getTime() ; //截止日跟今天差幾毫秒
 //				System.out.println("diff:"+ diff);
 				long diffDays = diff / (24 * 60 * 60 * 1000); //截止日跟今天差幾天
 //				System.out.println(diffDays);

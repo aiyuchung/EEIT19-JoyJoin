@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialBlob;
 
@@ -21,11 +23,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +40,6 @@ import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityForm;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
-import com.web.activity.model.ActivityPicBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.ProvinceBean;
@@ -104,9 +107,19 @@ public class ActivitiesController {
 				break;
 			}
 		}
+		List<ActivityFollowedBean> followed = memberService.getFollowedActivity(member.getMemberNo());
+		boolean isFollowed = false;
+		for(ActivityFollowedBean afb:followed) {
+			String followedAccount = afb.getMemberBean().getAccount();
+			if (followedAccount.equals(account)) {  //如果使用者在參加名單內回傳true
+				isFollowed = true;
+				break;
+			}
+		}
 		model.addAttribute("frombtn",frombtn);
 		model.addAttribute("nickname",nickname);
 		model.addAttribute("isJoined",isJoined);
+		model.addAttribute("isFollowed",isFollowed);
 		model.addAttribute("joined",joined);
 		model.addAttribute("msgBox",msgBox);
 		model.addAttribute("msgNum",msgNum);
@@ -217,6 +230,14 @@ public class ActivitiesController {
 		return provs;
 	}
 	
+	@ModelAttribute("nickname")
+	public String a5(HttpSession session) {
+		String account =  (String) session.getAttribute("account");
+		MemberBean member = memberService.getMember(account);
+		String nickname = member.getNickname();
+		return nickname;
+	}
+	
 	@GetMapping("/newActivities")	
 	public String newAcitivity(Model model
 			) {
@@ -230,7 +251,7 @@ public class ActivitiesController {
 			 @ModelAttribute("newform") ActivityBean newform) {
 		
 		String account =  (String) session.getAttribute("account");
-		MemberBean member= (MemberBean) session.getAttribute("member");
+		MemberBean member = memberService.getMember(account);
 		Integer memberNo = member.getMemberNo();
 		
 		MultipartFile mFile = newform.getUpdateImg();
@@ -483,6 +504,33 @@ public class ActivitiesController {
 		return "ajax/activity lists";
 
 	}
+	
+	@GetMapping("/ajax_keyWordscookie")
+	public String cookie(@CookieValue(value = "s", defaultValue = "Atta") String username,
+			Model model, HttpServletResponse response,
+			@RequestParam String keyword) {
+		 Cookie cookie = new Cookie("s", "Jovan");
+		 response.addCookie(cookie);
+		return  "";
+
+	}
+	
+	
+	@RequestMapping(value = "checkCookie")
+    public String checkCookie(String s, HttpServletResponse response){
+        // 新建Cookie
+        Cookie keywords_cookie = new Cookie("keyword", s);
+        // 輸出到客戶端
+        response.addCookie(keywords_cookie);
+        return "redirect:getCookie";
+	}
+	
+	@RequestMapping(value = "getCookie")
+    public String getCookie(@CookieValue("keyword") String keyword){
+        // 控制檯輸出
+        System.out.println("keyword: " + keyword);
+        return "success";
+    }
 
 //	@ModelAttribute
 //	public MemberBean isexist(

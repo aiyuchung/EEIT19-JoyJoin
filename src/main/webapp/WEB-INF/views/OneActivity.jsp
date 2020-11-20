@@ -174,6 +174,10 @@
 										<a href="<c:url value='/updateActivity/${one.activityNo}'/>" class="btn btn-contact">
 										<strong>修改活動</strong></a>
 									</c:when>
+									<c:when test="${isFollowed == true}">
+										<div class="nofollow" >
+										<strong><span style="font-size:18px">★</span>取消關注</strong></div>
+									</c:when>
 									<c:otherwise>
 										<div class="follow">
 <%-- 										<img src="<c:url value='/icons/star.png'/>"/> --%>
@@ -313,7 +317,7 @@
 										<c:choose>
 											<c:when test="${one.memberBean.account == account}">
 											</c:when>
-											<c:when test="${one.maxLimit == 'one.joinedNum'}">
+											<c:when test="${one.maxLimit == one.joinedNum}">
 												<button class="btn btn-full" disabled>已額滿</button>
 											</c:when>
 											<c:otherwise>
@@ -456,14 +460,14 @@
 		if (!isJoined){
 			var text = $(this).text();
 			var classname = $(this).find("div").attr("class")
-			if (classname == "unfollow"){ //關注改成不關注
+			if (classname == "nofollow"){ //關注改成不關注
 				$(".reminder").empty();
 				$(".reminder").append('<div class="follow"><strong><span style="font-size:18px">✰</span>關注本活動</strong></div>')
 	 			var curentUrl = location.href;
 				$.ajax({
 					  url:"<c:url value='/ajax_unfollow' />",
 					  type: "POST",
-					  dataType: "html", 
+// 					  dataType: "html", 
 					  data:  {
 						  activityUrl: curentUrl.toString(),
 						  },
@@ -503,6 +507,9 @@
 		if(!isJoined){
 			if(host != visit){
 				$('#msgModal').modal('show');
+			}else{
+				$(".msgboard").show();
+				$(".addmsg").show();
 			}
 		}else{
 			$(".msgboard").show();
