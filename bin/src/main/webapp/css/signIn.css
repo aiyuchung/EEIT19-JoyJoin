@@ -1,0 +1,321 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,700);
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+
+/* ---------------------------▼BODY設定▼-------------------------- */
+body, html {
+  height: 100%;
+}
+body {
+  font-family: 'Open Sans';
+  font-weight: 100;
+  display: flex;
+  overflow: hidden;
+}
+/* ---------------------------▲BODY設定▲-------------------------- */
+
+/* input { */
+/*   input::-webkit-input-placeholder { */
+/*      color: rgba(255,255,255,0.7); */
+/*   } */
+/*   input::-moz-placeholder { */
+/*      color: rgba(255,255,255,0.7);   */
+/*   } */
+/*   input:-ms-input-placeholder {   */
+/*      color: rgba(255,255,255,0.7);   */
+/*   } */
+/*   input:focus { */
+/*     outline: 0 transparent solid; */
+/*     ::-webkit-input-placeholder { */
+/*      color: rgba(0,0,0,0.7); */
+/*     } */
+/*     ::-moz-placeholder { */
+/*        color: rgba(0,0,0,0.7);   */
+/*     } */
+/*     :-ms-input-placeholder {   */
+/*        color: rgba(0,0,0,0.7);   */
+/*     } */
+/*   } */
+/* } */
+
+.login-form {
+/*   //background: #222; */
+/*   //box-shadow: 0 0 1rem rgba(0,0,0,0.3); */
+  min-height: 10rem;
+  margin: auto;
+  max-width: 50%;
+  padding: .5rem;
+}
+.login-text {
+/*   //background: hsl(40,30,60);s */
+/*   //border-bottom: .5rem solid white; */
+  color: white;
+  font-size: 1.5rem;
+  margin: 0 auto;
+  max-width: 50%;
+  padding: .5rem;
+  text-align: center;
+/*   //text-shadow: 1px -1px 0 rgba(0,0,0,0.3); */
+}
+  .fa-stack-1x {
+    color: black;
+  }
+
+/* ---------------------------▼輸入框設定▼-------------------------- */
+.login-username, .login-password {
+  background: transparent;
+  border: 0 solid;
+  border-bottom: 1px solid rgba(white, .5);
+  color: white;
+  display: block;
+  margin: 1rem;
+  padding: .5rem;
+  transition: 250ms background ease-in;
+  width: calc(100% - 3rem);
+}
+
+.login-username:focus, .login-password:focus {
+    background: white;
+    color: black;
+    transition: 250ms background ease-in;
+  }
+/* ---------------------------▲輸入框設定▲-------------------------- */
+
+
+.login-forgot-pass {
+/*   //border-bottom: 1px solid white; */
+  bottom: 0;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-size: 75%;
+  left: 0;
+  opacity: 0.6;
+  padding: .5rem;
+  position: absolute;
+  text-align: center;
+/*   //text-decoration: none; */
+  width: 100%;
+}
+.login-forgot-pass:hover {
+    opacity: 1;
+  }
+  
+/* ---------------------------▼按鍵設定▼-------------------------- */  
+	.login-submit {
+	  border: 1px solid white;
+	  background: transparent;
+	  color: white;
+	  display: block;
+	  margin: 1rem auto;
+	  min-width: 1px;
+	  transition: 250ms background ease-in;
+	  padding:4px;
+	}
+
+
+  .login-submit:hover, .login-submit:focus {
+    background: white;
+    color: black;
+    transition: 250ms background ease-in;
+  }
+/* ---------------------------▲按鍵設定▲-------------------------- */
+
+
+[class*=underlay] {
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+/* ---------------------------▼背景圖片設定▼-------------------------- */
+
+.underlay-photo {
+  animation: hue-rotate 6s infinite;
+  background: url('https://31.media.tumblr.com/41c01e3f366d61793e5a3df70e46b462/tumblr_n4vc8sDHsd1st5lhmo1_1280.jpg');
+  background-size: cover;
+  -webkit-filter: grayscale(30%);
+  z-index: -1;
+}
+.underlay-black {
+  background: rgba(0,0,0,0.7);
+  z-index: -1;
+}
+
+/* ---------------------------▲背景圖片設定▲-------------------------- */
+
+
+@keyframes hue-rotate {
+  from {
+    -webkit-filter: grayscale(30%) hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: grayscale(30%) hue-rotate(360deg);
+  }
+}
+.fa-lock{
+	color:black;
+}
+
+/* ---------------------------▼ajax, modal設定▼-------------------------- */
+
+/* .modal-login-result { */
+/* 	height: 40vh; */
+/* 	width:40vw; */
+/* 	border-radius:50em; */
+/* 	border: 3px solid green; */
+/* 	position: absolute; */
+/* 	margin:0 auto; */
+/* 	top:300px; */
+/* 	background:red; */
+/* 	color:white; */
+/* } */
+
+#msg{
+	position: absolute;
+	left:70px;
+	top:150px;
+	color:red;
+	text-shadow:0px 4px 3px rgba(0,0,0,0.4),
+						0px 8px 13px rgba(0,0,0,0.1),
+		                0px 18px 23px rgba(0,0,0,0.1);
+}
+
+#msg2{
+	position: absolute;
+	left:125px;
+	top:250px;
+	color:blue;
+	text-decoration:underline;
+}
+
+/* ==========================================註冊表單樣式========================================================= */
+
+.form-horizontal{
+    background: #fff;
+    padding-bottom: 40px;
+    border-radius: 15px;
+    text-align: center;
+}
+.form-horizontal .heading{
+    display: block;
+    font-size: 35px;
+    font-weight: 700;
+    padding: 35px 0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 30px;
+}
+.form-horizontal .form-group{
+    padding: 0 40px;
+    margin: 0 0 25px 0;
+    position: relative;
+}
+.form-horizontal .form-control{
+    background: #f0f0f0;
+    border: none;
+    border-radius: 30px;
+    box-shadow: #FFFF77 0px 0px 15px;
+    padding: 0 20px 0 45px;
+    height: 40px;
+    transition: all 0.3s ease 0s;
+    
+}
+.form-horizontal .form-control:focus{
+    background: #e0e0e0;
+    outline: 0 none;
+}
+.form-horizontal .form-group i{
+    position: absolute;
+    top: 12px;
+    left: 50px;
+    font-size: 17px;
+    color: #c8c8c8;
+    transition : all 0.5s ease 0s;
+}
+.form-horizontal .form-control:focus + i{
+    color: #00b4ef;
+    box-shadow:#FFA488 0px 0px 15px;
+}
+.form-horizontal .fa-question-circle{
+    display: inline-block;
+    position: absolute;
+    top: 12px;
+    right: 60px;
+    font-size: 20px;
+    color: #808080;
+    transition: all 0.5s ease 0s;
+}
+.form-horizontal .fa-question-circle:hover{
+    color: #000;
+}
+.form-horizontal .main-checkbox{
+    float: left;
+    width: 20px;
+    height: 20px;
+    background: #11a3fc;
+    border-radius: 50%;
+    position: relative;
+    margin: 5px 0 0 5px;
+    border: 1px solid #11a3fc;
+}
+.form-horizontal .main-checkbox label{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+.form-horizontal .main-checkbox label:after{
+    content: "";
+    width: 10px;
+    height: 5px;
+    position: absolute;
+    top: 5px;
+    left: 4px;
+    border: 3px solid #fff;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.form-horizontal .main-checkbox input[type=checkbox]{
+    visibility: hidden;
+}
+.form-horizontal .main-checkbox input[type=checkbox]:checked + label:after{
+    opacity: 1;
+}
+.form-horizontal .text{
+    float: left;
+    margin-left: 7px;
+    line-height: 20px;
+    padding-top: 5px;
+    text-transform: capitalize;
+}
+.form-horizontal .btn{
+    float: right;
+    font-size: 14px;
+    color: #fff;
+    background: #00b4ef;
+    border-radius: 30px;
+    padding: 10px 25px;
+    border: none;
+    text-transform: capitalize;
+    transition: all 0.5s ease 0s;
+}
+@media only screen and (max-width: 479px){
+    .form-horizontal .form-group{
+        padding: 0 25px;
+    }
+    .form-horizontal .form-group i{
+        left: 45px;
+    }
+    .form-horizontal .btn{
+        padding: 10px 20px;
+    }
+}
+
+

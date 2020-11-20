@@ -55,11 +55,13 @@ public class ActivityDaoImpl implements ActivityDao {
 		String hql1s = "FROM ActivityBean WHERE activityStatus = 'inactive' AND finalDate = :now";
 		Date today = new Date();
 		Calendar cal = Calendar.getInstance();
-		int date = cal.get(Calendar.DATE);
-		int tomorrow = date + 1;
+		cal.setTime(today);
+		cal.add(Calendar.DAY_OF_MONTH, -1);
+		Date tomorrow = cal.getTime();
+		
 		session.createQuery(hql).setParameter("now",tomorrow).executeUpdate();
 		List<ActivityBean> OKLists = session.createQuery(hqls).setParameter("now",today).getResultList();
-		session.createQuery(hql1).setParameter("now",today).executeUpdate();
+		session.createQuery(hql1).setParameter("now",tomorrow).executeUpdate();
 		List<ActivityBean> inactiveLists = session.createQuery(hql1s).setParameter("now",today).getResultList();
 		int todayOK = OKLists.size();
 		int todayinactive = inactiveLists.size();
@@ -88,7 +90,7 @@ public class ActivityDaoImpl implements ActivityDao {
 	@Override
 	public List<ActivityBean> selectAllActivities() {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ";
+		String hql = "FROM ActivityBean WHERE activityStatus = 'active' ORDER BY finalDate ASC";
 		List<ActivityBean> activities = session.createQuery(hql).getResultList();
 		return activities;
 	}
@@ -97,7 +99,7 @@ public class ActivityDaoImpl implements ActivityDao {
 	@Override
 	public List<ActivityBean> selectLatest() {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM ActivityBean  WHERE activityStatus = 'active' ORDER BY createdDate DESC";
+		String hql = "FROM ActivityBean  WHERE activityStatus = 'active' ORDER BY activityNo DESC";
 		List<ActivityBean> latestOnes = session.createQuery(hql).setFirstResult(0).setMaxResults(5).getResultList();
 		return latestOnes;
 	}

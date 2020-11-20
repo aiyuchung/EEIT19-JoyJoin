@@ -317,7 +317,7 @@ public class MemberController {
 					luckyguy = mbl.get(posi);
 					System.out.println("GET ONE GUY=======>"+luckyguy);
 				}while(luckyguy.getAccount()==account);
-				
+				System.out.println("======抓成功了======");
 				model.addAttribute("luckyguy", luckyguy);
 				return "login/ajax_membercard";
 			}

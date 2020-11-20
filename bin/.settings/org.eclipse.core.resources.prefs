@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//src/com/MovieController.java=UTF-8
+encoding//src/com/MovieDao.java=UTF-8
+encoding//src/customer/Delete.java=UTF-8
+encoding//src/customer/selectOne.java=UTF-8
+encoding//src/customer/update.java=UTF-8
+encoding//src/restaurant/Food_DAO.java=UTF-8
+encoding//src/sport/Crud.java=UTF-8
+encoding//src/sport/SportController.java=UTF-8
+encoding//src/trip/daoForTable.java=UTF-8
