@@ -32,7 +32,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/_spring/workspace/JoyJoin/javax.servlet-3.0.0.v201112011016.jar"/>
-	<classpathentry kind="lib" path="C:/_spring/workspace/JoyJoin/log4j.jar"/>
+	<classpathentry kind="lib" path="D:/其中專題 first/jars/javax.servlet-3.0.0.v201112011016.jar"/>
+	<classpathentry kind="lib" path="D:/其中專題 first/jars/log4j.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

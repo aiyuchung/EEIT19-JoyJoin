@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.web.activity.Enum.ForumType;
 import com.web.activity.model.ForumBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.RoleBean;
+import com.web.activity.model.userBean;
 import com.web.activity.service.ActivityService;
 import com.web.activity.service.ForumService;
 import com.web.activity.service.MemberService;
@@ -129,7 +131,19 @@ public class ForumController {
 	}
 	
 	@PostMapping("/saveOrUpdateArticle")
-	public String saveOrUpdateArticle( Model model,@ModelAttribute("form") ForumBean form) {
+	public String saveOrUpdateArticle( Model model,@ModelAttribute("form") ForumBean form,HttpSession session) {
+		//抓取使用者帳號
+		String id = (String) session.getAttribute("account");
+		//用ID抓MEMBERBEAN ROLEBEAN
+		MemberBean mb = memberService.getMember(id);
+		RoleBean rb = memberService.getRole(id);
+		//
+		userBean ub = new userBean();
+		ub.setAccount(id);
+		ub.setNickname(mb.getNickname());
+		ub.setLevel(rb.getLevel());
+		ub.setEmp(rb.getEmp());
+		ub.setPic(mb.getPicture());
 		//service.createForumTitle(26);
 		List<ForumBean> forumList = service.saveOrUpdateArticle(form);
 		ForumBean forumBean = forumList.stream()
