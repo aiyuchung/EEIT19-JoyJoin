@@ -311,9 +311,8 @@
 	              data: {}, 
 	              success:function(data){
 	            	  $("#showArea").empty();
-	      			  $("#showAreaTop").empty();
-	                  $("#showAreaTop").css("border", "0").addClass("animated").html(str);
-	                  $("#showAreaTop").append(data);
+	                  $("#showArea").addClass("animated").html(str);
+	                  $("#showArea").append(data);
 	                }
 	        })
 	    })
