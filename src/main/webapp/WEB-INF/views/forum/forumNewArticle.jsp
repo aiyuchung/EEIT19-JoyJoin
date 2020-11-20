@@ -272,7 +272,7 @@ font-familye:微軟正黑體;
  <c:import url="forumHeader.jsp"></c:import> 
  <div style="background-color:black;padding:10px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA"></div>
 		<!-- end header -->
-	<form method="post" action="<%=request.getContextPath()%>/saveOrUpdateArticle">
+	<form method="post" action="<%=request.getContextPath()%>/saveOrUpdateArticle" enctype="multipart/form-data">
 	  <input type = "hidden" name = "forumSeq" value = "${forumBean.forumSeq}">
 	  <input type = "hidden" name = "code" value = "${forumBean.code}">
       <input type = "hidden" name = "activityCode" value = "${forumBean.activityCode}">
@@ -284,23 +284,19 @@ font-familye:微軟正黑體;
 		<table width="70%" border="1" align="center"  class="tbdetail"; >
 		<tr>
 			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
-				<img width = "100%" src="images/img02.jpg" alt=""/>
+				<img src="<c:url value='/getMemberPicture/${forumBean.memberBean.account}' />" class="imgRange" alt="圖片" style="width:100%" />
 			</td>
 			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
-		<!-- 		String account =  (String) session.getAttribute("account");<br />
-				MemberBean member= (MemberBean) session.getAttribute("member");<br />
-				Integer memberNo = member.getMemberNo();<br /> -->
+		
 				暱稱 ${forumBean.memberBean.nickname}<br />
 		  		帳號 ${forumBean.memberBean.account}<br /> 
 		 		等級 ${forumBean.memberBean.rolebean.level} <br />
 		  		經驗 ${forumBean.memberBean.rolebean.emp}<br />
 			</td>
 			<td width="60%"  height="100px" style="border-left: 0px;">
-			<button class ="bot">上傳照片</button>
 			<!---------- 抓照片 ------------>
-			<%-- <c:otherwise>
-					<img src="<c:url value='/getPicture/${newform.activityNo}' />" class="imgRange" alt="圖片" />
-			</c:otherwise> --%>
+			<c:import url="forumImgUpload.jsp"></c:import> 
+			
 			
 			
 			<textarea style="width:100%;height:100px;"  name ="article">${forumBean.article}</textarea>

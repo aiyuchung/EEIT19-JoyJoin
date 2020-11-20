@@ -262,7 +262,7 @@ font-familye:微軟正黑體;
 		 <c:forEach var="forum" items="${forumDetailList}">
 		<tr>
 			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
-				<img width = "100%" src="images/img02.jpg" alt=""/>
+				<img src="<c:url value='/getMemberPicture/${forum.memberBean.account}' />" class="imgRange" alt="圖片" style="width:100%" />
 			</td>
 				<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
 		
@@ -274,12 +274,34 @@ font-familye:微軟正黑體;
 			
 			<td width="60%"  height="100px" style="border-left: 0px;">
 		    <!----------------------------------內容開始------------------------------------ -->
-		    <table width = "100%">
-		    <tr height="200px"><td><img width = "50%" src="images/img02.jpg" alt=""/></td></tr>
-		      <tr><td>${forum.article}</td></tr>
-		      <tr  height="50px"><td style="text-align :right; color:purple"><fmt:formatDate value="${forum.time}" type="both"/>
+		    <table>
+		     <c:if test="${forum.photo != null}">
+		    <tr >
+		    <td height="150px">
+
+		    <img width="100%" height="100%" src="<c:url value='/getForumPicture/${forum.forumSeq}/1' />" class="imgRange" alt="" />
+		      </td>
+		      <td height="150px">
+		      <img width="100%" height="100%"  src="<c:url value='/getForumPicture/${forum.forumSeq}/2' />" class="imgRange" alt="" />
+		    </td>
+		    
+		 
+		    </tr>
+		       </c:if>
+		       
+		       
+		      <tr>
+		      <td rowSpan="2">${forum.article}</td>
+		      </tr>
+		      
+		      <tr  height="50px">
+		      <td  rowSpan="2" style="text-align :right; color:purple">
+		      <fmt:formatDate value="${forum.time}" type="both"/>
 		      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		      <input class = "forumEdit" type="button" name = "${forum.forumSeq}" value="編輯">&nbsp;</td></tr>
+		      <input class = "forumEdit" type="button" name = "${forum.forumSeq}" value="編輯">&nbsp;
+		      </td>
+		      
+		      </tr>
 		    </table>
 		  
 			<!-- --------------------------------內容結束------------------------------------ -->			

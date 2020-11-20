@@ -1,17 +1,23 @@
 package com.web.activity.service.impl;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.sql.rowset.serial.SerialBlob;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.web.activity.Enum.ForumType;
 import com.web.activity.dao.ForumDao;
@@ -86,6 +92,20 @@ public class ForumServiceImpl implements ForumService {
 	
 	@Override
 	public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean){
+		if(forumBean.getPictures()!= null) {
+			Blob blob1 = this.handlePictures(forumBean.getPictures()[0]);
+			Blob blob2 = null;
+			if(forumBean.getPictures().length>1) {
+				 blob2 = this.handlePictures(forumBean.getPictures()[1]);
+			}
+			
+			if(blob1!=null) {
+				forumBean.setPhoto(blob1);
+			}
+			if(blob2!=null) {
+				forumBean.setPhoto2(blob2);
+			}
+		}
 		//如果沒有key值，進行新增文章
 		List<ForumBean> resultList = new ArrayList<ForumBean>();
 		if(forumBean.getForumSeq() == null) {
@@ -93,6 +113,9 @@ public class ForumServiceImpl implements ForumService {
 		}else {
 		//若已存在key值，則進行文章更新
 			forumBean.setForumType(ForumType.DETAIL);
+			if (forumBean.getScore() == null) {
+				forumBean.setScore(BigDecimal.ZERO);
+			}
 			forumDao.updateForum(forumBean.getForumSeq(), forumBean);
 		}
 		ForumBean queryForum = new ForumBean();
@@ -119,6 +142,22 @@ public class ForumServiceImpl implements ForumService {
 		forumBean.setScore(averageNumber);
 		forumDao.updateForum(forumBean.getForumSeq(), forumBean);
 
+	}
+	
+	
+	private Blob handlePictures(MultipartFile mFile) {
+		Blob blob = null;
+        if (mFile != null && !mFile.isEmpty()) {
+            byte[] b;
+				try {
+					b = mFile.getBytes();
+					blob = new SerialBlob(b);
+				} catch (IOException | SQLException e) {
+					e.printStackTrace();
+					throw new RuntimeException("異常:" + e.getMessage());
+				}
+			}
+        return blob;
 	}
 	
 	

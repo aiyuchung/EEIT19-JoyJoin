@@ -51,7 +51,7 @@ public class ForumBean implements java.io.Serializable {
 	private String title;
 	//討論區 評分
 	@NotNull
-	private BigDecimal score;
+	private BigDecimal score = BigDecimal.ZERO;
 	//討論區 發文者
 	@NotNull
 	private String author;
@@ -72,6 +72,10 @@ public class ForumBean implements java.io.Serializable {
 	
 	//討論發文 照片
 	private Blob photo;
+	
+	//討論發文 照片
+	private Blob photo2;
+	
 	//討論發文 文章
 	@Column(length=2048)
 	private String article;
@@ -99,6 +103,13 @@ public class ForumBean implements java.io.Serializable {
 	@Transient
 	private String keyWord;
 	
+	@Transient
+	private MultipartFile[] pictures;
+	
+	//討論發文 照片
+	@Transient
+    private String photoStr;
+	
 //	===========================因為加入照片要用===========================
 	
 	/*
@@ -107,7 +118,12 @@ public class ForumBean implements java.io.Serializable {
 	 * private String fileName;
 	 */
 	
-
+	public MultipartFile[] getPictures() {
+		return pictures;
+	}
+	public void setPictures(MultipartFile[] pictures) {
+		this.pictures = pictures;
+	}
 	public Integer getForumSeq() {
 		return forumSeq;
 	}
@@ -210,5 +226,17 @@ public class ForumBean implements java.io.Serializable {
 	}
 	public void setMemberBean(MemberBean memberBean) {
 		this.memberBean = memberBean;
+	}
+	public Blob getPhoto2() {
+		return photo2;
+	}
+	public void setPhoto2(Blob photo2) {
+		this.photo2 = photo2;
+	}
+	public String getPhotoStr() {
+		return photoStr;
+	}
+	public void setPhotoStr(String photoStr) {
+		this.photoStr = photoStr;
 	}
 }

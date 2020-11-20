@@ -244,5 +244,64 @@ Released   : 20100501
  <c:import url="forumHeader.jsp"></c:import> 
  <div style="background-color:black;padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA">揪in 祝您約會愉快!!!</div>
 		
+		
+		<!-- 請登入的modal  -->	
+
+<input type="text" id="userAccount" value="${account}" hidden>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+	  <div class="modal-dialog" role="document">
+
+	    <div class="modal-content" style="background-color:#ECEBEB; border:0">
+
+	      <div class="modal-header" style="background-color:#85AD90; border:2px solid #85AD90">
+
+	        <h5 class="modal-title" id="exampleModalLabel" style="color:black;font-size:15px ">未登入提醒</h5>
+
+	      </div>
+
+	      <div class="modal-body" style="color:black; font-size:19px">
+
+	        	您現在正在前往會員才能使用的功能!
+
+	      </div>
+
+	      <div class="modal-footer">
+
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal" >晚點再登入</button>
+
+	        <a type="button" class="btn btn-primary" href="<c:url value='/login' />" style="background-color:#85AD90;border:1px solid #85AD90">現在登入</a>
+
+	      </div>
+
+	    </div>
+
+	  </div>
+
+	</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<script>$(".more").click(function(){
+
+	var account = $("#userAccount").val();
+
+	console.log("account ="+account);
+
+	if (account == "" || account == null){
+
+		$('#exampleModal').modal('show');
+
+		event.preventDefault();
+
+	}
+
+})
+</script>
+
+		
 </body>
 </html>
