@@ -110,16 +110,23 @@ public class ActivitiesController {
 		List<ActivityFollowedBean> followed = memberService.getFollowedActivity(member.getMemberNo());
 		boolean isFollowed = false;
 		for(ActivityFollowedBean afb:followed) {
-			String followedAccount = afb.getMemberBean().getAccount();
-			if (followedAccount.equals(account)) {  //如果使用者在參加名單內回傳true
+			int followedactivityno = afb.getActivityBean().getActivityNo();
+			if (followedactivityno == activityNo) {  //如果使用者的關注名單跟此單號相同回傳true
 				isFollowed = true;
 				break;
 			}
+		}
+		boolean levelLimit = false;
+		int levelSetting = activity.getLevelLimit();
+		String level = (String) session.getAttribute("level");
+		if (Integer.parseInt(level) < levelSetting) {
+			levelLimit = true;
 		}
 		model.addAttribute("frombtn",frombtn);
 		model.addAttribute("nickname",nickname);
 		model.addAttribute("isJoined",isJoined);
 		model.addAttribute("isFollowed",isFollowed);
+		model.addAttribute("levelLimit",levelLimit);
 		model.addAttribute("joined",joined);
 		model.addAttribute("msgBox",msgBox);
 		model.addAttribute("msgNum",msgNum);
@@ -203,7 +210,15 @@ public class ActivitiesController {
 		model.addAttribute("categoryList",categoryList);
 		model.addAttribute("provs",provs);
 		
-		return "CreateNewActivity";
+		return "redirect:/oneActivity/{id}";
+	}
+//-----------------------------------------刪除活動跳轉全部活動頁面↓-----------------------------------------	
+	@GetMapping("/deleteActivity/{id}")
+	public String delete(@PathVariable("id") int activityNo, HttpSession session, Model model) {
+		service.inactiveActivity(activityNo);
+		
+		
+		return "redirect:/activities";
 	}
 //-----------------------------------------新增活動空的form表單↓-----------------------------------------	
 	@ModelAttribute("activities")

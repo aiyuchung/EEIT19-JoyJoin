@@ -145,11 +145,11 @@ public class MemberDaoImpl implements MemberDao {
 		}catch(Exception e) {
 			;
 		}
-		if(emp>500) {
+		if(emp>5000) {
 			session.createQuery(hql2).setParameter("lv","1" ).setParameter("id", account).executeUpdate();
-		}else if(emp>=500 && emp<1000) {
+		}else if(emp>=5000 && emp<10000) {
 			session.createQuery(hql2).setParameter("lv","2" ).setParameter("id", account).executeUpdate();
-		}else if(emp>=1000) {
+		}else if(emp>=10000) {
 			session.createQuery(hql2).setParameter("lv","3" ).setParameter("id", account).executeUpdate();			
 		}
 	}
