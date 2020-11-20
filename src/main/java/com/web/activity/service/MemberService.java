@@ -64,6 +64,8 @@ public interface MemberService {
 		public Integer checkType2Back(String account);
 			//後臺檢查會員帳號狀態
 		public void changeType2Back(String account, int type);
-			//後台改變會員帳號狀態
-
+			//後台改變會員帳號狀態	
+		public List<String> getFriendList(String account);
+			//抓取好友列表
+		public void friendWithMe();
 }	

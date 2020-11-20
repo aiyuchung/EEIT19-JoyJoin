@@ -498,6 +498,32 @@ public class MemberController {
 		 return re;
 		}
 	}		
+
+//---------------------------------------------▼好友系統▼---------------------------------------------//		
+
+		@GetMapping("/friendList")
+		public String getFriendList(Model model) {		//傳送friend資料到jsp ajax呼叫
+			//抓HOST為A1的LIST
+			//抓HOST為A2的LIST
+			//將值放入新的STRING LIST
+			//MODEL
+			//回傳
+		}
+		
+		public String makeFriend() {		//跟我做朋友
+			
+		}
+		
+		public String delFriend(Model model, String account, HttpSession session) {		//刪除好友,傳入對象Account和自己帳號
+			
+		}
+		
+		public agree2BeFriend() {			//收到申請應對
+			
+		}
+		
+		
+		
 //-----------------------------------------------------------------------
 		
 //		@RequestMapping()

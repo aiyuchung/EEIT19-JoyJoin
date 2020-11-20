@@ -185,5 +185,19 @@ public class MemberServieImpl implements MemberService {
 			memberDao.changeType2Back(account, type);
 		}
 		
-		
+		@Transactional
+		@Override
+		public List<String> getFriendList(String account){
+			List<String> list1 = memberDao.getFriendListA(account);
+			List<String> list2 = memberDao.getFriendListB(account);
+			List<String> list3 = list1;
+			for( String id : list2 ) {
+				for( String id2 : list1 ) {
+					if( !id.equals(id2)) {
+						list3.add(id);
+					}
+				}
+			}
+			return list3;
+		}
 }
