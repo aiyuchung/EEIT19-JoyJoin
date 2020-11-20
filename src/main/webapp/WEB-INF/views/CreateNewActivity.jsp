@@ -120,8 +120,8 @@
 <!-- 								<div class="about-information"> -->
 									<h1 class="section-title">活動細項</h1>
 									<div class="info-block  ">
-											<div class="fortitle">主辦人: </div>
-											<div class="forcontent"><a href="#">主辦人${member.nickname}</a></div>
+											<div class="fortitle">主辦人 </div>
+											<div class="forcontent"><a href="#">${nickname}</a></div>
 									</div>
 									<div class="info-block  ">
 											<div class="fortitle">活動名稱</div>
@@ -237,8 +237,10 @@
 									<div class="info-block  ">
 											<div class="fortitle">所需費用</div>
 											<div class="forcontent">
-											<form:input path="price" value="0" class="form-control"/>
+												<form:input path="price" value="0" class="form-control intOnly"/>
+												<div class="invalid-feedback" style="display:none"></div>
 											</div>
+											
 									</div>
 									<div class="info-block  ">
 											<div class="fortitle" style="vertical-align:top">活動介紹/提醒</div>
@@ -310,6 +312,17 @@
 				$(this).addClass("is-invalid");
 				$(this).parent().find(".invalid-feedback").css("display","block").text("必填欄位");
 			}else{
+				$(this).removeClass("is-invalid");
+				$(this).parent().find(".invalid-feedback").css("display","none");
+			}
+	})
+	
+	$(".intOnly").keyup(function(){
+		var val = $(this).val();
+		 if (val != val.replace(/[^0-9\.]/g, '')){
+				$(this).addClass("is-invalid");
+				$(this).parent().find(".invalid-feedback").css("display","block").text("只能輸入數字");
+		 }else{
 				$(this).removeClass("is-invalid");
 				$(this).parent().find(".invalid-feedback").css("display","none");
 			}
