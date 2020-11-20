@@ -70,7 +70,7 @@
 					<p>
 						<span>${member.nickname}</span> ( ${account} )
 					</p>
-					<p style="text-shadow:2px 2px 2px #00FF00">${member.mail}</p>
+					<p style="font-size:20px;text-shadow:2px 2px 2px #00FF00">${member.mail}</p>
 				</div>
 			</div>
 			<div id="btnArea">
