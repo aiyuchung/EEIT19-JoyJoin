@@ -312,7 +312,7 @@ public class MemberController {
 				List<MemberBean> mbl = getList(account);
 				System.out.println("GET LIST OK=======>"+mbl);
 				int max = mbl.size();
-				int posi = (int) (Math.random()*(max-0.1))+1;
+				int posi = (int) (Math.random()*(max-0.1));
 				System.out.println("POSITION=======>"+posi);
 				MemberBean luckyguy = mbl.get(posi);
 				System.out.println("GET ONE GUY=======>"+luckyguy);

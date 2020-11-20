@@ -105,7 +105,7 @@
 			<tr>
 				<td>
 <!-- 					<div class="fb-login-button" data-size="small" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false" data-width="" onclick="FBLogin();"></div> -->
-					<input type="button" value="登入" onclick="FBLogin();" />
+					<input type="button" value="FB登入" onclick="FBLogin();" />
 <!-- 				<fb:login-button scope="public_profile" onlogin="checkLoginState();"></fb:login-button> -->
 				</td>
 			</tr>
