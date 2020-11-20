@@ -28,6 +28,8 @@
 <!-- ====================文字特效======================= -->
 <%-- <link href="<c:url value='css/bootstrap.css' />" rel="stylesheet"> --%>
 <link	href="https://fonts.googleapis.com/css?family=Cabin+Sketch:700&display=swap"rel="stylesheet">
+<!-- ====================名片樣式======================= -->
+<link rel="stylesheet" href="<c:url value='css/membercard.css' />" />
 
 <style>
   a.superBtn{
@@ -357,7 +359,7 @@
 				data : {}, //data空的代表沒任何參數
 				success : function(data) { 
 					$("#showAreaTop").empty();
-					$("#showAreaTop").css("border", "2px solid white").addClass("animated");
+					$("#showAreaTop").addClass("animated");
 					$("#showAreaTop").append(data);
 				}
 			})

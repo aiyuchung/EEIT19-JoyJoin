@@ -30,12 +30,12 @@
 		</figure>
 	</c:when>
 	<c:otherwise>
-		<figure class="snip0056">
+		<figure class="snip0056 red">
 			<figcaption>
 				<h2>${luckyguy.nickname} <span>${luckyguy.account}</span></h2>
-				<p>${luckyguy.gender}</p>
-				<p>${luckyguy.mail}</p>
-				<p>${luckyguy.signature}</p>
+				<p>${luckyguy.gender}<br>
+					${luckyguy.mail}<br>
+					${luckyguy.signature}</p>
 				<div class="icons">
 					<a href="#"><i class="ion-ios-home"></i></a>
 					<a href="#"><i class="ion-ios-email"></i></a>

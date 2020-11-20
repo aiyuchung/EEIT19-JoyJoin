@@ -80,7 +80,7 @@ figure.snip0056 .position {
   opacity: 1;
   font-style: italic;
   color: #ffffff;
-  background: #000000;
+  background: #6A6AFF	;
   clear: both;
 }
 figure.snip0056.blue .position {
@@ -96,3 +96,6 @@ figure.snip0056:hover > img,
 figure.snip0056.hover > img {
   right: -12%;
 }
+p {
+	padding:0;
+	margin:0;	}

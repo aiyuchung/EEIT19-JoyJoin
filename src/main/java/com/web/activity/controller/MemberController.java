@@ -9,9 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -312,12 +310,16 @@ public class MemberController {
 				List<MemberBean> mbl = getList(account);
 				System.out.println("GET LIST OK=======>"+mbl);
 				int max = mbl.size();
-				int posi = (int) (Math.random()*(max-0.1));
-				System.out.println("POSITION=======>"+posi);
-				MemberBean luckyguy = mbl.get(posi);
-				System.out.println("GET ONE GUY=======>"+luckyguy);
+				MemberBean luckyguy = null;
+				do {
+					int posi = (int) (Math.random()*(max-0.1));
+					System.out.println("POSITION=======>"+posi);
+					luckyguy = mbl.get(posi);
+					System.out.println("GET ONE GUY=======>"+luckyguy);
+				}while(luckyguy.getAccount()==account);
+				
 				model.addAttribute("luckyguy", luckyguy);
-				return "ajax_membercard";
+				return "login/ajax_membercard";
 			}
 
 		  private List<MemberBean> getList(String account){			
