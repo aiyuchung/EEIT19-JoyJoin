@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
 @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
 figure.snip0056 {
@@ -81,7 +80,7 @@ figure.snip0056 .position {
   opacity: 1;
   font-style: italic;
   color: #ffffff;
-  background: #000000;
+  background: #6A6AFF	;
   clear: both;
 }
 figure.snip0056.blue .position {
@@ -91,9 +90,12 @@ figure.snip0056.red .position {
   background: #962d22;
 }
 figure.snip0056.yellow .position {
-  background: #bf6516;
+  background: #FF5151;
 }
 figure.snip0056:hover > img,
 figure.snip0056.hover > img {
   right: -12%;
 }
+p {
+	padding:0;
+	margin:0;	}

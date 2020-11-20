@@ -388,7 +388,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<MessageBean> getAllMsg(String account){
 		Session session = factory.getCurrentSession();
-		String hql = "FROM MessageBean WHERE account = :id ORDER BY readStatus DESC, time DESC";
+		String hql = "FROM MessageBean WHERE account = :id ORDER BY readStatus ASC , time DESC";
 		@SuppressWarnings("unchecked")
 		List<MessageBean> list = session.createQuery(hql).setParameter("id", account).getResultList();
 		System.out.println("id=======>"+account);
