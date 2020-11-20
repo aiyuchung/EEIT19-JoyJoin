@@ -284,14 +284,14 @@ font-familye:微軟正黑體;
 		<table width="70%" border="1" align="center"  class="tbdetail"; >
 		<tr>
 			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
-				<img src="<c:url value='/getMemberPicture/${forumBean.memberBean.account}' />" class="imgRange" alt="圖片" style="width:100%" />
+				<img src="<c:url value='/getMemberPicture/${account}' />" class="imgRange" alt="圖片" style="width:100%" />
 			</td>
 			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
 		
 				暱稱 ${forumBean.memberBean.nickname}<br />
 		  		帳號 ${forumBean.memberBean.account}<br /> 
-		 		等級 ${forumBean.memberBean.rolebean.level} <br />
-		  		經驗 ${forumBean.memberBean.rolebean.emp}<br />
+		 		等級 ${level} <br />
+<%-- 		  		經驗 ${forumBean.memberBean.rolebean.emp}<br /> --%>
 			</td>
 			<td width="60%"  height="100px" style="border-left: 0px;">
 			<!---------- 抓照片 ------------>

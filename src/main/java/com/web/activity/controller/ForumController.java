@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.activity.Enum.ForumType;
-import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ForumBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.service.ActivityService;
@@ -111,6 +110,21 @@ public class ForumController {
 	public String forumUpdateArticle( Model model,@ModelAttribute("form") ForumBean form) {
 		ForumBean forumRes = service.selectOneForum(form.getForumSeq());
 		model.addAttribute("forumBean",forumRes);
+		return "forum/forumNewArticle";
+	}
+	
+	@GetMapping("/createNewTitle/{id}")
+	public String getforumNewArticle(Model model, @PathVariable("id") Integer activeNo) {
+		//傳入活動號碼，建立新的討論標題
+		Integer forumSeq  = service.createForumTitle(activeNo);
+		//取得剛存好的討論標題ID，使用ID查詢詳細資料
+		ForumBean form = service.selectOneForum(forumSeq);
+		//清空ID
+		form.setForumSeq(null);
+		//這行可能不用加，記得儲存標題的時候就有做了，如果有就刪掉
+		form.setAuthor(form.getMemberBean().getMemberNo().toString());
+		//把標題資訊傳到新增頁面
+		model.addAttribute("forumBean",form);
 		return "forum/forumNewArticle";
 	}
 	
