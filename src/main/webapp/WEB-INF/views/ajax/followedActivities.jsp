@@ -15,6 +15,9 @@
 	.links{
 		color:white;
 		margin-top:8px;
+		border-bottom-style:double;
+		border-width:medium;
+		border-color:white;
 	}
 	.showurl a{
 		color:white;

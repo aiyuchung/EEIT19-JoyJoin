@@ -15,7 +15,7 @@
 	<c:when test="${mbcard.gender == 'F'}">
 		<figure class="snip0056 yellow">
 			<figcaption>
-				<h2>${luckyguy.nickname} <span>${luckyguy.account}</span></h2>
+				<h4>${luckyguy.nickname} <span>${luckyguy.account}</span></h4>
 				<p>${luckyguy.gender}</p>
 				<p>${luckyguy.mail}</p>
 				<p>${luckyguy.signature}</p>

@@ -268,8 +268,8 @@
 				+ '<span>職業</span><br>${member.job}<br><br>'
 				+ '<span>收入情況</span><br>${member.income}<br><br>';
 
-			$("#showAreaTop").empty();
-			$("#showAreaTop").css("border", "0").addClass("animated").html(str);
+			$("#showArea").empty();
+			$("#showArea").css("border", "0").addClass("animated").html(str);
 		})
 
 		$('#roleInfo-btn').on('click', function() {
@@ -281,8 +281,8 @@
 					+ '<span>簽名</span><br>${member.signature}<br><br>'
 					+ '<span>自我介紹</span><br>${member.introduction}<br><br>';
 					
-			$("#showAreaTop").empty();
-			$("#showAreaTop").css("border", "0").addClass("animated").html(str);
+			$("#showArea").empty();
+			$("#showArea").css("border", "0").addClass("animated").html(str);
 		})
 		
 		$('#trip-btn').on('click', function() {
@@ -295,9 +295,9 @@
 				  contentType: 'application/json; charset=utf-8',
 				  data: {}, 
 				  success:function(data){
-					  $("#showAreaTop").empty();
-					  $("#showAreaTop").css("border", "2px solid white").addClass("animated").html(str);
-					  $("#showAreaTop").append(data);
+					  $("#showArea").empty();
+					  $("#showArea").addClass("animated").html(str);
+					  $("#showArea").append(data);
 					}
 			})
 		})
@@ -310,7 +310,8 @@
 	              contentType: 'application/json; charset=utf-8',
 	              data: {}, 
 	              success:function(data){
-	                  $("#showAreaTop").empty();
+	            	  $("#showArea").empty();
+	      			  $("#showAreaTop").empty();
 	                  $("#showAreaTop").css("border", "0").addClass("animated").html(str);
 	                  $("#showAreaTop").append(data);
 	                }
@@ -358,9 +359,9 @@
 				contentType : 'application/json; charset=utf-8',
 				data : {}, //data空的代表沒任何參數
 				success : function(data) { 
-					$("#showAreaTop").empty();
-					$("#showAreaTop").addClass("animated");
-					$("#showAreaTop").append(data);
+					$("#showArea").empty();
+					$("#showArea").css("position","relative").css("left","20px").css("width","140%").addClass("animated");
+					$("#showArea").append(data);
 				}
 			})
 		})
@@ -375,8 +376,9 @@
 				  contentType: 'application/json; charset=utf-8',
 				  data: {}, 
 				  success:function(data){
-					  $("#showAreaTop").css("border", "2px solid white").addClass("animated").html(str);
-					  $("#showAreaTop").append(data);
+					  $("#showArea").empty();
+					  $("#showArea").css("border", "2px solid white").addClass("animated").html(str);
+					  $("#showArea").append(data);
 					}
 			})
 		})
@@ -390,7 +392,7 @@
 	              contentType: 'application/json; charset=utf-8',
 	              data: {}, 
 	              success:function(data){
-	                  $("#showArea").empty();
+	            	  $("#showArea").empty();
 	                  $("#showArea").css("border", "0").addClass("animated").html(str);
 	                  $("#showArea").append(data);
 	                }
