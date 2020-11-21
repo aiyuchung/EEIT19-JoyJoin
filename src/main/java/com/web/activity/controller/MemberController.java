@@ -498,7 +498,7 @@ public class MemberController {
 		 re = new ResponseEntity<byte[]>(content, headers, HttpStatus.OK);
 		 return re;
 		}
-	}		
+			
 
 //---------------------------------------------▼好友系統▼---------------------------------------------//		
 
@@ -518,21 +518,20 @@ public class MemberController {
 			return "redirect:/member";
 		}
 		
-		public String checkFriend(HttpSession session) {
-			String account = (String) session.getAttribute("account");
-
-		}
+//		public String checkFriend(HttpSession session) {
+//			String account = (String) session.getAttribute("account");
+//
+//		}
+//		
+//		public String delFriend(Model model, String account, HttpSession session) {		//刪除好友,傳入對象Account和自己帳號
+//			
+//		}
+//		
+//		public agree2BeFriend() {			//收到申請應對
+//			
+//		}
 		
-		public String delFriend(Model model, String account, HttpSession session) {		//刪除好友,傳入對象Account和自己帳號
-			
-		}
-		
-		public agree2BeFriend() {			//收到申請應對
-			
-		}
-		
-		
-		
+}		
 //-----------------------------------------------------------------------
 		
 //		@RequestMapping()

@@ -173,6 +173,8 @@
 									<c:when test="${one.memberBean.account == account}">
 										<a href="<c:url value='/updateActivity/${one.activityNo}'/>" class="btn btn-contact">
 										<strong>修改活動</strong></a>
+										<button class="btn btn-contact btn-sm delete">
+										<strong>刪除活動</strong></button>
 									</c:when>
 									<c:when test="${isFollowed == true}">
 										<div class="nofollow" >
@@ -387,6 +389,25 @@
 				<!--/sidebar-->
 			</div>
 		</div>
+<!------------------------刪除活動------------------------->		
+	<div class="modal fade bd-example-modal-sm" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm" role="document">
+	    <div class="modal-content" style="background-color:#ECEBEB; border:0">
+	      <div class="modal-header" style="background-color:#85AD90; border:2px solid #85AD90">
+	        <h5 class="modal-title" id="exampleModalLabel" style="color:white;font-size:15px ">刪除活動確認</h5>
+	      </div>
+	      <div class="modal-body" style="color:black; font-size:19px">
+	        	<p>真的要刪除本活動嗎?</p>
+	        	<p>會少一次跟大家碰面的機會呢...</p>
+	        	<p>刪除前用留言版說明一下吧</p>
+	      </div>
+	      <div class="modal-footer" style="padding:0 16 12 16">
+	         <button type="button" class="btn btn-secondary" data-dismiss="modal" >保留活動</button>
+	        <a type="button" class="btn btn-primary" href="<c:url value='/deleteActivity/${one.activityNo}' />" style="background-color:#85AD90;border:1px solid #85AD90">確定要刪除</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 <!------------------------參加活動------------------------->		
 	<div class="modal fade bd-example-modal-sm" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-sm" role="document">
@@ -526,6 +547,9 @@
 	$(".btn-cancel").one("click", function(){ //取消參加活動(跳出確認框)
 		$('#cancelModal').modal('show');
 		
+	})
+	$(".delete").on("click", function(){ 
+		$('#deleteModal').modal('show');
 	})
 	$(".sendmsg").click(function(){ //新增留言
 		var msgContent = $(".newmsg").val();

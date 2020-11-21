@@ -116,10 +116,17 @@ public class ActivitiesController {
 				break;
 			}
 		}
+		boolean levelLimit = false;
+		int levelSetting = activity.getLevelLimit();
+		String level = (String) session.getAttribute("level");
+		if (Integer.parseInt(level) < levelSetting) {
+			levelLimit = true;
+		}
 		model.addAttribute("frombtn",frombtn);
 		model.addAttribute("nickname",nickname);
 		model.addAttribute("isJoined",isJoined);
 		model.addAttribute("isFollowed",isFollowed);
+		model.addAttribute("levelLimit",levelLimit);
 		model.addAttribute("joined",joined);
 		model.addAttribute("msgBox",msgBox);
 		model.addAttribute("msgNum",msgNum);

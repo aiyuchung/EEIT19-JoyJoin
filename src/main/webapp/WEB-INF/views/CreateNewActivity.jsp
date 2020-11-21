@@ -82,7 +82,7 @@
 		<div class="container addNew">
 			<div class="row">
 				<div class="content" style="margin: auto">
-					<form:form method="POST"  modelAttribute="newform" id="newform" enctype="multipart/form-data">
+					<form:form method="POST" action="newActivities" modelAttribute="newform" id="newform" enctype="multipart/form-data">
 <%-- 					<form method="POST" action="/newActivities" enctype="multipart/form-data" id="picform"> --%>
 					
 				 		<div class="section-block">
