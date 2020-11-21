@@ -212,6 +212,14 @@ public class ActivitiesController {
 		
 		return "CreateNewActivity";
 	}
+//-----------------------------------------刪除活動跳轉全部活動頁面↓-----------------------------------------	
+	@GetMapping("/deleteActivity/{id}")
+	public String delete(@PathVariable("id") int activityNo, HttpSession session, Model model) {
+		service.inactiveActivity(activityNo);
+		
+		
+		return "redirect:/activities";
+	}
 //-----------------------------------------新增活動空的form表單↓-----------------------------------------	
 	@ModelAttribute("activities")
 	public List<ActivityBean> a1() {
@@ -293,7 +301,48 @@ public class ActivitiesController {
 		
 	    return "redirect:/activities";
 	   }
-					
+//-----------------------------------------更新活動↓-----------------------------------------
+	@PostMapping("/updateActivities/{id}")
+	public String updateAcitivity(@PathVariable("id") int activityNo, HttpSession session, 
+			Model model,@ModelAttribute("newform") ActivityBean newform) {
+		
+//		String account =  (String) session.getAttribute("account");
+//		MemberBean member = memberService.getMember(account);
+//		Integer memberNo = member.getMemberNo();
+		
+		newform.setActivityNo(activityNo);
+		System.out.println("activity no in form: "+ newform.getActivityNo());
+		
+		MultipartFile mFile = newform.getUpdateImg();
+		
+			//取得檔案型態 令存檔名
+		String original = mFile.getOriginalFilename();
+		newform.setFileName(original);
+			
+		if (mFile != null && !mFile.isEmpty()) {
+			byte[] b;
+			System.out.println("newform.getUpdateImg() != null ");
+			try {
+				b = mFile.getBytes();
+				Blob blob = new SerialBlob(b);
+				newform.setActivityPic(blob);
+				System.out.println("controller blob-----------------------"+blob);
+			} catch (IOException | SQLException e) {
+				e.printStackTrace();
+				throw new RuntimeException("異常:" + e.getMessage());
+			}
+		}else {
+			ActivityBean activity = service.selectOneActivity(activityNo);
+			newform.setActivityPic(activity.getActivityPic());
+		}
+		
+//		String prov= newform.getProv();
+//		System.out.println("controller prov:"+prov);
+		service.updateActivity(newform);
+//		memberService.updatePost(account);
+		
+	    return "redirect:/activities";
+	   }					
 //-----------------------------------------條件查詢form表單↓-----------------------------------------		
 	@PostMapping("/form")
 	public String form(Model model, @ModelAttribute("form") ActivityForm form) {

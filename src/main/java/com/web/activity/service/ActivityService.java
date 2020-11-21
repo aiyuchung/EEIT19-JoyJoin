@@ -128,6 +128,9 @@ public interface ActivityService {
 	
 	//新增活動-form表單
 	void createActivity(Integer memberNo, ActivityBean newform);
+
+	//修改活動
+	void updateActivity(ActivityBean newform);
 	
     //刪除活動(下架)
     void inactiveActivity(int activityNo);

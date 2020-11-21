@@ -548,7 +548,7 @@
 		$('#cancelModal').modal('show');
 		
 	})
-	$(".delete").on("click", function(){ 
+	$(".delete").on("click", function(){ //下架活動
 		$('#deleteModal').modal('show');
 	})
 	$(".sendmsg").click(function(){ //新增留言

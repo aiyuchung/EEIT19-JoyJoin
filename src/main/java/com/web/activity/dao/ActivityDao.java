@@ -103,6 +103,9 @@ public interface ActivityDao {
 	//新增活動
 	void createActivity(Integer memberNo, ActivityBean newform);
 	
+	//修改活動
+	void updateActivity(ActivityBean newform);
+	
 	//關注活動
 	void followActivity(Integer memberNo, ActivityFollowedBean follow,int activityNo);
 	

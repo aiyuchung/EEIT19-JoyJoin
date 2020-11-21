@@ -339,6 +339,12 @@ public class ActivityServiceImpl implements ActivityService {
 		dao.inactiveActivity(activityNo);
 		
 	}
+
+	@Override
+	public void updateActivity(ActivityBean newform) {
+		dao.updateActivity(newform);
+		
+	}
 	
 
 	

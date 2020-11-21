@@ -137,7 +137,7 @@ body{
 <script>
 	$(document).ready(function(){
 		$.ajax({
-			  url:"checkStatus",
+			  url:"/JoyJoin/checkStatus",
 			  type: "GET",
 			  dataType: "text", //server送回
 			  contentType: 'application/json; charset=utf-8',

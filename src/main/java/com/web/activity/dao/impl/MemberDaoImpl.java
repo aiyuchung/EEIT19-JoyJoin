@@ -495,20 +495,21 @@ public class MemberDaoImpl implements MemberDao {
 				return friend;
 			}
 			public boolean hostAndFriend() {
+				return true;
 				
 			}
 
 			public boolean friendPostReady() {
-				
+				return true;
 			}
 			
 			public void friendWithMe(FriendBean fb) {
 				Session session = factory.getCurrentSession();
-				String hql = 
+				String hql ;
 			}
 				
 			public Integer friendStatus() {
-				
+				return null;
 			}
 			
 			public void changeStatus() {
