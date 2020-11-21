@@ -207,6 +207,11 @@ public class MemberServieImpl implements MemberService {
 		public void friendWithMe(FriendBean fb) {
 			memberDao.friendWithMe(fb);
 		}
+
+		@Override
+		public OrderBean orderRecords(Integer memberNo) {
+			return memberDao.orderRecords(memberNo);
+		}
 		
 		
 		

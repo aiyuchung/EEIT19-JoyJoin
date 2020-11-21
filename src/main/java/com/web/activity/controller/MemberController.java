@@ -45,6 +45,7 @@ import com.web.activity.model.FormBean;
 import com.web.activity.model.FriendBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
+import com.web.activity.model.OrderBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.service.ActivityService;
 import com.web.activity.service.MemberService;
@@ -386,7 +387,17 @@ public class MemberController {
 		public String shop(Model model, HttpSession session) {
 		    return "ajax/order";
 		}		  
-		  
+//---------------------------------------------▼購買紀錄畫面▼---------------------------------------------//            
+
+		@GetMapping("/ajax_orders")
+		public String orderRecord(Model model, HttpSession session) {
+			String account =  (String) session.getAttribute("account");
+			MemberBean member = memberService.getMember(account);
+			Integer memberNo = member.getMemberNo();
+			OrderBean orders = memberService.orderRecords(memberNo);
+			model.addAttribute("orders",orders);
+		    return "ajax/orderRecords";
+		}	  
 //---------------------------------------------▼訊息系統▼---------------------------------------------//		
 
 		@GetMapping("/mailMsg")

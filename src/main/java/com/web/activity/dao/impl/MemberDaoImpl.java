@@ -446,7 +446,8 @@ public class MemberDaoImpl implements MemberDao {
     public OrderBean createOrder(Integer memberNo, OrderBean order) {
         Session session = factory.getCurrentSession();
         int i = (int) (new Date().getTime()/1000);
-        String orderNo = "J"+ Integer.toString(i);
+        String orderNo = "JoyJoin"+ Integer.toString(i).substring(0,9);
+        System.out.println(orderNo);
         order.setOrderNo(orderNo);
         order.setMemberBean(session.get(MemberBean.class,memberNo));
         session.save(order);
@@ -516,6 +517,13 @@ public class MemberDaoImpl implements MemberDao {
 				
 			}
 				//更改交友狀態
-	
+//---------------------------------------------▼購買紀錄▼---------------------------------------------//		
+		@Override
+		public OrderBean orderRecords(Integer memberNo)	{
+			Session session = factory.getCurrentSession();
+			String hql = "FROM OrderBean WHERE memberNo = :memberNo";
+			OrderBean orders= (OrderBean) session.createQuery(hql).setParameter("memberNo", memberNo).getSingleResult();
+			return orders;
+		}
 	
 }

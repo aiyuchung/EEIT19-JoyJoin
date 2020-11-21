@@ -24,6 +24,10 @@
 	crossorigin="anonymous"></script>
 
 <style>
+body{
+	background: #009393;
+/* 	background: #4F9D9D; */
+}
 #thiscap {
 	padding-top: .75rem;
 	padding-bottom: .75rem;
@@ -582,6 +586,7 @@ function showPrev(){
 	showCalendar(y,m,d,firstday);
 	
 	document.getElementById("prev").innerHTML="&laquo;"+ (m==0?12:m) +"月";
+	document.getElementById("next").innerHTML=((m+2)>12?1:m+2)+"月 &raquo;";
 	document.getElementById("thiscap").innerHTML=y+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (m+1)+"月"
 } 
 
@@ -602,6 +607,7 @@ function showNext(){
 	
 	showCalendar(y,m,d,firstday);
 	
+	document.getElementById("prev").innerHTML="&laquo;"+ (m==0?12:m) +"月";
 	document.getElementById("next").innerHTML=((m+2)>12?1:m+2)+"月 &raquo;";
 	document.getElementById("thiscap").innerHTML=y+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (m+1)+"月"
 } 
@@ -613,7 +619,7 @@ function showNext(){
 		  function showCalendar(y,m,d,firstday){
 		  dayOfWeek = firstday.getDay(),           //判斷第一天是星期幾(返回[0-6]中的一個，0代表星期天，1代表星期一，以此類推)
 		  days_per_month = new Array(31, 28 + isLeap(y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31),         //建立月份陣列
-		  str_nums = Math.ceil((dayOfWeek + days_per_month[m])/ 7);                        //確定日期表格所需的行數
+		  str_nums = Math.ceil((dayOfWeek + days_per_month[m]) / 7);                        //確定日期表格所需的行數
 
 				var calendarbody = document.getElementById("calBody");
 				for (var i = 0; i < str_nums; i ++) {         //二維陣列建立日期表格

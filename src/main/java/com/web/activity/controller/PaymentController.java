@@ -55,17 +55,17 @@ public class PaymentController {
 		
 		AioCheckOutALL payment = new AioCheckOutALL();
 		
-//		payment.setMerchantTradeNo(thisOrder.getOrderNo());
-		payment.setMerchantTradeNo("qwerui37895wsdfs");
+		payment.setMerchantTradeNo(thisOrder.getOrderNo());
+//		payment.setMerchantTradeNo("qwerui37895wsdfs");
 		payment.setMerchantTradeDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
 		String total= Integer.toString(thisOrder.getOrderNum() * thisOrder.getOrderPrice());
 		System.out.println("String total-----------------"+total);
-//		payment.setTotalAmount(total);
-		payment.setTotalAmount("1000");
+		payment.setTotalAmount(total);
+//		payment.setTotalAmount("1000");
 		payment.setTradeDesc("Join");
 		String orderItem = thisOrder.getOrderItem() + " x"+Integer.toString(thisOrder.getOrderNum());
-//		payment.setItemName(orderItem);
-		payment.setItemName("1000point");
+		payment.setItemName(orderItem);
+//		payment.setItemName("1000point");
 		payment.setReturnURL("http://localhost:8080/JoyJoin/activities");
 		payment.setClientBackURL("http://localhost:8080/JoyJoin/");
 		payment.setChooseSubPayment("TAISHIN");
