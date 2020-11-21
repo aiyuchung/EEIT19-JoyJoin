@@ -78,7 +78,7 @@ public interface MemberDao {
 			//取得會員關注活動連結
 		public OrderBean createOrder(Integer memberNo, OrderBean order);
         	//存訂單 並取出	
-		public OrderBean orderRecords(Integer memberNo);
+		public List<OrderBean> orderRecords(Integer memberNo);
     		//取訂單紀錄
 //---------------------------------------------▼訊息系統▼---------------------------------------------//			
 		

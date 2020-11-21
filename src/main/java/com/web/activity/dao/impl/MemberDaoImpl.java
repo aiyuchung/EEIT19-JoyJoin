@@ -504,10 +504,10 @@ public class MemberDaoImpl implements MemberDao {
 				//更改交友狀態
 //---------------------------------------------▼購買紀錄▼---------------------------------------------//		
 		@Override
-		public OrderBean orderRecords(Integer memberNo)	{
+		public List<OrderBean> orderRecords(Integer memberNo)	{
 			Session session = factory.getCurrentSession();
 			String hql = "FROM OrderBean WHERE memberNo = :memberNo";
-			OrderBean orders= (OrderBean) session.createQuery(hql).setParameter("memberNo", memberNo).getSingleResult();
+			List<OrderBean> orders=session.createQuery(hql).setParameter("memberNo", memberNo).getResultList();
 			return orders;
 		}
 //---------------------------------------------▼購買點數▼---------------------------------------------//		

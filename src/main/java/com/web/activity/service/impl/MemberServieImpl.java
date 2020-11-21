@@ -209,7 +209,7 @@ public class MemberServieImpl implements MemberService {
 		}
 
 		@Override
-		public OrderBean orderRecords(Integer memberNo) {
+		public List<OrderBean> orderRecords(Integer memberNo) {
 			return memberDao.orderRecords(memberNo);
 		}
 		
