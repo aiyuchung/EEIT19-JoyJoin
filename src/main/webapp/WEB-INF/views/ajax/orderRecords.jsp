@@ -29,38 +29,23 @@
 		<table>
 			<thead>
 				<tr>
-					<td>購買項目</td>
+					<td>購買日期</td>
+					<td>項目</td>
 					<td>價格</td>
 					<td>數量</td>
 				</tr>
 			</thead>
 			<tbody>
+			<c:forEach var="order" items="orders">
 				<tr>
+					<td>${order.orderDate}</td>
 					<td>${order.orderItem}</td>
 					<td>${order.orderPrice}</td>
 					<td>${order.orderNum}</td>
 				</tr>
-				<tr>
-					<td></td>
-					<td>訂單編號</td>
-					<td>${order.orderNo}</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>總價</td>
-					<td>${orderTotal}</td>
-				</tr>
-				<tr>
-					
-					<td colspan="1.5"><button id="topay">確認支付</button></td>
-					<td colspan="1.5"><button id="nottopay">取消訂單</button></td>
-				</tr>
-				
+			</c:forEach>	
 			</tbody>
 		</table>
-	</div>
-	<div id="gotogreen" >
-	
 	</div>
 	
 <script type="text/javascript">

@@ -442,21 +442,6 @@ public class MemberDaoImpl implements MemberDao {
 		session.createQuery(hql).setParameter("no", msgNo).executeUpdate();
 	}
 	
-	@Override
-    public OrderBean createOrder(Integer memberNo, OrderBean order) {
-        Session session = factory.getCurrentSession();
-        int i = (int) (new Date().getTime()/1000);
-        String orderNo = "JoyJoin"+ Integer.toString(i).substring(0,9);
-        System.out.println(orderNo);
-        order.setOrderNo(orderNo);
-        order.setMemberBean(session.get(MemberBean.class,memberNo));
-        session.save(order);
-        
-        String hql = "FROM OrderBean where orderNo = :no";
-        OrderBean thisorder = (OrderBean) session.createQuery(hql).setParameter("no", orderNo).getSingleResult();
-        return thisorder;
-        
-    }
 	
 	@Override
 	public Integer checkType2Back(String account) {
@@ -525,5 +510,26 @@ public class MemberDaoImpl implements MemberDao {
 			OrderBean orders= (OrderBean) session.createQuery(hql).setParameter("memberNo", memberNo).getSingleResult();
 			return orders;
 		}
+//---------------------------------------------▼購買點數▼---------------------------------------------//		
+		@Override
+	    public OrderBean createOrder(Integer memberNo, OrderBean order) {
+	        Session session = factory.getCurrentSession();
+	        int i = (int) (new Date().getTime()/1000);
+	        String orderNo = "JoyJoin"+ Integer.toString(i).substring(0,9);
+	        System.out.println(orderNo);
+	        order.setOrderNo(orderNo);
+	        
+	        Date today = new Date();
+			java.sql.Date sqltoday = new java.sql.Date(today.getTime());
+			order.setOrderDate(sqltoday);
+			
+	        order.setMemberBean(session.get(MemberBean.class,memberNo));
+	        session.save(order);
+	        
+	        String hql = "FROM OrderBean where orderNo = :no";
+	        OrderBean thisorder = (OrderBean) session.createQuery(hql).setParameter("no", orderNo).getSingleResult();
+	        return thisorder;
+	        
+	    }
 	
 }
