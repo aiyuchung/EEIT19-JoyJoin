@@ -252,7 +252,12 @@
 						</div>
 					</div>
 					<div align="center">
-						<button id="createnew"  class="btn btn-secondary btn-lg" style="width:80%;background-color:#85AD90">確認送出</button>
+						<a href="#" id="autotext" class="btn btn-secondary btn-lg"  style="display:none;width:80%;background-color:#85AD99">一鍵輸入</a>
+						<button id="createnew"  class="btn btn-secondary btn-lg" style="width:80%;background-color:#85AD90; margin-top:8px;">確認送出</button>
+					</div>
+					<div>
+					
+						
 					</div>
 					</form:form>
 					</div>
@@ -269,22 +274,26 @@
 <script>
 	$(document).ready(function(){
 		var id = ${newform.activityNo};
-		if (id == null && id ==""){
+		if (id == 0){
 			$("#newform").attr("action","newActivities");
+			$("#autotext").css("display","block");
+			$("#autotext").show();
 		}else{
-			var url = "../updateActivities/" + id
+			var url = "../updateActivities/" + id;
 			$("#newform").attr("action",url);
+			
+			var maxLimit = '${newform.maxLimit}';
+			if (maxLimit == ""){
+				$("#nolimitmax").attr("checked",true);
+			}else{
+				$("#nolimitmax").attr("checked",false);
+				$("#limitmax").attr("checked",true);
+				$(".inputhide").attr("disabled",false);
+				
+			}
 		}
 		
-		var maxLimit = ${newform.maxLimit};
-		if (maxLimit == null && id ==""){
-			$("#nolimitmax").attr("checked",true);
-		}else{
-			$("#nolimitmax").attr("checked",false);
-			$("#limitmax").attr("checked",true);
-			$(".inputhide").attr("disabled",false);
-			
-		}
+		
 		
 	})
 	
@@ -355,15 +364,28 @@
 		$(".inputhide").prop("disabled",true);
 	})
 	
-	$("#createnew").click(function(){
+	$("#createnew").click(function(){  //送出表單
 		$(".must").each(function(){
 			if($(this).hasClass("is-invalid")){
 				window.location.href = "#";
 			}else{
 				$("#newform").submit();
-// 				$("#picform").submit();
 			}
 		})
+	})
+	$("#autotext").click(function(){  //一鍵輸入
+		$("input[name=name]").val("六福村");
+		$("#selecytType").val("旅遊");
+		$(".showClass").val("遊樂園");
+		$("select[name=prov]").val("新竹縣");
+		$("input[name=activityDate]").val("2020-11-30");
+		$("input[name=meetPoint]").val("台北車站");
+		$("input[name=meetTime]").val("07:00");
+		$("input[name=finalDate]").val("2020-11-28");
+		$("input[name=minLimit]").val("1");
+		$("input[name=price]").val("999");
+		$("textarea[name=introduction]").val("很久沒去遊樂園了，想說可以尖叫紓壓順便看看動物放鬆一下~");
+		
 	})
 	
 </script>	
