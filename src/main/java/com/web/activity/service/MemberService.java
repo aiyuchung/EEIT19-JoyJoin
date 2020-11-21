@@ -68,7 +68,17 @@ public interface MemberService {
 			//後臺檢查會員帳號狀態
 		public void changeType2Back(String account, int type);
 			//後台改變會員帳號狀態	
-		public List<String> getFriendList(String account);
-			//抓取好友列表
-		public void friendWithMe(FriendBean fb);
+		public List<String> getAllFriendList(String account);
+			//抓取好友清單
+		public boolean checkFriend (String host, String account);
+			//確認好友
+		public void saveFriend(FriendBean fb);
+			//提出好友申請
+		public void delFriend(String host, String account);
+			//刪除好友
+		public void updateStatus(String host, String account);
+			//同意好友更改狀態
+		public String checkFriendType(String host, String account);
+			//檢查交友狀態
+		
 }	

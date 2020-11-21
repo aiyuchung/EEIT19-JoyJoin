@@ -51,7 +51,7 @@ import com.web.activity.service.ActivityService;
 import com.web.activity.service.MemberService;
 
 @Controller
-@SessionAttributes( value = {"member", "role","level","account"} )
+@SessionAttributes( value = {"member", "role","level","account","friend"} )
 public class MemberController {
 
 		@Autowired
@@ -394,7 +394,7 @@ public class MemberController {
 			String account =  (String) session.getAttribute("account");
 			MemberBean member = memberService.getMember(account);
 			Integer memberNo = member.getMemberNo();
-			OrderBean orders = memberService.orderRecords(memberNo);
+			List<OrderBean> orders = memberService.orderRecords(memberNo);
 			model.addAttribute("orders",orders);
 		    return "ajax/orderRecords";
 		}	  
@@ -511,38 +511,115 @@ public class MemberController {
 		}
 			
 
-//---------------------------------------------▼好友系統▼---------------------------------------------//		
+      //---------------------------------------------▼好友系統▼---------------------------------------------//		
 
-		@GetMapping("/friendList")
-		public String getFriendList(Model model, HttpSession session) {		//傳送friend資料到jsp ajax呼叫
-			String account = (String) session.getAttribute("account");
-			List<String> friendList = memberService.getFriendList(account);
-			model.addAttribute("friend", friendList);
-			return "";
-		}
-		
-		public String makeFriend(FriendBean fb) {		//跟我做朋友
-			fb.setOneType(1);
-			fb.setTwoType(0);
-			fb.setStatus(0);
-			memberService.friendWithMe(fb);
-			return "redirect:/member";
-		}
-		
-//		public String checkFriend(HttpSession session) {
-//			String account = (String) session.getAttribute("account");
-//
-//		}
-//		
-//		public String delFriend(Model model, String account, HttpSession session) {		//刪除好友,傳入對象Account和自己帳號
-//			
-//		}
-//		
-//		public agree2BeFriend() {			//收到申請應對
-//			
-//		}
-		
-}		
+      		public void getFriendList(Model model, HttpSession session) {		//做為方法讀取至MEMBER
+      			String account = (String) session.getAttribute("account");
+      			List<String> list = memberService.getAllFriendList(account);
+      			model.addAttribute("friend", list);
+      		}
+      		
+      		@PostMapping("/getFriend/{account}")
+      		public String newFriend(HttpSession session, @PathVariable String account) {		//host為出發點,申請好友並寄出系統訊息
+      			String host = (String) session.getAttribute("account");
+      			boolean flag = memberService.checkFriend(host, account);
+      			FriendBean fb = new FriendBean();
+      			fb.setAccountOne(host);
+      			fb.setAccountTwo(account);
+      			fb.setOneType(1);
+      			fb.setTwoType(0);
+      			fb.setStatus(0);
+      			if(flag){		//SAVE好友
+      				memberService.saveFriend(fb);
+      				sendServerMsg2friend(host, account);
+      			}else {
+      				
+      			}
+      			return "redirect:/mailMsg";
+      		}
+      		
+      		//刪除好友,傳入host和對象Account帳號
+      		@PostMapping("/delFriend/{account}")
+      		public String deleteFriend(HttpSession session, @PathVariable String account) {		
+      			String host = (String) session.getAttribute("account");
+      			boolean flag = memberService.checkFriend(host, account);
+      			if(flag) {
+      				memberService.delFriend(host, account);
+      			}else {
+      				;
+      			}
+      			return "redirect:/member";
+      		}
+      		
+      		//查詢對象狀態,確認交友狀態並顯示ajax
+      		@GetMapping("/showFriendType/{account}")
+      		public String showFriendType(Model model, HttpSession session, @PathVariable String account) {
+      			String host = (String) session.getAttribute("account");
+      			String str = memberService.checkFriendType(host, account);
+      			model.addAttribute("btn",str);
+      			return "ajax...";
+      			
+      		}
+      		
+      		//設計空白jsp做為同意好友跳板
+      		@GetMapping("/ansFriend/agree")
+      		public String friendAgree(HttpSession session, String account) {
+      			//path?host=host&account=
+      			String host = (String) session.getAttribute("account");
+      			memberService.updateStatus(host, account);
+      			return "redirect:/member";
+      		}
+      		
+      		//設計空白jsp做為拒絕好友跳板,刪除db
+      		@GetMapping("/ansFriend/no")
+      		public String friendNope(HttpSession session, String account) {
+      			//path?host=host&account=
+      			String host = (String) session.getAttribute("account");
+      			memberService.delFriend(host, account);
+      			return "redirect:/member";
+      		}
+      		
+      		public void sendServerMsg2friend(String host, String account) {		//加好友送出系統站內訊息
+      			MessageBean mb = new MessageBean();
+      			mb.setfromAccount("揪in Server");
+      			mb.setAccount(account);
+      			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+         		 	String time = dateFormat.format(new Date());
+         		 	mb.setTime(time);
+         		 	mb.setReadStatus(0);
+         		 	mb.setSubject("系統訊息:您有一則好友申請");
+         		 	mb.setMsg(host+"加你好友");
+         		 	memberService.sendMsg(mb);
+      		}
+
+      		public void sendServerMsgNoCatch(String host, String account) {		//加好友失敗送出系統站內訊息
+      			MessageBean mb = new MessageBean();
+      			mb.setfromAccount("揪in Server");
+      			mb.setAccount(account);
+      			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+         		 	String time = dateFormat.format(new Date());
+         		 	mb.setTime(time);
+         		 	mb.setReadStatus(0);
+         		 	mb.setSubject("系統訊息");
+         		 	mb.setMsg(host+"與您已經是好友或正在申請中");
+         		 	memberService.sendMsg(mb);
+      		}      		
+      		
+      		
+      		
+      		
+      		
+      		
+      }				
+
+
+
+
+
+
+
+
+
 //-----------------------------------------------------------------------
 		
 //		@RequestMapping()

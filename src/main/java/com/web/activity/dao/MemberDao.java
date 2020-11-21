@@ -104,20 +104,22 @@ public interface MemberDao {
 				
 //---------------------------------------------▼好友功能▼---------------------------------------------//		
 		
-		public List<String> getFriendListA(String account);
-			//搜尋好友清單
-		public List<String> getFriendListB(String account);
-			//搜尋好友清單		
-		public boolean hostAndFriend();
-			//判斷使用者和對方是不是朋友
-		public boolean friendPostReady();
-			//判斷是否已有交友申請
-		public void friendWithMe(FriendBean fb);
-			//申請好友
-		public Integer friendStatus();
-			//判斷回應 ( A1預設值為1 所以只看A2回應)
-		public void changeStatus();
-			//更改交友狀態
+		public List<String> getFriendListOne(String account);
+					
+		public List<String> getFriendListTwo(String account);
+			//抓取所有好友清單在SERVICE加起來丟回CONTROLLER
+		public boolean checkFriend(String host, String account);
+			//確認是否為好友或申請中
+		public void saveFriend(FriendBean fb);
+			//提出好友申請
+		public void delFriend(String host, String account);
+			//刪除好友
+		public void updateStatus(String host, String account);
+			//同意好友更改狀態
+		public String checkFriendType(String host, String account);
+			//檢查交友狀態
+		
+				
 		
 		
 		
