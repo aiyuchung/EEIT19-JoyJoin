@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
+import com.web.activity.model.FriendBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
 import com.web.activity.model.OrderBean;
@@ -77,6 +78,8 @@ public interface MemberDao {
 			//取得會員關注活動連結
 		public OrderBean createOrder(Integer memberNo, OrderBean order);
         	//存訂單 並取出	
+		public List<OrderBean> orderRecords(Integer memberNo);
+    		//取訂單紀錄
 //---------------------------------------------▼訊息系統▼---------------------------------------------//			
 		
 		public List<MessageBean> getAllMsg(String account);
@@ -98,6 +101,26 @@ public interface MemberDao {
 			//回傳帳號狀態 0為未開通 1為正常 2為黑名單
 		public void changeType2Back(String account, int type);
 			//後臺改變帳號狀態
+				
+//---------------------------------------------▼好友功能▼---------------------------------------------//		
+		
+		public List<String> getFriendListOne(String account);
+					
+		public List<String> getFriendListTwo(String account);
+			//抓取所有好友清單在SERVICE加起來丟回CONTROLLER
+		public boolean checkFriend(String host, String account);
+			//確認是否為好友或申請中
+		public void saveFriend(FriendBean fb);
+			//提出好友申請
+		public void delFriend(String host, String account);
+			//刪除好友
+		public void updateStatus(String host, String account);
+			//同意好友更改狀態
+		public String checkFriendType(String host, String account);
+			//檢查交友狀態
+		
+				
+		
 		
 		
 }

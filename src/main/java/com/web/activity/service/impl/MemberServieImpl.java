@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.web.activity.dao.MemberDao;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
+import com.web.activity.model.FriendBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
 import com.web.activity.model.OrderBean;
@@ -17,173 +18,220 @@ import com.web.activity.model.RoleBean;
 import com.web.activity.service.MemberService;
 
 @Service
+@Transactional
 public class MemberServieImpl implements MemberService {
 
 		@Autowired
 		MemberDao memberDao;
 		
-		@Transactional
+		
 		@Override
 		public void signUp(MemberBean mb) {
 			memberDao.signUp(mb);
 			memberDao.sentMail(mb.getMail());
 		}
 		
-		@Transactional
+		
 		@Override
 		public MemberBean getMember(String account) {
 			return memberDao.getMember(account);
 		}
 		
-		@Transactional
+		
 		@Override
 		public RoleBean getRole(String account) {
 			return memberDao.getRole(account);
 		}
 		
-		@Transactional
+		
 		@Override
 		public String getMail(String account) {
 			return memberDao.getMail(account);
 		}		
 		
-		@Transactional
+		
 		@Override
 		public void newPwd(String account, String password) {
 			memberDao.newPwd(account, password);
 		}
 		
-		@Transactional
+		
 		@Override
 		public Integer checkID(String account, String password) {
 			return memberDao.checkID(account, password);
 		}
 		
-		@Transactional
+		
 		@Override
         public Integer checkLevel(String account) {
             return memberDao.checkLevel(account);
 		}
 
-		@Transactional
+		
 		@Override
 		public void updateInfo(MemberBean mb) {
 			memberDao.updateInfo(mb);
 		}
 		
-		@Transactional
+		
 		@Override
 		 public boolean checkAccount(String account) {
 			 return memberDao.checkAccount(account);
 		 }
 
-		 @Transactional
+		 
 		 @Override
     	public boolean checkEmail(String email) {
     		return memberDao.checkEmail(email);
     	}
 
-		@Transactional
+		
 		@Override
 		public void openType(String account) {
 			memberDao.openType(account);
 		}
 
-		@Transactional
+		
 		@Override
 		public void updateTime(String account, String time) {
 			memberDao.updateTime(account, time);
 		}
 		
-		@Transactional
+		
 		@Override
 		public void updateSign(String account) {
 			memberDao.updateSign(account);
 		}
 		
-		@Transactional
+		
 		@Override
 		public void updatePost(String account) {
 			memberDao.updatePost(account);
 		}
 
-		@Transactional
+		
 		@Override
 		public void updateFinish(String account) {
 			memberDao.updateFinish(account);			
 		}
 
-		@Transactional
+		
 		@Override
 		public List<MemberBean> getPair(String pair, String account) {
 			return memberDao.getPair(pair, account);
 		}
 		
-		@Transactional
+		
 		@Override
 		public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo) {
 			return memberDao.getFollowedActivity(memberNo);
 		}
 
-		@Transactional
+		
 		@Override
 		public List<ActivityJoinedBean> getJoinedActivity(Integer memberNo) {
 			return memberDao.getJoinedActivity(memberNo);
 		}
 	
-		@Transactional
+		
 		@Override
 		public List<MessageBean> getAllMsg(String account){
 			return memberDao.getAllMsg(account);
 		}
 		
-		@Transactional
+		
 		@Override
 		public boolean checkStatus(String account) {
 			return memberDao.checkStatus(account);
 		}
 		
-		@Transactional
+		
 		@Override
 		public MessageBean getMsg(int msgNo) {
 			return memberDao.getMsg(msgNo);
 		}
 		
-		@Transactional
+		
 		@Override
 		public void sendMsg(MessageBean mb) {
 			memberDao.sendMsg(mb);
 		}
 
-		@Transactional
+		
 		@Override
 		public void readMsg(int msgNo) {
 			memberDao.readMsg(msgNo);
 		}
 		
-		@Transactional
+		
 		@Override
 		public void delMsg(int msgNo) {
 			memberDao.delMsg(msgNo);
 		}
 		
-		@Transactional
+		
 		@Override
 		public OrderBean createOrder(Integer memberNo, OrderBean order) {
 			return memberDao.createOrder(memberNo,order);
 		}
 		
-		@Transactional
+		
 		@Override
 		public Integer checkType2Back(String account) {
 			return memberDao.checkType2Back(account);
 		}
 		
-		@Transactional
+		
 		@Override
 		public void changeType2Back(String account, int type) {
 			memberDao.changeType2Back(account, type);
 		}
+
+		@Override
+		public List<OrderBean> orderRecords(Integer memberNo) {
+			return memberDao.orderRecords(memberNo);
+		}
+		
+		@Override
+		public List<String> getAllFriendList(String account){
+			List<String> List1 = memberDao.getFriendListOne(account);
+			List<String> List2 = memberDao.getFriendListTwo(account);
+			List<String> List3 = List1;
+			for( String id1 : List1 ) {
+				for( String id2 : List2 ) {
+					if( id1 != id2) {
+						List3.add(id2);
+					}
+				}
+			}
+			return List3;
+		}
+		
+		@Override
+		public boolean checkFriend (String host, String account) {
+			return memberDao.checkFriend(host, account);
+		}
+		
+		@Override
+		public void saveFriend(FriendBean fb) {
+			memberDao.saveFriend(fb);
+		}
+	
+		@Override
+		public void delFriend(String host, String account) {
+			memberDao.delFriend(host, account);
+		}
+
+		@Override
+		public void updateStatus(String host, String account) {
+			memberDao.updateStatus(host, account);;
+		}
+		
+		@Override
+		public String checkFriendType(String host, String account) {
+			return memberDao.checkFriendType(host, account);
+		}
+		
 		
 		
 }

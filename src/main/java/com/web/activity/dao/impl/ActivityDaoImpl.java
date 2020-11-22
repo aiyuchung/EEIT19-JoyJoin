@@ -499,8 +499,91 @@ public class ActivityDaoImpl implements ActivityDao {
 			follow.setActivityBean(session.get(ActivityBean.class, no));
 			follow.setCondition("舉辦");
 			session.save(follow);
+	}
+	//----------------------------------------修改活動--------------------------------------------
+			@Override
+			public void updateActivity(ActivityBean newform) {
+				Session session = factory.getCurrentSession();
+				String hql = "FROM ActivityBean  WHERE activityNo = :id";
+				ActivityBean bean = (ActivityBean) session.createQuery(hql).setParameter("id",newform.getActivityNo()).getSingleResult();
+//				newform.setCreatedDate(bean.getCreatedDate());
+//				newform.setHitCount(bean.getHitCount());
+//				newform.setJoinedNum(bean.getJoinedNum());
+//				newform.setMemberBean(session.get(MemberBean.class, bean.getMemberBean().getMemberNo()));
+				
+				
+				Date today = new Date();
+//				java.sql.Date sqltoday = new java.sql.Date(today.getTime());
+				Date expiredDay = newform.getFinalDate();
+				long diff = expiredDay.getTime() - today.getTime() ; //截止日跟今天差幾毫秒
+				long diffDays = diff / (24 * 60 * 60 * 1000); //截止日跟今天差幾天
+				bean.setLeftDays((int)diffDays);
+				
+				
+				String prov = newform.getProv();
+				System.out.println("prov="+prov);
+				String hql1 = "FROM ProvinceBean WHERE prov = :prov ";
+				ProvinceBean provs = (ProvinceBean) session.createQuery(hql1).setParameter("prov",prov).getSingleResult();
+				String location = provs.getLocation();
+				int provId = provs.getProvId();
+				
+				String type = newform.getActivityTypeName();
+				String hql2 = "FROM ActivityTypeBean WHERE activityTypeName = :type ";
+				ActivityTypeBean types = (ActivityTypeBean) session.createQuery(hql2).setParameter("type",type).getSingleResult();
+				String activityTypeName = types.getActivityTypeName();
+				String typeno = types.getActivityType();
+				
+				String classname = newform.getActivityClass();
+				String hql3 = "FROM ActivityClassBean WHERE activityClass = :classname ";
+				ActivityClassBean classes = (ActivityClassBean) session.createQuery(hql3).setParameter("classname",classname).getSingleResult();
+				String activityClassNo = classes.getActivityClassNo();
+				
+//				newform.setCreatedDate(sqltoday);
+				bean.setActivityStatus("active");
+				
+//				newform.setJoinedNum(0);
+//				newform.setHitCount(0);
+				bean.setLocation(location);
+				bean.setActivityTypeName(activityTypeName);
+//				newform.setMemberBean(session.get(MemberBean.class,memberNo));
+				bean.setActivityTypeBean(session.get(ActivityTypeBean.class,typeno));
+				bean.setProvinceBean(session.get(ProvinceBean.class,provId));
+				bean.setActivityClassBean(session.get(ActivityClassBean.class,activityClassNo));
+				
+				bean.setActivityDate(newform.getActivityDate());
+				bean.setActivityPic(newform.getActivityPic());
+				bean.setActivityClass(newform.getActivityClass());
+				bean.setFinalDate(newform.getFinalDate());
+				bean.setIntroduction(newform.getIntroduction());
+				bean.setLevelLimit(newform.getLevelLimit());
+				bean.setMaxLimit(newform.getMaxLimit());
+				bean.setMeetPoint(newform.getMeetPoint());
+				bean.setMinLimit(newform.getMinLimit());
+				bean.setMeetTime(newform.getMeetTime());
+				bean.setName(newform.getName());
+				bean.setPrice(newform.getPrice());
+				bean.setProv(newform.getProv());
+				
+				session.update(bean);
+				
+				String hql4 = "SELECT MAX(activityNo) FROM ActivityBean "; //存照片
+				Integer no = (Integer) session.createQuery(hql4).getSingleResult();
+				
+//				String url = "http://localhost:8080/JoyJoin/oneActivity/"+ no;
+//				ActivityFollowedBean follow = new ActivityFollowedBean(); //存連結
+//				follow.setActivityUrl(url);
+//				follow.setMemberBean(session.get(MemberBean.class, memberNo));
+//				follow.setActivityBean(session.get(ActivityBean.class, no));
+//				follow.setCondition("舉辦");
+//				session.save(follow);
 		}
-		
+	//----------------------------------------刪除(下架)活動--------------------------------------------
+	@Override
+	public void inactiveActivity(int activityNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "UPDATE ActivityBean SET activityStatus = 'inactive' WHERE activityNo=:no";
+		session.createQuery(hql).setParameter("no",activityNo).executeUpdate();
+	}	
 	//----------------------------------------關注活動存連結--------------------------------------------	
 		@Override
 		public void followActivity(Integer memberNo, ActivityFollowedBean follow,int activityNo) {

@@ -80,6 +80,7 @@
 				<br><a href="#" class='superBtn' id='trip-btn'>出遊資料</a><br>
 				<br><a href="#" class='superBtn' id='pair-btn'>推薦好友</a><br>
 				<br><a href="#"class='superBtn' id='shop-btn'>點數購買</a><br>
+				<br><a href="#"class='superBtn' id='orders-btn'>購買紀錄</a><br>
 			</div>
 			<div id="showAreaTop" class="text-effect">
 				<div id="pushArea" class="text-effect">
@@ -396,6 +397,23 @@
 	                  $("#showArea").append(data);
 	                }
 	        })
+	    })
+	    
+	    $(".orders-btn").click(function (){
+	    	 var str = "購買紀錄";
+	    	 $.ajax({
+	              url:"ajax_orders",
+	              type: "GET",
+	              dataType: "html", //server送回
+	              contentType: 'application/json; charset=utf-8',
+	              data: {}, 
+	              success:function(data){
+	            	  $("#showArea").empty();
+	                  $("#showArea").css("border", "0").addClass("animated").html(str);
+	                  $("#showArea").append(data);
+	                }
+	        })
+	    	
 	    })
 	    
 	    

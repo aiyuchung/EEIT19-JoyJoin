@@ -116,10 +116,17 @@ public class ActivitiesController {
 				break;
 			}
 		}
+		boolean levelLimit = false;
+		int levelSetting = activity.getLevelLimit();
+		String level = (String) session.getAttribute("level");
+		if (Integer.parseInt(level) < levelSetting) {
+			levelLimit = true;
+		}
 		model.addAttribute("frombtn",frombtn);
 		model.addAttribute("nickname",nickname);
 		model.addAttribute("isJoined",isJoined);
 		model.addAttribute("isFollowed",isFollowed);
+		model.addAttribute("levelLimit",levelLimit);
 		model.addAttribute("joined",joined);
 		model.addAttribute("msgBox",msgBox);
 		model.addAttribute("msgNum",msgNum);
@@ -205,6 +212,14 @@ public class ActivitiesController {
 		
 		return "CreateNewActivity";
 	}
+//-----------------------------------------刪除活動跳轉全部活動頁面↓-----------------------------------------	
+	@GetMapping("/deleteActivity/{id}")
+	public String delete(@PathVariable("id") int activityNo, HttpSession session, Model model) {
+		service.inactiveActivity(activityNo);
+		
+		
+		return "redirect:/activities";
+	}
 //-----------------------------------------新增活動空的form表單↓-----------------------------------------	
 	@ModelAttribute("activities")
 	public List<ActivityBean> a1() {
@@ -286,7 +301,48 @@ public class ActivitiesController {
 		
 	    return "redirect:/activities";
 	   }
-					
+//-----------------------------------------更新活動↓-----------------------------------------
+	@PostMapping("/updateActivities/{id}")
+	public String updateAcitivity(@PathVariable("id") int activityNo, HttpSession session, 
+			Model model,@ModelAttribute("newform") ActivityBean newform) {
+		
+//		String account =  (String) session.getAttribute("account");
+//		MemberBean member = memberService.getMember(account);
+//		Integer memberNo = member.getMemberNo();
+		
+		newform.setActivityNo(activityNo);
+		System.out.println("activity no in form: "+ newform.getActivityNo());
+		
+		MultipartFile mFile = newform.getUpdateImg();
+		
+			//取得檔案型態 令存檔名
+		String original = mFile.getOriginalFilename();
+		newform.setFileName(original);
+			
+		if (mFile != null && !mFile.isEmpty()) {
+			byte[] b;
+			System.out.println("newform.getUpdateImg() != null ");
+			try {
+				b = mFile.getBytes();
+				Blob blob = new SerialBlob(b);
+				newform.setActivityPic(blob);
+				System.out.println("controller blob-----------------------"+blob);
+			} catch (IOException | SQLException e) {
+				e.printStackTrace();
+				throw new RuntimeException("異常:" + e.getMessage());
+			}
+		}else {
+			ActivityBean activity = service.selectOneActivity(activityNo);
+			newform.setActivityPic(activity.getActivityPic());
+		}
+		
+//		String prov= newform.getProv();
+//		System.out.println("controller prov:"+prov);
+		service.updateActivity(newform);
+//		memberService.updatePost(account);
+		
+	    return "redirect:/activities";
+	   }					
 //-----------------------------------------條件查詢form表單↓-----------------------------------------		
 	@PostMapping("/form")
 	public String form(Model model, @ModelAttribute("form") ActivityForm form) {
@@ -515,21 +571,39 @@ public class ActivitiesController {
 
 	}
 	
-	
+	List<String> cookies = new ArrayList<>();
 	@RequestMapping(value = "checkCookie")
-    public String checkCookie(String s, HttpServletResponse response){
+    public String checkCookie(HttpSession httpsession,String keyword, HttpServletResponse response, Model model){
         // 新建Cookie
-        Cookie keywords_cookie = new Cookie("keyword", s);
         // 輸出到客戶端
-        response.addCookie(keywords_cookie);
-        return "redirect:getCookie";
+		if(cookies.size() == 0) {
+			cookies.add(keyword);
+		}else {
+			for(int i =0; i <cookies.size(); i++) {
+				if (!cookies.get(i).equals(keyword)) {
+					cookies.add(keyword);
+					break;
+					
+				}else {
+					break;
+				}
+			}if (cookies.size()>10) {
+				cookies.remove(0);
+			}
+		}
+		
+		httpsession.setAttribute("keywords", cookies);
+		model.addAttribute("keywords",cookies);
+		
+        return "ajax/cookie";
 	}
 	
 	@RequestMapping(value = "getCookie")
-    public String getCookie(@CookieValue("keyword") String keyword){
+    public String getCookie(HttpSession httpsession, Model model){
         // 控制檯輸出
-        System.out.println("keyword: " + keyword);
-        return "success";
+//        System.out.println("keyword: " + keyword);
+        
+        return "ajax/cookie";
     }
 
 //	@ModelAttribute

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.web.activity.dao.MemberDao;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
+import com.web.activity.model.FriendBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
 import com.web.activity.model.OrderBean;
@@ -441,20 +442,6 @@ public class MemberDaoImpl implements MemberDao {
 		session.createQuery(hql).setParameter("no", msgNo).executeUpdate();
 	}
 	
-	@Override
-    public OrderBean createOrder(Integer memberNo, OrderBean order) {
-        Session session = factory.getCurrentSession();
-        int i = (int) (new Date().getTime()/1000);
-        String orderNo = "J"+ Integer.toString(i);
-        order.setOrderNo(orderNo);
-        order.setMemberBean(session.get(MemberBean.class,memberNo));
-        session.save(order);
-        
-        String hql = "FROM OrderBean where orderNo = :no";
-        OrderBean thisorder = (OrderBean) session.createQuery(hql).setParameter("no", orderNo).getSingleResult();
-        return thisorder;
-        
-    }
 	
 	@Override
 	public Integer checkType2Back(String account) {
@@ -476,7 +463,133 @@ public class MemberDaoImpl implements MemberDao {
 		session.createQuery(hql).setParameter("type", type).setParameter("id", account).executeUpdate();
 	}
 
-	
-	
+//---------------------------------------------▼好友功能▼---------------------------------------------//		
+		
+		@Override
+		public List<String> getFriendListOne(String account){
+			Session session = factory.getCurrentSession();
+			String hql = "SELECT accountOne FROM FriendBean WHERE accountTwo = :id and oneType = 1 and twoType = 1";
+			@SuppressWarnings("unchecked")
+			List<String> list = session.createQuery(hql).setParameter("id", account).getResultList();
+			return list;
+		}
+		
+		@Override
+		public List<String> getFriendListTwo(String account){
+			Session session = factory.getCurrentSession();
+			String hql = "SELECT accountTwo FROM FriendBean WHERE accountOne = :id and oneType = 1 and twoType = 1";
+			@SuppressWarnings("unchecked")
+			List<String> list = session.createQuery(hql).setParameter("id", account).getResultList();
+			return list;
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		public boolean checkFriend(String host, String account) {
+			Session session = factory.getCurrentSession();
+			String hql = "SELECT accountOne = :id1 FROM FriendBean WHERE accountTwo = :id2";
+			List<String> list1 = session.createQuery(hql).setParameter("id1", host).setParameter("id2", account).getResultList();
+			List<String> list2 = session.createQuery(hql).setParameter("id1", account).setParameter("id2", host).getResultList();
+			if( list1 == null && list2 == null ) {
+				return true;
+			}else return false;
+		}
+
+		@Override
+		public void saveFriend(FriendBean fb) {
+			Session session = factory.getCurrentSession();
+			session.save(fb);
+		}
+		
+		@Override
+		public void delFriend(String host, String account) {
+			Session session = factory.getCurrentSession();
+			String hql = "DELETE FROM FriendBean WHERE accountOne = :id1 and accountTwo = :id2";
+			session.createQuery(hql).setParameter("id1", host).setParameter("id2", account).executeUpdate();
+			session.createQuery(hql).setParameter("id1", account).setParameter("id2", host).executeUpdate();
+		}
+		
+		@Override
+		public void updateStatus(String host, String account) {
+			Session session = factory.getCurrentSession();
+			String hql = "UPDATE FriendBean SET status = :s, twoType = :t WHERE accountOne = :id1 and accountTwo = :id2";
+			session.createQuery(hql).setParameter("s", 1)
+												  .setParameter("t", 1)
+												  .setParameter("id1", host)
+												  .setParameter("id2", account)
+												  .executeUpdate();
+											
+		}
+		
+		@Override
+		public String checkFriendType(String host, String account) {
+			Session session = factory.getCurrentSession();
+			String hql1 = "SELECT oneType WHERE (accountOne = :id1 and accountTwo = :id2) or (accountOne = :id3 and accountTwo = :id4)";
+			String hql2 = "SELECT twoType WHERE (accountOne = :id1 and accountTwo = :id2) or (accountOne = :id3 and accountTwo = :id4)";
+			Integer i1 = 0;
+			Integer i2 = 0;
+			String str = null;
+			try {
+				i1 = (Integer) session.createQuery(hql1).setParameter("id1", host)
+															  .setParameter("id2", account)
+															  .setParameter("id3", account)
+															  .setParameter("id4", host)
+															  .getSingleResult();
+			}catch(Exception e) {
+				;
+			}
+			try {
+				i2 = (Integer) session.createQuery(hql2).setParameter("id1", host)
+															  .setParameter("id2", account)
+															  .setParameter("id3", account)
+															  .setParameter("id4", host)
+															  .getSingleResult();
+			}catch(Exception e) {
+				;
+			}
+			
+			if(i1==1&&i2==1) {
+				str = "好友";
+			}else if((i1==1&&i2==0)||(i1==0&&i2==1)) {
+				str = "申請中";
+			}
+			return str;
+		}
+		
+		
+		
+		
+		
+		
+//---------------------------------------------▼購買紀錄▼---------------------------------------------//		
+		@Override
+		public List<OrderBean> orderRecords(Integer memberNo)	{
+			Session session = factory.getCurrentSession();
+			String hql = "FROM OrderBean WHERE memberNo = :memberNo";
+			@SuppressWarnings("unchecked")
+			List<OrderBean> orders=session.createQuery(hql).setParameter("memberNo", memberNo).getResultList();
+			return orders;
+		}
+//---------------------------------------------▼購買點數▼---------------------------------------------//		
+		@Override
+	    public OrderBean createOrder(Integer memberNo, OrderBean order) {
+	        Session session = factory.getCurrentSession();
+	        int i = (int) (new Date().getTime()/1000);
+	        String orderNo = "JoyJoin"+ Integer.toString(i).substring(0,9);
+	        System.out.println(orderNo);
+	        order.setOrderNo(orderNo);
+	        
+	        Date today = new Date();
+			java.sql.Date sqltoday = new java.sql.Date(today.getTime());
+			order.setOrderDate(sqltoday);
+			
+	        order.setMemberBean(session.get(MemberBean.class,memberNo));
+	        session.save(order);
+	        
+	        String hql = "FROM OrderBean where orderNo = :no";
+	        OrderBean thisorder = (OrderBean) session.createQuery(hql).setParameter("no", orderNo).getSingleResult();
+	        return thisorder;
+	        
+	    }
 	
 }

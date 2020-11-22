@@ -108,31 +108,39 @@
 			}
 		})
 		param.num = num;
-				param.item = item;
-				param.price = price;
+		param.item = item;
+		param.price = price;
+		$.ajax({
+			  url:"<c:url value='/shopping'/>",
+			  type: "POST",
+			  dataType: "JSON", //server送回
+			  contentType: 'application/json; charset=utf-8',
+			  data: JSON.stringify(param),
+			  success:function(data){
+				  $("#ecpay").append(data.pay);
+				}
+		})
 	
 // 		var param = {};
 // 		var num = $(this).siblings("input[name=orderNum]").val();
 // 		var item = $(this).val();
 // 		var price= $(this).siblings("input[name=orderPrice]").val();
+
+
+// 		console.log("outside"+param);
+// 		var xhr = new XMLHttpRequest();
+// 		xhr.open("POST","<c:url value='/shopping'/>",true);
+// 		xhr.setRequestHeader('Content-type','application/json;charset=utf-8');
+// 		xhr.send(JSON.stringify(param))
 		
-// 		param.num = num;
-// 		param.item = item;
-// 		param.price = price;
-		console.log("outside"+param);
-		var xhr = new XMLHttpRequest();
-		xhr.open("POST","<c:url value='/shopping'/>",true);
-		xhr.setRequestHeader('Content-type','application/json;charset=utf-8');
-		xhr.send(JSON.stringify(param))
-		
-		xhr.onreadystatechange = function(){
-			if(xhr.readyState == 4 && xhr.status == 200){
-				console.log(xhr.responseText)
+// 		xhr.onreadystatechange = function(){
+// 			if(xhr.readyState == 4 && xhr.status == 200){
+// 				console.log(xhr.responseText)
 				
-				var obj = JSON.parse(xhr.responseText);
-				$("#ecpay").append(obj.pay);
-			}
-		}
+// 				var obj = JSON.parse(xhr.responseText);
+// 				$("#ecpay").append(obj.pay);
+// 			}
+// 		}
 		
 		
 		

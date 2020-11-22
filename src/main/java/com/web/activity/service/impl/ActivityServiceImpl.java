@@ -333,6 +333,18 @@ public class ActivityServiceImpl implements ActivityService {
 	public void unfollowActivity(Integer memberNo, String activityUrl) {
 		dao.unfollowActivity(memberNo, activityUrl);
 	}
+
+	@Override
+	public void inactiveActivity(int activityNo) {
+		dao.inactiveActivity(activityNo);
+		
+	}
+
+	@Override
+	public void updateActivity(ActivityBean newform) {
+		dao.updateActivity(newform);
+		
+	}
 	
 
 	

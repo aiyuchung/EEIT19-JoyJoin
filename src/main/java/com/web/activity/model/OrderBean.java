@@ -1,6 +1,7 @@
 package com.web.activity.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -25,7 +26,20 @@ public class OrderBean implements Serializable {
 	private Integer orderPrice;
 	private String orderItem;
 	private Integer orderNum; 
+	private Date orderDate;
 	
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+
+
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="memberNo") 	
     private MemberBean memberBean;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
+import com.web.activity.model.FriendBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
 import com.web.activity.model.OrderBean;
@@ -61,9 +62,23 @@ public interface MemberService {
 			//刪除訊息
 		public OrderBean createOrder(Integer memberNo, OrderBean order);
 			//存訂單 並取出
+		public List<OrderBean> orderRecords(Integer memberNo);
+			//取訂單紀錄
 		public Integer checkType2Back(String account);
 			//後臺檢查會員帳號狀態
 		public void changeType2Back(String account, int type);
-			//後台改變會員帳號狀態
-
+			//後台改變會員帳號狀態	
+		public List<String> getAllFriendList(String account);
+			//抓取好友清單
+		public boolean checkFriend (String host, String account);
+			//確認好友
+		public void saveFriend(FriendBean fb);
+			//提出好友申請
+		public void delFriend(String host, String account);
+			//刪除好友
+		public void updateStatus(String host, String account);
+			//同意好友更改狀態
+		public String checkFriendType(String host, String account);
+			//檢查交友狀態
+		
 }	

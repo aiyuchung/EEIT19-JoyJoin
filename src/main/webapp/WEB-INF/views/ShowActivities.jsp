@@ -24,6 +24,10 @@
 	crossorigin="anonymous"></script>
 
 <style>
+body{
+	background: #009393;
+/* 	background: #4F9D9D; */
+}
 #thiscap {
 	padding-top: .75rem;
 	padding-bottom: .75rem;
@@ -320,16 +324,19 @@
 						<form id="searchform" method="get" action="#">
 							<h6>&nbsp;&nbsp;關鍵字搜尋</h6>
 							<div>
-								&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="s" id="s" size="20" value="" placeholder="EX: 瑜珈" /> <br />
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="text" name="s" id="s" size="20" value="" placeholder="EX: 瑜珈" /> <br />
 								<button type="button" class="btn btn-outline-light btn-sm">確認</button>
 							</div>
 						</form>
 					</li>
 <!-- tags未寫 -->					
 					<li>
-						<h2>Tags</h2>
-						<p>
-							<a href="#">dolor</a> <a href="#">ipsum</a> <a href="#">lorem</a>
+						<h2>熱門搜尋</h2>
+						<p class="forcookie">
+							<c:forEach var="keyword" items="${keywords}">
+							 <a href="Javascript:;" class="searchForKey">${keyword}</a>
+							</c:forEach>
 							
 						</p>
 					</li>
@@ -579,6 +586,7 @@ function showPrev(){
 	showCalendar(y,m,d,firstday);
 	
 	document.getElementById("prev").innerHTML="&laquo;"+ (m==0?12:m) +"月";
+	document.getElementById("next").innerHTML=((m+2)>12?1:m+2)+"月 &raquo;";
 	document.getElementById("thiscap").innerHTML=y+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (m+1)+"月"
 } 
 
@@ -599,6 +607,7 @@ function showNext(){
 	
 	showCalendar(y,m,d,firstday);
 	
+	document.getElementById("prev").innerHTML="&laquo;"+ (m==0?12:m) +"月";
 	document.getElementById("next").innerHTML=((m+2)>12?1:m+2)+"月 &raquo;";
 	document.getElementById("thiscap").innerHTML=y+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (m+1)+"月"
 } 
@@ -610,7 +619,7 @@ function showNext(){
 		  function showCalendar(y,m,d,firstday){
 		  dayOfWeek = firstday.getDay(),           //判斷第一天是星期幾(返回[0-6]中的一個，0代表星期天，1代表星期一，以此類推)
 		  days_per_month = new Array(31, 28 + isLeap(y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31),         //建立月份陣列
-		  str_nums = Math.ceil((dayOfWeek + days_per_month[m])/ 7);                        //確定日期表格所需的行數
+		  str_nums = Math.ceil((dayOfWeek + days_per_month[m]) / 7);                        //確定日期表格所需的行數
 
 				var calendarbody = document.getElementById("calBody");
 				for (var i = 0; i < str_nums; i ++) {         //二維陣列建立日期表格
@@ -865,6 +874,17 @@ function showNext(){
 		var keywords = $("#s").val();
 		console.log(keywords);
 		$.ajax({
+			  url:"checkCookie",
+			  type: "GET",
+			  dataType: "html", //server送回
+			  contentType: 'application/json; charset=utf-8',
+			  data: {keyword: keywords},
+			  success:function(data){
+				  $(".forcookie").empty();
+				  $(".forcookie").append(data);
+				}
+		})
+		$.ajax({
 			  url:"ajax_keyWords",
 			  type: "get",
 			  dataType: "html",
@@ -890,6 +910,34 @@ function showNext(){
 				  }
 		})
 	})
+	$(document).on('click','.searchForKey',function(){ //熱門搜尋
+		var keyword = $(this).text();
+		$.ajax({
+			  url:"ajax_keyWords",
+			  type: "get",
+			  dataType: "html",
+// 			  contentType: 'application/json; charset=utf-8',
+			  data: {
+				  keyword: keyword
+				},
+			  success:function(data){
+				  $(".post").empty();
+				  $(".newajaxlist").empty();
+				  $(".newajaxlist").append(data);
+					},
+				error:function(){
+				 	$(".newajaxlist").empty();
+		 			$(".newajaxlist").append(
+		 					'<c:forEach var="all" items="${activities}"><div class="post oldajaxlist"><h2 class="title"><strong>${all.activityDate} </strong> (${all.prov})</h2>'
+		 				        +'<h1 class="title"><a href="#">${all.name}</a></h1><p class="byline"><small><a href="#發起人的超連結" rel="nofollow">${all.memberBean.nickname}</a>於 ${all.createdDate} 發起</small></p>'
+		 				        +'<div class="entry"><p>本 <strong>${all.activityTypeName}</strong> 活動將於${all.finalDate}截止</p>'
+		 				        +'<p>只要 ${all.minLimit}人即可成公開團!     本活動最高上限人數:  ${all.maxLimit}</p>'
+		 				        +'<p class="links"><a href="#" class="more">(看詳細內容)</a> &nbsp;&nbsp;&nbsp;</p></div></div></c:forEach>'
+			 		);
+				  }
+		})
+	})
+	
 //條件篩選中的大小類選擇
 	$(".Bigtype").click(function(){
 		var liClass= "."+$(this).val();

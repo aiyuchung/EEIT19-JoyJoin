@@ -82,7 +82,7 @@
 		<div class="container addNew">
 			<div class="row">
 				<div class="content" style="margin: auto">
-					<form:form method="POST"  modelAttribute="newform" id="newform" enctype="multipart/form-data">
+					<form:form method="POST" action="" modelAttribute="newform" id="newform" enctype="multipart/form-data">
 <%-- 					<form method="POST" action="/newActivities" enctype="multipart/form-data" id="picform"> --%>
 					
 				 		<div class="section-block">
@@ -91,7 +91,6 @@
 										<h1 class="section-title">活動封面照</h1>
 
 								<form:input type="file"  path="updateImg" id="file"/>
-								
 								
 								<div class="video-frame">
 									<div id="forimg" align="center">
@@ -211,8 +210,8 @@
 									<div class="info-block  ">
 											<div class="fortitle">最高人數限制</div>
 											<div class="forcontent">
-												<form:radiobutton path="maxLimit" value="無限制" label="無限制" id="nolimitmax" checked="checked"/> &nbsp;
-												<form:radiobutton path="maxLimit" value="" label="限制人數:" id="limitmax" /><form:input disabled="true" path="maxLimit" class="form-control inputhide" style="width:100px; display:inline-block"/>
+												<form:radiobutton path="maxLimit" value="無限制" label="無限制" id="nolimitmax" checked="true"/> &nbsp;
+												<form:radiobutton path="maxLimit" value="" label="限制人數:" id="limitmax" /><form:input disabled="true" path="maxLimit" class="form-control inputhide intOnly" style="width:100px; display:inline-block"/>
 											</div>
 									</div>
 							  		<div class="info-block ">
@@ -253,7 +252,12 @@
 						</div>
 					</div>
 					<div align="center">
-						<button id="createnew"  class="btn btn-secondary btn-lg" style="width:80%;background-color:#85AD90">確認送出</button>
+						<a href="#" id="autotext" class="btn btn-secondary btn-lg"  style="display:none;width:80%;background-color:#85AD99">一鍵輸入</a>
+						<button id="createnew"  class="btn btn-secondary btn-lg" style="width:80%;background-color:#85AD90; margin-top:8px;">確認送出</button>
+					</div>
+					<div>
+					
+						
 					</div>
 					</form:form>
 					</div>
@@ -268,7 +272,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script>
-
+	$(document).ready(function(){
+		var id = ${newform.activityNo};
+		if (id == 0){
+			$("#newform").attr("action","newActivities");
+			$("#autotext").css("display","block");
+			$("#autotext").show();
+		}else{
+			var url = "../updateActivities/" + id;
+			$("#newform").attr("action",url);
+			
+			var maxLimit = '${newform.maxLimit}';
+			if (maxLimit == ""){
+				$("#nolimitmax").attr("checked",true);
+			}else{
+				$("#nolimitmax").attr("checked",false);
+				$("#limitmax").attr("checked",true);
+				$(".inputhide").attr("disabled",false);
+				
+			}
+		}
+		
+		
+		
+	})
+	
 	$('#file').change(function() {
 	  var file = $('#file')[0].files[0];
 	  var reader = new FileReader;
@@ -317,7 +345,7 @@
 			}
 	})
 	
-	$(".intOnly").keyup(function(){
+	$(".intOnly").keyup(function(){ //只能秀數字
 		var val = $(this).val();
 		 if (val != val.replace(/[^0-9\.]/g, '')){
 				$(this).addClass("is-invalid");
@@ -336,15 +364,28 @@
 		$(".inputhide").prop("disabled",true);
 	})
 	
-	$("#createnew").click(function(){
+	$("#createnew").click(function(){  //送出表單
 		$(".must").each(function(){
 			if($(this).hasClass("is-invalid")){
 				window.location.href = "#";
 			}else{
 				$("#newform").submit();
-// 				$("#picform").submit();
 			}
 		})
+	})
+	$("#autotext").click(function(){  //一鍵輸入
+		$("input[name=name]").val("六福村");
+		$("#selecytType").val("旅遊");
+		$(".showClass").val("遊樂園");
+		$("select[name=prov]").val("新竹縣");
+		$("input[name=activityDate]").val("2020-11-30");
+		$("input[name=meetPoint]").val("台北車站");
+		$("input[name=meetTime]").val("07:00");
+		$("input[name=finalDate]").val("2020-11-28");
+		$("input[name=minLimit]").val("1");
+		$("input[name=price]").val("999");
+		$("textarea[name=introduction]").val("很久沒去遊樂園了，想說可以尖叫紓壓順便看看動物放鬆一下~");
+		
 	})
 	
 </script>	

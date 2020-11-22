@@ -317,7 +317,7 @@
 										<c:choose>
 											<c:when test="${one.memberBean.account == account}">
 											</c:when>
-											<c:when test="${one.maxLimit == one.joinedNum}">
+											<c:when test="${one.maxLimit == 'one.joinedNum'}">
 												<button class="btn btn-full" disabled>已額滿</button>
 											</c:when>
 											<c:otherwise>
@@ -392,7 +392,7 @@
 	  <div class="modal-dialog modal-sm" role="document">
 	    <div class="modal-content" style="background-color:#ECEBEB; border:0">
 	      <div class="modal-header" style="background-color:#85AD90; border:2px solid #85AD90">
-	        <h5 class="modal-title" id="exampleModalLabel" style="color:white;font-size:15px ">未登入提醒</h5>
+	        <h5 class="modal-title" id="exampleModalLabel" style="color:white;font-size:15px ">活動已參加</h5>
 	      </div>
 	      <div class="modal-body" style="color:black; font-size:19px">
 	        	<p>您已成功參加此活動👌👌👌</p>
