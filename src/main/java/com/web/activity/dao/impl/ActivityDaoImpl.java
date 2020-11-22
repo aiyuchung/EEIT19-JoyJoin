@@ -603,6 +603,17 @@ public class ActivityDaoImpl implements ActivityDao {
 			session.createQuery(hql).setParameter("activityUrl",activityUrl)
 									.setParameter("no",memberNo).executeUpdate();
 		}
+	//----------------------------------------分頁--------------------------------------------	
+	
+//			@Override
+//			public List<ActivityBean> pages (int offset,int pageSize) {
+//				Session session = factory.getCurrentSession();
+//				String hql = "FROM ActivityBean WHERE activityStatus = 'active'";
+//				List<ActivityBean> result = session.createQuery(hql).setFirstResult(offset).setMaxResults(pageSize)
+//						.getResultList();
+//				return result;
+//			}
+
 
 
 }
