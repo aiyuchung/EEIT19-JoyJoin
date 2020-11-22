@@ -3,8 +3,11 @@ package com.web.activity.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.Blob;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.web.activity.Enum.ForumType;
 import com.web.activity.model.ForumBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.MessageBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.model.userBean;
 import com.web.activity.service.ActivityService;
@@ -52,7 +56,7 @@ public class ForumController {
 	
 	
 	@GetMapping("/forum")
-	public String selectAllForum(Model model,@ModelAttribute("form") ForumBean form) {
+	public String selectAllForum(Model model, HttpSession session,@ModelAttribute("form") ForumBean form) {
 		List<ForumBean>forumList = service.selectForumTitleListByParam(form);
 		model.addAttribute("forumList", forumList);
 		return "forum/forum";
@@ -220,4 +224,19 @@ public class ForumController {
 	   re = new ResponseEntity<byte[]>(content, headers, HttpStatus.OK);
 	   return re;
 	  }
+	  
+	  @PostMapping("/serverMsg/{account}")
+		public String sendServerMsg(@PathVariable String account) {
+			MessageBean mb = new MessageBean();
+			mb.setAccount("揪in Server");
+			mb.setAccount(account);
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+ 		 	String time = dateFormat.format(new Date());
+ 		 	mb.setTime(time);
+ 		 	mb.setReadStatus(0);
+ 		 	mb.setSubject("來自系統的訊息");
+ 		 	mb.setMsg(null);
+ 		 	memberService.sendMsg(mb);
+ 		 	return "";
+		}
 }

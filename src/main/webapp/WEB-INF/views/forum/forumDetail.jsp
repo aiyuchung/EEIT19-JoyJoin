@@ -44,7 +44,6 @@ Released   : 20100501
 <!---------- Header ------------>
  <c:import url="forumHeader.jsp"></c:import> 
  <div style="background-color:black;padding:10px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA"></div>
-
  
 	<table width="70%" border="1" align="center" class="tbdetail">
 
@@ -53,7 +52,7 @@ Released   : 20100501
 			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
 				<img src="<c:url value='/getMemberPicture/${forum.memberBean.account}' />" class="imgRange" alt="圖片" style="width:100%" />
 			</td>
-				<td rowspan="2" width="10%" height="100px" style="border-left: 0px;">
+			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;" class = "userInfoTd" name = "${forum.memberBean.account}">
 		
 				暱稱 ${forum.memberBean.nickname}<br />
 		  		帳號 ${forum.memberBean.account}<br /> 
@@ -142,8 +141,35 @@ Released   : 20100501
 		</form> 
 	</table>
 
+    <div class="textsssss" >	
+	</div>
 
 <script>	
+
+$(".userInfoTd").click(function() { //關鍵字搜尋
+
+	var userAccount = $(this).attr('name');
+	alert(userAccount);
+	if (userAccount != null) {
+		$.ajax({
+			url : "detailCard/"+userAccount,
+			type : "GET",
+			dataType : "html", //server送回
+			contentType : 'application/json; charset=utf-8',
+			data : {
+				
+			},
+			success : function(data) {
+				alert('success');
+				console.log(data);
+				//$(".textsssss").empty();
+				$(".textsssss").append(data);
+				$("#exampleModal").show();
+				
+			}
+		})
+	} 
+})
 
 
 $(".forumEdit").click(function(){ //以活動類型作為快速篩選

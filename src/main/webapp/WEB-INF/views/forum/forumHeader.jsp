@@ -313,6 +313,7 @@ input  {
 	<div class="newajaxlist">
 		<c:import url="../ajax/forumTable.jsp"></c:import>
 	</div>
+	
 	<script>
 
 

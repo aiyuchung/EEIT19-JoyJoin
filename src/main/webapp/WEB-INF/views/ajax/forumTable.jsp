@@ -82,8 +82,7 @@ border:none;
 			</tr>
 		</thead>
 		<c:forEach var="forum" items="${forumList}">
-			<tr  style="text-align: center" height="60px" class="to_detail"
-				name="${forum.forumSeq}">
+			<tr  style="text-align: center" height="60px" class="to_detail" name="${forum.forumSeq}">
 				<td>${forum.type}</td>
 				<td>${forum.title}</td>
 				<td>${forum.score}</td>
@@ -95,15 +94,48 @@ border:none;
 			</tr>
 		</c:forEach>
 	</table>
-	
-	
-
 	<script type="text/javascript">
-		$(".to_detail").click(function() { //以活動類型作為快速篩選
+	$(".submitBtn").click(function() { //關鍵字搜尋
+		var keyWord = $('#keyWord').val();
+		if (isCodeExists) {
+			$("#keyWordInput").val(keyWord);
+			$("#backHomeForm").submit();
+		} else {
+			$.ajax({
+				url : "ajax_forum",
+				type : "GET",
+				dataType : "html", //server送回
+				contentType : 'application/json; charset=utf-8',
+				data : {
+					keyWord : keyWord
+				},
+				success : function(data) {
+					$(".newajaxlist").empty();
+					$(".newajaxlist").append(data);
+				}
+			})
+		}
+	})
+	
+	
+	$(".to_detail").click(function(){
+
+		var account = $("#userAccount").val();
+
+		console.log("account ="+account);
+
+		if (account == "" || account == null){
+
+			$('#exampleModal').modal('show');
+
+			event.preventDefault();
+
+		}else{
 			var forumSeq = $(this).attr('name');
 			$("#forumSeqInput").val(forumSeq);
 			$("#formToDetail").submit();
-		})
+		}
+	})
 	</script>
 </body>
 </html>
