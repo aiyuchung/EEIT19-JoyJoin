@@ -518,7 +518,7 @@ public class MemberController {
       			String account = (String) session.getAttribute("account");
       			List<String> list = memberService.getAllFriendList(account);
       			model.addAttribute("friend", list);
-      			return "ajax_memberlist";
+      			return "login/ajax_memberlist";
       		}
       		
       		@PostMapping("/getFriend/{account}")

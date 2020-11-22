@@ -344,7 +344,7 @@
 		})
 		
 		//好友
-		$("#showFriend-btn").on("clikc", function(){
+		$("#showFriend-btn").on("click", function(){
 			var str = "好友列表"
 		    	$.ajax({
 					url : "getAllFriend",

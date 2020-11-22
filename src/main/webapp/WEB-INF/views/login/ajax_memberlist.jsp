@@ -25,12 +25,14 @@
 <script>
 	function see(){
 		var id = document.getElementById("account")
-		location.href="<c:url value='/detailCard/'+id/>"
+		console.log("=======>"+id)
+		location.href="http://localhost:8080/JoyJoin/detailCard/"+id
 	}
 	
 	function del(){
 		var id = document.getElementById("account")
-		location.href="<c:url value='/delFriend/'+id/>"
+		location.href="http://localhost:8080/JoyJoin/delFriend/"+id
+
 	}
 	
 </script>	
