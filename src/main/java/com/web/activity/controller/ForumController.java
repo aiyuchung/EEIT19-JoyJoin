@@ -44,199 +44,193 @@ public class ForumController {
 
 	@Autowired
 	ForumService service;
-	
+
 	@Autowired
 	ActivityService activityService;
-	
+
 	@Autowired
 	MemberService memberService;
-	
+
 	@Autowired
 	ServletContext servletContext;
-	
-	
+
 	@GetMapping("/forum")
-	public String selectAllForum(Model model, HttpSession session,@ModelAttribute("form") ForumBean form) {
-		List<ForumBean>forumList = service.selectForumTitleListByParam(form);
+	public String selectAllForum(Model model, HttpSession session, @ModelAttribute("form") ForumBean form) {
+		List<ForumBean> forumList = service.selectForumTitleListByParam(form);
 		model.addAttribute("forumList", forumList);
 		return "forum/forum";
 	}
-	
+
 	@GetMapping("/ajax_forum")
-	public String selectRecentMon(Model model, String activeType, String keyWord,String code) {
+	public String selectRecentMon(Model model, String activeType, String keyWord, String code) {
 		ForumBean forumBean = new ForumBean();
 		forumBean.setType(activeType);
 		forumBean.setKeyWord(keyWord);
 		forumBean.setCode(code);
-		List<ForumBean>forumList = service.selectForumTitleListByParam(forumBean);
-		model.addAttribute("forumList",forumList);
+		List<ForumBean> forumList = service.selectForumTitleListByParam(forumBean);
+		model.addAttribute("forumList", forumList);
 		return "ajax/forumTable";
 
 	}
-	
+
 	@GetMapping("/forumDetail")
-	public String getForumDetail(Model model,@ModelAttribute("form") ForumBean form) {
+	public String getForumDetail(Model model, @ModelAttribute("form") ForumBean form) {
 		service.plusPopularity(form.getForumSeq());
 		form.setCode(String.valueOf(form.getForumSeq()));
-		List<ForumBean>forumList = service.selectForumDteailListByParam(form);
-		ForumBean forumBean = forumList.stream()
-				.filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()
+		List<ForumBean> forumList = service.selectForumDteailListByParam(form);
+		ForumBean forumBean = forumList.stream().filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()
 				.orElse(new ForumBean());
-		List<ForumBean> forumDetailList = forumList.stream()
-				.sorted(Comparator.comparing(ForumBean::getForumSeq))
-				.filter(f -> ForumType.DETAIL.equals(f.getForumType()))
-				.collect(Collectors.toList());
+		List<ForumBean> forumDetailList = forumList.stream().sorted(Comparator.comparing(ForumBean::getForumSeq))
+				.filter(f -> ForumType.DETAIL.equals(f.getForumType())).collect(Collectors.toList());
 
-		model.addAttribute("forumBean",forumBean);
-		model.addAttribute("forumDetailList",forumDetailList);
+		model.addAttribute("forumBean", forumBean);
+		model.addAttribute("forumDetailList", forumDetailList);
 		return "forum/forumDetail";
 	}
-	
-	
+
 	@GetMapping("/forumDetail_ONE")
-	public String getForumDetailOne(Model model,@RequestParam Integer forumSeq) {
+	public String getForumDetailOne(Model model, @RequestParam Integer forumSeq) {
 		ForumBean forum = service.selectOneForum(forumSeq);
 		model.addAttribute("forum", forum);
 		return "forum/forumDetail";
 	}
-	
+
 	@GetMapping("/forumNewArticle")
-	public String getforumNewArticle(Model model,  HttpSession session,@ModelAttribute("form") ForumBean form) {
+	public String getforumNewArticle(Model model, HttpSession session, @ModelAttribute("form") ForumBean form) {
 		String account = (String) session.getAttribute("account");
 		MemberBean member = memberService.getMember(account);
 		form.setMemberBean(member);
 		form.setAuthor(member.getMemberNo().toString());
-		model.addAttribute("forumBean",form);
-		
+		model.addAttribute("forumBean", form);
+
 		return "forum/forumNewArticle";
 	}
-	
-	
+
 	@GetMapping("/forumUpdateArticle")
-	public String forumUpdateArticle( Model model,@ModelAttribute("form") ForumBean form) {
+	public String forumUpdateArticle(Model model, @ModelAttribute("form") ForumBean form) {
 		ForumBean forumRes = service.selectOneForum(form.getForumSeq());
-		model.addAttribute("forumBean",forumRes);
+		model.addAttribute("forumBean", forumRes);
 		return "forum/forumNewArticle";
 	}
-	
+
 	@GetMapping("/createNewTitle/{id}")
 	public String getforumNewArticle(Model model, HttpSession session, @PathVariable("id") Integer activeNo) {
-		//傳入活動號碼，建立新的討論標題
-		Integer forumSeq  = service.createForumTitle(activeNo);
-		//取得剛存好的討論標題ID，使用ID查詢詳細資料
+		// 傳入活動號碼，建立新的討論標題
+		Integer forumSeq = service.createForumTitle(activeNo);
+		// 取得剛存好的討論標題ID，使用ID查詢詳細資料
 		ForumBean forumBean = service.selectOneForum(forumSeq);
-		//清空ID
+		// 清空ID
 		forumBean.setForumSeq(null);
-		//這行可能不用加，記得儲存標題的時候就有做了，如果有就刪掉
+		// 這行可能不用加，記得儲存標題的時候就有做了，如果有就刪掉
 		forumBean.setAuthor(forumBean.getMemberBean().getMemberNo().toString());
-		//把標題資訊傳到新增頁面
+		// 把標題資訊傳到新增頁面
 		List<ForumBean> forumBeans = new ArrayList();
 		forumBeans.add(forumBean);
-		model.addAttribute("forumBean",forumBean);
+		model.addAttribute("forumBean", forumBean);
 		model.addAttribute("forumList", forumBeans);
 		return "forum/forumNewArticle2";
 	}
-	
+
 	@PostMapping("/saveOrUpdateArticle")
-	public String saveOrUpdateArticle( Model model,@ModelAttribute("form") ForumBean form,HttpSession session) {
-		//抓取使用者帳號
+	public String saveOrUpdateArticle(Model model, @ModelAttribute("form") ForumBean form, HttpSession session) {
+		System.out.println("saveOrUpdateArticle");
+		// 抓取使用者帳號
 		String id = (String) session.getAttribute("account");
-		//用ID抓MEMBERBEAN ROLEBEAN
+		// 用ID抓MEMBERBEAN ROLEBEAN
 		MemberBean mb = memberService.getMember(id);
 		RoleBean rb = memberService.getRole(id);
-		//
+		rb.setEmp(rb.getEmp() + 10);
 		userBean ub = new userBean();
 		ub.setAccount(id);
 		ub.setNickname(mb.getNickname());
 		ub.setLevel(rb.getLevel());
 		ub.setEmp(rb.getEmp());
 		ub.setPic(mb.getPicture());
-		//service.createForumTitle(26);
-		List<ForumBean> forumList = service.saveOrUpdateArticle(form);
-		ForumBean forumBean = forumList.stream()
-				.filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()
+		// service.createForumTitle(26);
+		List<ForumBean> forumList = service.saveOrUpdateArticle(form,rb);
+		ForumBean forumBean = forumList.stream().filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()
 				.orElse(new ForumBean());
-		List<ForumBean> forumDetailList = forumList.stream()
-				.filter(f -> ForumType.DETAIL.equals(f.getForumType()))
+		List<ForumBean> forumDetailList = forumList.stream().filter(f -> ForumType.DETAIL.equals(f.getForumType()))
 				.collect(Collectors.toList());
-		
-		model.addAttribute("forumBean",forumBean);
-		model.addAttribute("forumDetailList",forumDetailList);
+
+		model.addAttribute("forumBean", forumBean);
+		model.addAttribute("forumDetailList", forumDetailList);
 		return "forum/forumDetail";
 	}
-	
+
 	@GetMapping("/getForumPicture/{id}/{seq}")
-	  public ResponseEntity<byte[]> getPicture(@PathVariable("id") int forumSeq,@PathVariable("seq") int seq) throws Exception{
-	   //用商品ID來抓取圖片的ID
+	public ResponseEntity<byte[]> getPicture(@PathVariable("id") int forumSeq, @PathVariable("seq") int seq)
+			throws Exception {
+		// 用商品ID來抓取圖片的ID
 //	   System.out.println("commodityId="+ImageID);
-	   //先定義一下mimeType和InputStream
-	   InputStream is = null;
-	   String mimeType = null;
-	//   CommodityBean bean = service.getcommodityID(ImageID);
-	   //將得到的ImageID也就是透過商品ID 去查詢本方法在Imagebean裡設的外鍵欄位=商品id
-	   //所以list 會取得所有綁定這個外鍵id的圖片
-	   
+		// 先定義一下mimeType和InputStream
+		InputStream is = null;
+		String mimeType = null;
+		// CommodityBean bean = service.getcommodityID(ImageID);
+		// 將得到的ImageID也就是透過商品ID 去查詢本方法在Imagebean裡設的外鍵欄位=商品id
+		// 所以list 會取得所有綁定這個外鍵id的圖片
+
 //	   List<ImageBean> list = service.getImageByCommodityID(ImageID);
-	   //定義blob
-	   Blob blob=null;
-	   //將取得的商品id所綁定的圖片抓出來
-	   ForumBean bean = service.selectOneForum(forumSeq);
-	   if(bean != null) {
-		   if(seq == 1) {
-			   blob = bean.getPhoto();
-		   }else {
-			   blob = bean.getPhoto2();
-		   }
-		  
-	   }
-	   if(blob != null) {
-		   is = blob.getBinaryStream();
-		   mimeType = servletContext.getMimeType("Test.jpg");
-	   }
-	   
-	   ResponseEntity<byte[]> re = null;
-	//   if(list != null) {
-	//    
-	//   if(blob != null){
+		// 定義blob
+		Blob blob = null;
+		// 將取得的商品id所綁定的圖片抓出來
+		ForumBean bean = service.selectOneForum(forumSeq);
+		if (bean != null) {
+			if (seq == 1) {
+				blob = bean.getPhoto();
+			} else {
+				blob = bean.getPhoto2();
+			}
+
+		}
+		if (blob != null) {
+			is = blob.getBinaryStream();
+			mimeType = servletContext.getMimeType("Test.jpg");
+		}
+
+		ResponseEntity<byte[]> re = null;
+		// if(list != null) {
+		//
+		// if(blob != null){
 //	    is = blob.getBinaryStream();
 //	    mimeType = servletContext.getMimeType(bean.getCommodityImagefilename());
 //	      
 //	    }
-	//   }
-	   //如果抓到的圖片為null值 給一個預設圖片
-	   if(is == null) {
+		// }
+		// 如果抓到的圖片為null值 給一個預設圖片
+		if (is == null) {
 //	    is = servletContext.getResourceAsStream("/images/noImage.jpg");
 //	    mimeType = servletContext.getMimeType("noImage.jpg");
-	   }
-	   //將得到的mimeType塞進來
-	   MediaType mediaType = MediaType.valueOf(mimeType);
-	   HttpHeaders headers = new HttpHeaders();
-	   //再將剛得到的mimeType塞進回應headers的ContentType內
-	   headers.setContentType(mediaType);
-	   headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	   byte[] b = new byte[81920];
-	   int len = 0;
-	   while((len = is.read(b)) != -1) {
-	    baos.write(b,0,len);
-	   }
-	   byte[] content = baos.toByteArray();
-	   re = new ResponseEntity<byte[]>(content, headers, HttpStatus.OK);
-	   return re;
-	  }
-	  
-	  @PostMapping("/serverMsg/{account}")
-		public String sendServerMsg(@PathVariable String account) {
-			MessageBean mb = new MessageBean();
-			mb.setAccount("揪in Server");
-			mb.setAccount(account);
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
- 		 	String time = dateFormat.format(new Date());
- 		 	mb.setTime(time);
- 		 	mb.setReadStatus(0);
- 		 	mb.setSubject("來自系統的訊息");
- 		 	mb.setMsg(null);
- 		 	memberService.sendMsg(mb);
- 		 	return "";
 		}
+		// 將得到的mimeType塞進來
+		MediaType mediaType = MediaType.valueOf(mimeType);
+		HttpHeaders headers = new HttpHeaders();
+		// 再將剛得到的mimeType塞進回應headers的ContentType內
+		headers.setContentType(mediaType);
+		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		byte[] b = new byte[81920];
+		int len = 0;
+		while ((len = is.read(b)) != -1) {
+			baos.write(b, 0, len);
+		}
+		byte[] content = baos.toByteArray();
+		re = new ResponseEntity<byte[]>(content, headers, HttpStatus.OK);
+		return re;
+	}
+
+	@PostMapping("/serverMsg/{account}")
+	public String sendServerMsg(@PathVariable String account) {
+		MessageBean mb = new MessageBean();
+		mb.setAccount("揪in Server");
+		mb.setAccount(account);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String time = dateFormat.format(new Date());
+		mb.setTime(time);
+		mb.setReadStatus(0);
+		mb.setSubject("來自系統的訊息");
+		mb.setMsg(null);
+		memberService.sendMsg(mb);
+		return "";
+	}
 }

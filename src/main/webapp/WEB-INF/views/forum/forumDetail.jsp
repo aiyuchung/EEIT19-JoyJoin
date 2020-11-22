@@ -79,14 +79,17 @@ Released   : 20100501
 		       
 		       
 		      <tr>
-		      <td rowSpan="2">${forum.article}</td>
+		      <td rowSpan="2">${forum.article}  </td>
 		      </tr>
 		      
 		      <tr  height="50px">
 		      <td  rowSpan="2" style="text-align :right; color:purple">
 		      <fmt:formatDate value="${forum.time}" type="both"/>
 		      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		      <input class = "forumEdit" type="button" name = "${forum.forumSeq}" value="編輯">&nbsp;
+		      <c:if test="${forum.memberBean.account == account }">
+		      
+		       <input class = "forumEdit" type="button" name = "${forum.forumSeq}" value="編輯">&nbsp;
+		      </c:if>
 		      </td>
 		      
 		      </tr>

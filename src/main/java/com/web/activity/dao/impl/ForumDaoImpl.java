@@ -16,12 +16,15 @@ import com.web.activity.Enum.Status;
 import com.web.activity.dao.ForumDao;
 import com.web.activity.model.ForumBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.RoleBean;
+
 @SuppressWarnings("unchecked")
 @Repository
 public class ForumDaoImpl implements ForumDao {
 	@Autowired
 	SessionFactory factory;
-	//----------------------------------------新增點擊率並回傳--------------------------------------------
+
+	// ----------------------------------------新增點擊率並回傳--------------------------------------------
 	@Override
 	public Integer createForum(ForumBean forumBean) {
 		Session session = factory.getCurrentSession();
@@ -32,9 +35,9 @@ public class ForumDaoImpl implements ForumDao {
 		return Integer.valueOf(forumSeqSerializable.toString());
 
 	}
-	
+
 	@Override
-	public ForumBean updateForum(int forumSeq,ForumBean forumBean) {
+	public ForumBean updateForum(int forumSeq, ForumBean forumBean) {
 		Session session = factory.getCurrentSession();
 		forumBean.setTime(new Date());
 		forumBean.setStatus(Status.ACTIVE);
@@ -43,90 +46,106 @@ public class ForumDaoImpl implements ForumDao {
 		session.update(forumBean);
 		return this.selectOneForum(forumSeq);
 	}
-	
+
 	@Override
-	public ForumBean updateForumByParam(int forumSeq,ForumBean forumBean) {
-	    Session session = factory.getCurrentSession();
+	public ForumBean updateForumByParam(int forumSeq, ForumBean forumBean) {
+		Session session = factory.getCurrentSession();
 		LocalDateTime nowDateTime = LocalDateTime.now();
-	    StringBuffer sb = new StringBuffer();
-	    sb.append("UPDATE ForumBean SET ");
-	    sb.append("time = :time").append(",");
-	    sb.append("photo = :photo").append(",");
-	    sb.append("article = :article");
-	    sb.append(" WHERE forumSeq = :forumSeq" );
+		StringBuffer sb = new StringBuffer();
+		sb.append("UPDATE ForumBean SET ");
+		sb.append("time = :time").append(",");
+		sb.append("photo = :photo").append(",");
+		sb.append("article = :article");
+		sb.append(" WHERE forumSeq = :forumSeq");
 		String hql = sb.toString();
-		session.createQuery(hql)
-		.setParameter("time", nowDateTime)
-		.setParameter("photo", forumBean.getPhoto())
-		.setParameter("article", forumBean.getArticle())
-		.setParameter("forumSeq",forumSeq)
-		.executeUpdate();
+		session.createQuery(hql).setParameter("time", nowDateTime).setParameter("photo", forumBean.getPhoto())
+				.setParameter("article", forumBean.getArticle()).setParameter("forumSeq", forumSeq).executeUpdate();
 		return this.selectOneForum(forumSeq);
 	}
-	
+
 	@Override
 	public Integer plusPopularity(int forumSeq) {
 		Session session = factory.getCurrentSession();
-		//先查出指定資料
-		//String hql = "FROM ForumBean WHERE status = 'ACTIVE' AND forumSeq = :forumSeq ";
+		// 先查出指定資料
+		// String hql = "FROM ForumBean WHERE status = 'ACTIVE' AND forumSeq = :forumSeq
+		// ";
 		ForumBean forumRes = this.selectOneForum(forumSeq);
 		Integer popularity = forumRes.getPopularity();
 		System.out.println("hit from bean=====================" + popularity);
 		popularity += 1;
-		//更新指定資料的點擊率
+		// 更新指定資料的點擊率
 		String hql = "UPDATE ForumBean SET popularity= :popularity WHERE status = 'ACTIVE' AND forumSeq = :forumSeq ";
-		session.createQuery(hql).setParameter("popularity", popularity).setParameter("forumSeq", forumSeq).executeUpdate();
+		session.createQuery(hql).setParameter("popularity", popularity).setParameter("forumSeq", forumSeq)
+				.executeUpdate();
 		return popularity;
 	}
-	
 
 	@Override
-	public List<ForumBean> selectAllForumByParam(ForumBean forumBean){
+	public List<ForumBean> selectAllForumByParam(ForumBean forumBean) {
 		Session session = factory.getCurrentSession();
-		StringBuffer  sb = new StringBuffer("FROM ForumBean WHERE 1=1 ");
-		if(forumBean.getForumType() != null) {
+		StringBuffer sb = new StringBuffer("FROM ForumBean WHERE 1=1 ");
+		if (forumBean.getForumType() != null) {
 			sb.append(" AND forumType = :forumType");
 		}
-		if(forumBean.getCode() != null && !StringUtils.isEmpty(forumBean.getCode())) {
+		if (forumBean.getCode() != null && !StringUtils.isEmpty(forumBean.getCode())) {
 			sb.append(" AND code = :code");
 		}
-		if(forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType())) {
-			if(forumBean.getType().equals("熱門")) {
+		if (forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType())) {
+			if (forumBean.getType().equals("熱門")) {
 				sb.append(" AND popularity > 60");
-			}else {
+			} else {
 				sb.append(" AND type = :type");
 			}
 		}
-		if(forumBean.getKeyWord() != null && !StringUtils.isEmpty(forumBean.getKeyWord())) {
+		if (forumBean.getKeyWord() != null && !StringUtils.isEmpty(forumBean.getKeyWord())) {
 			sb.append(" AND (author like :keyWord OR location like :keyWord OR title like :keyWord) ");
 		}
-		
+
 		String hql = sb.toString();
-		  Query<ForumBean> query = session.createQuery(hql);
-		
-		if(forumBean.getForumType() != null) {
+		Query<ForumBean> query = session.createQuery(hql);
+
+		if (forumBean.getForumType() != null) {
 			query.setParameter("forumType", forumBean.getForumType());
 		}
-		if(forumBean.getCode() != null && !StringUtils.isEmpty(forumBean.getCode())) {
+		if (forumBean.getCode() != null && !StringUtils.isEmpty(forumBean.getCode())) {
 			query.setParameter("code", forumBean.getCode());
 		}
-		if(forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType()) && !forumBean.getType().equals("熱門")) {
+		if (forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType())
+				&& !forumBean.getType().equals("熱門")) {
 			query.setParameter("type", forumBean.getType());
 		}
-		if(forumBean.getKeyWord() != null && !StringUtils.isEmpty(forumBean.getKeyWord())) {
-			query.setParameter("keyWord", "%"+forumBean.getKeyWord()+"%");
+		if (forumBean.getKeyWord() != null && !StringUtils.isEmpty(forumBean.getKeyWord())) {
+			query.setParameter("keyWord", "%" + forumBean.getKeyWord() + "%");
 		}
-		List<ForumBean> list =query.getResultList();
-		
+		List<ForumBean> list = query.getResultList();
+
 		return list;
 	}
-	
+
 	@Override
-	public ForumBean selectOneForum(int forumSeq){
+	public ForumBean selectOneForum(int forumSeq) {
 		Session session = factory.getCurrentSession();
-		//先查出指定資料
+		// 先查出指定資料
 		String hql = "FROM ForumBean WHERE status = 'ACTIVE' AND forumSeq = :forumSeq ";
 		return (ForumBean) session.createQuery(hql).setParameter("forumSeq", forumSeq).getSingleResult();
+	}
+
+	@Override
+	public boolean updateRoleEmp(RoleBean rb) {
+		Session session = factory.getCurrentSession();
+		StringBuffer sb = new StringBuffer();
+		sb.append("UPDATE RoleBean SET ");
+		sb.append("emp = :emp");
+		sb.append(" WHERE roleNo = :roleNo");
+		String hql = sb.toString();
+
+		int updateCount = session.createQuery(hql).
+				setParameter("emp", rb.getEmp())
+				.setParameter("roleNo", rb.getRoleNo()).executeUpdate();
+		if (updateCount != 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

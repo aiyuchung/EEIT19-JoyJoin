@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.web.activity.model.ForumBean;
+import com.web.activity.model.RoleBean;
 
 public interface ForumService {
 
@@ -35,7 +36,7 @@ public interface ForumService {
 
 	public void createNewArticle(ForumBean forumBean);
 
-	public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean);
+	public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean,RoleBean rb);
 
 	/**
 	 * 建立新的討論主題 根據傳入的活動編號
@@ -44,6 +45,8 @@ public interface ForumService {
 	 * 
 	 */
 	public Integer createForumTitle(Integer activityNo);
+	
+
 
 	/**
 	 * 建立一筆新的討論

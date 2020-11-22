@@ -111,6 +111,7 @@ Released   : 20100501
 				<td height ="70" colspan="3" align="center">
 					<input type="submit" value="儲存貼文"> 
 					<input type="reset" value="復原">
+					<input type="button" value="回討論內容" onclick="back()">
 				</td>
 			</tr>
 			
@@ -141,6 +142,11 @@ Released   : 20100501
 
 
 <script>
+
+
+function back () {
+	history.go(-1) ;
+}
 
 $(".userInfoTd").click(function() { //點擊出現名片
 

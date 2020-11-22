@@ -24,15 +24,17 @@ import com.web.activity.dao.ForumDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ForumBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.RoleBean;
 import com.web.activity.service.ActivityService;
 import com.web.activity.service.ForumService;
+
 @Transactional
 @Service
 public class ForumServiceImpl implements ForumService {
 
 	@Autowired
 	ForumDao forumDao;
-	
+
 	@Autowired
 	ActivityService activityService;
 
@@ -41,36 +43,34 @@ public class ForumServiceImpl implements ForumService {
 		forumBean.setForumType(ForumType.TITLE);
 		return forumDao.selectAllForumByParam(forumBean);
 	}
-	
+
 	// 查詢討論內容清單
 	public List<ForumBean> selectForumDteailListByParam(ForumBean forumBean) {
-		//forumBean.setForumType(ForumType.DETAIL);
-		//forumBean.setCode(String.valueOf(forumBean.getForumSeq()));
+		// forumBean.setForumType(ForumType.DETAIL);
+		// forumBean.setCode(String.valueOf(forumBean.getForumSeq()));
 		forumBean.setForumSeq(null);
 		return forumDao.selectAllForumByParam(forumBean);
 	}
-
 
 	@Override
 	public Integer plusPopularity(int forumSeq) {
 		Integer hit = forumDao.plusPopularity(forumSeq);
 		return hit;
 	}
-	
+
 	@Override
 	public ForumBean selectOneForum(int forumSeq) {
-		 ForumBean forumBean = forumDao.selectOneForum(forumSeq);
+		ForumBean forumBean = forumDao.selectOneForum(forumSeq);
 		return forumBean;
 	}
-	
+
 	@Override
-	 public void createNewArticle(ForumBean forumBean){
+	public void createNewArticle(ForumBean forumBean) {
 		forumBean.setForumType(ForumType.DETAIL);
 		forumBean.setPopularity(0);
 		forumDao.createForum(forumBean);
-	 }
-	
-	
+	}
+
 	@Override
 	public Integer createForumTitle(Integer activityNo) {
 		ActivityBean activeBean = activityService.selectOneActivity(activityNo);
@@ -84,34 +84,35 @@ public class ForumServiceImpl implements ForumService {
 		forumBean.setForumType(ForumType.TITLE);
 		forumBean.setPopularity(0);
 		forumBean.setScore(BigDecimal.ZERO); // 呼叫寫入討論的DAO
-		Integer forumSeq =  forumDao.createForum(forumBean);
+		Integer forumSeq = forumDao.createForum(forumBean);
 		forumBean.setCode(forumSeq.toString());
 		forumDao.updateForum(forumSeq, forumBean);
 		return forumSeq;
 	}
-	
+
 	@Override
-	public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean){
-		if(forumBean.getPictures()!= null) {
+	public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean ,RoleBean rb) {
+		if (forumBean.getPictures() != null) {
 			Blob blob1 = this.handlePictures(forumBean.getPictures()[0]);
 			Blob blob2 = null;
-			if(forumBean.getPictures().length>1) {
-				 blob2 = this.handlePictures(forumBean.getPictures()[1]);
+			if (forumBean.getPictures().length > 1) {
+				blob2 = this.handlePictures(forumBean.getPictures()[1]);
 			}
-			
-			if(blob1!=null) {
+
+			if (blob1 != null) {
 				forumBean.setPhoto(blob1);
 			}
-			if(blob2!=null) {
+			if (blob2 != null) {
 				forumBean.setPhoto2(blob2);
 			}
 		}
-		//如果沒有key值，進行新增文章
+		// 如果沒有key值，進行新增文章
 		List<ForumBean> resultList = new ArrayList<ForumBean>();
-		if(forumBean.getForumSeq() == null) {
-			 this.createNewArticle(forumBean);
-		}else {
-		//若已存在key值，則進行文章更新
+		if (forumBean.getForumSeq() == null) {
+			forumDao.updateRoleEmp(rb);
+			this.createNewArticle(forumBean);
+		} else {
+			// 若已存在key值，則進行文章更新
 			forumBean.setForumType(ForumType.DETAIL);
 			if (forumBean.getScore() == null) {
 				forumBean.setScore(BigDecimal.ZERO);
@@ -121,44 +122,39 @@ public class ForumServiceImpl implements ForumService {
 		ForumBean queryForum = new ForumBean();
 		queryForum.setCode(forumBean.getCode());
 		resultList = this.selectForumDteailListByParam(queryForum);
-		//更新TITLE的平均分數
+		// 更新TITLE的平均分數
 		this.updateScore(resultList);
 		return resultList;
 	}
-	
-	private void updateScore(List<ForumBean> forumList){	
-		ForumBean forumBean = forumList.stream()
-				.filter(f -> ForumType.TITLE.equals(f.getForumType()))
-				.findAny()
+
+	private void updateScore(List<ForumBean> forumList) {
+		ForumBean forumBean = forumList.stream().filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()
 				.orElse(new ForumBean());
-		List<ForumBean> forumDetailList = forumList.stream()
-				.sorted(Comparator.comparing(ForumBean::getForumSeq))
-				.filter(f -> ForumType.DETAIL.equals(f.getForumType()))
-				.collect(Collectors.toList());
-		BigDecimal averageNumber = forumDetailList.stream().map(ForumBean::getScore)
-				.reduce(BigDecimal::add).orElse(BigDecimal.ZERO)
-				.divide(new BigDecimal(forumDetailList.size()),1,RoundingMode.CEILING);
-		
+		List<ForumBean> forumDetailList = forumList.stream().sorted(Comparator.comparing(ForumBean::getForumSeq))
+				.filter(f -> ForumType.DETAIL.equals(f.getForumType())).collect(Collectors.toList());
+		BigDecimal averageNumber = forumDetailList.stream().map(ForumBean::getScore).reduce(BigDecimal::add)
+				.orElse(BigDecimal.ZERO).divide(new BigDecimal(forumDetailList.size()), 1, RoundingMode.CEILING);
+
 		forumBean.setScore(averageNumber);
 		forumDao.updateForum(forumBean.getForumSeq(), forumBean);
 
 	}
-	
-	
+
 	private Blob handlePictures(MultipartFile mFile) {
 		Blob blob = null;
-        if (mFile != null && !mFile.isEmpty()) {
-            byte[] b;
-				try {
-					b = mFile.getBytes();
-					blob = new SerialBlob(b);
-				} catch (IOException | SQLException e) {
-					e.printStackTrace();
-					throw new RuntimeException("異常:" + e.getMessage());
-				}
+		if (mFile != null && !mFile.isEmpty()) {
+			byte[] b;
+			try {
+				b = mFile.getBytes();
+				blob = new SerialBlob(b);
+			} catch (IOException | SQLException e) {
+				e.printStackTrace();
+				throw new RuntimeException("異常:" + e.getMessage());
 			}
-        return blob;
+		}
+		return blob;
 	}
-	
-	
+
+
+
 }
