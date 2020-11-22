@@ -73,6 +73,11 @@ body .right {
 	
 }
 
+#ajax_subject, #mailTime {
+	padding:10px;	
+}
+
+
 /*  ====================信箱效果=======================  */
 
 #mailBox{

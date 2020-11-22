@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MEMBER CARD</title>
 <link rel="stylesheet" href="<c:url value='css/membercard.css' />" />
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
 <c:choose>
