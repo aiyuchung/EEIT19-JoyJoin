@@ -302,21 +302,21 @@
 					}
 			})
 		})
-		 $("#shop-btn").click(function (){
-        	var str = "購買點數";
-	        $.ajax({
-	              url:"ajax_shop",
-	              type: "GET",
-	              dataType: "html", //server送回
-	              contentType: 'application/json; charset=utf-8',
-	              data: {}, 
-	              success:function(data){
-	            	  $("#showArea").empty();
-	                  $("#showArea").addClass("animated").html(str);
-	                  $("#showArea").append(data);
-	                }
-	        })
-	    })
+// 		 $("#shop-btn").click(function (){
+//         	var str = "購買點數";
+// 	        $.ajax({
+// 	              url:"ajax_shop",
+// 	              type: "GET",
+// 	              dataType: "html", //server送回
+// 	              contentType: 'application/json; charset=utf-8',
+// 	              data: {}, 
+// 	              success:function(data){
+// 	            	  $("#showArea").empty();
+// 	                  $("#showArea").addClass("animated").html(str);
+// 	                  $("#showArea").append(data);
+// 	                }
+// 	        })
+// 	    })
 
 		$('#showArea').on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",function() {
 			$(this).removeClass("animated");
@@ -352,7 +352,8 @@
 	    });
 		
 	    $('#pair-btn').on('click',function(){
-			$.ajax({
+			var str = "建議好友"
+	    	$.ajax({
 				url : "getPair",
 				type : "GET",
 				dataType : "html", 
@@ -360,15 +361,14 @@
 				data : {}, //data空的代表沒任何參數
 				success : function(data) { 
 					$("#showArea").empty();
-					$("#showArea").css("position","relative").css("left","20px").css("width","140%").addClass("animated");
+					$("#showArea").css("position","relative").css("left","20px").css("width","140%").addClass("animated").html(str);
 					$("#showArea").append(data);
 				}
 			})
 		})
 	    
-		$('#trip-btn').on('click', function() {
-			str = '旅遊連結' ;
-			
+		$('#trip-btn').on('click', function() {		//旅遊
+			var str = "活動連結"
 			$.ajax({
 				  url:"ajax_getFollowed",
 				  type: "GET",
@@ -377,15 +377,15 @@
 				  data: {}, 
 				  success:function(data){
 					  $("#showArea").empty();
-					  $("#showArea").css("border", "2px solid white").addClass("animated").html(str);
+					  $("#showArea").css("position","relative").css("left","20px").css("width","140%").addClass("animated").html(str);
 					  $("#showArea").append(data);
 					}
 			})
 		})
 		
-		$("#shop-btn").click(function (){
-        var str = "購買點數";
-	        $.ajax({
+		$("#shop-btn").click(function (){		//購買
+	        var str = "購買點數"
+			$.ajax({
 	              url:"ajax_shop",
 	              type: "GET",
 	              dataType: "html", //server送回
@@ -393,13 +393,13 @@
 	              data: {}, 
 	              success:function(data){
 	            	  $("#showArea").empty();
-	                  $("#showArea").css("border", "0").addClass("animated").html(str);
+	            	  $("#showArea").css("position","relative").css("left","20px").css("width","140%").addClass("animated").html(str);
 	                  $("#showArea").append(data);
 	                }
 	        })
 	    })
 	    
-	    $(".orders-btn").click(function (){
+	    $("#orders-btn").click(function (){
 	    	 var str = "購買紀錄";
 	    	 $.ajax({
 	              url:"ajax_orders",
@@ -409,7 +409,7 @@
 	              data: {}, 
 	              success:function(data){
 	            	  $("#showArea").empty();
-	                  $("#showArea").css("border", "0").addClass("animated").html(str);
+	            	  $("#showArea").css("position","relative").css("left","20px").css("width","140%").addClass("animated").html(str);
 	                  $("#showArea").append(data);
 	                }
 	        })

@@ -102,14 +102,9 @@
 				<td><input type="submit" value="登入" name="Login" class="login-submit" id="login-btn" style="margin-right:10px"/></td>
 				<td><input type="button" value="返回" class="login-submit" id="back-btn" style="margin-left:10px"/></td>
 			</tr>
-			<tr>
-				<td>
-<!-- 					<div class="fb-login-button" data-size="small" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false" data-width="" onclick="FBLogin();"></div> -->
-					<input type="button" value="FB登入" onclick="FBLogin();" />
-<!-- 				<fb:login-button scope="public_profile" onlogin="checkLoginState();"></fb:login-button> -->
-				</td>
-			</tr>
 		</table>
+		
+		<span class="login-forgot-pass" style="bottom:55px" onclick="FBLogin();" >FB登入</span>
 		<span class="login-forgot-pass" style="bottom:35px" id="signup-btn">現在註冊</span><br>
 		<span class="login-forgot-pass" style="bottom:15px" id="missPwd-btn">忘記密碼</span>
 <!-- 		<input type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" value="GO" /> -->
@@ -126,9 +121,10 @@
 	        </button>
 	      </div>
 	      <div class="modal-body" id="resultArea" style="height:380px;width:380px">
-				<form:form modelAttribute="formBean" style="position: absolute;top:80px;left:40px;margin:0 auto;">
-					<form:input type="text" class="form-control" id="missAccount" placeholder="請輸入帳號" path="account" required="required"/>
-					請輸入驗證碼<input type="text" size="4" maxlength="4" name="checkNo" id="checkNo"><input type="text" disabled="disabled" id="number" size="4" maxlength="4"/><br>
+				<form:form modelAttribute="formBean" style="width:200px;position: relative;top:100px;left:0px;margin:0 auto;text-align:center">
+					<form:input type="text" size="10" class="form-control" id="missAccount" placeholder="請輸入帳號" path="account" required="required"/><br>
+					<form:input type="text" size="4" maxlength="4" path="checkNo" id="checkNo" placeholder="驗證碼"/>
+					<input type="text" disabled="disabled" id="number" size="4" maxlength="4"/><br><br>
 					
 					<input type=button id="getPwd-btn" value="送出"/>
 				</form:form>

@@ -15,7 +15,7 @@ body{
 	user-select:none;
 	background-size:cover; 
 	background-repeat: no-repeat;
-	background-color:black;
+	
 }
 
 .neverRead{
@@ -75,6 +75,7 @@ body{
 			}
 #headerdiv
 	{
+		background-color:black;
 		position: relative;
 		height:150px;
 	}

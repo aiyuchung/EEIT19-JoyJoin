@@ -36,7 +36,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach var="order" items="orders">
+			<c:forEach var="order" items="${orders}">
 				<tr>
 					<td>${order.orderDate}</td>
 					<td>${order.orderItem}</td>
