@@ -13,17 +13,115 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="	crossorigin="anonymous"></script>
 <!-- ====================信箱樣式======================= -->
-<link rel="stylesheet" href="<c:url value='css/mailbox.css' />" />
+<%-- <link rel="stylesheet" href="<c:url value='css/mailbox.css' />" /> --%>
 <!-- ====================icon樣式======================= -->
 <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<style>
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block;}audio,canvas,video{display:inline-block;}audio:not([controls]){display:none;height:0;}[hidden]{display:none;}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}body{margin:0;}a:focus{outline:thin dotted;}a:active,a:hover{outline:0;}h1{font-size:2em;margin:0.67em 0;}abbr[title]{border-bottom:1px dotted;}b,strong{font-weight:bold;}dfn{font-style:italic;}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0;}mark{background:#ff0;color:#000;}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em;}pre{white-space:pre-wrap;}q{quotes:"\201C" "\201D" "\2018" "\2019";}small{font-size:80%;}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}sup{top:-0.5em;}sub{bottom:-0.25em;}img{border:0;}svg:not(:root){overflow:hidden;}figure{margin:0;}fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:0.35em 0.625em 0.75em;}legend{border:0;padding:0;}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0;}button,input{line-height:normal;}button,select{text-transform:none;}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer;}button[disabled],html input[disabled]{cursor:default;}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0;}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none;}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}textarea{overflow:auto;vertical-align:top;}table{border-collapse:collapse;border-spacing:0;}
 
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot?rretjt');
+	src:url('../fonts/icomoon.eot?#iefixrretjt') format('embedded-opentype'),
+		url('../fonts/icomoon.woff?rretjt') format('woff'),
+		url('../fonts/icomoon.ttf?rretjt') format('truetype'),
+		url('../fonts/icomoon.svg?rretjt#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body, html { font-size: 100%; 	padding: 0; margin: 0; color: white;}
+
+.homepage {
+  overflow-y: auto;
+  font-family: 'Roboto Condensed', sans-serif;
+  background-size:100% ;
+  background-repeat: no-repeat;
+  background-image: url(images/ogspot_bg.jpg);  
+  background-attachment: fixed;
+}
+#keepread{
+	color:	#46A3FF;
+	border-bottom-style:solid;
+	border-width:	thin;
+	border-color:	#46A3FF;
+	position:relative;
+	left:20px
+}
+#mailFeatures{
+	width:50px;
+	position:relative;
+	top:20px;
+	left:120px;
+	
+}
+
+#mailBox{
+	margin:0 auto;
+	background:rgba(0, 0, 0, 0.5);
+	padding:10px;
+	width:60%;
+/* 	border:4px solid #9F5000; */
+	box-shadow: 0 0 25px 15px #9F5000;
+	overflow-y: auto;
+	-ms-overflow-style: none;
+	border-radius:1em;
+	
+}
+
+.mail{
+	border-bottom-style:double;
+	border-width:medium;
+	border-color:white;
+}
+
+.mail:hover{
+	box-shadow: 0 0 15px 5px #f3d42e;
+}
+
+#mailTime{
+	position:relative;
+	left:650px;
+}
+
+div::-webkit-scrollbar {
+	display: none;
+}
+.modal-content{
+	width:500px;
+	height:380px;
+}
+
+div.modal-body {
+	padding:15px;
+	margin:0 auto;
+	color:black;
+	font-size:30px;
+	height:220px;
+}
+#ajax_subject{
+	border-radius:1em;
+	
+}
+h2{
+	padding-left:10px;
+}
+.mail{
+	border-radius:1em;
+	padding:5px;
+}
+#ajax_subject, #mailTime {
+    padding:10px;    
+}
+
+</style>
 </head>
 <body>
 	<div>
 		<jsp:include page="../header/header_guest.jsp" />
 	</div>
 	
-	<div class="homepage" style="background-image: url(images/memberBack.jpg);background-size: 100%;background-repeat: no-repeat;height: 1100px;">
+	<div class="homepage" >
 	
 	<div id="back-div">
 		<div id="mailFeatures" style="width:50px;	position:relative;top:20px;left:120px;">

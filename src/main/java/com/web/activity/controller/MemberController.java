@@ -462,8 +462,10 @@ public class MemberController {
 		
 		@GetMapping("/detailCard/{account}")
 		public String getOne(Model model, @PathVariable String account) {
+			System.out.println("------------enter controller");
 			MemberBean mb = memberService.getMember(account);
 			model.addAttribute("mbcard", mb);
+			System.out.println(mb.getAccount());
 			return "login/ajax_membercard2";
 		}
 		

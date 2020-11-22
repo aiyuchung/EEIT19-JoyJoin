@@ -49,7 +49,15 @@
   
   body{
 		font-family: Microsoft JhengHei;
+		
 	}
+.homepage{
+	background-image: url(images/smoke_bg.jpg);
+ 	background-size: 100%; 
+	background-repeat: no-repeat;
+	height: 1100px;
+	background-attachment:fixed; 
+}
 </style>
 </head>
 <!-- Header -->
@@ -58,7 +66,7 @@
 	<jsp:include page="../header/header_guest.jsp" />
 </div>
 
-	<div class="homepage" style="background-image: url(images/memberBack.jpg);background-size: 100%;background-repeat: no-repeat;height: 1100px;">
+	<div class="homepage" >
 		
 
 		<div id="infoArea">

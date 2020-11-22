@@ -60,17 +60,17 @@ a {
 
 /*-Section Blocks-*/
 .section-block {
-	background-color: rbga(236,235,235,0.5);
+	background-color: rgba(236,235,235,0.9);
 	border-radius:4px;
 	padding: 30px;
 	margin-bottom:30px;
 }
 .section-block.summary {
-    background-color: #99DEAB;  
+    background-color: rgba(236,235,235,0.9);  
 /*     草綠色 */
 }
 .section-block.summary h1 {
-    color: #fff;
+    color: rgba(30,50,39,1);
 	display:block;
 	text-align:center;
 }
@@ -84,7 +84,7 @@ a {
 	margin-top:0;
 }
 .section-title {
-	color: #99DEAB;
+	color:rgba(30,50,39,1);
 	border-radius: 4px;
 	display: table;
 	padding: 10px 0px;
@@ -103,10 +103,10 @@ a {
     text-align: center;
 }
 .profile-contents h2 {
-	color:#FFF;
-	font-size: 16px;
+	color:rgba(30,50,39,1);
+	font-size: 18px;
 	line-height: 1.5;
-	font-weight:300;
+	font-weight:700;
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
@@ -142,7 +142,7 @@ a {
 /*-Funding Meta-*/
 .funding-meta {}
 .funding-meta h1 {
-	background: #99DEAB;
+	background:#85AD90;
 	color: #fff;
 	border-radius: 4px;
 	display: table;
@@ -226,7 +226,7 @@ a {
 
 .info-block {
 	position:relative;
-	background-color: #fff;
+	background-color: rgba(255,255,255,0.9);
 	border-radius: 4px;
 	padding: 10px;
 	margin-bottom:5px;

@@ -35,7 +35,24 @@ Released   : 20100501
 	crossorigin="anonymous"></script>
 
 <style>
+body{
+		width:100%;
+		background-image: url(images/stars_bg.jpg);
+	 	background-size: 100%;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+}
 
+.firstdiv{
+	background-color:transparent;
+	padding:10px;
+	margin-bottom:5px;
+	font-size:0.5cm;
+	font-weight:900;
+	font-familye:微軟正黑體;
+	text-align: center;
+	color:#FF44AA"
+}
 </style>
 
 </head>
@@ -43,7 +60,7 @@ Released   : 20100501
 <body>
 <!---------- Header ------------>
  <c:import url="forumHeader.jsp"></c:import> 
- <div style="background-color:black;padding:10px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA"></div>
+ <div class="firstdiv"></div>
 		<!-- end header -->
 	<form method="post" action="<%=request.getContextPath()%>/saveOrUpdateArticle" enctype="multipart/form-data">
 	  <input type = "hidden" name = "forumSeq" value = "${forumBean.forumSeq}">
@@ -109,9 +126,9 @@ Released   : 20100501
 		</tr>
 			<tr>
 				<td height ="70" colspan="3" align="center">
-					<input type="submit" value="儲存貼文"> 
-					<input type="reset" value="復原">
-					<input type="button" value="回討論內容" onclick="back()">
+					<input type="submit" value="儲存貼文" class="btn btn-dark"> 
+					<input type="reset" value="復原" class="btn btn-dark">
+					<input type="button" value="回討論內容" onclick="back()" class="btn btn-dark">
 				</td>
 			</tr>
 			

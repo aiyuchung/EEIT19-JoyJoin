@@ -10,20 +10,21 @@
 <title>MEMBER CARD</title>
 <link rel="stylesheet" href="<c:url value='css/membercard.css' />" />
 </head>
+<style>
+ figcaption>p {
+ font-size:10px;
+ }
+</style>
 <body>
 <c:choose>
 	<c:when test="${mbcard.gender == 'F'}">
 		<figure class="snip0056 yellow">
 			<figcaption>
 				<h4>${mbcard.nickname} <span>${mbcard.account}</span></h4>
-				<p>${mbcard.gender}</p>
+				<p>性別:${mbcard.gender}</p>
 				<p>${mbcard.mail}</p>
 				<p>${mbcard.signature}</p>
-				<div class="icons">
-					<a href="#"><i class="ion-ios-home"></i></a>
-					<a href="#"><i class="ion-ios-email"></i></a>
-					<a href="#"><i class="ion-ios-telephone"></i></a>
-				</div>
+				
 			</figcaption>
 			<img src="<c:url value='/getMemberPicture/${mbcard.account}' />" alt="picture" />
 <!-- 			<div class="position">show</div> -->
@@ -33,14 +34,10 @@
 		<figure class="snip0056 red">
 			<figcaption>
 				<h2>${mbcard.nickname} <span>${mbcard.account}</span></h2>
-				<p>${mbcard.gender}<br>
+				<p>性別:${mbcard.gender}<br>
 					${mbcard.mail}<br>
 					${mbcard.signature}</p>
-				<div class="icons">
-					<a href="#"><i class="ion-ios-home"></i></a>
-					<a href="#"><i class="ion-ios-email"></i></a>
-					<a href="#"><i class="ion-ios-telephone"></i></a>
-				</div>
+
 			</figcaption>
 			<img src="<c:url value='/getMemberPicture/${mbcard.account}' />" alt="picture" />
 			<div class="position">show</div>

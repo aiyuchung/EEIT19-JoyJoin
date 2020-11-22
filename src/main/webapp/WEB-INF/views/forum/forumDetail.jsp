@@ -35,7 +35,23 @@ Released   : 20100501
 	crossorigin="anonymous"></script>
 
 <style>
-
+body{
+		width:100%;
+		background-image: url(images/stars_bg.jpg);
+	 	background-size: 100%;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+}
+.firstdiv{
+	background-color:transparent;
+	padding:10px;
+	margin-bottom:5px;
+	font-size:0.5cm;
+	font-weight:900;
+	font-familye:微軟正黑體;
+	text-align: center;
+	color:#FF44AA"
+}
 </style>
 
 </head>
@@ -43,7 +59,7 @@ Released   : 20100501
 <body>
 <!---------- Header ------------>
  <c:import url="forumHeader.jsp"></c:import> 
- <div style="background-color:black;padding:10px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA"></div>
+ <div class="firstdiv"></div>
  
 	<table width="70%" border="1" align="center" class="tbdetail">
 

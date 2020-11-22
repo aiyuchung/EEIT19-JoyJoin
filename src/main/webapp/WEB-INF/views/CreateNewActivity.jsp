@@ -47,6 +47,14 @@
 	ga('send', 'pageview');
 </script>
 <style>
+.main-content{
+	background-image: url(images/leaves2_bg.jpg);
+ 	background-size: 100%; 
+	background-repeat: no-repeat;
+	height: 1100px;
+	background-attachment:fixed; 
+}
+
 	.video-frame div{
 		border: 2px solid darkgrey;
 	/*  	width: auto;  */

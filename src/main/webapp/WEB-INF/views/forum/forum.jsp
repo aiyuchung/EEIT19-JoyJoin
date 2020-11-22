@@ -36,6 +36,11 @@ Released   : 20100501
 	crossorigin="anonymous"></script>
 
 <style>
+body{
+/* 	background-size:100%; */
+	background-image: url(images/stars_bg.jpg);
+	background-attachment:fixed; 
+}
 
 </style>
 

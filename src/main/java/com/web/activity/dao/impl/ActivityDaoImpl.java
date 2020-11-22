@@ -70,6 +70,44 @@ public class ActivityDaoImpl implements ActivityDao {
 		changedStatus.put("todayinactive",todayinactive);
 		return changedStatus;
 	}
+	//----------------------------------------發系統信1--------------------------------------------
+		@Override
+		public List<ActivityBean> getLastDay() {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM ActivityBean WHERE activityStatus = 'acitve' AND finalDate = :now";
+			Date today = new Date();
+			
+			List<ActivityBean> Last = session.createQuery(hql).setParameter("now",today).getResultList();
+			return Last;
+		}
+	//----------------------------------------發系統信2--------------------------------------------
+	@Override
+	public List<ActivityBean> getOkOnes() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityBean WHERE finalDate = :now AND minLimit <= joinedNum";
+		Date today = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(today);
+		cal.add(Calendar.DAY_OF_MONTH, -1);
+		Date tomorrow = cal.getTime();
+		
+		List<ActivityBean> ok = session.createQuery(hql).setParameter("now",tomorrow).getResultList();
+		return ok;
+	}
+	//----------------------------------------發系統信3--------------------------------------------
+	@Override
+	public List<ActivityBean> getInactiveOnes() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ActivityBean WHERE finalDate = :now AND minLimit > joinedNum";
+		Date today = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(today);
+		cal.add(Calendar.DAY_OF_MONTH, -1);
+		Date tomorrow = cal.getTime();
+		
+		List<ActivityBean> Last = session.createQuery(hql).setParameter("now",tomorrow).getResultList();
+		return Last;
+	}
 	//----------------------------------------新增點擊率並回傳--------------------------------------------
 
 	@Override

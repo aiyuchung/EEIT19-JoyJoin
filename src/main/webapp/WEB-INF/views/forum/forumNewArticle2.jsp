@@ -254,6 +254,8 @@ font-familye:微軟正黑體;
 	border: 0;
 	border-radius:20px;
 	cursor:pointer;
+	padding:2px 10px;
+	margin:6px 3px;
 }
 
 .fourmString  {
@@ -264,6 +266,25 @@ font-familye:微軟正黑體;
 input  {
 	font-family: 微軟正黑體;
 	font-weight: 900;
+}
+
+body{
+		width:100%;
+		background-image: url(images/stars_bg.jpg);
+	 	background-size: 100%;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+}
+
+.firstdiv{
+	background-color:transparent;
+	padding:10px;
+	margin-bottom:5px;
+	font-size:0.5cm;
+	font-weight:900;
+	font-familye:微軟正黑體;
+	text-align: center;
+	color:#FF44AA"
 }
 </style>
 
@@ -310,7 +331,7 @@ input  {
  
  
  
- <div style="background-color:black;padding:10px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA"></div>
+ <div class="firstdiv"></div>
 		<!-- end header -->
 	<form method="post" action="<%=request.getContextPath()%>/saveOrUpdateArticle" enctype="multipart/form-data">
 	  <input type = "hidden" name = "forumSeq" value = "${forumBean.forumSeq}">
@@ -375,9 +396,9 @@ input  {
 			</td>
 		</tr>
 			<tr>
-				<td height ="70" colspan="3" align="center">
-					<input type="submit" value="儲存貼文"> 
-					<input type="reset" value="復原">
+				<td height ="70" colspan="3" align="center" class="btn btn-dark">
+					<input type="submit" value="儲存貼文" class="btn btn-dark"> 
+					<input type="reset" value="復原" class="btn btn-dark">
 				</td>
 			</tr>
 			
