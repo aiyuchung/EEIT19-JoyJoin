@@ -51,10 +51,9 @@
  	
  	$(".fa fa-address-book-o").on("click",function(){
  		var id = $(".id").val()
- 		location.href = "<c:url value='/getFriend/'+id/>";
+ 		location.href = "http://localhost:8080/JoyJoin'/getFriend/"+id;
  	})
 
- 
  
  </script>
 

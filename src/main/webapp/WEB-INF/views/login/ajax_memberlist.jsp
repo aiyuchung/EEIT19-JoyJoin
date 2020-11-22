@@ -8,13 +8,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table>
+	<table style="color:white">
 		<th>
 			<td>好友帳號</td>
 			<td>查看名片</td>
 			<td>刪除好友</td>
 		</th>
-		<c:forEach var="ff" items="${friend}" begin="0" step="1">
+		<c:forEach var="ff" items="${friend}">
 			<tr>
 				<td id="account">${ff}</td>
 				<td><input type="button" id="seeCard" onclick="see()"/></td>
@@ -23,6 +23,8 @@
 		</c:forEach>
 	</table>
 <script>
+	console.log(ff)
+
 	function see(){
 		var id = document.getElementById("account")
 		console.log("=======>"+id)
