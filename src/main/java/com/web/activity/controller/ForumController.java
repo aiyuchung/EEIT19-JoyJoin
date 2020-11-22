@@ -3,6 +3,7 @@ package com.web.activity.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,7 +53,6 @@ public class ForumController {
 	
 	@GetMapping("/forum")
 	public String selectAllForum(Model model,@ModelAttribute("form") ForumBean form) {
-		System.out.println("controllerOK");
 		List<ForumBean>forumList = service.selectForumTitleListByParam(form);
 		model.addAttribute("forumList", forumList);
 		return "forum/forum";
@@ -116,17 +116,20 @@ public class ForumController {
 	}
 	
 	@GetMapping("/createNewTitle/{id}")
-	public String getforumNewArticle(Model model, @PathVariable("id") Integer activeNo) {
+	public String getforumNewArticle(Model model, HttpSession session, @PathVariable("id") Integer activeNo) {
 		//傳入活動號碼，建立新的討論標題
 		Integer forumSeq  = service.createForumTitle(activeNo);
 		//取得剛存好的討論標題ID，使用ID查詢詳細資料
-		ForumBean form = service.selectOneForum(forumSeq);
+		ForumBean forumBean = service.selectOneForum(forumSeq);
 		//清空ID
-		form.setForumSeq(null);
+		forumBean.setForumSeq(null);
 		//這行可能不用加，記得儲存標題的時候就有做了，如果有就刪掉
-		form.setAuthor(form.getMemberBean().getMemberNo().toString());
+		forumBean.setAuthor(forumBean.getMemberBean().getMemberNo().toString());
 		//把標題資訊傳到新增頁面
-		model.addAttribute("forumBean",form);
+		List<ForumBean> forumBeans = new ArrayList();
+		forumBeans.add(forumBean);
+		model.addAttribute("forumBean",forumBean);
+		model.addAttribute("forumList", forumBeans);
 		return "forum/forumNewArticle";
 	}
 	

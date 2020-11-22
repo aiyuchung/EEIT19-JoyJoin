@@ -37,11 +37,10 @@ Released   : 20100501
 
 <style>
 #menu-bb {
-	background:#FFFF33;
+	background: #FFFF33;
 	height: 55px;
-	
-	
 }
+
 #thiscap {
 	padding-top: .75rem;
 	padding-bottom: .75rem;
@@ -59,7 +58,7 @@ Released   : 20100501
 	text-decoration: none;
 	text-transform: uppercase;
 	font-family: 微軟正黑體;
-	font-weight:900;
+	font-weight: 900;
 	font-size: 22px;
 	color: BLACK;
 }
@@ -237,6 +236,34 @@ Released   : 20100501
 	position: relative;
 	padding: 6em 0em;
 }
+/* 控制討論Detail Table Css  */
+.tbdetail{
+border-radius: 30px ;
+outline:0;
+background:	#FFFFBF	;
+color:black;
+font-size:0.5cm;
+font-weight:900;
+font-familye:微軟正黑體;
+}
+
+.evaTag  {
+	outline: 0;
+	border: 0;
+	border-radius:20px;
+	cursor:pointer;
+}
+
+.fourmString  {
+	font-family: 微軟正黑體;
+	font-weight: 900;
+}
+
+input  {
+	font-family: 微軟正黑體;
+	font-weight: 900;
+}
+
 </style>
 
 </head>
@@ -249,95 +276,111 @@ Released   : 20100501
 	<div id="menu-bb">
 		<div id="menu">
 			<ul id="main">
-				<li class="nav-item dropdown"><a href="#" name = "熱門" class="activeType">熱門 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "電影" class="activeType">電影 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "運動" class="activeType">運動 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "美食" class="activeType">美食 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "旅遊" class="activeType">旅遊 </a></li>
-				<li class="nav-item dropdown"><a href="#" name = "音樂藝文 " class="activeType">音樂藝文 </a></li>
+				<li class="nav-item dropdown"><a href="#" name="熱門"
+					class="activeType">熱門 </a></li>
+				<li class="nav-item dropdown"><a href="#" name="電影"
+					class="activeType">電影 </a></li>
+				<li class="nav-item dropdown"><a href="#" name="運動"
+					class="activeType">運動 </a></li>
+				<li class="nav-item dropdown"><a href="#" name="美食"
+					class="activeType">美食 </a></li>
+				<li class="nav-item dropdown"><a href="#" name="旅遊"
+					class="activeType">旅遊 </a></li>
+				<li class="nav-item dropdown"><a href="#" name="音樂藝文 "
+					class="activeType">音樂藝文 </a></li>
 			</ul>
 		</div>
 	</div>
-		<!-- end header -->
+	<!-- end header -->
 
-		
-		<!-- 關鍵字搜尋   -->					
-						<div id="searchform" method="get" action="#">
-							<h6>&nbsp;&nbsp;關鍵字搜尋</h6>
-							<div>
-								&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"  id="keyWord" size="20" value="" placeholder="EX: 籃球、和牛" /> <br />
-								<button type="button" class="btn btn-outline-light btn-sm submitBtn">確認</button>
-							</div>
-						</div>
-						
-						<form  id = "backHomeForm" method ="get" action="<%=request.getContextPath()%>/forum">
-			                <input type = "hidden" id = "keyWordInput" name = "keyWord" >
-			                <input type = "hidden" id = "activeTypeInput" name = "type" >
-		                 </form> 
 
-<div class="newajaxlist">
-	 <c:import url="../ajax/forumTable.jsp"></c:import> 
-</div>
-		<script>
-		
+	<!-- 關鍵字搜尋   -->
+	<div id="searchform" method="get" action="#">
+		<h6>&nbsp;&nbsp;關鍵字搜尋</h6>
+		<div>
+			&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="keyWord" size="20"
+				value="" placeholder="EX: 籃球、和牛" /> <br />
+			<button type="button" class="btn btn-outline-light btn-sm submitBtn">確認</button>
+		</div>
+	</div>
+
+	<form id="backHomeForm" method="get"
+		action="<%=request.getContextPath()%>/forum">
+		<input type="hidden" id="keyWordInput" name="keyWord"> <input
+			type="hidden" id="activeTypeInput" name="type">
+	</form>
+
+	<div class="newajaxlist">
+		<c:import url="../ajax/forumTable.jsp"></c:import>
+	</div>
+	<script>
+
+
 		var code = '${forumBean.code}';
 		var isCodeExists = code != null && code != '';
-		console.log('是否存在主要標題代碼',isCodeExists);
-		$(".activeType").click(function(){ //以活動類型作為快速篩選
+		console.log('是否存在主要標題代碼', isCodeExists);
+		$(".activeType").click(function() { //以活動類型作為快速篩選
 			var activeType = $(this).attr('name');
 			var keyWord = $('#keyWord').val();
-			if(isCodeExists){
+			if (isCodeExists) {
 				$("#keyWordInput").val(keyWord);
 				$("#activeTypeInput").val(activeType);
 				$("#backHomeForm").submit();
-			}else{
+			} else {
 				$.ajax({
-					  url:"ajax_forum",
-					  type: "GET",
-					  dataType: "html", //server送回
-					  contentType: 'application/json; charset=utf-8',
-					  data: {activeType: activeType,keyWord: keyWord},
-					  success:function(data){
-						  $(".newajaxlist").empty();
-						  $(".newajaxlist").append(data);
-						}
-				}) 
+					url : "ajax_forum",
+					type : "GET",
+					dataType : "html", //server送回
+					contentType : 'application/json; charset=utf-8',
+					data : {
+						activeType : activeType,
+						keyWord : keyWord
+					},
+					success : function(data) {
+						$(".newajaxlist").empty();
+						$(".newajaxlist").append(data);
+					}
+				})
 			}
-	 	
+
 		})
-		$(".submitBtn").click(function(){ //關鍵字搜尋
+		$(".submitBtn").click(function() { //關鍵字搜尋
 			var keyWord = $('#keyWord').val();
-			if(isCodeExists){
+			if (isCodeExists) {
 				$("#keyWordInput").val(keyWord);
 				$("#backHomeForm").submit();
-			}else{
+			} else {
 				$.ajax({
-					  url:"ajax_forum",
-					  type: "GET",
-					  dataType: "html", //server送回
-					  contentType: 'application/json; charset=utf-8',
-					  data: {keyWord: keyWord},
-					  success:function(data){
-						  $(".newajaxlist").empty();
-						  $(".newajaxlist").append(data);
-						}
-				}) 
+					url : "ajax_forum",
+					type : "GET",
+					dataType : "html", //server送回
+					contentType : 'application/json; charset=utf-8',
+					data : {
+						keyWord : keyWord
+					},
+					success : function(data) {
+						$(".newajaxlist").empty();
+						$(".newajaxlist").append(data);
+					}
+				})
 			}
 		})
-		
-		if(isCodeExists){
+
+		if (isCodeExists) {
 			$.ajax({
-				  url:"ajax_forum",
-				  type: "GET",
-				  dataType: "html", //server送回
-				  contentType: 'application/json; charset=utf-8',
-				  data: {code: code},
-				  success:function(data){
-					  $(".newajaxlist").empty();
-					  $(".newajaxlist").append(data);
-					}
-			}) 
+				url : "ajax_forum",
+				type : "GET",
+				dataType : "html", //server送回
+				contentType : 'application/json; charset=utf-8',
+				data : {
+					code : code
+				},
+				success : function(data) {
+					$(".newajaxlist").empty();
+					$(".newajaxlist").append(data);
+				}
+			})
 		}
-		</script>
+	</script>
 </body>
 </html>

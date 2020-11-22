@@ -28,7 +28,7 @@ Released   : 20100501
     position: relative;
     width: 90px;
     height: 90px;
-    background: url("images/Button_Add.png") no-repeat;
+    background: url("${pageContext.request.contextPath}/images/Button_Add.png") no-repeat;
     background-size: cover;
     text-align: center;
     cursor: pointer;

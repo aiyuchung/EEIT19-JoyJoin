@@ -171,7 +171,7 @@
 	
 	$(".raise").click(function(){
 		var activityno = $(this).attr("id");
-		var url = "${pageContext.request.contextPath}/saveOrUpdateArticle/"+activityno;
+		var url = "${pageContext.request.contextPath}/createNewTitle/"+activityno;
 		location.href=url;
 	})
 	

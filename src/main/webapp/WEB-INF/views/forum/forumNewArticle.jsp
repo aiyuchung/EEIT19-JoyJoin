@@ -36,233 +36,6 @@ Released   : 20100501
 
 <style>
 
-#menu-bb {
-	background: #E0E000;
-	height: 50px;
-	
-}
-#thiscap {
-	padding-top: .75rem;
-	padding-bottom: .75rem;
-	color: white;
-	text-align: center;
-	caption-side: top;
-}
-
-#menu>ul>li>a {
-	display: block;
-	float: left;
-	margin: 0 0 0 50px;
-	padding: 12px 15px 10px 15px;
-	border: none;
-	text-decoration: none;
-	text-transform: uppercase;
-	font-family: 微軟正黑體;
-	font-weight:900;
-	font-size: 20px;
-	color: BLACK;
-}
-
-#menu>ul>li>a:hover {
-	margin: 0 0 0 50px;
-	background: #191E1A;
-	border-bottom: 3px solid #FF30FF;
-	color: white;
-}
-
-#selectAll1>a:hover {
-	background: red;
-	margin: 0 0 0 70px;
-	background: #191E1A;
-	border-bottom: 3px solid #FF30FF;
-	color: #FFFFFF;
-}
-
-#selectAll1>a {
-	background: none;
-	margin: 0 0 0 70px;
-	background: #191E1A;
-	border-bottom: 3px solid #DDBB04;
-	color: #FFFFFF;
-}
-
-
-.bot{border:0;
-  background-color:#003C9D;
-  color:#fff;
-  border:2px #003C9D solid;
-
-  cursor:pointer;}
-
-.bot:hover{
-  color:#003C9D;
-  background-color:#fff;
-  border:2px #003C9D solid;
-}
-/* #dropdown-menu { */
-/*     position: absolute; */
-/*     top: 45px; */
-
-/*     left: 0; */
-/*     z-index: 1000; */
-/*     display: none; */
-/*     float: left; */
-/*     min-width: 10rem; */
-/*     padding: .5rem 0; */
-/*     margin: .125rem 0 0; */
-/*     font-size: 1rem; */
-/*     color: #212529; */
-/*     text-align: left; */
-/*     list-style: none; */
-/*     background-color: #fff; */
-/*     background-clip: padding-box; */
-/*     border: 1px solid rgba(0,0,0,.15); */
-/*     border-radius: .25rem; */
-/* } */
-.dropdown-item {
-	display: block;
-	float: left;
-	margin: 0 3px 0 0;
-	padding: 12px 15px 10px 15px;
-	border: none;
-	text-decoration: none;
-	text-transform: uppercase;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #DDBB04;
-}
-
-.dropdown-menu {
-	position: absolute;
-	top: 44px;
-	left: 0;
-	z-index: 1000;
-	display: none;
-	float: left;
-	min-width: 10rem;
-	padding: .5rem 0;
-	margin: .125rem 0 0;
-	font-size: 1rem;
-	color: #212529;
-	text-align: left;
-	list-style: none;
-	background-color: #fff;
-	background-clip: padding-box;
-	border: 1px solid rgba(0, 0, 0, .15);
-	border-radius: .25rem;
-}
-
-#menu ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-#menu>.dropdown-checkbox:hover {
-	margin: 0 3px 0 0;
-	background: #E0E0000;
-	border-bottom: 3px solid #DDBB04;
-	color: #FFFFFF;
-}
-
-.panel {
-	padding: 0.3px 15px 0px 15px;
-	background-color: dark-gray;
-	display: none;
-	overflow: hidden;
-	vertical-align: middle;
-	line-height: 1.8rem;
-}
-
-.panel>label {
-	margin-bottom: 0rem;
-}
-
-.dropdown-item.active, .dropdown-item:active {
-	text-decoration: none;
-}
-
-.dropdown-item:focus, .dropdown-item:hover {
-	color: #16181b;
-	text-decoration: none;
-	background-color: yellow;
-}
-
-#searchform {
-	margin: 0;
-	padding: 20px 0;
-}
-
-.today {
-	border: solid 2px lightblue;
-}
-
-#headernav {
-	position: absolute;
-	right: 0em;
-	top: 5em;
-}
-
-#headernav>ul>li {
-	float: left !important;
-	list-style-type: none;
-}
-
-#headernav>ul>li:last-child {
-	padding-right: 0 !important;
-}
-
-#headernav>ul>li>a, #headernav>ul>li>span {
-	display: block !important;
-	margin-left: 0.7em !important;
-	padding: 0.80em 1.2em !important;
-	letter-spacing: 0.06em !important;
-	text-decoration: none !important;
-	font-size: 15px !important;
-	outline: 0;
-	color: #FFF;
-	border-radius: 10px;
-}
-
-#headernav>ul>li>a:hover, #headernav>ul>li>span:hover {
-	color: #BBFFFF;
-	font-weight: 700;
-	box-shadow: rgba(255, 255, 255, 0.5) 0px 5px 15px;
-}
-
-#headernav li.active a {
-	background: yellow;
-	border-radius: 5px;
-	color: #FFF;
-}
-
-#headernav>ul>li>ul {
-	display: none;
-}
-
-#headerdiv {
-	position: relative;
-	height: 150px;
-}
-
-#headerdiv .headernav {
-	position: relative;
-	padding: 6em 0em;
-}
-
-.tbdetail{
-
-border-radius: 30px ;
-outline:0;
-background:	#FFFFBF	;
-color:black;
-font-size:0.5cm;
-font-weight:900;
-font-familye:微軟正黑體;
-}
-
-
-
 </style>
 
 </head>
@@ -310,11 +83,11 @@ font-familye:微軟正黑體;
 						<td width="25%">
 						    <div>
 						    	  <c:forEach var="i" begin="1" end="${forumBean.score}">
-                                <img  class="star" width = "33" src="images/chngstar.gif" />
+                                <img  class="star" width = "33" src="${pageContext.request.contextPath}/images/chngstar.gif" />
                                  </c:forEach>
 
 	                          <c:forEach var="i" begin="1" end="${5-forumBean.score}">
-                               <img  class="star" width = "33" src="images/star.gif" />
+                               <img  class="star" width = "33" src="${pageContext.request.contextPath}/images/star.gif" />
                                  </c:forEach>
 						    </div>
 						    <input type="hidden" name = "score" id = "score" value = "${forumBean.score}" />
@@ -355,8 +128,8 @@ var scoreLock = $("#score").val() != 0;
 
 $(".star").hover(function () {
     if (score == 0 && !scoreLock) {
-        $(this).attr("src", "images/chngstar.gif");
-        $(this).prevAll('img').attr("src", "images/chngstar.gif");
+        $(this).attr("src", "${pageContext.request.contextPath}/images/chngstar.gif");
+        $(this).prevAll('img').attr("src", "${pageContext.request.contextPath}/images/chngstar.gif");
         let num = $(this).index()+1;
         $("#score").val(num);
         console.log($(".i").index($(this)))
@@ -364,8 +137,8 @@ $(".star").hover(function () {
 },
     function () {
         if (score == 0 && !scoreLock) {
-            $(this).attr("src", "images/star.gif");
-            $(this).prevAll('img').attr("src", "images/star.gif");
+            $(this).attr("src", "${pageContext.request.contextPath}/images/star.gif");
+            $(this).prevAll('img').attr("src", "${pageContext.request.contextPath}/images/star.gif");
             $("#score").val(0);
         }
     });
@@ -373,30 +146,21 @@ $(".star").hover(function () {
 $(".star").click(function () {
     score = ($(this).index()) + 1;
     console.log("score" + score);
-    $(".star").attr("src", "images/star.gif");
-    $(this).attr("src", "images/chngstar.gif");
-    $(this).prevAll('img').attr("src", "images/chngstar.gif");
+    $(".star").attr("src", "${pageContext.request.contextPath}/images/star.gif");
+    $(this).attr("src", "${pageContext.request.contextPath}/images/chngstar.gif");
+    $(this).prevAll('img').attr("src", "${pageContext.request.contextPath}/images/chngstar.gif");
     $("#score").val(score);
     scoreLock = 0;
 });
 
 $(".star").dblclick(function () {
-    $(".star").attr("src", "images/star.gif");
+    $(".star").attr("src", "${pageContext.request.contextPath}/images/star.gif");
     score = 0;
     $("#score").val(score);
     scoreLock = 0;
 });
 //---------------處理SCORE SCRIPT END---------------//
 /* $(".evaTag").css('background-color','white');  */
-$(".evaTag").css('outline','0');
-$(".evaTag").css('border','0');
-$(".evaTag").css('border-radius','20px');
-$(".evaTag").css('cursor','pointer');
-$("button").css('font-family','微軟正黑體');
-$("button").css('font-weight','900');
-$("input").css('font-family','微軟正黑體');
-$("input").css('font-weight','900');
-
 
 var fruits = [];
 var dataEvaTagStr =  $("#evaTag").val();
