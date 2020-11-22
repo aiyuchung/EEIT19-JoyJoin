@@ -464,7 +464,7 @@ public class MemberController {
 		public String getOne(Model model, @PathVariable String account) {
 			MemberBean mb = memberService.getMember(account);
 			model.addAttribute("mbcard", mb);
-			return "ajax/memberCardModal";
+			return "login/ajax_membercard2";
 		}
 		
 

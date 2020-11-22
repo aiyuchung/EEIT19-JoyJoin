@@ -134,7 +134,7 @@ public class ForumController {
 		forumBeans.add(forumBean);
 		model.addAttribute("forumBean",forumBean);
 		model.addAttribute("forumList", forumBeans);
-		return "forum/forumNewArticle";
+		return "forum/forumNewArticle2";
 	}
 	
 	@PostMapping("/saveOrUpdateArticle")

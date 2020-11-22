@@ -33,7 +33,7 @@
 		text-align:left;
 		float:left;
 		list-style-type: none;
-		width:400px;
+		width:350px;
 		overflow : hidden;
  		text-overflow : ellipsis;
 	}
@@ -47,6 +47,10 @@
  		padding:7px 0;
 		list-style-type: none;
 		vertical-align:bottom;
+	}
+	.inactive{
+		font-style:italic;
+		padding:4px 0;
 	}
 </style>
 </head>
@@ -64,16 +68,24 @@
 			
 			<ul class="showurl">
 				<li class="lititle litime">活動日期: ${followed.activityBean.activityDate}</li>
-				<li class="lititle"><a href="${followed.activityUrl}">${followed.activityBean.name}</a></li>
+				<c:choose>
+					<c:when test="${followed.activityBean.activityStatus eq 'inactive'}">
+						<li class="lititle" ><a href="Javascipt:;" style="font-style:italic;">${followed.activityBean.name} (此活動已下架)</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="lititle"><a href="${followed.activityUrl}">${followed.activityBean.name}</a></li>
+					</c:otherwise>
+				</c:choose>
+			
 					<c:if test="${followed.activityBean.activityStatus eq 'active'}">	
 						<c:if test="${followed.condition eq '關注'}">
-							<li><button type="button" class="btn btn-outline-light follow">取消關注</button></li>
+							<li><button type="button" class="btn btn-outline-secondary follow">取消關注</button></li>
 						</c:if>	
 						<c:if test="${followed.condition eq '舉辦'}">
-							<li><button type="button" class="btn btn-outline-danger hold">修改</button></li>
+							<li><button type="button" class="btn btn-outline-success hold">修改</button></li>
 						</c:if>
 						<c:if test="${followed.condition eq '參加'}">
-							<li><button type="button" class="btn btn-outline-warning join">去留言</button></li>
+							<li><button type="button" class="btn btn-outline-info join">去留言</button></li>
 						</c:if>
 					</c:if>
 					
@@ -82,7 +94,7 @@
 							
 							
 							<c:when test="${followed.condition eq '可發討論'}">
-								<li><button type="button" class="btn btn-outline-danger raise" id=${followed.activityBean.activityNo} >可發起活動</button></li>
+								<li><button type="button" class="btn btn-outline-primary raise" id=${followed.activityBean.activityNo} >發起討論</button></li>
 <%-- 								<c:if test="${followed.condition eq '舉辦'}"> --%>
 <!-- 									<li><button type="button" class="btn btn-outline-danger join raise">發起活動</button></li> -->
 <%-- 								</c:if> --%>
@@ -90,10 +102,10 @@
 							
 							<c:otherwise>
 									<c:if test="${followed.condition eq '舉辦'}">
-										<li><button type="button" class="btn btn-outline-danger join">去留言</button></li>
+										<li><button type="button" class="btn btn-outline-success join">去留言</button></li>
 									</c:if>
 									<c:if test="${followed.condition eq '參加'}">
-										<li><button type="button" class="btn btn-outline-warning join">去留言</button></li>
+										<li><button type="button" class="btn btn-outline-info join">去留言</button></li>
 									</c:if>
 							</c:otherwise>
 						</c:choose>	
@@ -101,7 +113,7 @@
 					
 					<c:if test="${followed.activityBean.activityStatus eq 'inactive'}">
 						<li style="font-size:20px;">
-							活動已下架<button type="button" class="btn btn-outline-warning follow">移除</button>
+							<button type="button" class="btn btn-outline-danger follow">移除</button>
 						</li>
 						
 					</c:if>
