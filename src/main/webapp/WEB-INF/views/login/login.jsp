@@ -77,6 +77,7 @@
                         <form:input type="text" class="form-control" id="inputNickname" placeholder="暱稱 ( 必填 )" path="nickname" required="required"/>
                     </div>
 					<input type="submit" class="btn btn-default" value="快速註冊" id="signUpnow-btn" style="color:black;box-shadow:none;background-color:	#7B7B7B"/>
+					<i class="fa fa-external-link-square" aria-hidden="true" id="one-click-signup"></i>
 				</form:form>
 				</div>
 	      </div>
@@ -221,6 +222,20 @@
 		}
 	})
 	
+// ---------------------------------一鍵輸入-----------------------------------------------------------	
+	
+	$("#one-click-signup").on("click",function(){
+		$("#inputAccount").attr("value","ABC12345")
+		$("#inputPassword").attr("value","12345678")
+		$("#inputEmail").attr("value","eeit19joinjoy@gmail.com")
+		$("#inputNickname").attr("value","丘丘")		
+	})
+	
+	
+	
+	
+	
+	
 // ----------------------------------FB驗證-----------------------------------------------------------
 
 //應用程式編號，進入 https://developers.facebook.com/apps/ 即可看到
@@ -308,23 +323,8 @@
                 }
             });
         }
-  //------------------------
-
-//   {
-//       status: 'connected',
-//       authResponse: {
-//           accessToken: '...',
-//           expiresIn:'...',
-//           signedRequest:'...',
-//           userID:'...'
-//       }
-//   }
   
-
-
-  
-  
-//----------------------------------FB驗證-----------------------------------------------------------
+//----------------------------------一鍵輸入-----------------------------------------------------------
 
 </script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&autoLogAppEvents=1&version=v9.0&appId=389574248905554" nonce="Ygm7YWIX"></script>

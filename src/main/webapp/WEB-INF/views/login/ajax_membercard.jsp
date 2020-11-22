@@ -15,14 +15,14 @@
 	<c:when test="${mbcard.gender == 'F'}">
 		<figure class="snip0056 yellow">
 			<figcaption>
-				<h4>${luckyguy.nickname} <span>${luckyguy.account}</span></h4>
+				<h4>${luckyguy.nickname} <span class='id'>${luckyguy.account}</span></h4>
 				<p>${luckyguy.gender}</p>
 				<p>${luckyguy.mail}</p>
 				<p>${luckyguy.signature}</p>
 				<div class="icons">
 					<a href="#"><i class="ion-ios-home"></i></a>
-					<a href="#"><i class="ion-ios-email"></i></a>
-					<a href="#"><i class="ion-ios-telephone"></i></a>
+					<a href="#"><i class="fa fa-address-book-o"></i></a>
+					<a href="#"><i class="fa fa-envelope-o"></i></a>
 				</div>
 			</figcaption>
 			<img src="<c:url value='/getMemberPicture/${luckyguy.account}' />" alt="picture" />
@@ -32,14 +32,14 @@
 	<c:otherwise>
 		<figure class="snip0056 red">
 			<figcaption>
-				<h2>${luckyguy.nickname} <span>${luckyguy.account}</span></h2>
+				<h2>${luckyguy.nickname} <span class='id'>${luckyguy.account}</span></h2>
 				<p>${luckyguy.gender}<br>
 					${luckyguy.mail}<br>
 					${luckyguy.signature}</p>
 				<div class="icons">
 					<a href="#"><i class="ion-ios-home"></i></a>
-					<a href="#"><i class="ion-ios-email"></i></a>
-					<a href="#"><i class="ion-ios-telephone"></i></a>
+					<a href="#"><i class="fa fa-address-book-o"></i></a>
+					<a href="#"><i class="fa fa-envelope-o"></i></a>
 				</div>
 			</figcaption>
 			<img src="<c:url value='/getMemberPicture/${luckyguy.account}' />" alt="picture" />
@@ -47,7 +47,16 @@
 		</figure>
 	</c:otherwise>
 </c:choose>
+ <script>
+ 	
+ 	$(".fa fa-address-book-o").on("click",function(){
+ 		var id = $(".id").val()
+ 		location.href = "<c:url value='/getFriend/'+id/>";
+ 	})
+
  
+ 
+ </script>
 
 </body>
 </html>

@@ -14,10 +14,10 @@
 	<!-- 	<span id="textSpan"></span> -->
 
 		<c:if test="${msg.readStatus == 1}">
-			<h2>${msg.subject}</h2>
+			<i class="fa fa-envelope-open-o" aria-hidden="true"></i><h2>${msg.subject}</h2>
 		</c:if>
 		<c:if test="${msg.readStatus == 0}">
-			<img src="${pageContext.request.contextPath}/images/notRead.png"><h2>${msg.subject}</h2>
+			<i class="fa fa-envelope-o" aria-hidden="true"></i><h2>${msg.subject}</h2>
 		</c:if>				
 <script>
 	

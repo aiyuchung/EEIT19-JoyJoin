@@ -20,7 +20,9 @@ body, html { font-size: 100%; 	padding: 0; margin: 0; color: white;}
 body {
   overflow-y: auto;
   font-family: 'Roboto Condensed', sans-serif;
-  
+  background-size:100% ;
+  background-repeat: no-repeat;
+  background-image: url(images/memberBack.jpg);  
 }
 
 body .right {
@@ -77,11 +79,11 @@ body .right {
 	margin:0 auto;
 	padding:10px;
 	width:60%;
-	border:4px solid #9F5000;
+/* 	border:4px solid #9F5000; */
 	box-shadow: 0 0 25px 15px #9F5000;
 	overflow-y: auto;
 	-ms-overflow-style: none;
-
+	border-radius:55em;
 	
 }
 
