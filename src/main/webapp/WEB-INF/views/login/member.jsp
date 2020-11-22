@@ -377,7 +377,7 @@
 				  data: {}, 
 				  success:function(data){
 					  $("#showArea").empty();
-					  $("#showArea").css("position","relative").css("left","20px").css("width","140%").addClass("animated").html(str);
+					  $("#showArea").css("position","relative").css("left","20px").css("width","160%").addClass("animated").html(str);
 					  $("#showArea").append(data);
 					}
 			})
