@@ -127,7 +127,9 @@ public class ForumDaoImpl implements ForumDao {
 		Session session = factory.getCurrentSession();
 		// 先查出指定資料
 		String hql = "FROM ForumBean WHERE status = 'ACTIVE' AND forumSeq = :forumSeq ";
-		return (ForumBean) session.createQuery(hql).setParameter("forumSeq", forumSeq).getSingleResult();
+		ForumBean result = (ForumBean) session.createQuery(hql).setParameter("forumSeq", forumSeq).getSingleResult();
+		session.clear();
+		 return result;
 	}
 
 	@Override

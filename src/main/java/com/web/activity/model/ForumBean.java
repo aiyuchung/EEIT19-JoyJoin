@@ -110,6 +110,9 @@ public class ForumBean implements java.io.Serializable {
 	@Transient
     private String photoStr;
 	
+	@Transient
+	private String picUpdFlag;
+	
 //	===========================因為加入照片要用===========================
 	
 	/*
@@ -238,5 +241,11 @@ public class ForumBean implements java.io.Serializable {
 	}
 	public void setPhotoStr(String photoStr) {
 		this.photoStr = photoStr;
+	}
+	public String getPicUpdFlag() {
+		return picUpdFlag;
+	}
+	public void setPicUpdFlag(String picUpdFlag) {
+		this.picUpdFlag = picUpdFlag;
 	}
 }

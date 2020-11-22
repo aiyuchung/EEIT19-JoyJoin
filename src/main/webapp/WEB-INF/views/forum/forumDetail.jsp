@@ -70,7 +70,9 @@ Released   : 20100501
 		    <img width="100%" height="100%" src="<c:url value='/getForumPicture/${forum.forumSeq}/1' />" class="imgRange" alt="" />
 		      </td>
 		      <td height="150px">
-		      <img width="100%" height="100%"  src="<c:url value='/getForumPicture/${forum.forumSeq}/2' />" class="imgRange" alt="" />
+		        <c:if test="${forum.photo2 != null}">
+		         <img width="100%" height="100%"  src="<c:url value='/getForumPicture/${forum.forumSeq}/2' />" class="imgRange" alt="" />
+		        </c:if>
 		    </td>
 		    
 		 

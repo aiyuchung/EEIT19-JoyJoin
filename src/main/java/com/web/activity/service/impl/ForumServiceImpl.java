@@ -92,7 +92,7 @@ public class ForumServiceImpl implements ForumService {
 
 	@Override
 	public List<ForumBean> saveOrUpdateArticle(ForumBean forumBean ,RoleBean rb) {
-		if (forumBean.getPictures() != null) {
+		if (forumBean.getPictures() != null &&  "Y".equals(forumBean.getPicUpdFlag())) {
 			Blob blob1 = this.handlePictures(forumBean.getPictures()[0]);
 			Blob blob2 = null;
 			if (forumBean.getPictures().length > 1) {
@@ -116,6 +116,12 @@ public class ForumServiceImpl implements ForumService {
 			forumBean.setForumType(ForumType.DETAIL);
 			if (forumBean.getScore() == null) {
 				forumBean.setScore(BigDecimal.ZERO);
+			}
+			//如果沒有進行圖片調整(PicUpdFlag = N)，就取DB原本的值，不進行更新
+			if ("N".equals(forumBean.getPicUpdFlag())) {
+				ForumBean dbForum = forumDao.selectOneForum(forumBean.getForumSeq());
+				forumBean.setPhoto(dbForum.getPhoto());
+				forumBean.setPhoto2(dbForum.getPhoto2());
 			}
 			forumDao.updateForum(forumBean.getForumSeq(), forumBean);
 		}

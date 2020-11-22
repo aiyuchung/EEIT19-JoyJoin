@@ -70,7 +70,7 @@ Released   : 20100501
 			<!---------- 抓照片 ------------>
 			<c:import url="forumImgUpload.jsp"></c:import> 
 			
-			
+
 			
 			<textarea style="width:100%;height:100px;"  name ="article">${forumBean.article}</textarea>
 			

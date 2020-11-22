@@ -22,13 +22,39 @@ Released   : 20100501
 
 
 <style>
+
+.cancelImage{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    width: 90px;
+    height: 90px;
+    background: url("${pageContext.request.contextPath}/images/button_error.png") no-repeat;
+    background-size: cover;
+    text-align: center;
+    cursor: pointer;
+}
+.cancelImage p{
+    position: absolute;
+    left:0;right:0;
+    bottom: 10px;
+    font-size: 14px;
+    color: #999999;
+}
+.cancelImage input#file{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
 .uploadImage{
     display: inline-block;
     vertical-align: top;
     position: relative;
     width: 90px;
     height: 90px;
-    background: url("${pageContext.request.contextPath}/images/Button_Add.png") no-repeat;
+    background: url("${pageContext.request.contextPath}/images/button_add.png") no-repeat;
     background-size: cover;
     text-align: center;
     cursor: pointer;
@@ -84,20 +110,31 @@ Released   : 20100501
 
 </head>
 <body>
-
+<input type="hidden" name="picUpdFlag" id ="picUpdFlag" value="N"/>
 <div class="pic">
     <div class="uploadImage">
         <input type="file" name ="pictures" value="上傳檔案" id="file" accept="image/png, image/jpeg, image/gif, image/jpg" multiple/>
     </div>
     <div class="preview">
-        <img src="" id="look1">
+      <c:if test="${forumBean.photo != null}">
+         <img src="<c:url value='/getForumPicture/${forumBean.forumSeq}/1' />" id="look1">
+      </c:if>
+      <c:if test="${forumBean.photo == null}">
+         <img src="" id="look1">
+      </c:if>
         <p class="word">圖片1</p>
     </div>
     <div class="preview">
-        <img src="" id="look2">
+      <c:if test="${forumBean.photo2 != null}">
+       <img src="<c:url value='/getForumPicture/${forumBean.forumSeq}/2' />" id="look2">
+      </c:if>
+       <c:if test="${forumBean.photo2 == null}">
+         <img src="" id="look2">
+      </c:if>
         <p class="word">圖片2</p>
     </div>
-
+    <div class="cancelImage" id ="cancelImage">
+    </div>
 </div>
 
 <script>
@@ -108,6 +145,8 @@ var hasUploadedTwo = false;// 已上傳過2張圖片
 var imgObjPreview1 = document.getElementById("look1");
 var imgObjPreview2 = document.getElementById("look2");
 document.getElementById('file').onchange = function() {
+	$("#picUpdFlag").val('Y');
+	
     // 若還沒完成2張圖片的上傳
     if(!hasUploadedTwo){
         //獲取到file的檔案
@@ -116,13 +155,19 @@ document.getElementById('file').onchange = function() {
         //獲取到檔名和型別（非IE，可一次上傳1張或多張）
         if(docObj.files && docObj.files[0]) {
             // 一次上傳了>=2張圖片（只有前兩張會真的上傳上去）
+            if(docObj.files.length == 1){
+                imgObjPreview1.src = window.URL.createObjectURL(docObj.files[0]);
+                imgObjPreview2.src = "";
+                docObj.files[1]=null;
+               // hasUploadedTwo = true;
+            }
             if(docObj.files.length >= 2){
                 imgObjPreview1.src = window.URL.createObjectURL(docObj.files[0]);
                 imgObjPreview2.src = window.URL.createObjectURL(docObj.files[1]);
-                hasUploadedTwo = true;
+                //hasUploadedTwo = true;
             }
             //一次只上傳了1張照片
-            else{
+/*              else{
                 // 這是上傳的第一張照片
                 if(!hasUploadedOne){
                     imgObjPreview1.src = window.URL.createObjectURL(docObj.files[0]);
@@ -133,11 +178,11 @@ document.getElementById('file').onchange = function() {
                     imgObjPreview2.src = window.URL.createObjectURL(docObj.files[0]);
                     hasUploadedTwo = true;
                 }
-            }
+            }  */
 
         }
         //IE（只能一次上傳1張）
-        else {
+/*         else {
             //使用濾鏡
             docObj.select();
             var imgSrc = document.selection.createRange().text;
@@ -152,10 +197,20 @@ document.getElementById('file').onchange = function() {
                 hasUploadedTwo = true;
             }
             document.selection.empty();
-        }
+        } */
         return true;
     }
 }
+
+
+$("#cancelImage").click(function () {
+	$("#picUpdFlag").val('Y');
+	var docObj =document.getElementById('file');
+	  docObj.files[1]=null;
+	  docObj.files[2]=null;
+	 imgObjPreview1.src = "";
+	 imgObjPreview2.src = "";
+});
 </script>
 
 </body>
