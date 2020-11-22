@@ -14,6 +14,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="	crossorigin="anonymous"></script>
 <!-- ====================信箱樣式======================= -->
 <link rel="stylesheet" href="<c:url value='css/mailbox.css' />" />
+<!-- ====================icon樣式======================= -->
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 
 </head>
 <body>
@@ -27,7 +29,7 @@
 		<div id="mailFeatures" style="width:50px;	position:relative;top:20px;left:120px;">
 			<table id="boxbox">
 				<tr>
-					<td><input type="button" value="撰寫新信" id="writeNewLetter-btn"></td>
+					<td><i class="fa fa-paper-plane-o" aria-hidden="true" id="writeNewLetter-btn">寫信</i></td>
 				</tr>
 			</table>
 		</div>
@@ -36,10 +38,10 @@
 				<div class	="mail" id="${msg.msgNo}">
 					<div id="ajax_subject">
 						<c:if test="${msg.readStatus == 1}">
-							<h2>${msg.subject}</h2>
+							<i class="fa fa-envelope-open-o" aria-hidden="true"></i><h2>${msg.subject}</h2>
 						</c:if>
 						<c:if test="${msg.readStatus == 0}">
-							<h2><img src="${pageContext.request.contextPath}/images/notRead.png">${msg.subject}</h2>
+							<i class="fa fa-envelope-o" aria-hidden="true"></i><h2>${msg.subject}</h2>
 						</c:if>
 					</div>					
 					<span id="keepread">繼續閱讀...</span><br>
