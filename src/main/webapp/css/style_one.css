@@ -9,7 +9,7 @@
 /*-Base-*/
 
 body {
-	background-color:black;
+	
 	font-family: 'Open Sans', sans-serif;
 }
 p {
@@ -60,7 +60,7 @@ a {
 
 /*-Section Blocks-*/
 .section-block {
-	background-color: #ECEBEB;
+	background-color: rbga(236,235,235,0.5);
 	border-radius:4px;
 	padding: 30px;
 	margin-bottom:30px;

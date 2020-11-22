@@ -24,9 +24,13 @@
 	crossorigin="anonymous"></script>
 
 <style>
-body{
-	background: #009393;
-/* 	background: #4F9D9D; */
+#wrapper{
+
+	width:100%;
+	background-image: url(images/leave_bg.jpg);
+ 	background-size: 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 #thiscap {
 	padding-top: .75rem;
@@ -462,7 +466,7 @@ body{
 <!-- 活動列表圖片 -->
 			<div id="content">
 				<div style="padding-bottom: 20px; overflow:hidden">
-					<img src="images/img02.jpg" alt=""/>
+					<img src="images/friends1.jpg" style="width:100%; border-radius:15px;" title="一起開心吧!"/>
 				</div>
 				<div class="post newajaxlist">
 				
@@ -476,8 +480,8 @@ body{
 								<p>可以重新提供條件或是用快篩方式查詢喔!</p>
 							</div>
 							<c:forEach var="all" items="${activities}">
-								<div class="post">
-									<h2 class="title activitytitle">
+								<div class="post" >
+									<h2 class="title activitytitle" style="width:100%; border-radius:8px; padding-left:10px;">
 										<strong>${all.activityDate} </strong> (${all.prov})
 									</h2>
 									<h1 class="title">

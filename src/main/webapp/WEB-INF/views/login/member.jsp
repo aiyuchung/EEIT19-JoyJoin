@@ -399,7 +399,7 @@
 	        })
 	    })
 	    
-	    $(".orders-btn").click(function (){
+	    $("#orders-btn").click(function (){
 	    	 var str = "購買紀錄";
 	    	 $.ajax({
 	              url:"ajax_orders",

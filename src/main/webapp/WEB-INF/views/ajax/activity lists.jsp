@@ -15,7 +15,7 @@
 
 		<c:forEach var="all" items="${activities}">
 			<div class="post">
-				<h2 class="title activitytitle">
+				<h2 class="title activitytitle" style="width:100%; border-radius:8px; padding-left:10px;">
 					<strong>${all.activityDate} </strong> (${all.prov})
 				</h2>
 				<h1 class="title">

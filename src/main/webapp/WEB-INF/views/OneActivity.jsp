@@ -44,6 +44,13 @@
 	ga('send', 'pageview');
 </script>
 <style>
+	.main-content{
+		width:100%;
+		background-image: url(images/stars_bg.jpg);
+	 	background-size: 100%;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+	}
 	.video-frame div{
 		border: 2px solid darkgrey;
 	/* 	width: auto; */ 
