@@ -77,7 +77,7 @@
                         <form:input type="text" class="form-control" id="inputNickname" placeholder="暱稱 ( 必填 )" path="nickname" required="required"/>
                     </div>
 					<input type="submit" class="btn btn-default" value="快速註冊" id="signUpnow-btn" style="color:black;box-shadow:none;background-color:	#7B7B7B"/>
-					<i class="fa fa-external-link-square" aria-hidden="true"><button id="one-click-signup"></button></i>
+					<i class="fa fa-external-link-square" aria-hidden="true" id="one-click-signup"></i>
 				</form:form>
 				</div>
 	      </div>
@@ -225,10 +225,10 @@
 // ---------------------------------一鍵輸入-----------------------------------------------------------	
 	
 	$("#one-click-signup").on("click",function(){
-		$("#inputAccount").text("ABC12345")
-		$("#inputPassword").text("12345678")
-		$("#inputEmail").text("eeit19joinjoy@gmail.com")
-		$("#inputNickname").text("丘丘")		
+		$("#inputAccount").attr("value","ABC12345")
+		$("#inputPassword").attr("value","12345678")
+		$("#inputEmail").attr("value","eeit19joinjoy@gmail.com")
+		$("#inputNickname").attr("value","丘丘")		
 	})
 	
 	

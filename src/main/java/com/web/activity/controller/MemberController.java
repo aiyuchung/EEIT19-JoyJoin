@@ -513,10 +513,12 @@ public class MemberController {
 
       //---------------------------------------------▼好友系統▼---------------------------------------------//		
 
-      		public void getFriendList(Model model, HttpSession session) {		//做為方法讀取至MEMBER
+        	@GetMapping("/getAllFriend")
+      		public String getFriendList(Model model, HttpSession session) {		//做為方法讀取至MEMBER
       			String account = (String) session.getAttribute("account");
       			List<String> list = memberService.getAllFriendList(account);
       			model.addAttribute("friend", list);
+      			return "ajax_memberlist";
       		}
       		
       		@PostMapping("/getFriend/{account}")
@@ -533,7 +535,7 @@ public class MemberController {
       				memberService.saveFriend(fb);
       				sendServerMsg2friend(host, account);
       			}else {
-      				
+      				sendServerMsgNoCatch(host, account);
       			}
       			return "redirect:/mailMsg";
       		}
@@ -588,7 +590,7 @@ public class MemberController {
          		 	mb.setTime(time);
          		 	mb.setReadStatus(0);
          		 	mb.setSubject("系統訊息:您有一則好友申請");
-         		 	mb.setMsg(host+"加你好友");
+         		 	mb.setMsg(host+"加你好友 \r\n 同意:http://localhost:8080/JoyJoin/ansFriend/agree \r\n 拒絕:http://localhost:8080/JoyJoin/ansFriend/no");
          		 	memberService.sendMsg(mb);
       		}
 

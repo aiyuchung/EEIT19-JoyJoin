@@ -20,6 +20,9 @@
 	<div>
 		<jsp:include page="../header/header_guest.jsp" />
 	</div>
+	
+	<div class="homepage" style="background-image: url(images/memberBack.jpg);background-size: 100%;background-repeat: no-repeat;height: 1100px;">
+	
 	<div id="back-div">
 		<div id="mailFeatures" style="width:50px;	position:relative;top:20px;left:120px;">
 			<table id="boxbox">
@@ -114,7 +117,7 @@
 	   </div>
 	</div>
 
-
+</div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script>	
