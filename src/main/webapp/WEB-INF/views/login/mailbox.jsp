@@ -125,11 +125,9 @@ h2{
 	
 	<div id="back-div">
 		<div id="mailFeatures" style="width:50px;	position:relative;top:20px;left:120px;">
-			<table id="boxbox">
-				<tr>
-					<td><i class="fa fa-paper-plane-o" aria-hidden="true" id="writeNewLetter-btn">寫信</i></td>
-				</tr>
-			</table>
+			<div id="boxbox">
+				<img src="${pageContext.request.contextPath}/images/sent.png" id="writeNewLetter-btn">
+			</div>
 		</div>
 		<div id="mailBox">
 			<c:forEach var="msg" items="${msgList}">
@@ -201,11 +199,11 @@ h2{
 	        <div class="modal-content"  style="position:relative;top:100px;color:black">
 	            <form:form modelAttribute="msgBean" method="POST">
 	            <div class="modal-header">
-	                發送給: <form:input path="account" type="text" id="account-sendTo"/>
+	                <h4>發送給: <form:input path="account" type="text" id="account-sendTo" class="write-h4"/></h4>
 	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button> 
 	            </div>
 	            <div class="modal-body">
-	            	主旨: <form:input path="subject" type="text"/>
+	            	<h4>主旨: <form:input path="subject" type="text" class="write-h4"/></h4>
 	            	<form:textarea path="msg" style="resize: none" rows="3" cols="29"/>	        
 	            </div>
 	            <div class="modal-footer">

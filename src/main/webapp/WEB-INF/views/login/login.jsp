@@ -241,6 +241,7 @@
 		$("#inputPassword").attr("value","12345678")
 		$("#inputEmail").attr("value","eeit19joinjoy@gmail.com")
 		$("#inputNickname").attr("value","丘丘")		
+		$("#signUpnow-btn").attr("type","submit").css("color","#33FFFF").css("box-shadow","#33FFFF 0px 0px 15px")
 	})
 	
 	

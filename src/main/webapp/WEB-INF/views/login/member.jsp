@@ -121,7 +121,7 @@
 								</tr>
 								<tr>
 									<td><form:label path = "fullName">姓名</form:label></td>
-									<td><form:input path = "fullName" type = "text" placeholder = "${member.fullName}"/></td>
+									<td><form:input path = "fullName" type = "text" placeholder = "${member.fullName}" id="one-fullname"/></td>
 								</tr>
 								<tr>
 									<td><form:label path = "nickname">暱稱</form:label></td>
@@ -129,7 +129,7 @@
 								</tr>
 								<tr>
 									<td><form:label path = "gender">性別</form:label></td>
-									<td><form:select path = "gender" id = "drop-select" placeholder = "${member.gender}">
+									<td><form:select path = "gender" id = "drop-select" placeholder = "${member.gender}" >
 											<form:option value="N" id="dropdown-list">不顯示</form:option>						    
 											<form:option value="M" id="dropdown-list">男性</form:option>
 											<form:option value="F" id="dropdown-list">女性</form:option>
@@ -137,11 +137,11 @@
 								</tr>
 								<tr>
 									<td><form:label path = "phone">電話</form:label></td>
-									<td><form:input path = "phone" type = "text" placeholder = "${member.phone}"/></td>
+									<td><form:input path = "phone" type = "text" placeholder = "${member.phone}" id="one-phone"/></td>
 								</tr>
 								<tr>
 									<td><form:label path = "birthYear">出生日期</form:label></td>
-									<td><form:input path = "birthYear" size="5" maxlength="4" type = "text" placeholder = "${member.birthYear}"/>
+									<td><form:input path = "birthYear" size="5" maxlength="4" type = "text" placeholder = "${member.birthYear}" id="one-year"/>
 										<form:select path = "birthMonth" id = "drop-select1" placeholder = "${member.birthMonth}">										
 										<form:option id="dropdown-list" value = "不顯示" />
 										<form:option id="dropdown-list" value = "1月" />
@@ -187,11 +187,11 @@
 								</tr>
 								<tr>
 									<td><form:label path = "address">居住地址</form:label></td>
-									<td><form:input path = "address" type = "text"/></td>
+									<td><form:input path = "address" type = "text" id="one-addr"/></td>
 								</tr>
 								<tr>
 									<td><form:label path = "hobby">興趣</form:label></td>
-									<td><form:input path = "hobby" type = "text"/></td>
+									<td><form:input path = "hobby" type = "text" id="one-hobby"/></td>
 								</tr>
 								<tr>
 									<td><form:label path = "education">學歷</form:label></td>
@@ -206,15 +206,15 @@
 								</tr>
 								<tr>
 									<td><form:label path = "school">學校</form:label></td>
-									<td><form:input path = "school" type = "text"/></td>
+									<td><form:input path = "school" type = "text" id="one-school"/></td>
 								</tr>
 								<tr>
 									<td><form:label path = "company">公司</form:label></td>
-									<td><form:input path = "company" type = "text"/></td>
+									<td><form:input path = "company" type = "text" id="one-company"/></td>
 								</tr>
 								<tr>
 									<td><form:label path = "job">職業</form:label></td>
-									<td><form:input path = "job" type = "text"/></td>
+									<td><form:input path = "job" type = "text" id="one-job"/></td>
 								</tr>
 								<tr>
 									<td><form:label path = "income">收入情形</form:label></td>
@@ -232,18 +232,21 @@
 								</tr>
 								<tr>
 									<td><form:label path = "signature">簽名</form:label></td>
-									<td><form:textarea path = "signature" type = "textarea" rows = "3" cols="30" style="resize: none;"/></td>
+									<td><form:textarea path = "signature" type = "textarea" rows = "3" cols="30" style="resize: none;" id="one-sign"/></td>
 									
 								</tr>
 								<tr>
 									<td><form:label path = "introduction">自我介紹</form:label></td>
-									<td><form:textarea  path = "introduction" type = "textarea" rows = "8" cols="30"  style="resize: none;"/></td>
+									<td><form:textarea  path = "introduction" type = "textarea" rows = "8" cols="30"  style="resize: none;" id="one-intro"/></td>
 								</tr>
 							</table>	
 							<table class="tablebtn">
 								<tr>
 									<td><form:button type = "submit">更改</form:button></td>
 									<td><form:button type = "reset">還原</form:button></td>
+								</tr>
+								<tr>
+									<td><a id="one-touch">一鍵輸入</a></td>
 								</tr>
 							</table>
 						</form:form>	
@@ -444,6 +447,25 @@
 	    
 	    
 	})
+
+// 	==========================一鍵輸入=============================
+	
+		$("#one-touch").on("click",function(){
+			$("#one-fullname").attr("value","丘秋鶖")
+			$("#one-phone").attr("value","0919548236")
+			$("#one-year").attr("value","1987")
+			$("#one-addr").attr("value","台北市大安區信義路四段")
+			$("#one-hobby").attr("value","運動")
+			$("#one-school").attr("value","台灣大學")
+			$("#one-company").attr("value","資訊工程策進會")
+			$("#one-job").attr("value","清潔工")
+			$("#one-sign").attr("value","我是鶖鶖鶖鶖鶖")
+			$("#one-intro").attr("value","我叫鶖鶖,喜歡運動,希望可以找到志同道合的朋友")
+
+			
+		})
+	
+	
 	
 
 // 	$('#msg-btn').on('click',function(){
