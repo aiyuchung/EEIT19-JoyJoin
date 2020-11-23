@@ -124,6 +124,7 @@ body{
 						</c:when>
 						<c:when test="${level > 3}">
 							<li><a href = "<c:url value = '/allactive'/>">後台管理</a></li>
+							<li><a href = "<c:url value = '/member'/>">${account}</a></li>
 							<li><a href = "<c:url value = '/out'/>">登出</a></li>
 						</c:when>
 						<c:when test="${empty level}">
