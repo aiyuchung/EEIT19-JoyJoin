@@ -119,4 +119,7 @@ public interface ActivityDao {
 	List<ActivityBean> getLastDay();
 	List<ActivityBean> getOkOnes();
 	List<ActivityBean> getInactiveOnes();
+	
+	//
+	void saveActivityScore(ActivityBean newform);
 }

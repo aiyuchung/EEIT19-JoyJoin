@@ -642,6 +642,15 @@ public class ActivityDaoImpl implements ActivityDao {
 									.setParameter("no",memberNo).executeUpdate();
 		}
 	//----------------------------------------分頁--------------------------------------------	
+		@Override
+		public void saveActivityScore(ActivityBean activity) {
+			Session session = factory.getCurrentSession();
+			String hql = "UPDATE ActivityBean SET score =:scpre WHERE activityNo=:no";
+			session.createQuery(hql).setParameter("scpre",activity.getScore())
+									.setParameter("no",activity.getActivityNo())
+									.executeUpdate();
+									
+		}
 	
 //			@Override
 //			public List<ActivityBean> pages (int offset,int pageSize) {

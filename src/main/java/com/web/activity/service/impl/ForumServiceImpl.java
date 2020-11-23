@@ -2,7 +2,6 @@ package com.web.activity.service.impl;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -14,12 +13,12 @@ import java.util.stream.Collectors;
 import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.web.activity.Enum.ForumType;
+import com.web.activity.dao.ActivityDao;
 import com.web.activity.dao.ForumDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.ForumBean;
@@ -34,6 +33,9 @@ public class ForumServiceImpl implements ForumService {
 
 	@Autowired
 	ForumDao forumDao;
+	
+	@Autowired
+	ActivityDao activityDao;
 
 	@Autowired
 	ActivityService activityService;
@@ -141,9 +143,13 @@ public class ForumServiceImpl implements ForumService {
 		BigDecimal averageNumber = forumDetailList.stream().map(ForumBean::getScore).reduce(BigDecimal::add)
 				.orElse(BigDecimal.ZERO).divide(new BigDecimal(forumDetailList.size()), 1, RoundingMode.CEILING);
 
+		
 		forumBean.setScore(averageNumber);
 		forumDao.updateForum(forumBean.getForumSeq(), forumBean);
-
+		String stno= forumBean.getActivityCode();
+		ActivityBean activity = activityDao.selectOneActivity(Integer.parseInt(stno));
+		activity.setScore((averageNumber));
+		activityDao.saveActivityScore(activity);
 	}
 
 	private Blob handlePictures(MultipartFile mFile) {
