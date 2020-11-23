@@ -92,7 +92,7 @@ public class ForumDaoImpl implements ForumDao {
 		}
 		if (forumBean.getType() != null && !StringUtils.isEmpty(forumBean.getType())) {
 			if (forumBean.getType().equals("熱門")) {
-				sb.append(" AND popularity > 60");
+				sb.append(" AND popularity > 20");
 			} else {
 				sb.append(" AND type = :type");
 			}

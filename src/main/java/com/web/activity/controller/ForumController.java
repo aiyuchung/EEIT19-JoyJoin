@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.activity.Enum.ForumType;
+import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ForumBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
@@ -74,7 +75,8 @@ public class ForumController {
 	}
 
 	@GetMapping("/forumDetail")
-	public String getForumDetail(Model model, @ModelAttribute("form") ForumBean form) {
+	public String getForumDetail(Model model, @ModelAttribute("form") ForumBean form,HttpSession session) {
+		String account = (String) session.getAttribute("account");
 		service.plusPopularity(form.getForumSeq());
 		form.setCode(String.valueOf(form.getForumSeq()));
 		List<ForumBean> forumList = service.selectForumDteailListByParam(form);
@@ -83,6 +85,23 @@ public class ForumController {
 		List<ForumBean> forumDetailList = forumList.stream().sorted(Comparator.comparing(ForumBean::getForumSeq))
 				.filter(f -> ForumType.DETAIL.equals(f.getForumType())).collect(Collectors.toList());
 
+		List<ActivityJoinedBean> joined = activityService.joinedMember(Integer.valueOf(forumBean.getActivityCode())); //取得本活動參加名單
+		String isJoined = "N";
+		//如果有在參加名單內
+		for(ActivityJoinedBean ajb:joined) {
+			String joinedAccount = ajb.getMemberBean().getAccount();
+			if (joinedAccount.equals(account)) {  //如果使用者在參加名單內回傳true
+				isJoined = "Y";
+				break;
+			}
+		}
+		//如果是標題發起者
+		if(account.equals(forumBean.getMemberBean().getAccount())){
+			isJoined = "Y";
+		}
+		
+		//放資訊到前端
+		model.addAttribute("isJoined", isJoined);
 		model.addAttribute("forumBean", forumBean);
 		model.addAttribute("forumDetailList", forumDetailList);
 		return "forum/forumDetail";
@@ -101,6 +120,8 @@ public class ForumController {
 		MemberBean member = memberService.getMember(account);
 		form.setMemberBean(member);
 		form.setAuthor(member.getMemberNo().toString());
+
+		
 		model.addAttribute("forumBean", form);
 
 		return "forum/forumNewArticle";
@@ -147,7 +168,7 @@ public class ForumController {
 		ub.setEmp(rb.getEmp());
 		ub.setPic(mb.getPicture());
 		// service.createForumTitle(26);
-		List<ForumBean> forumList = service.saveOrUpdateArticle(form,rb);
+		List<ForumBean> forumList = service.saveOrUpdateArticle(form, rb);
 		ForumBean forumBean = forumList.stream().filter(f -> ForumType.TITLE.equals(f.getForumType())).findAny()
 				.orElse(new ForumBean());
 		List<ForumBean> forumDetailList = forumList.stream().filter(f -> ForumType.DETAIL.equals(f.getForumType()))

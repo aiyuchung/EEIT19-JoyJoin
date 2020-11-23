@@ -360,7 +360,11 @@ font-familye:微軟正黑體;
 					<input type = "hidden" name = "author" value = "${forumBean.author}">
 					<input type = "hidden" name = "title" value = "${forumBean.title}">
 					<input type = "hidden" name = "location" value = "${forumBean.location}">
-			   		<input type="submit" value="新增貼文" id="to_forumNewArticle">
+					
+					<c:if test="${joined}">
+			   		<input type="submit" value="新增貼文${joined}" id="to_forumNewArticle">
+			   		</c:if>
+			   		
 			</form>	
 			</td>
 		</tr>
@@ -457,6 +461,8 @@ font-familye:微軟正黑體;
 					<input type = "hidden" name = "author" value = "${forumBean.author}">
 					<input type = "hidden" name = "title" value = "${forumBean.title}">
 					<input type = "hidden" name = "location" value = "${forumBean.location}">
+					
+					
 			   		<input type="submit" value="新增貼文" id="to_forumNewArticle">
 			</form>	
 			</td>
@@ -509,7 +515,7 @@ $(".forumEdit").click(function(){ //以活動類型作為快速篩選
 
 
 </div>
-<div  id="wrapper" style="padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA">揪in 祝您約會愉快!!!</div>
+
 	
 </body>
 </html>
