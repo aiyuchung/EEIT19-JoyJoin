@@ -153,6 +153,9 @@ img {
 								<c:if test="${eachmenu == 4}"> 
 									<li><a href="Javascript:;" id="parentId${eachmenu}" class="rights">權限管理</a></li>
 								</c:if>
+								<c:if test="${eachmenu == 11}"> 
+									<li><a href="Javascript:;" id="parentId${eachmenu}" class="order">訂單管理</a></li>
+								</c:if>
 								</c:forEach>
 						</ul>
 						<ul class="nav nav-sidebar">
