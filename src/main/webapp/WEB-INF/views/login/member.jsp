@@ -84,7 +84,7 @@
 			<div id="btnArea">
 				<br><a href="#" class='superBtn' id='memberInfo-btn'>個人資料</a><br>
 				<br><a href="#" class='superBtn' id='roleInfo-btn'>用戶資料</a><br> 
-				<br><a href="#" class='superBtn' id='showFriend-btn'>好友列表</a><br> 
+<!-- 				<br><a href="#" class='superBtn' id='showFriend-btn'>好友列表</a><br>  -->
 				<br><a href="#" class='superBtn' id='update-btn'>修改資料</a><br>
 				<br><a href="#" class='superBtn' id='trip-btn'>出遊資料</a><br>
 				<br><a href="#" class='superBtn' id='pair-btn'>推薦好友</a><br>

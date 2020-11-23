@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Header what Guest can see</title>
 <script src="https://code.jquery.com/jquery-3.5.1.js"	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="	crossorigin="anonymous"></script>
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 <style>
 body{
 	-webkit-user-select:none;
@@ -146,7 +147,8 @@ body{
 			  success:function(data){
 				  console.log(data)
 				  if(data=="yes"){
-					  $("#mailbox").addClass("neverRead").text("你有未讀信件");
+					  $("#mailbox").addClass("neverRead").addClass("iconify").attr("data-icon","ion:mail-unread").attr("data-inline","false")
+// 					  .text("你有未讀信件");
 				  }else{
 					  $("#mailbox").removeClass("neverRead").text("信箱");
 				  }
