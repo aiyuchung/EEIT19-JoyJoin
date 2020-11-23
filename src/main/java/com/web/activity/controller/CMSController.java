@@ -87,13 +87,21 @@ public class CMSController {
 	// 跟活動新刪改查有關
 	// 用在CMS頁面出現的活動資料
 	@GetMapping("/allactive") // 請求路徑
-	public String list(Model model) {
+	public String list(Model model, HttpSession session) {
 		List<ActivityBean> list = service.selectAllActivities(); // 宣告list物件 "list" 用selectAllActivies 方法
 		List<Menubean> Menubean = service.getMenuName("1");// 外層迴圈
 		List<Menubean> Menubean2 = service.getMenuName("2");// 內層迴圈
+		String levelst = (String) session.getAttribute("level");
+		int level = Integer.parseInt(levelst);
+		int rsbList = 1 ;
+		if (level == 4) { rsbList=3;}
+		if (level == 5) { rsbList=2;}
+		if (level == 6) { rsbList=1;}
+		List<Integer> checked = service.forRoleRight(rsbList);
 		model.addAttribute("allactive", Menubean);// 外層迴圈
 		model.addAttribute("allactive2", Menubean2);// 內層迴圈
 		model.addAttribute("activities", list); // model 裝進去東西 識別字串 activities
+		model.addAttribute("checked", checked); // model 裝進去東西 識別字串 activities
 //		System.out.println("hello world");
 		return "CMS"; // 分配jsp
 	}
@@ -121,6 +129,12 @@ public class CMSController {
 
 		return "ajax/rights";
 	}
+	
+	@GetMapping("/forRoleRight")
+	public @ResponseBody List<Integer> forRoleRight(Model model, int rsbList) {
+		return service.forRoleRight(rsbList);
+	}
+	
 
 	// 關鍵字查詢
 	@GetMapping("/ajax_CM_keyWords")

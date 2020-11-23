@@ -137,7 +137,50 @@ img {
 			<div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar"
 				role="navigation">
 
+				<c:if test="${level eq '5' || level eq '4' }"> 
+				<!-- 4=工讀生=roleId=3(RoleSaveBean) -->
+						<ul class="nav nav-sidebar">
+							<c:forEach var="eachmenu" items="${checked}">
+								<c:if test="${eachmenu == 1}"> 
+									<li class="active"><a href="#" id="parentId0">功能總覽</a></li>
+								</c:if>
+								<c:if test="${eachmenu == 2}"> 
+									<li><a href="Javascript:;" id="parentId${eachmenu}" class="allMembers">會員管理</a></li>
+								</c:if>
+								<c:if test="${eachmenu == 3}"> 
+									<li><a href="Javascript:;" id="parentId${eachmenu}" class="allactives">活動管理</a></li>
+								</c:if>
+								<c:if test="${eachmenu == 4}"> 
+									<li><a href="Javascript:;" id="parentId${eachmenu}" class="rights">權限管理</a></li>
+								</c:if>
+								</c:forEach>
+						</ul>
+						<ul class="nav nav-sidebar">
+							<c:forEach var="eachmenu" items="${checked}">
+								<c:if test="${eachmenu == 5}"> 
+									<li class="active"><a href="#" id="parentId5">圖表即時分析</a></li>
+								</c:if>
+								<c:if test="${eachmenu == 6}"> 
+									<li><a href="Javascript:;" id="parentId${eachmenu}" class="provStac">縣市統計</a></li>
+								</c:if>
+								<c:if test="${eachmenu == 7}"> 
+									<li><a href="Javascript:;" id="parentId${eachmenu}" class="counts">區域活動</a></li>
+								</c:if>
+								<c:if test="${eachmenu == 8}"> 
+									<li><a href="Javascript:;" id="parentId${eachmenu}" class="gender">性別分析</a></li>
+								</c:if>
+								<c:if test="${eachmenu == 9}"> 
+									<li><a href="Javascript:;" id="parentId${eachmenu}" class="starSign">星座比較</a></li>
+								</c:if>
+								<c:if test="${eachmenu == 10}"> 
+									<li><a href="Javascript:;" id="parentId${eachmenu}" class="log">日誌</a></li>
+								</c:if>
+							</c:forEach>
+					</ul>
+				</c:if>
+		
 				<!-- 			左邊項目 -->
+				<c:if test="${level eq '6' }"> 
 				<c:forEach var="Menu" items="${allactive}">
 					<ul class="nav nav-sidebar">
 						<li class="active"><a href="#" id="parentId${Menu.parentId}">${Menu.menuName}</a></li>
@@ -151,6 +194,7 @@ img {
 						</c:forEach>
 					</ul>
 				</c:forEach>
+				</c:if>
 			</div>
 
 
@@ -262,6 +306,9 @@ img {
 
 		<!--/.container-->
 		<!-- 請登入的modal  -->
+		<script>
+			
+		</script>
 
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

@@ -118,29 +118,59 @@
 	})
 	
 	//下拉式選單管理員選擇
-	 $("#selectrole").click (function () {
-	   var  rsbList= $("#selectrole").val(); 
+// 	 $("#selectrole").click (function () {
+// 	   var  rsbList= $("#selectrole").val(); 
 	   
-	   console.log(rsbList)
+// 	   console.log(rsbList)
         
-	    $.ajax({
-	       url:"selectRights",
-	       type: "get",
-	       dataType: "html",
-	       contentType: 'application/json; charset=utf-8',
-	       data: {
-	    	   rsbList:rsbList  ,
-	     },
-	      success:function(data){
-// 	        $(".post").empty();
-// 	        $(".newajaxlist").empty();
-// 	        $(".newajaxlist").append(data);
+// 	    $.ajax({
+// 	       url:"selectRights",
+// 	       type: "get",
+// 	       dataType: "html",
+// 	       contentType: 'application/json; charset=utf-8',
+// 	       data: {
+// 	    	   rsbList:rsbList  ,
+// 	     },
+// 	      success:function(data){
+// // 	        $(".post").empty();
+// // 	        $(".newajaxlist").empty();
+// // 	        $(".newajaxlist").append(data);
 
 	     
-//	       console.log(data);
- 	       },  
-	    })
+// //	       console.log(data);
+//  	       },  
+// 	    })
+// 	 })
+	 
+	 $(document).on("change","#selectrole",function(){
+		 var roleSave=$("#selectrole").val();
+		 $.ajax({
+		       url:"forRoleRight",
+		       type: "get",
+		       dataType: "JSON",
+		       contentType: 'application/json; charset=utf-8',
+		       data: {
+		    	   rsbList:roleSave  ,
+		     },
+		      success:function(data){
+		    	  $(data).each(function(i, value){
+		    		  
+		    		  for(var a =1; a <11; a++){
+				  		var id = "#tree_" + a + "_check"
+				  		console.log("a:" + a+"; value:"+value);
+				  		if (a == value){
+				  			$(id).removeClass("checkbox_false_full");
+				  			$(id).addClass("checkbox_true_full");
+				  		}
+				  	  }
+		    	  })
+		      }
+		 })
 	 })
+// 	 checkbox-true-full
+// 	 checkbox-false-full
+	 
+// 	 tree_i_check
 	</script>
 </body>
 </html>

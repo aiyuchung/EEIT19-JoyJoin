@@ -1,5 +1,6 @@
 package com.web.activity.dao.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,6 +154,17 @@ public class CMSDaoImpl implements CMSDao {
 	public List<RoleSaveBean> saveRsb() {
 	
 		return null;
+	}
+	
+	public List<Integer> forRoleRight(int rsbList) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM RoleSaveBean WHERE roleId = :id";
+		List <RoleSaveBean> rights = session.createQuery(hql).setParameter("id",rsbList).getResultList();		 
+		List<Integer> checked =  new ArrayList<>();
+		for (RoleSaveBean rsb:rights) {
+			checked.add(rsb.getMenuId());
+		}
+		return checked;
 	}
 	
 	//關鍵字搜尋

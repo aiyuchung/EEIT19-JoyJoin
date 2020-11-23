@@ -64,6 +64,10 @@ public class CMSServiceImpl implements CMSService {
 						
 				 }
 		}	
+		@Override
+		public List<Integer> forRoleRight(int rsbList){
+			return dao.forRoleRight(rsbList);		
+		}
 		
 		//關鍵字查詢
 		@Override

@@ -41,7 +41,7 @@ public interface CMSService {
 		List<ActivityBean> selectAllActivitiesInAtive();
 
 	
-	
+		List<Integer> forRoleRight(int rsbList);
 	
 	
 	

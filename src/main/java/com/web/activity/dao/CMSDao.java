@@ -28,7 +28,7 @@ public interface CMSDao {
 		//存節點和人員
 		void saveRsb(String roleId, String ztreeSave);	
 	
-	
+		List<Integer> forRoleRight(int rsbList);
 	
 	
 
