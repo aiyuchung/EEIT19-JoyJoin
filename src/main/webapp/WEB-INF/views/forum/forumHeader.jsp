@@ -28,8 +28,8 @@ Released   : 20100501
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
-<link href="css/default.css" rel="stylesheet" type="text/css"
-	media="screen" />
+<!-- <link href="css/default.css" rel="stylesheet" type="text/css" -->
+<!-- 	media="screen" /> -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"
 	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -47,9 +47,11 @@ Released   : 20100501
 }
 
 #menu-bb {
-	background: #FFFF33;
-	height: 55px;
+	background:	#003060;
+	height: 45px;
+	
 }
+
 
 #thiscap {
 	padding-top: .75rem;
@@ -63,14 +65,14 @@ Released   : 20100501
 	display: block;
 	float: left;
 	margin: 0 0 0 50px;
-	padding: 12px 15px 10px 15px;
+	padding: 5px 15px 15px 15px;
 	border: none;
 	text-decoration: none;
 	text-transform: uppercase;
 	font-family: 微軟正黑體;
 	font-weight: 900;
 	font-size: 22px;
-	color: BLACK;
+	color: 	#ECF5FF;
 }
 
 #menu>ul>li>a:hover {
@@ -188,6 +190,7 @@ Released   : 20100501
 #searchform {
 	margin: 0;
 	padding: 20px 0;
+	color:white;
 }
 
 .today {
@@ -250,7 +253,7 @@ Released   : 20100501
 .tbdetail{
 border-radius: 30px ;
 outline:0;
-background:	#FFFFBF	;
+background:	rgba(102,153,204,0.7)	;
 color:black;
 font-size:0.5cm;
 font-weight:900;
@@ -262,6 +265,8 @@ font-familye:微軟正黑體;
 	border: 0;
 	border-radius:20px;
 	cursor:pointer;
+	padding:2px 10px;
+	margin:6px 3px;
 }
 
 .fourmString  {
@@ -273,7 +278,12 @@ input  {
 	font-family: 微軟正黑體;
 	font-weight: 900;
 }
-
+#menu>li>a{
+	color:	#D2E9FF;
+}
+.newajaxlist{
+	background:transparent;
+}
 </style>
 
 </head>

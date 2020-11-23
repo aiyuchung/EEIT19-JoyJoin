@@ -27,6 +27,11 @@
 			<link rel="stylesheet" href="css/style-desktop.css" />
 			<link rel="stylesheet" href="css/carousel.css" />
 <style>
+body{
+	background-size:100%;
+	background-image: url(images/woods_bg.jpg);
+	background-attachment:fixed; 
+}
 .enterbtn{
 /* 	backtgrond-color: white; */
 	color:white;
@@ -152,7 +157,13 @@
 			position: relative;
 			padding: 6em 0em;
 		}
-			
+ 	#main 
+ 	{ 
+ 		position: relative; 
+ 		padding: 6em 0em; 
+  		background: transparent; 
+		
+ 	}			 
 </style>
 	</head>
 	<body class="homepage">

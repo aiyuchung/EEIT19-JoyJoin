@@ -35,15 +35,24 @@ Released   : 20100501
 	crossorigin="anonymous"></script>
 
 <style>
-#wrapper{
-
-	width:100%;
-	background-image: url(images/forumBg1.jpg);
- 	background-size: 100%;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
+body{
+		width:100%;
+		background-image: url(images/stars_bg.jpg);
+	 	background-size: 100%;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
 }
 
+.firstdiv{
+	background-color:transparent;
+	padding:10px;
+	margin-bottom:5px;
+	font-size:0.5cm;
+	font-weight:900;
+	font-familye:微軟正黑體;
+	text-align: center;
+	color:#FF44AA"
+}
 </style>
 
 </head>
@@ -51,7 +60,7 @@ Released   : 20100501
 <body>
 <!---------- Header ------------>
  <c:import url="forumHeader.jsp"></c:import> 
- <div style="padding:10px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA" id="wrapper"></div>
+ <div class="firstdiv"></div>
 		<!-- end header -->
 	<form method="post" action="<%=request.getContextPath()%>/saveOrUpdateArticle" enctype="multipart/form-data">
 	  <input type = "hidden" name = "forumSeq" value = "${forumBean.forumSeq}">
@@ -64,22 +73,15 @@ Released   : 20100501
 			             
 		<table width="70%" border="1" align="center"  class="tbdetail"; >
 		<tr>
-		<td rowspan="2" colspan="2"  width="20%" height="100px" style="border-right: 0px;" class = "userInfoTd" name = "${forumBean.memberBean.account}">
-			<table  width="100%" height="100%">
-			  <tr height ="150px">
-			  	<td valign="top"><img src="<c:url value='/getMemberPicture/${forumBean.memberBean.account}' />" class="imgRange" alt="圖片" style="width:100%" /></td>
-			  </tr>
-			   <tr>
-			  	<td valign="top"  style="border-left: 0px;" >
+			<td rowspan="2" width="10%" height="100px" style="border-right: 0px;">
+				<img src="<c:url value='/getMemberPicture/${account}' />" class="imgRange" alt="圖片" style="width:100%" />
+			</td>
+			<td rowspan="2" width="10%" height="100px" style="border-left: 0px;" class = "userInfoTd" name = "${forumBean.memberBean.account}">
 		
 				暱稱 ${forumBean.memberBean.nickname}<br />
 		  		帳號 ${forumBean.memberBean.account}<br /> 
-		 		等級 ${forumBean.memberBean.rolebean.level} <br />
+		 		等級 ${level} <br />
 		  		經驗 ${forumBean.memberBean.rolebean.emp}<br />
-			</td>
-			  </tr>
-			</table>
-				
 			</td>
 			<td width="60%"  height="100px" style="border-left: 0px;">
 			<!---------- 抓照片 ------------>
@@ -87,7 +89,7 @@ Released   : 20100501
 			
 
 			
-			<textarea style="width:100%;height:200px;"  name ="article">${forumBean.article}</textarea>
+			<textarea style="width:100%;height:100px;"  name ="article">${forumBean.article}</textarea>
 			
 			</td>
 		</tr>
@@ -124,9 +126,9 @@ Released   : 20100501
 		</tr>
 			<tr>
 				<td height ="70" colspan="3" align="center">
-					<input type="submit" value="儲存貼文"> 
-					<!-- <input type="reset" value="復原"> -->
-					<input type="button" value="回討論內容" onclick="back()">
+					<input type="submit" value="儲存貼文" class="btn btn-dark"> 
+					<input type="reset" value="復原" class="btn btn-dark">
+					<input type="button" value="回討論內容" onclick="back()" class="btn btn-dark">
 				</td>
 			</tr>
 			
@@ -254,7 +256,7 @@ $(".evaTag").click(function () {
 
 </script>
 
-<div style="padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA" id="wrapper"></div>
+<div style="background-color:black;padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA">揪in 祝您約會愉快!!!</div>
 	
 </body>
 </html>

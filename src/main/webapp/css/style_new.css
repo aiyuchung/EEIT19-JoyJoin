@@ -9,7 +9,6 @@
 /*-Base-*/
 
 body {
-	background-color:black;
 	font-family: 'Open Sans', sans-serif;
 }
 p {
@@ -74,7 +73,7 @@ a {
 
 /*-Section Blocks-*/
 .section-block {
-	background-color: #ECEBEB;
+	background-color: rgba(236,235,235,0.9);
 	border-radius:4px;
 	padding: 30px;
 	margin-bottom:30px;
@@ -97,7 +96,7 @@ a {
 	margin-top:0;
 }
 .section-title {
-	color: #99DEAB;
+	color: #3D7878;
 	border-radius: 4px;
 	display: table;
 	padding: 10px 0px;
@@ -239,7 +238,7 @@ a {
 
 .info-block {
 	position:relative;
-	background-color: #fff;
+	background-color: rgba(255,255,255,0.9);
 	border-radius: 4px;
 	padding: 10px;
 	margin-bottom:5px;

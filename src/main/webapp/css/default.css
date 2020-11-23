@@ -10,7 +10,7 @@ body {
 	padding: 0;
 
 	font-family: Microsoft JhengHei;
-	font-size: 13px;
+	font-size: 15px;
 	color: #FCFFFD;
 }
 
@@ -24,7 +24,7 @@ h1 {
 }
 
 h2 {
-	font-size: 1.6em;
+	font-size: 1.7em;
 }
 
 h3 {
@@ -216,7 +216,7 @@ img.right {
 }
 
 .links {
-	font-size: 11px;
+	font-size: 13px;
 }
 
 .links a {
@@ -280,7 +280,7 @@ img.right {
 	margin: 0 0 10px 0;
 	padding: 10px 15px 10px 15px;
 	background: #1E3227;
-	font-size: 16px;
+	font-size: 19px;
 	font-weight: normal;
 	color: #FFFFFF;
 }
@@ -311,7 +311,7 @@ img.right {
 	height: 18px;
 	border: none;
 	background: #FFFFFF;
-	font-size: 10px;
+	font-size: 13px;
 	color: #000000;
 }
 

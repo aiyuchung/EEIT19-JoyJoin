@@ -24,6 +24,7 @@
 	crossorigin="anonymous"></script>
 
 <style>
+
 #wrapper{
 
 	width:100%;
@@ -44,12 +45,12 @@
 	display: block;
 	float: left;
 	margin: 0 0 0 70px;
-	padding: 12px 15px 10px 15px;
+	padding: 6px 15px 10px 15px;
 	border: none;
 	text-decoration: none;
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11px;
+	font-size:11px;;
 	color: #DDBB04;
 }
 
@@ -126,7 +127,7 @@
     color: #212529;
     text-align: left;
     list-style: none;
-    background-color: #fff;
+    background-color: rgba(238,255,245,0.94);
     background-clip: padding-box;
     border: 1px solid rgba(0,0,0,.15);
     border-radius: .25rem;
@@ -217,12 +218,12 @@
 		<div id="menu-bg">
 			<div id="menu">
 				<ul id="main">
-					<li class="current_page_item" id="selectAll1"><a href="#"  style="font-size:15px">活動總覽</a></li>
-					<li class="nav-item dropdown"><a href="<c:url value='/newActivities' />" class="more" style="font-size:15px"> 新增活動</a></li>
+					<li class="current_page_item" id="selectAll1"><a href="#"  style="font-size:22px">活動總覽</a></li>
+					<li class="nav-item dropdown"><a href="<c:url value='/newActivities' />" class="more" style="font-size:22px"> 新增活動</a></li>
 					
 <!-- 查詢按鈕  -->
 					<li class="nav-item dropdown">
-					<a id="navbarCheckboxMenuLink" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="font-size:15px">
+					<a id="navbarCheckboxMenuLink" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="font-size:22px">
 					<buttton>條件篩選</buttton></a>
 <!-- 					<a -->
 <!-- 						class="nav-link dropdown-toggle" href="#" -->
@@ -237,7 +238,7 @@
 <!-- 									</button> -->
 <!-- 									</div> -->
 								<div class="dropdown-item  dropdown-foreach" id="check1">
-									<h6><strong>活動類型</strong><span class="reminder" style='color:red; font-size: 10px'></span></h6>
+									<h6><strong>活動類型</strong><span class="reminder" style='color:red; font-size: 16px'></span></h6>
 										<c:forEach var="type" items="${allTypes}">
 											<ul class="ulof${type.activityType}" id="ulid${type.activityType}">
 											<form:checkbox path="Bigtype" id="Bigtype${type.activityType}" value="${type.activityType}" class="Bigtype ${type.activityType}" />
@@ -295,7 +296,7 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#"
 						id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false"  style="font-size:15px"> 活動排序 </a>
+						aria-haspopup="true" aria-expanded="false"  style="font-size:22px"> 活動排序 </a>
 						
 						<div class="dropdown-menu" id="dropdown-menu"
 							aria-labelledby="navbarDropdown">
@@ -464,7 +465,7 @@
 
 			<!-- start content -->
 <!-- 活動列表圖片 -->
-			<div id="content">
+			<div id="content" style="margin-left: 30px;">
 				<div style="padding-bottom: 20px; overflow:hidden">
 					<img src="images/friends1.jpg" style="width:100%; border-radius:15px;" title="一起開心吧!"/>
 				</div>
@@ -563,17 +564,17 @@
 <div class="modal" tabindex="-1" role="dialog" id="showMsgArea">
       <div class="modal-dialog" role="document"> 
          <div class="modal-content" style="position:relative;top:100px">
-             <div class="modal-header">
-                 <h4 class="modal-title" id="account-from" style="color:black"></h4>
-                 <input type="hidden" id="number-hid">
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button> 
+<!--              <div class="modal-header"> -->
+<!--                  <h4 class="modal-title" id="account-from" style="color:black"></h4> -->
+<!--                  <input type="hidden" id="number-hid"> -->
+<!--                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>  -->
+<!--              </div> -->
+             <div class="modal-body" id="msgArea"  style="padding:15px;margin:0 auto;color:black;font-size:30px;height:380px;width:500px;">
              </div>
-             <div class="modal-body" id="msgArea"  style="padding:15px;margin:0 auto;color:black;font-size:30px;height:220px">
-             </div>
-             <div class="modal-footer">
+<!--              <div class="modal-footer"> -->
 <!--               <input type="button" class="btn btn-primary" id="delMsg-btn" value="刪除信件"> -->
 <!--                  <input type="button" class="btn btn-primary" id="returnLetter-btn" value="回覆信件"> -->
-             </div>
+<!--              </div> -->
         </div>
     </div>
  </div>
@@ -644,7 +645,7 @@ function showNext(){
 		  function showCalendar(y,m,d,firstday){
 		  dayOfWeek = firstday.getDay(),           //判斷第一天是星期幾(返回[0-6]中的一個，0代表星期天，1代表星期一，以此類推)
 		  days_per_month = new Array(31, 28 + isLeap(y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31),         //建立月份陣列
-		  str_nums = Math.ceil((dayOfWeek + days_per_month[m]) / 7);                        //確定日期表格所需的行數
+		  str_nums = Math.ceil((dayOfWeek + days_per_month[m])/ 7);                        //確定日期表格所需的行數
 
 				var calendarbody = document.getElementById("calBody");
 				for (var i = 0; i < str_nums; i ++) {         //二維陣列建立日期表格
@@ -1075,6 +1076,7 @@ function showNext(){
 			  success:function(data){
 				  $("#msgArea").empty();
 				  $("#msgArea").append(data);
+				  console.log("ajax ok")
 				}
 		})
 		$('#showMsgArea').modal('show');

@@ -29,7 +29,19 @@
 <link rel="stylesheet" href="<c:url value = 'css/signIn.css'/>" />
 
 <style>
-	
+	.underlay-photo {
+  animation: hue-rotate 6s infinite;
+/*   background: url('https://31.media.tumblr.com/41c01e3f366d61793e5a3df70e46b462/tumblr_n4vc8sDHsd1st5lhmo1_1280.jpg'); */
+  background-image: url(images/black_bg.jpg);
+  background-size: cover;
+  -webkit-filter: grayscale(30%);
+  z-index: -1;
+}
+
+.underlay-black {
+  background: rgba(0,0,0,0.7);
+  z-index: -1;
+}
 </style>
 </head>
 
@@ -229,6 +241,7 @@
 		$("#inputPassword").attr("value","12345678")
 		$("#inputEmail").attr("value","eeit19joinjoy@gmail.com")
 		$("#inputNickname").attr("value","丘丘")		
+		$("#signUpnow-btn").attr("type","submit").css("color","#33FFFF").css("box-shadow","#33FFFF 0px 0px 15px")
 	})
 	
 	

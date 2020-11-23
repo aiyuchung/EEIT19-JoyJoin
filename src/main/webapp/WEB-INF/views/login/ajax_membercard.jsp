@@ -9,12 +9,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MEMBER CARD</title>
 <link rel="stylesheet" href="<c:url value='css/membercard.css' />" />
-<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 </head>
 <body>
 <c:choose>
 	<c:when test="${mbcard.gender == 'F'}">
-		<figure class="snip0056 yellow">
+		<figure class="snip0056 yellow"><span class="iconify" data-icon="ion:mail-sharp" data-inline="false"></span>
 			<figcaption>
 				<h4>${luckyguy.nickname} <span class='id'>${luckyguy.account}</span></h4>
 				<p>${luckyguy.gender}</p>
@@ -22,8 +22,7 @@
 				<p>${luckyguy.signature}</p>
 				<div class="icons">
 					<a href="#"><i class="ion-ios-home"></i></a>
-					<a href="#"><i class="fa fa-address-book-o"></i></a>
-					<a href="#"><i class="fa fa-envelope-o"></i></a>
+					<a href="#"><span class="iconify" data-icon="ion:mail-sharp" data-inline="false"></span></a>
 				</div>
 			</figcaption>
 			<img src="<c:url value='/getMemberPicture/${luckyguy.account}' />" alt="picture" />
@@ -39,8 +38,7 @@
 					${luckyguy.signature}</p>
 				<div class="icons">
 					<a href="#"><i class="ion-ios-home"></i></a>
-					<a href="#"><i class="fa fa-address-book-o"></i></a>
-					<a href="#"><i class="fa fa-envelope-o"></i></a>
+					<a href="#"><span class="iconify" data-icon="ion:mail-sharp" data-inline="false"></span></a>
 				</div>
 			</figcaption>
 			<img src="<c:url value='/getMemberPicture/${luckyguy.account}' />" alt="picture" />

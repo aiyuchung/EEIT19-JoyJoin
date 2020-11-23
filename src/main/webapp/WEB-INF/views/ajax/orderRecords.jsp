@@ -20,6 +20,21 @@
 	#showAreaTop li{
 		list-style-type:none;
 		text-align:left;
+		
+	}
+	tr{
+		border-bottom: dotted 1px white;
+	}
+	thead{
+		padding:10px;
+		color:	#CAFFFF;
+		
+		border-bottom: double 2px #CAFFFF;
+		
+	}
+	table{
+		margin-top:20px;
+		font-size: 23px;
 	}
 
 </style>
@@ -29,10 +44,10 @@
 		<table>
 			<thead>
 				<tr>
-					<td>購買日期</td>
-					<td>項目</td>
-					<td>價格</td>
-					<td>數量</td>
+					<td style="width:150px;">購買日期</td>
+					<td style="width:200px;">項目</td>
+					<td style="width:100px;">價格</td>
+					<td style="width:100px;">數量</td>
 				</tr>
 			</thead>
 			<tbody>

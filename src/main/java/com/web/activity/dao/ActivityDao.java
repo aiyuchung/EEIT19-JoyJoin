@@ -114,4 +114,9 @@ public interface ActivityDao {
 
 	//取消關注活動
 	void unfollowActivity(Integer memberNo, String activityUrl);
+	
+	//系統信
+	List<ActivityBean> getLastDay();
+	List<ActivityBean> getOkOnes();
+	List<ActivityBean> getInactiveOnes();
 }

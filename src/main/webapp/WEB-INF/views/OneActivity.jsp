@@ -44,9 +44,9 @@
 	ga('send', 'pageview');
 </script>
 <style>
-	.main-content{
-		width:100%;
-		background-image: url(images/stars_bg.jpg);
+	body{
+		
+		background-image: url(${pageContext.request.contextPath}/images/leaves3_bg.jpg);
 	 	background-size: 100%;
 		background-repeat: no-repeat;
 		background-attachment: fixed;
@@ -89,7 +89,7 @@
 	}
 	.header {
 	position:relative;
-	background-color: #191E1A;
+	background-color: rgba(30,50,39,0.9);
 	border-bottom: 5px solid #85AD90;
 	padding: 10px 0px;
 }

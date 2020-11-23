@@ -468,7 +468,7 @@ public class MemberDaoImpl implements MemberDao {
 		@Override
 		public List<String> getFriendListOne(String account){
 			Session session = factory.getCurrentSession();
-			String hql = "SELECT accountOne FROM FriendBean WHERE accountTwo = :id and oneType = 1 and twoType = 1";
+			String hql = "SELECT accountOne FROM FriendBean WHERE accountTwo = :id and status = 1";
 			@SuppressWarnings("unchecked")
 			List<String> list = session.createQuery(hql).setParameter("id", account).getResultList();
 			return list;
@@ -477,7 +477,7 @@ public class MemberDaoImpl implements MemberDao {
 		@Override
 		public List<String> getFriendListTwo(String account){
 			Session session = factory.getCurrentSession();
-			String hql = "SELECT accountTwo FROM FriendBean WHERE accountOne = :id and oneType = 1 and twoType = 1";
+			String hql = "SELECT accountTwo FROM FriendBean WHERE accountOne = :id and status = 1";
 			@SuppressWarnings("unchecked")
 			List<String> list = session.createQuery(hql).setParameter("id", account).getResultList();
 			return list;

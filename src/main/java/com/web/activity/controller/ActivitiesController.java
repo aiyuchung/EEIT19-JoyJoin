@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +45,7 @@ import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.MessageBean;
 import com.web.activity.model.ProvinceBean;
 import com.web.activity.service.ActivityService;
 import com.web.activity.service.MemberService;
@@ -62,6 +66,7 @@ public class ActivitiesController {
 	@GetMapping("/activities")
 	public String list(Model model, @ModelAttribute("form") ActivityForm form) {
 		Map <String, Integer> changedStatus = service.checkFinalDate();
+		
 		List<ActivityBean> list = service.selectAllActivities();
 		int elementsNum = list.size();
 		List<ActivityBean> latest = service.selectLatest();
@@ -637,6 +642,12 @@ public class ActivitiesController {
 	public String chatbot(Model model) {
 		return "index00";
 	}
+	
+	
+//-----------------------------------------系統信↓-----------------------------------------	
+	public void sendServerMsg2friend(String account) {		//加好友送出系統站內訊息
+			
+		}
 //-----------------------------------------前端讀圖片↓-----------------------------------------		
 	@GetMapping("/getPicture/{id}")
 	  public ResponseEntity<byte[]> getPicture(

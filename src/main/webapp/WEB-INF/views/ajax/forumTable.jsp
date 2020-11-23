@@ -20,26 +20,26 @@ border:none;
 
 }
 #ccc thead tr {
-	background-color: #800080;
+	background-color:rgba(102,153,204,0.9);
 	color: white;
 }
 
 #ccc tbody tr:nth-child(odd) {
-	background-color: white;
+	background-color: rgba(255,255,255,0.8);
 	color: black;
 }
 
 #ccc tbody tr:nth-child(odd):hover {
-	background:#FFFFB5;
+	background:#FFFFCE;
 }
 
 #ccc tbody tr:nth-child(even) {
-	background-color: #FFD4FF;
+	background-color:  rgba(210,233,255,0.8);
 	color: black;
 }
 
 #ccc tbody tr:nth-child(even):hover {
-	background: #FFFFB5	;
+	background: #FFFFCE	;
 }
 
 #ccc thead td:first-child {

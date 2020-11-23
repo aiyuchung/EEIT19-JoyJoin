@@ -1,5 +1,6 @@
 package com.web.activity.dao.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,9 @@ import com.web.activity.model.MemberBean;
 import com.web.activity.model.Menubean;
 //import com.web.activity.model.RoleBean;
 import com.web.activity.model.RoleBean;
+import com.web.activity.model.RoleCheckBean;
+import com.web.activity.model.RoleSaveBean;
+import com.web.activity.model.SystemLog;
 
 @Repository
 @SuppressWarnings("unchecked")
@@ -24,7 +28,7 @@ public class CMSDaoImpl implements CMSDao {
 	@Autowired
 	SessionFactory factory;
 
-	
+//==========================================圖表	
 	// 星座次數
 		@Override
 
@@ -61,10 +65,6 @@ public class CMSDaoImpl implements CMSDao {
 
 	}
 
-//		String hql1 = "SELECT ab.location,COUNT(ab.activityNo) FROM ActivityBean ab WHERE  =:南";
-//		String hql2 = "SELECT ab.location,COUNT(ab.activityNo) FROM ActivityBean ab GROUP BY ab.location";
-//		String hql3 = "SELECT ab.location,COUNT(ab.activityNo) FROM ActivityBean ab GROUP BY ab.location";
-//		String hql4 = "SELECT ab.location,COUNT(ab.activityNo) FROM ActivityBean ab GROUP BY ab.location";
 	@Override
 	public Map<String, Long> getActiveLocation() { // 回傳MAP型態
 //		long count = 0; // 必須使用 long 型態 location
@@ -95,6 +95,8 @@ public class CMSDaoImpl implements CMSDao {
 		return map;
 
 	}
+	
+//==========================================圖表	
 
 //	<<<<<<<<<<<<<<<針對活動部分>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //	 WHERE activityStatus = 'active'
@@ -113,6 +115,58 @@ public class CMSDaoImpl implements CMSDao {
 		List<Menubean> cms = session.createQuery(hql).getResultList();
 		return cms;
 	}
+	//權限設定
+	@Override
+	public List<Menubean> rights() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM Menubean  ";
+		List<Menubean> cms = session.createQuery(hql).getResultList();
+		return cms;
+	}
+	//下拉式選單管理員選擇
+	@Override
+	public List<RoleCheckBean> checkRole() {
+		Session session = factory.getCurrentSession();
+		String hql ="FROM RoleCheckBean ";
+//		List<RoleCheckBean> list=session.createQuery(hql).getResultList();
+		return session.createQuery(hql).getResultList();
+	}
+	//下拉式選單取管理員的值
+	@Override
+	public List<RoleSaveBean> selectRole() {
+		Session session = factory.getCurrentSession();
+		String hql ="FROM RoleSaveBean";
+		return session.createQuery(hql).getResultList();
+	}
+	
+	//存節點和人員	
+	@Override
+	public void saveRsb(String roleId, String ztreeSave) {
+		Session session = factory.getCurrentSession();
+		RoleSaveBean rsb =new RoleSaveBean();
+		rsb.setRoleId(Integer.parseInt(roleId));
+		rsb.setMenuId(Integer.parseInt(ztreeSave));
+		session.save(rsb);
+		
+		
+	}
+	@Override
+	public List<RoleSaveBean> saveRsb() {
+	
+		return null;
+	}
+	
+	public List<Integer> forRoleRight(int rsbList) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM RoleSaveBean WHERE roleId = :id";
+		List <RoleSaveBean> rights = session.createQuery(hql).setParameter("id",rsbList).getResultList();		 
+		List<Integer> checked =  new ArrayList<>();
+		for (RoleSaveBean rsb:rights) {
+			checked.add(rsb.getMenuId());
+		}
+		return checked;
+	}
+	
 	//關鍵字搜尋
 	@Override
 	public List<ActivityBean> selectActivities(String keyWord) {
@@ -156,6 +210,12 @@ public class CMSDaoImpl implements CMSDao {
 		List<ActivityBean> activities = session.createQuery(hql).getResultList();
 		return activities;
 	}
+	
+	
+	
+	
+	
+	
 
 //	<<<<<<<<<<<<<<<針對會員部分>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	@Override
@@ -199,12 +259,28 @@ public class CMSDaoImpl implements CMSDao {
 			System.out.println("hello BABY");
 		}
 		
+		
+		
+		
+		
+		
 		//搜尋單筆虛擬角色
+		@Override
 		public RoleBean getRole(Integer roleNo) {
 			Session session = factory.getCurrentSession();
 			RoleBean ro = session.get(RoleBean.class,roleNo);
 			return ro;
 		}
+		
+		
+		//搜尋日誌內容
+		@Override
+		public List<SystemLog> selectSystemLog(){
+			Session session = factory.getCurrentSession();
+			String hql = "FROM SystemLog";
+			List<SystemLog> sl = session.createQuery(hql).getResultList();
 
+			return sl;
+		}
 
 }
