@@ -33,4 +33,5 @@ public interface ForumDao {
 	// 更新分數
 	public boolean updateRoleEmp(RoleBean rb);
 
+	public ForumBean selectByActivityNo(int activityNo) ;
 }

@@ -37,7 +37,7 @@ Released   : 20100501
 <style>
 body{
 		width:100%;
-		background-image: url(images/stars_bg.jpg);
+		
 	 	background-size: 100%;
 		background-repeat: no-repeat;
 		background-attachment: fixed;
@@ -57,7 +57,7 @@ body{
 
 </head>
 
-<body>
+<body style="background-image: url(<%=request.getContextPath()%>/images/stars_bg.jpg);">
 <!---------- Header ------------>
  <c:import url="forumHeader.jsp"></c:import> 
  <div class="firstdiv"></div>

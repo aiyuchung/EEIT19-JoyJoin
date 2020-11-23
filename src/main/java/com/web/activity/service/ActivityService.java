@@ -10,6 +10,7 @@ import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityPicBean;
 import com.web.activity.model.ActivityTypeBean;
+import com.web.activity.model.ForumBean;
 import com.web.activity.model.ProvinceBean;
 
 public interface ActivityService {
@@ -140,4 +141,10 @@ public interface ActivityService {
 
 	//取消關注活動
 	void unfollowActivity(Integer memberNo, String activityUrl);
+	
+	//舉辦人的id
+	List<ForumBean> issuedForums(Integer memberNo);
+	
+	//全部的討論版
+	List<String> selectAllForums();
 }

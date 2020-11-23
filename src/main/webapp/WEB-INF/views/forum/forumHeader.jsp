@@ -40,7 +40,7 @@ Released   : 20100501
 #wrapper{
 
 	width:100%;
-	background-image: url(images/forumBg1.jpg);
+	background:transparent;
  	background-size: 100%;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
@@ -250,6 +250,9 @@ Released   : 20100501
 	padding: 6em 0em;
 }
 /* 控制討論Detail Table Css  */
+#main{
+	width:800px;
+}
 .tbdetail{
 border-radius: 30px ;
 outline:0;
@@ -295,7 +298,7 @@ input  {
 	</div>
 
 	<div id="menu-bb">
-		<div id="menu">
+		<div id="menu" align="center">
 			<ul id="main">
 				<li class="nav-item dropdown"><a href="#" name="熱門"
 					class="activeType">熱門 </a></li>

@@ -67,5 +67,7 @@ public interface ForumService {
 //	
 //	//查詢單一討論內容
 //    public ForumBean selectOneForum(int forumSeq);
+	
+	public Integer selectByActivityNo(int activityNo) ;
 
 }

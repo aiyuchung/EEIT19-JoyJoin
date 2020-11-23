@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -131,7 +134,19 @@ public class ForumDaoImpl implements ForumDao {
 		session.clear();
 		 return result;
 	}
-
+	
+	@Enumerated(EnumType.STRING)
+	@Override
+	public ForumBean selectByActivityNo(int activityNo) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ForumBean WHERE status = 'ACTIVE' AND activityCode = :no ";
+		ForumBean result = (ForumBean) session.createQuery(hql)
+				.setParameter("no", Integer.toString(activityNo))
+				.setFirstResult(0).setMaxResults(1)
+				.getSingleResult();
+		return result;
+	}
+	
 	@Override
 	public boolean updateRoleEmp(RoleBean rb) {
 		Session session = factory.getCurrentSession();

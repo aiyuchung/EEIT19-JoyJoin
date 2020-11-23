@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.activity.Enum.ForumType;
 import com.web.activity.model.ActivityJoinedBean;
@@ -113,6 +114,12 @@ public class ForumController {
 		model.addAttribute("forum", forum);
 		return "forum/forumDetail";
 	}
+	
+	@GetMapping("/forumDetail_Join")
+	public @ResponseBody Integer getForumDetailJoin(Model model, @RequestParam Integer activityNo) {
+		Integer forumSeq = service.selectByActivityNo(activityNo);
+		return forumSeq;
+	}
 
 	@GetMapping("/forumNewArticle")
 	public String getforumNewArticle(Model model, HttpSession session, @ModelAttribute("form") ForumBean form) {
@@ -149,7 +156,7 @@ public class ForumController {
 		forumBeans.add(forumBean);
 		model.addAttribute("forumBean", forumBean);
 		model.addAttribute("forumList", forumBeans);
-		return "forum/forumNewArticle2";
+		return "forum/forumNewArticle";
 	}
 
 	@PostMapping("/saveOrUpdateArticle")

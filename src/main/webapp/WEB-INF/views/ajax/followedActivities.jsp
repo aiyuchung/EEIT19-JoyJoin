@@ -66,7 +66,7 @@
 			
 			<c:forEach var="followed" items="${followed}">
 			
-			<ul class="showurl">
+			<ul class="showurl" id="no${followed.activityBean.activityNo}">
 				<li class="lititle litime">活動日期: ${followed.activityBean.activityDate}</li>
 				<c:choose>
 					<c:when test="${followed.activityBean.activityStatus eq 'inactive'}">
@@ -105,7 +105,7 @@
 										<li><button type="button" class="btn btn-outline-success join">去留言</button></li>
 									</c:if>
 									<c:if test="${followed.condition eq '參加'}">
-										<li><button type="button" class="btn btn-outline-info join">去留言</button></li>
+										<li><button type="button" class="btn btn-outline-info join judge" id="btn${followed.activityBean.activityNo}">去留言</button></li>
 									</c:if>
 							</c:otherwise>
 						</c:choose>	
@@ -146,6 +146,58 @@
 // 			break;
 // 		}
 // 	}
+	$(document).ready(function(){
+		$(".showurl").each(function(){
+			var no = $(this).attr("id");
+			console.log(no+"-->showurl id no")
+			var issuedlist = ${forums}
+			$(issuedlist).each(function(index, value){
+				var issuedno = "no" + value;
+				console.log(issuedno+"-->issuedno")
+				if (no === issuedno){
+					id= "#"+no;
+					$(id).hide();
+					 return false;
+				}else {
+				}
+			})
+		})
+		$(".judge").each(function(){
+			var no = $(this).attr("id"); //btn1
+			console.log($(this).text()+"BTN");
+			var allforums = ${numbers}
+			$(allforums).each(function(index, value){
+				var issuedno = "btn" + value;
+				console.log(issuedno+"-->以發起討論版的活動");
+				console.log(no+"-->目前btn的id");
+				if (no === issuedno){
+					id= "#"+issuedno;
+					$(id).removeClass("join")
+					$(id).text("去評分");
+					 return false;
+				}
+			})
+		})
+	})
+	$(".judge").click(function(){
+		var url = $(this).parents("ul").find('a').attr('href');
+		var tokens = url.split("/");
+		console.log(tokens);
+		var no = tokens[5];
+		$.ajax({
+			  url:"<c:url value='/forumDetail_Join' />",
+			  type: "GET",
+			  dataType: "JSON", //server送回
+			  data: {
+				  activityNo:no,
+			  }, 
+			  success:function(data){
+				  var url = "http://localhost:8080/JoyJoin/forumDetail?forumSeq="+data
+				  window.location.href = url;
+				}
+		})
+		
+	})
 	$(".follow").click(function(){
 		var url = $(this).parents("ul").find('a').attr('href');
 		var tokens = url.split("/");
@@ -186,6 +238,7 @@
 		var url = "${pageContext.request.contextPath}/createNewTitle/"+activityno;
 		location.href=url;
 	})
+	
 	
 	$(".btn").mouseenter(function(){
 		$(this).parents(".showurl").find(".lititle").css("background-color","rgba(255, 255, 255, 0.3)");

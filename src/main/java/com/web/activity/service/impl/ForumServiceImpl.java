@@ -167,6 +167,15 @@ public class ForumServiceImpl implements ForumService {
 		return blob;
 	}
 
+	@Override
+	public Integer selectByActivityNo(int activityNo) {
+		ForumBean bean = forumDao.selectByActivityNo(activityNo);
+		System.out.println("service bean:" + bean);
+		Integer forumSeq = bean.getForumSeq();
+		System.out.println("service forumSeq:" + forumSeq);
+		return forumSeq;
+	}
+
 
 
 }

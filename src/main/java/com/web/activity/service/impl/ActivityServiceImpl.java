@@ -22,6 +22,7 @@ import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityPicBean;
 import com.web.activity.model.ActivityTypeBean;
+import com.web.activity.model.ForumBean;
 import com.web.activity.model.ProvinceBean;
 import com.web.activity.service.ActivityService;
 
@@ -344,6 +345,21 @@ public class ActivityServiceImpl implements ActivityService {
 	public void updateActivity(ActivityBean newform) {
 		dao.updateActivity(newform);
 		
+	}
+
+	@Override
+	public List<ForumBean> issuedForums(Integer memberNo) {
+		return dao.issuedForums(memberNo);
+	}
+
+	@Override
+	public List<String> selectAllForums() {
+		List<ForumBean> list = dao.selectAllForums();
+		List<String> numbers = new ArrayList<>();
+		for(ForumBean fb:list) {
+			numbers.add(fb.getActivityCode());
+		}
+		return numbers;
 	}
 	
 

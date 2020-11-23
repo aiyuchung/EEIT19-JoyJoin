@@ -20,6 +20,7 @@ import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityTypeBean;
+import com.web.activity.model.ForumBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.ProvinceBean;
 
@@ -74,7 +75,7 @@ public class ActivityDaoImpl implements ActivityDao {
 		@Override
 		public List<ActivityBean> getLastDay() {
 			Session session = factory.getCurrentSession();
-			String hql = "FROM ActivityBean WHERE activityStatus = 'acitve' AND finalDate = :now";
+			String hql = "FROM ActivityBean WHERE activityStatus = 'active' AND finalDate = :now";
 			Date today = new Date();
 			
 			List<ActivityBean> Last = session.createQuery(hql).setParameter("now",today).getResultList();
@@ -674,6 +675,22 @@ public class ActivityDaoImpl implements ActivityDao {
 			List<BigDecimal> list = session.createQuery(hql2).setParameter("no", no).getResultList();
 			return list;
 		}
-
+		
+		@Override
+		public List<ForumBean> issuedForums(Integer memberNo) {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM ForumBean WHERE memberNo=:no";
+			List<ForumBean> lists = session.createQuery(hql).setParameter("no",memberNo).getResultList();
+			return lists;
+		}
+		@Override
+		public List<ForumBean> selectAllForums() {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM ForumBean";
+			List<ForumBean> lists = session.createQuery(hql).getResultList();
+			return lists;
+		}
+		
+		
 
 }

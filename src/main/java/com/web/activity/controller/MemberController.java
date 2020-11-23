@@ -42,6 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.FormBean;
+import com.web.activity.model.ForumBean;
 import com.web.activity.model.FriendBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.MessageBean;
@@ -62,6 +63,7 @@ public class MemberController {
 
 		@Autowired
 		ServletContext servletContext;
+		
 		
 //---------------------------------------------▼會員頁面&修改▼---------------------------------------------//	
 		
@@ -390,9 +392,15 @@ public class MemberController {
 					}
 				}
 			}
-			
+			List<ForumBean> forums = service.issuedForums(memberNo);  //舉辦人的id
+			List<String> codes = new ArrayList<>();
+			for (ForumBean fb:forums) {
+				codes.add(fb.getActivityCode());
+			}
+			List<String> numbers = service.selectAllForums();  //全部討論版
 			model.addAttribute("followed",beans);
-//			model.addAttribute("joinedActivities",joinedActivities);
+			model.addAttribute("forums",codes);
+			model.addAttribute("numbers",numbers);
 			return "ajax/followedActivities";
 		}		  
 		  

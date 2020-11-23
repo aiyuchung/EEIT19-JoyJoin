@@ -12,6 +12,7 @@ import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
 import com.web.activity.model.ActivityPicBean;
 import com.web.activity.model.ActivityTypeBean;
+import com.web.activity.model.ForumBean;
 import com.web.activity.model.ProvinceBean;
 
 public interface ActivityDao {	
@@ -122,8 +123,14 @@ public interface ActivityDao {
 	List<ActivityBean> getInactiveOnes();
 	
 	//
-	void saveActivityScore(ActivityBean newform);
+	void saveActivityScore(ActivityBean activity);
 	
 	//抓取分數LIST
 	List<BigDecimal> getPersonalScore(String account);
+	
+	//舉辦人的id
+	List<ForumBean> issuedForums(Integer memberNo);
+	
+	//全部的討論版
+	List<ForumBean> selectAllForums();
 }
