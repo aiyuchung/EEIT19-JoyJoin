@@ -61,7 +61,104 @@ body{
  <c:import url="forumHeader.jsp"></c:import> 
  <div class="firstdiv"></div>
  
-	<table width="70%" border="1" align="center" class="tbdetail">
+ <table width="70%" border="1" align="center" class="tbdetail" >
+	 <c:forEach var="forum" items="${forumDetailList}">
+		<tr>
+			<td rowspan="4" valign="top" style="width:20%" class = "userInfoTd" name = "${forum.memberBean.account}">
+				<table>
+					<tr>
+						<td><img style="width:180px" src="<c:url value='/getMemberPicture/${forum.memberBean.account}' />" style="width:100%" /></td>
+					</tr>
+					<tr>
+						<td>
+						暱稱 ${forum.memberBean.nickname}<br />
+		  				帳號 ${forum.memberBean.account}<br /> 
+		 				等級 ${forum.memberBean.rolebean.level} <br />
+		  				經驗 ${forum.memberBean.rolebean.emp}<br />
+		  				</td>
+					</tr>
+				</table>
+			</td>
+			<c:if test="${forum.photo != null}">
+		    
+		    <td height="150px" style="width:35%">
+			 	<img  src="<c:url value='/getForumPicture/${forum.forumSeq}/1' />" class="post" alt="" />
+		    </td>
+		    
+		    <td height="150px" style="width:40%">
+		        <c:if test="${forum.photo2 != null}">
+		        <img   src="<c:url value='/getForumPicture/${forum.forumSeq}/2' />" class="post" alt="" />
+		        </c:if>
+		    </td>
+		 	</c:if>
+		</tr>
+		
+		<tr>
+			<td colspan="2">${forum.article} </td>
+		</tr>
+		
+		<tr>
+			<td  style="text-align :left; color:purple"  style="border: solid 1px blue;">
+		      <fmt:formatDate value="${forum.time}" type="both"/>
+		    </td>
+		      <td  style="text-align :right; color:purple"  style="border: solid 1px blue;">
+		      <c:if test="${forum.memberBean.account == account }">
+		      
+		       <input class = "forumEdit" type="button" name = "${forum.forumSeq}" value="編輯">&nbsp;
+		      </c:if>
+		      </td>
+			
+		</tr>
+		<tr>
+			<td colspan="2">
+				<table style="width:100%">
+				<tr>
+					<td style="width:25%">
+						<div>
+							<c:forEach var="i" begin="1" end="${forum.score}">
+                    		<img  class="i" width = "33" src="images/chngstar.gif" />
+                    		</c:forEach>
+
+	                		<c:forEach var="i" begin="1" end="${5-forum.score}">
+                    		<img id="img5" class="i" width = "33" src="images/star.gif" />
+                    		</c:forEach>
+						</div>
+					</td>
+				
+					<td style="width:75%">
+						<input type="hidden" name = "evaTag" id = "evaTag${forum.forumSeq}" value = "${forum.evaTag}" />
+						<div id="evaTagArea${forum.forumSeq}"></div>
+					</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+	
+	</c:forEach>
+	
+			<tr>
+			<td height ="70" colspan="3" align="center">
+			<form method ="get" action="<%=request.getContextPath()%>/forumNewArticle">
+			 	    <input type = "hidden" name = "code" value = "${forumBean.code}">
+					<input type = "hidden" name = "activityCode" value = "${forumBean.activityCode}">
+					<input type = "hidden" name = "type" value = "${forumBean.type}">
+					<input type = "hidden" name = "author" value = "${forumBean.author}">
+					<input type = "hidden" name = "title" value = "${forumBean.title}">
+					<input type = "hidden" name = "location" value = "${forumBean.location}">
+			   		<input type="submit" value="新增貼文" id="to_forumNewArticle">
+			</form>	
+			</td>
+		</tr>
+		
+		
+		 <form  id = "updateForm" method ="get" action="<%=request.getContextPath()%>/forumUpdateArticle">
+			<input type = "hidden" id = "detailForumSeq" name = "forumSeq" >
+		</form> 
+	
+	</table>
+ 
+	<%-- <table width="70%" border="1" align="center" class="tbdetail">
 
 		 <c:forEach var="forum" items="${forumDetailList}">
 		<tr>
@@ -160,7 +257,7 @@ body{
 		 <form  id = "updateForm" method ="get" action="<%=request.getContextPath()%>/forumUpdateArticle">
 			<input type = "hidden" id = "detailForumSeq" name = "forumSeq" >
 		</form> 
-	</table>
+	</table> --%>
 
 <div class="modal" tabindex="-1" role="dialog" id="showMsgArea">
       <div class="modal-dialog" role="document"> 
@@ -224,6 +321,44 @@ $(".forumEdit").click(function(){ //以活動類型作為快速篩選
   }
   
 </c:forEach>
+
+
+
+/* 檢查圖片大小，等比例縮小 */
+
+$(document).ready(function() {
+     $('.post').each(function() {
+     var maxWidth = 400; // 圖片最大寬度
+     var maxHeight = 300;    // 圖片最大高度
+     var ratio = 0;  // 縮放比例
+     var width = $(this).width();    // 圖片實際寬度
+     var height = $(this).height();  // 圖片實際高度
+     console.log('原始寬度',width);
+	 console.log('最大寬度',maxWidth);
+	 
+
+     // 檢查圖片是否超寬
+     if(width > maxWidth){
+         ratio = maxWidth / width;   // 計算縮放比例
+         $(this).css("width", maxWidth); // 設定實際顯示寬度
+         height = height * ratio;    // 計算等比例縮放後的高度
+         $(this).css("height", height);  // 設定等比例縮放後的高度
+         console.log('高度比例',ratio);
+         console.log('最後高度',height);
+     }
+
+     // 檢查圖片是否超高
+/*      if(height > maxHeight){
+    	 console.log('高度超過');
+         ratio = maxHeight / height; // 計算縮放比例
+         $(this).css("height", maxHeight);   // 設定實際顯示高度
+         width = width * ratio;    // 計算等比例縮放後的高度
+         $(this).css("width", width * ratio);    // 設定等比例縮放後的高度
+         console.log('寬度比例',ratio);
+         console.log('最後寬度',width);
+     } */
+ });
+ });
 
 
 </script>
