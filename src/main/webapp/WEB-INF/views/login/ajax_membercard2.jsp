@@ -27,7 +27,7 @@
 				
 			</figcaption>
 			<img src="<c:url value='/getMemberPicture/${mbcard.account}' />" alt="picture" />
-<!-- 			<div class="position">show</div> -->
+			<div class="position">${score }</div>
 		</figure>
 	</c:when>
 	<c:otherwise>
@@ -40,7 +40,7 @@
 
 			</figcaption>
 			<img src="<c:url value='/getMemberPicture/${mbcard.account}' />" alt="picture" />
-			<div class="position">show</div>
+			<div class="position">${score }</div>
 		</figure>
 	</c:otherwise>
 </c:choose>

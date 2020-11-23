@@ -13,6 +13,7 @@ import com.web.activity.dao.CMSDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.Menubean;
+import com.web.activity.model.OrderBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.model.RoleCheckBean;
 import com.web.activity.model.RoleSaveBean;
@@ -95,7 +96,12 @@ public class CMSServiceImpl implements CMSService {
 	
 	
 	
-	
+	//==========訂單==============================================================	
+		
+		@Override
+		public List<OrderBean> selectAllOrder() {
+			return dao.selectAllOrder();
+		}
 	
 	
 	
@@ -156,6 +162,18 @@ public class CMSServiceImpl implements CMSService {
 	public List<SystemLog> selectSystemLog(){
 		return dao.selectSystemLog();
 	}
+	
+	
+	//角色關鍵字查詢
+		@Override
+		public List<RoleBean> selectRoles(String keyWord) {
+			return dao.selectRoles(keyWord);
+		}
+		//會員關鍵字查詢
+		@Override
+		public List<MemberBean> selectMemb(String keyword) {
+			return dao.selectMemb(keyword);
+		}
 	
 
 }

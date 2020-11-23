@@ -248,6 +248,19 @@ public class MemberController {
 				}  
 		  }
 		  
+		  public void send2mailBox(String account) {
+			  MessageBean mb = new MessageBean();
+			  mb.setAccount(account);
+			  mb.setfromAccount("揪in Server");
+			  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	   		  String time = dateFormat.format(new Date());
+	   		  mb.setTime(time);
+	   		  mb.setReadStatus(0);
+	   		  mb.setSubject("系統訊息");
+	   		  mb.setMsg("您已經成功開通帳號,\r\n歡迎加入揪in!!");
+	   		  memberService.sendMsg(mb);
+		  }
+		  
 //---------------------------------------------▼忘記密碼▼---------------------------------------------//	
 		  
 		  @GetMapping("/getPwd")
@@ -320,6 +333,8 @@ public class MemberController {
 					System.out.println("GET ONE GUY=======>"+luckyguy);
 				}while(luckyguy.getAccount()==account);
 				System.out.println("======抓成功了======");
+				double score = memberService.getPersonalScore(account);
+				model.addAttribute("score",score);
 				model.addAttribute("luckyguy", luckyguy);
 				return "login/ajax_membercard";
 			}
@@ -608,6 +623,22 @@ public class MemberController {
          		 	mb.setMsg(host+"與您已經是好友或正在申請中");
          		 	memberService.sendMsg(mb);
       		}      		
+      		
+      		//名片傳訊息
+      		@PostMapping("talk2u/{account}")
+      		public void sendMsgagain(HttpSession session, @PathVariable String account) {
+      			String fromAccount = (String) session.getAttribute("account");
+      			MessageBean mb = new MessageBean();
+      			mb.setfromAccount(fromAccount);
+      			mb.setAccount(account);
+      			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+         		 	String time = dateFormat.format(new Date());
+         		 	mb.setTime(time);
+         		 	mb.setReadStatus(0);
+         		 	mb.setSubject("系統訊息");
+         		 	mb.setMsg("與您已經是好友或正在申請中");
+         		 	memberService.sendMsg(mb);
+      		}
       		
       		
       		

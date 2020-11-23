@@ -1,5 +1,6 @@
 package com.web.activity.dao;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -122,4 +123,7 @@ public interface ActivityDao {
 	
 	//
 	void saveActivityScore(ActivityBean newform);
+	
+	//抓取分數LIST
+	List<BigDecimal> getPersonalScore(String account);
 }

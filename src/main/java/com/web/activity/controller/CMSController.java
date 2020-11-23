@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.Menubean;
+import com.web.activity.model.OrderBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.model.RoleCheckBean;
 import com.web.activity.model.RoleSaveBean;
@@ -188,6 +189,37 @@ public class CMSController {
 //	<=========================================================================================>
 
 	// 會員部分controller
+	
+	// 關鍵字角色查詢
+			@GetMapping("/ajax_role_keyWords")
+			public String selectrole(Model model, @RequestParam String keyword) {
+				List<RoleBean> ro = service.selectRoles(keyword);
+				int elementsNum = ro.size();
+				model.addAttribute("RolesNum", elementsNum);
+				model.addAttribute("Roles", ro);
+				System.out.println(ro);
+				System.out.println(keyword);
+				return "ajax/CMSRole"; // 分配到ajax jsp
+			}
+			// 關鍵字會員查詢
+			@GetMapping("/ajax_member_keyWords")
+			public String selectMemb(Model model, @RequestParam String keyword) {
+				List<MemberBean> mb = service.selectMemb(keyword);
+				int elementsNum = mb.size();
+				model.addAttribute("MemB", elementsNum);
+				model.addAttribute("Members", mb);
+				System.out.println(mb);
+				System.out.println(keyword);
+				return "ajax/CMSMembers"; // 分配到ajax jsp
+			}
+	
+	
+	
+	
+	
+	
+	
+	
 //		 搜尋全部角色
 	@GetMapping("/ajax_selectAllRoles")
 	public String selectAllRoles(Model model) {
@@ -202,7 +234,6 @@ public class CMSController {
 	public String selectAllMembers(Model model) {
 		List<MemberBean> mb = service.selectAllMembers();
 		model.addAttribute("Members", mb);
-//		System.out.println(mb);
 		return "ajax/CMSMembers"; // 分配到ajax jsp
 	}
 
@@ -237,28 +268,25 @@ public class CMSController {
 
 		return map; // 分配到ajax jsp 回傳MAP JSON
 	}
-
-//	 修改角色資料@ModelAttribute(value="RoleB") RoleBean RoleB,Model model
-	@PostMapping(value = "/ajax_updateRole2", produces = { "application/json" }, consumes = { "application/json" }) // 接收都是JSON檔案
-	public @ResponseBody Map<String, String> updateRole2(@RequestBody RoleBean roleB, @RequestParam Integer id,
-			Model model) { // 裝到BEAN裡面
-
-		Map<String, String> map = new LinkedHashMap<String, String>();
-		// 抓BEAN裡面存取前端的資料
-		// 搜尋舊有資料
-		RoleBean roleB1 = service.getRole(id); // 資料庫回傳的內容 搜尋舊有資料
-		service.updateRole(roleB1);// 更新完成
-		return map; // 分配到ajax jsp 回傳MAP JSON
-	}
-
 	// 日誌部分controller
 //	 搜尋全部日誌
 	@GetMapping("/ajax_selectSystemLog")
 	public String selectSystemLog(Model model) {
 		List<SystemLog> log = service.selectSystemLog();
 		model.addAttribute("Log", log);
-//	System.out.println(ro);
 		return "ajax/CMSLog"; // 分配到ajax jsp
 	}
+	
+	
+//	=======訂單====================================================================
+	
+	// 搜尋全部訂單
+		@GetMapping("/ajax_selectAllOrder")
+		public String selectAllOrder(Model model) {
+			List<OrderBean> ob = service.selectAllOrder();
+			model.addAttribute("Order", ob);
+			return "ajax/CMSOrder"; // 分配到ajax jsp
+		}
+	
 
 }
