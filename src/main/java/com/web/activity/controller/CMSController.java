@@ -6,6 +6,8 @@ import java.util.List;
 //import java.util.Map;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 //import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,14 @@ import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.Menubean;
 import com.web.activity.model.RoleBean;
+import com.web.activity.model.RoleCheckBean;
+import com.web.activity.model.RoleSaveBean;
+import com.web.activity.model.SystemLog;
 import com.web.activity.service.CMSService;
 import com.web.activity.service.MemberService;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @SessionAttributes(value = { "member", "role", "level", "account" })
@@ -42,8 +50,6 @@ public class CMSController {
 		Map<String, Long> loc = new HashMap<>(); // 宣告一個map物件loc
 		loc = service.getActiveLocation(); // LOC使用getActiveLocation
 
-//		System.out.println("hello world"); // 測試有沒有通過
-
 		return loc; // 全部放到LOC 也是回傳 JSP的意思
 
 	}
@@ -53,8 +59,6 @@ public class CMSController {
 	public @ResponseBody Map<String, Long> gender() { // 設定@ResponseBody 伺服器回應JSON檔案
 		Map<String, Long> gen = new HashMap<>(); // 宣告一個map物件gen
 		gen = service.getGenderCounts(); // gen使用getActiveLocation
-
-//		System.out.println("hello world"); // 測試有沒有通過
 
 		return gen; // 全部放到gen 也是回傳 JSP的意思
 
@@ -74,9 +78,6 @@ public class CMSController {
 	public @ResponseBody Map<String, Long> starSign() { // 設定@ResponseBody 伺服器回應JSON檔案
 		Map<String, Long> star = new HashMap<>(); // 宣告一個map物件loc
 		star = service.getstarSignCounts(); // star使用getstarSignCounts
-
-		System.out.println(star); // 測試有沒有通過
-		System.out.println("hello world"); // 測試有沒有通過
 
 		return star; // 全部放到LOC 也是回傳 JSP的意思
 
@@ -99,7 +100,25 @@ public class CMSController {
 
 	// 權限管理
 	@GetMapping("/ajax_rights")
-	public String rights(Model model) {
+	public String rights(Model model, HttpSession httpSession) {
+		// System.out.println(httpSession.getAttribute("tree"));
+
+		List<Menubean> rightspath = service.rights();
+		model.addAttribute("rights", rightspath);
+		JSONArray jsonArray = new JSONArray();
+		for (Menubean rights : rightspath) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("id", rights.getId());
+			jsonObject.put("pId", rights.getParentId());
+			jsonObject.put("name", rights.getMenuName());
+			jsonArray.add(jsonObject);
+		}
+		model.addAttribute("rights1", jsonArray.toString());
+
+		List<RoleCheckBean> roleList = service.checkRole();
+		model.addAttribute("roleList", roleList);
+//	  System.out.println(roleList+"~~~~~~~~~~~~~~~~~~~");
+
 		return "ajax/rights";
 	}
 
@@ -135,6 +154,23 @@ public class CMSController {
 		return "ajax/CMSActives";
 	}
 
+	//// 下拉式選單取管理員的值
+	@GetMapping("/selectRights")
+	public String selectRole(Model model) {
+		List<RoleSaveBean> rsbList = service.selectRole();
+		model.addAttribute("rsbList", rsbList);
+		System.out.println(rsbList + "~~~~~~~~~~~~~~~~~~~");
+		return "ajax/rights";
+	}
+
+	// 存節點和人員
+	// 確定鍵
+	@GetMapping("/rights")
+	public String roleSave(Model model, @RequestParam String roleSave, @RequestParam String ztreeSave) {
+		service.saveRsb(roleSave, ztreeSave);
+//	 System.out.println(+"~~~~~~~~~~~~~~~~~~~");
+		return "ajax/rights";
+	}
 //	<=========================================================================================>
 
 	// 會員部分controller
@@ -143,7 +179,7 @@ public class CMSController {
 	public String selectAllRoles(Model model) {
 		List<RoleBean> ro = service.selectAllRoles();
 		model.addAttribute("Roles", ro);
-		System.out.println(ro);
+//		System.out.println(ro);
 		return "ajax/CMSRole"; // 分配到ajax jsp
 	}
 
@@ -152,7 +188,7 @@ public class CMSController {
 	public String selectAllMembers(Model model) {
 		List<MemberBean> mb = service.selectAllMembers();
 		model.addAttribute("Members", mb);
-		System.out.println(mb);
+//		System.out.println(mb);
 		return "ajax/CMSMembers"; // 分配到ajax jsp
 	}
 
@@ -166,12 +202,9 @@ public class CMSController {
 		// 搜尋舊有資料
 		RoleBean roleB1 = service.getRole(id); // 資料庫回傳的內容 搜尋舊有資料
 		roleB1.setLevel(roleB.getLevel()); // update 原本資料庫的欄位 把之前的資料注入進去
-//		
-		System.out.println("roleB1.setLevel(roleB.getLevel())=" + roleB.getLevel());
-//		
+
 		service.updateRole(roleB1);// 更新完成
-//		
-		System.out.println("hello SkyWalker");
+
 		return map; // 分配到ajax jsp 回傳MAP JSON
 	}
 
@@ -186,12 +219,8 @@ public class CMSController {
 		RoleBean roleB1 = service.getRole(id); // 資料庫回傳的內容 搜尋舊有資料
 
 		roleB1.setAccountType(roleB.getAccountType()); // update 原本資料庫的欄位 把之前的資料注入進去
-
-		System.out.println("roleB1.setLevel(roleB.getLevel())=" + roleB.getLevel());
-
 		service.updateRole(roleB1);// 更新完成
 
-		System.out.println("hello SkyWalker");
 		return map; // 分配到ajax jsp 回傳MAP JSON
 	}
 
@@ -204,13 +233,18 @@ public class CMSController {
 		// 抓BEAN裡面存取前端的資料
 		// 搜尋舊有資料
 		RoleBean roleB1 = service.getRole(id); // 資料庫回傳的內容 搜尋舊有資料
-
-		System.out.println("roleB1.setNoticeType(roleB.getNoticeType())=" + roleB.getNoticeType());
-
 		service.updateRole(roleB1);// 更新完成
-
-		System.out.println("hello SkyWalker");
 		return map; // 分配到ajax jsp 回傳MAP JSON
+	}
+
+	// 日誌部分controller
+//	 搜尋全部日誌
+	@GetMapping("/ajax_selectSystemLog")
+	public String selectSystemLog(Model model) {
+		List<SystemLog> log = service.selectSystemLog();
+		model.addAttribute("Log", log);
+//	System.out.println(ro);
+		return "ajax/CMSLog"; // 分配到ajax jsp
 	}
 
 }
