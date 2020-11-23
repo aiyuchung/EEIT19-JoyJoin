@@ -36,14 +36,21 @@ Released   : 20100501
 	crossorigin="anonymous"></script>
 
 <style>
+#wrapper{
 
+	width:100%;
+	background-image: url(images/forumBg1.jpg);
+ 	background-size: 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
 </style>
 
 </head>
 <body>
 	<!---------- Header ------------>
  <c:import url="forumHeader.jsp"></c:import> 
- <div style="background-color:black;padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA">揪in 祝您約會愉快!!!</div>
+ <div style="padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:700;font-familye:微軟正黑體;text-align: center;color:red" id="wrapper"></div>
 		
 		
 		<!-- 請登入的modal  -->	

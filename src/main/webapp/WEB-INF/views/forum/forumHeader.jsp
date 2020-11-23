@@ -36,6 +36,16 @@ Released   : 20100501
 	crossorigin="anonymous"></script>
 
 <style>
+
+#wrapper{
+
+	width:100%;
+	background-image: url(images/forumBg1.jpg);
+ 	background-size: 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
 #menu-bb {
 	background: #FFFF33;
 	height: 55px;
@@ -268,6 +278,7 @@ input  {
 
 </head>
 <body>
+<div id="wrapper">
 	<!---------- Header ------------>
 	<div class="headerPage">
 		<jsp:include page="../header/header_guest.jsp" />
@@ -313,6 +324,7 @@ input  {
 	<div class="newajaxlist">
 		<c:import url="../ajax/forumTable.jsp"></c:import>
 	</div>
+</div>
 	
 	<script>
 
@@ -383,5 +395,6 @@ input  {
 			})
 		}
 	</script>
+	
 </body>
 </html>

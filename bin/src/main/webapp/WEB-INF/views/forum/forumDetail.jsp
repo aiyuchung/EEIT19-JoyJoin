@@ -247,6 +247,24 @@ font-weight:900;
 font-familye:微軟正黑體;
 }
 
+#wrapper{
+
+	width:100%;
+	background-image: url(images/forumBg1.jpg);
+ 	background-size: 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+#wrapper3{
+
+	width:100%;
+	background-image: url(images/forumBg3.jpg);
+ 	background-size: 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
 </style>
 
 </head>
@@ -254,8 +272,8 @@ font-familye:微軟正黑體;
 <body>
 <!---------- Header ------------>
  <c:import url="forumHeader.jsp"></c:import> 
- <div style="background-color:black;padding:10px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA"></div>
-
+ <div style="background-color:transparent;padding:10px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA"></div>
+<div id="wrapper3">
  
 	<table width="70%" border="1" align="center" class="tbdetail">
 
@@ -393,8 +411,8 @@ $(".forumEdit").click(function(){ //以活動類型作為快速篩選
 </script>
 
 
-
-<div style="background-color:black;padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA">揪in 祝您約會愉快!!!</div>
+</div>
+<div  id="wrapper" style="padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA">揪in 祝您約會愉快!!!</div>
 	
 </body>
 </html>

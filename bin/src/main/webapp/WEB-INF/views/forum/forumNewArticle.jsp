@@ -36,6 +36,15 @@ Released   : 20100501
 
 <style>
 
+#wrapper3{
+
+	width:100%;
+	background-image: url(images/forumBg3.jpg);
+ 	background-size: 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
 #menu-bb {
 	background: #E0E000;
 	height: 50px;
@@ -271,6 +280,7 @@ font-familye:微軟正黑體;
 <!---------- Header ------------>
  <c:import url="forumHeader.jsp"></c:import> 
  <div style="background-color:black;padding:10px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA"></div>
+		<div id="wrapper3">
 		<!-- end header -->
 	<form method="post" action="<%=request.getContextPath()%>/saveOrUpdateArticle" enctype="multipart/form-data">
 	  <input type = "hidden" name = "forumSeq" value = "${forumBean.forumSeq}">
@@ -428,7 +438,7 @@ $(".evaTag").click(function () {
 })
 
 </script>
-
+</div>
 <div style="background-color:black;padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA">揪in 祝您約會愉快!!!</div>
 	
 </body>

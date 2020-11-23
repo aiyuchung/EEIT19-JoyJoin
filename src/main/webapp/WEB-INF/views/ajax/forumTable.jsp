@@ -69,9 +69,9 @@ border:none;
 		action="<%=request.getContextPath()%>/forumDetail">
 		<input type="hidden" id="forumSeqInput" name="forumSeq" />
 	</form>
-	<table  id="ccc" width="70%" border="1" align="center" >
+	<table  id="ccc" width="70%" border="1" align="center" style="padding:10px;background-color:green;opacity:0.8;">
 		<thead>
-			<tr style="text-align: center" height="60px">
+			<tr style="text-align: center" height="60px" >
 				<td width="10%">類型</td>
 				<td width="30%">標題</td>
 				<td width="5%">評分</td>

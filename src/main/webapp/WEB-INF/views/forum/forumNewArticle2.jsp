@@ -265,6 +265,15 @@ input  {
 	font-family: 微軟正黑體;
 	font-weight: 900;
 }
+
+#wrapper{
+
+	width:100%;
+	background-image: url(images/forumBg1.jpg);
+ 	background-size: 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
 </style>
 
 </head>
@@ -528,7 +537,7 @@ $(".evaTag").click(function () {
 			})
 		}
 	</script>
-<div style="background-color:black;padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA">揪in 祝您約會愉快!!!</div>
+<div style="padding:20px;margin-bottom:5px;font-size:0.5cm;font-weight:900;font-familye:微軟正黑體;text-align: center;color:#FF44AA" id="wrapper"></div>
 	
 </body>
 </html>
