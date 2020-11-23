@@ -28,15 +28,15 @@
 			<thead>
 				<!-- 	這邊可以用個迴圈拉資料出圈拉資料出 -->
 				<tr>
-					<th>activityClass</th>
-					<th>prov</th>
-					<th>activityStatus</th>
-					<th>price</th>
-					<th>name</th>
-					<th>activityDate</th>
-					<th>finalDate</th>
-					<th>introduction</th>
-					<th>createdDate</th>
+					<th>活動主題</th>
+					<th>地區</th>
+					<th>活動狀態</th>
+					<th>價錢</th>
+					<th>活動內容</th>
+					<th>出發日期</th>
+					<th>結束日期</th>
+					<th>介紹</th>
+					<th>開團日期</th>
 				</tr>
 			</thead>
 			<c:forEach var="CMS" items="${activities}">
