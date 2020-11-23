@@ -6,6 +6,7 @@ import java.util.Map;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.Menubean;
+import com.web.activity.model.OrderBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.model.RoleCheckBean;
 import com.web.activity.model.RoleSaveBean;
@@ -60,6 +61,9 @@ public interface CMSService {
 	List<MemberBean> selectAllMembers();
 	List<RoleBean> selectAllRoles();
 	
+	//角色關鍵字搜尋
+		List<RoleBean> selectRoles(String keyWord);//關鍵字搜尋
+	
 	public void updateRole(RoleBean RoleB);
 	//搜尋單筆角色
 	public RoleBean getRole(Integer roleNo);
@@ -67,5 +71,8 @@ public interface CMSService {
 	//搜尋日誌內容
 	List<SystemLog> selectSystemLog();
 	
+	
+//	=============訂單======================================================
+	List<OrderBean> selectAllOrder();
 	
 }

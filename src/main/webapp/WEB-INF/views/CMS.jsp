@@ -923,6 +923,33 @@ img {
 			})
 			$(".oldajaxlist").show();
 			$(".newajaxlist").show();
+
+		</script>
+		
+		<script>
+
+		// 			<!-- ===========訂單========= -->
+		$(".order").click(function() { //click event
+			$("#provstatic").hide(); //可隱藏
+			$("#locBarChart").hide();//可隱藏
+			$("#genderPie").hide();
+			$("#starstatic").hide();
+			$(".oldajaxlist").hide();
+			
+			$(".newajaxlist").show();
+			$.ajax({
+				url : "ajax_selectAllOrder",
+				type : "GET",
+				dataType : "html", //server送回
+				contentType : 'application/json; charset=utf-8',
+				data : {}, //data空的代表沒任何參數
+				success : function(data) { //成功的話
+					$(".newajaxlist").empty();
+					$(".newajaxlist").append(data); //透過導向的URL到ajax方法 div class裝東西
+				}
+			})
+		})
+		
 		</script>
 </body>
 

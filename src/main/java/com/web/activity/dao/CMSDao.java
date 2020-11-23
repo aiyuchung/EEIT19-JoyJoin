@@ -6,6 +6,7 @@ import java.util.Map;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.Menubean;
+import com.web.activity.model.OrderBean;
 //import com.web.activity.model.RoleBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.model.RoleCheckBean;
@@ -66,13 +67,18 @@ public interface CMSDao {
 
 	List<ActivityBean> selectAllActivitiesInAtive();
 
-	
+	//搜尋訂單
+		List<OrderBean> selectAllOrder();
 	
 	// <會員部分>
 	List<MemberBean> selectAllMembers();
 
 	List<RoleBean> selectAllRoles();
 	
+	
+	//搜尋關鍵字角色
+
+		List<RoleBean> selectRoles(String keyWord);//關鍵字搜尋
 	
 	//
 	List<RoleSaveBean> saveRsb();

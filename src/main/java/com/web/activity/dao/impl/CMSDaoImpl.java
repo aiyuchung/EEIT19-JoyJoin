@@ -16,6 +16,7 @@ import com.web.activity.dao.CMSDao;
 import com.web.activity.model.ActivityBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.Menubean;
+import com.web.activity.model.OrderBean;
 //import com.web.activity.model.RoleBean;
 import com.web.activity.model.RoleBean;
 import com.web.activity.model.RoleCheckBean;
@@ -273,6 +274,25 @@ public class CMSDaoImpl implements CMSDao {
 		}
 		
 		
+		//關鍵字虛擬角色
+		@Override
+		public List<RoleBean> selectRoles(String keyWord) {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM RoleBean WHERE account like '%"+keyWord+"%'  ";
+			String[] keyWords =keyWord.split(" ");
+			String key ="";
+			for (int i = 0; i< keyWords.length; i++) {
+				key += "OR account LIKE '%"+ keyWords[i] +"%'";
+				key += "OR level LIKE '%"+ keyWords[i] +"%'";
+				key += "OR accountType LIKE '%"+ keyWords[i] +"%'";
+				
+			}
+			hql += key;
+			List<RoleBean> ro = session.createQuery(hql).getResultList();
+			return ro;
+		}
+		
+		
 		//搜尋日誌內容
 		@Override
 		public List<SystemLog> selectSystemLog(){
@@ -282,5 +302,18 @@ public class CMSDaoImpl implements CMSDao {
 
 			return sl;
 		}
+		
+//		<<<<<<<<<<<<<<<針對訂單部分>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		//搜尋訂單
+		@Override
+		public List<OrderBean> selectAllOrder() {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM OrderBean";
+			List<OrderBean> ob = session.createQuery(hql).getResultList();
+//			System.out.println(mb);
+			return ob;
+		}
+		
+		
 
 }
