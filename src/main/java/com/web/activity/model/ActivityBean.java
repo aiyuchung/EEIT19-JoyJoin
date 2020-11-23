@@ -1,6 +1,7 @@
 package com.web.activity.model;
 
 
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Date;
 import java.util.LinkedHashSet;
@@ -63,6 +64,15 @@ public class ActivityBean implements java.io.Serializable {
 	private Integer joinedNum;
 	private Integer hitCount;
 	private Integer levelLimit;
+	
+	private BigDecimal score;
+	
+	public BigDecimal getScore() {
+		return score;
+	}
+	public void setScore(BigDecimal score) {
+		this.score = score;
+	}
 	
 	@Transient
 	private MultipartFile updateImg;
