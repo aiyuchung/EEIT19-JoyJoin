@@ -1,5 +1,6 @@
 package com.web.activity.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.web.activity.model.ActivityFollowedBean;
@@ -80,5 +81,9 @@ public interface MemberService {
 			//同意好友更改狀態
 		public String checkFriendType(String host, String account);
 			//檢查交友狀態
+		public void addEmpforBuying(String account, int point);
+			//台戰
+		public double getPersonalScore(String account);
+			//個人平均分數
 		
 }	

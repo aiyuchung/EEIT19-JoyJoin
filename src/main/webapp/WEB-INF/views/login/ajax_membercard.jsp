@@ -22,11 +22,11 @@
 				<p>${luckyguy.signature}</p>
 				<div class="icons">
 					<a href="#"><i class="ion-ios-home"></i></a>
-					<a href="#"><span class="iconify" data-icon="ion:mail-sharp" data-inline="false"></span></a>
+					<a href="#"><span class="iconify" data-icon="ion:mail-sharp" data-inline="false" id="msg"></span></a>
 				</div>
 			</figcaption>
 			<img src="<c:url value='/getMemberPicture/${luckyguy.account}' />" alt="picture" />
-			<div class="position">show</div>
+			<div class="position">${score }</div>
 		</figure>
 	</c:when>
 	<c:otherwise>
@@ -38,20 +38,23 @@
 					${luckyguy.signature}</p>
 				<div class="icons">
 					<a href="#"><i class="ion-ios-home"></i></a>
-					<a href="#"><span class="iconify" data-icon="ion:mail-sharp" data-inline="false"></span></a>
+					<a href="#"><span class="iconify" data-icon="ion:mail-sharp" data-inline="false" id="msg"></span></a>
 				</div>
 			</figcaption>
 			<img src="<c:url value='/getMemberPicture/${luckyguy.account}' />" alt="picture" />
-			<div class="position">show</div>
+			<div class="position">${score }</div>
 		</figure>
 	</c:otherwise>
 </c:choose>
  <script>
  	
- 	$(".fa fa-address-book-o").on("click",function(){
- 		var id = $(".id").val()
- 		location.href = "http://localhost:8080/JoyJoin'/getFriend/"+id;
- 	})
+	("#msg").on("click",function(){
+		if(confirm("請輸入訊息")){
+				
+		}else{
+		;	
+		}		
+	})
 
  
  </script>

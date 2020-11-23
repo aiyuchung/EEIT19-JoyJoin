@@ -1,5 +1,6 @@
 package com.web.activity.dao.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,7 +19,6 @@ import com.web.activity.model.ActivityClassBean;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
 import com.web.activity.model.ActivityMsgBean;
-import com.web.activity.model.ActivityPicBean;
 import com.web.activity.model.ActivityTypeBean;
 import com.web.activity.model.MemberBean;
 import com.web.activity.model.ProvinceBean;
@@ -661,6 +661,19 @@ public class ActivityDaoImpl implements ActivityDao {
 //				return result;
 //			}
 
+		public List<BigDecimal> getPersonalScore(String account){
+			Session session = factory.getCurrentSession();
+			String hql = "SELECT memberNo FROM ActivityBean WHERE account = :id";
+			int no = 0;
+			try {
+				no = (int) session.createQuery(hql).setParameter("id", account).getSingleResult();
+			}catch(Exception e) {
+				;
+			}
+			String hql2 = "SELECT score FROM ActivityBean WHERE memberNo = :no";
+			List<BigDecimal> list = session.createQuery(hql2).setParameter("no", no).getResultList();
+			return list;
+		}
 
 
 }

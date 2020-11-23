@@ -286,7 +286,19 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	//比對登入時間,第一次登入增加經驗
 	
-	
+	@Override
+	public void addEmpforBuying(String account, int point) {
+		Session session = factory.getCurrentSession();
+		String hql = "SELECT emp FROM RoleBean WHERE account = :id";
+		int emp = 0;
+		try {
+			emp = ((int) session.createQuery(hql).setParameter("id", account).getSingleResult())+point;
+		}catch(Exception e) {
+			;
+		}
+		String hql2 = "UPDATE RoleBean SET emp = :emp WHERE account = :id";
+		session.createQuery(hql2).setParameter("emp", emp).setParameter("id", account).executeUpdate();
+	}
 	
 	
 	

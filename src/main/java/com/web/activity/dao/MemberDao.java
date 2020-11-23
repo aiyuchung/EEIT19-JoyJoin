@@ -37,6 +37,8 @@ public interface MemberDao {
 			//判斷經驗,更改等級
 		public void login2Emp(String account) ;
 		//比對登入時間,第一次登入增加經驗
+		public void addEmpforBuying(String account, int point);
+			//購買經驗
 
 //---------------------------------------------▼會員登入判斷▼---------------------------------------------//		
 		

@@ -1,8 +1,8 @@
 package com.web.activity.controller;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.web.activity.model.MemberBean;
+import com.web.activity.model.MessageBean;
 import com.web.activity.model.OrderBean;
 import com.web.activity.service.MemberService;
 
@@ -74,6 +75,11 @@ public class PaymentController {
 		 //回傳form (自動submit 所有資料)
 		all.aioCheckOut(payment, null);
 		param.put("pay",all.aioCheckOut(payment, null));
+		
+		String str = param.get("item");
+		int point = Integer.parseInt(str.substring(0, str.length()-1));
+		addEmpforBuying(account,point);
+		sendMsgforBuying(account,point);
 		return param;
 	}
 	
@@ -89,4 +95,22 @@ public class PaymentController {
 	 public String checkout(Model model) {
 		return "/ajax/orderfinalcheck";
 	}
+	
+	public void addEmpforBuying(String account, int point) {
+		memberService.addEmpforBuying(account, point);
+	}
+	
+	public void sendMsgforBuying(String account, int point) {
+		MessageBean mb = new MessageBean();
+			mb.setfromAccount("揪in Server");
+			mb.setAccount(account);
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+ 		 	String time = dateFormat.format(new Date());
+ 		 	mb.setTime(time);
+ 		 	mb.setReadStatus(0);
+ 		 	mb.setSubject("系統訊息:購買點數");
+ 		 	mb.setMsg("親愛的用戶\r\n感謝您購買了"+point+"點經驗值\r\n\r\n");
+ 		 	memberService.sendMsg(mb);
+	}
+	
 }

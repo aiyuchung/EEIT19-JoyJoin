@@ -1,5 +1,6 @@
 package com.web.activity.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.web.activity.dao.ActivityDao;
 import com.web.activity.dao.MemberDao;
 import com.web.activity.model.ActivityFollowedBean;
 import com.web.activity.model.ActivityJoinedBean;
@@ -24,6 +26,8 @@ public class MemberServieImpl implements MemberService {
 		@Autowired
 		MemberDao memberDao;
 		
+		@Autowired
+		ActivityDao activityDao;		
 		
 		@Override
 		public void signUp(MemberBean mb) {
@@ -232,6 +236,23 @@ public class MemberServieImpl implements MemberService {
 			return memberDao.checkFriendType(host, account);
 		}
 		
+		@Override
+		public void addEmpforBuying(String account, int point) {
+			memberDao.addEmpforBuying(account, point);
+		}
+		
+		@Override
+		public double getPersonalScore(String account) {
+			List<BigDecimal> list = activityDao.getPersonalScore(account);
+			double i = 0;
+			for ( BigDecimal j : list) {
+				double k = j.doubleValue();
+				i+=k;
+			}
+			int m = list.size();
+			i = i/m;
+			return i;
+		}
 		
 		
 }
