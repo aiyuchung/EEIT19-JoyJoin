@@ -81,6 +81,7 @@
 				},
 // 				  JSON.stringify(keywords),
 			  success:function(data){
+				  console.log(data);
 				  $(".post").empty();
 				  $(".newajaxlist").empty();
 				  $(".newajaxlist").append(data);

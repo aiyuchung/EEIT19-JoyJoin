@@ -282,7 +282,6 @@ public class CMSDaoImpl implements CMSDao {
 			String[] keyWords =keyWord.split(" ");
 			String key ="";
 			for (int i = 0; i< keyWords.length; i++) {
-				key += "OR account LIKE '%"+ keyWords[i] +"%'";
 				key += "OR level LIKE '%"+ keyWords[i] +"%'";
 				key += "OR accountType LIKE '%"+ keyWords[i] +"%'";
 				
@@ -290,6 +289,25 @@ public class CMSDaoImpl implements CMSDao {
 			hql += key;
 			List<RoleBean> ro = session.createQuery(hql).getResultList();
 			return ro;
+		}
+		//關鍵字虛擬會員
+		@Override
+		public List<MemberBean> selectMemb(String keyword) {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM MemberBean WHERE account like '%"+keyword+"%'  ";
+			String[] keywords =keyword.split(" ");
+			String key ="";
+			for (int i = 0; i< keywords.length; i++) {
+				key += "OR gender LIKE '%"+ keywords[i] +"%'";
+				key += "OR mail LIKE '%"+ keywords[i] +"%'";
+				key += "OR fullName LIKE '%"+ keywords[i] +"%'";
+				key += "OR nickname LIKE '%"+ keywords[i] +"%'";
+				key += "OR starSign LIKE '%"+ keywords[i] +"%'";
+				
+			}
+			hql += key;
+			List<MemberBean> mb = session.createQuery(hql).getResultList();
+			return mb;
 		}
 		
 		

@@ -16,14 +16,14 @@
 
 	<div>
 		<h2 class="sub-header">角色一覽</h2>
-<%-- 		<form id="searchform" method="get" action="#"> --%>
-<!-- 			<h6>&nbsp;&nbsp;搜尋</h6> -->
-<!-- 			<div> -->
-<!-- 				&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="role" id="role" -->
-<!-- 					size="20" value="" placeholder="請輸入關鍵字尋找會員" /> -->
-<!-- 				<button type="button" class="btn btn-outline-light btn-sm">確認</button> -->
-<!-- 			</div> -->
-<%-- 		</form> --%>
+		<form id="searchform" method="get" action="#">
+			<h6>&nbsp;&nbsp;搜尋</h6>
+			<div>
+				&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="role" id="role"
+					size="20" value="" placeholder="請輸入關鍵字尋找會員" />
+				<button type="button" class="btn btn-outline-light btn-sm">確認</button>
+			</div>
+		</form>
 
 		<div class="post newajaxlist">
 			<div class="table-responsive">
@@ -45,7 +45,7 @@
 
 							<td><select name="updateRole" id="level_op${CMS.roleNo}"
 								onchange="update1(this)">
-									<option value="" selected="selected" style="display: none;">會員等級</option>
+									<option value="" selected="selected" style="display: none;">最高管理者</option>
 									<option value="1" ${CMS.level == "1"  ? 'selected' : ''}>1</option>
 									<option value="2" ${CMS.level == "2"  ? 'selected' : ''}>2</option>
 									<option value="3" ${CMS.level == "3"  ? 'selected' : ''}>3</option>

@@ -63,6 +63,8 @@ public interface CMSService {
 	
 	//角色關鍵字搜尋
 		List<RoleBean> selectRoles(String keyWord);//關鍵字搜尋
+	//會員關鍵字搜尋
+		List<MemberBean> selectMemb(String keyword);
 	
 	public void updateRole(RoleBean RoleB);
 	//搜尋單筆角色
@@ -74,5 +76,6 @@ public interface CMSService {
 	
 //	=============訂單======================================================
 	List<OrderBean> selectAllOrder();
+	
 	
 }

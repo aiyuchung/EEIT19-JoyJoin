@@ -169,6 +169,11 @@ public class CMSServiceImpl implements CMSService {
 		public List<RoleBean> selectRoles(String keyWord) {
 			return dao.selectRoles(keyWord);
 		}
+		//會員關鍵字查詢
+		@Override
+		public List<MemberBean> selectMemb(String keyword) {
+			return dao.selectMemb(keyword);
+		}
 	
 
 }

@@ -195,11 +195,22 @@ public class CMSController {
 			public String selectrole(Model model, @RequestParam String keyword) {
 				List<RoleBean> ro = service.selectRoles(keyword);
 				int elementsNum = ro.size();
-				model.addAttribute("activitiesNum", elementsNum);
-				model.addAttribute("activities", ro);
+				model.addAttribute("RolesNum", elementsNum);
+				model.addAttribute("Roles", ro);
 				System.out.println(ro);
 				System.out.println(keyword);
 				return "ajax/CMSRole"; // 分配到ajax jsp
+			}
+			// 關鍵字會員查詢
+			@GetMapping("/ajax_member_keyWords")
+			public String selectMemb(Model model, @RequestParam String keyword) {
+				List<MemberBean> mb = service.selectMemb(keyword);
+				int elementsNum = mb.size();
+				model.addAttribute("MemB", elementsNum);
+				model.addAttribute("Members", mb);
+				System.out.println(mb);
+				System.out.println(keyword);
+				return "ajax/CMSMembers"; // 分配到ajax jsp
 			}
 	
 	
@@ -223,7 +234,6 @@ public class CMSController {
 	public String selectAllMembers(Model model) {
 		List<MemberBean> mb = service.selectAllMembers();
 		model.addAttribute("Members", mb);
-//		System.out.println(mb);
 		return "ajax/CMSMembers"; // 分配到ajax jsp
 	}
 
@@ -264,7 +274,6 @@ public class CMSController {
 	public String selectSystemLog(Model model) {
 		List<SystemLog> log = service.selectSystemLog();
 		model.addAttribute("Log", log);
-//	System.out.println(ro);
 		return "ajax/CMSLog"; // 分配到ajax jsp
 	}
 	
@@ -276,7 +285,6 @@ public class CMSController {
 		public String selectAllOrder(Model model) {
 			List<OrderBean> ob = service.selectAllOrder();
 			model.addAttribute("Order", ob);
-//			System.out.println(mb);
 			return "ajax/CMSOrder"; // 分配到ajax jsp
 		}
 	
