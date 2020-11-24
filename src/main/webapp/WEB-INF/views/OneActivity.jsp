@@ -21,9 +21,11 @@
 <link href="<c:url value='/css/style_one.css' />" rel="stylesheet"
 	type="text/css" media="screen" />
 
+
 <script src="https://code.jquery.com/jquery-3.5.1.js"
 	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 	crossorigin="anonymous"></script>
+	
 <!--  -----------------------------------------------------------  -->
 
 
@@ -148,6 +150,8 @@
 	 object-fit: cover;
 	}
 </style>
+<link href="<c:url value='/css/membercard.css' />" rel="stylesheet"
+	type="text/css" media="screen" />
 </head>
 
 <body>
@@ -326,11 +330,11 @@
 										<c:choose>
 											<c:when test="${one.memberBean.account == account}">
 											</c:when>
-											<c:when test="${one.maxLimit == 'one.joinedNum'}">
-												<button class="btn btn-full" disabled>已額滿</button>
+											<c:when test="${one.maxLimit eq 'one.joinedNum'}">
+												<button class="btn btn-full" disabled >已額滿</button>
 											</c:when>
 											<c:otherwise>
-												<button class="btn btn-launch">參加活動</button>
+												<button class="btn btn-launch" id="fullbtn">參加活動</button>
 											</c:otherwise>
 										</c:choose>
 									</c:if>
@@ -374,7 +378,7 @@
 						<c:forEach var="msg" items="${msgBox}">
 						<div class="credit-block sources ">
 							<div class="btnarea">
-								<img src="" class="userpic msgpic"/><span>&nbsp;${nickname}<a href="#"> ( ${account} ) </a></span>
+								<img src="<c:url value='/getMemberPicture/${msg.memberBean.account}' />" class="userpic msgpic"/><span>&nbsp;${msg.memberBean.nickname}<a href="#"> ( ${msg.memberBean.account} ) </a></span>
 								<c:if test="${account == msg.memberBean.account}">
 									<img  class="smbtn msgbtnDelete" title="刪除" src="https://img.icons8.com/material-rounded/24/000000/delete-trash.png"/>
 									<img  class="smbtn msgbtnEdit" title="編輯" src="https://img.icons8.com/material-outlined/24/000000/edit.png"/>
@@ -468,6 +472,25 @@
 	    </div>
 	  </div>
 	</div>
+<!-- 彈出會員名片 -->		
+<div class="modal" tabindex="-1" role="dialog" id="showMsgArea">
+      <div class="modal-dialog" role="document"> 
+         <div class="modal-content" style="position:relative;top:100px">
+<!--              <div class="modal-header"> -->
+<!--                  <h4 class="modal-title" id="account-from" style="color:black"></h4> -->
+<!--                  <input type="hidden" id="number-hid"> -->
+<!--                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>  -->
+<!--              </div> -->
+             <div class="modal-body" id="msgArea"  style="padding:15px;margin:0 auto;color:black;font-size:30px;height:380px;width:500px;">
+             </div>
+<!--              <div class="modal-footer"> -->
+<!--               <input type="button" class="btn btn-primary" id="delMsg-btn" value="刪除信件"> -->
+<!--                  <input type="button" class="btn btn-primary" id="returnLetter-btn" value="回覆信件"> -->
+<!--              </div> -->
+        </div>
+    </div>
+ </div>
+ 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
@@ -483,7 +506,12 @@
 		if (frombtn){
 			looksmg();
 		}
-		
+	var maxlimit =${one.maxLimit}
+	var joinnumst = ${one.joinedNum}
+		if (maxlimit == joinnumst){
+			$("#fullbtn").attr("disabled", true).text("已額滿");
+			$("#fullbtn").removeClass("btn-launch").addClass("btn-full");
+		}
 	})
 
 	$(".reminder").click(function(){ //關注活動
@@ -528,9 +556,12 @@
 	})
 	
 	
-	$(".lookmsg").click(function(){ //看留言
+// 	$(".lookmsg").click(function(){ //看留言
+// 		looksmg();
+// 	})
+	$(document).on("click",".lookmsg",function(){
 		looksmg();
-	})
+	});
 	
 	function looksmg(){
 		var isJoined = ${isJoined};
@@ -656,7 +687,7 @@
 	$(".memberDetail").click(function(){
 		var account = $(this).attr("id");
 		console.log(account);
-		var controllerUrl = "detailCard/"+account;
+		var controllerUrl = "../detailCard/"+account;
 		$.ajax({
 			  url:controllerUrl,
 			  type: "GET",

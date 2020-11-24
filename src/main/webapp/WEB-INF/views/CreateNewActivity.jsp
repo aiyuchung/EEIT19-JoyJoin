@@ -48,10 +48,9 @@
 </script>
 <style>
 .main-content{
-	background-image: url(images/leaves2_bg.jpg);
+	background-image: url(${pageContext.request.contextPath}/images/leaves2_bg.jpg);
  	background-size: 100%; 
 	background-repeat: no-repeat;
-	height: 1100px;
 	background-attachment:fixed; 
 }
 

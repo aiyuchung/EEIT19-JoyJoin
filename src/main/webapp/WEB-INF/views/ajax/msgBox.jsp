@@ -64,7 +64,7 @@
 	<c:forEach var="msg" items="${msgBox}">
 	<div class="credit-block sources ">
 		<div class="btnarea">
-			<img src="" class="userpic msgpic"/><span>&nbsp;${nickname}<a href="#"> ( ${account} ) </a></span>
+			<img src="${pageContext.request.contextPath}/getMemberPicture/${msg.memberBean.account}" class="userpic msgpic"/><span>&nbsp;${msg.memberBean.nickname}<a href="#"> ( ${msg.memberBean.account} ) </a></span>
 			<c:if test="${account == msg.memberBean.account}">
 				<img  class="smbtn msgbtnDelete" title="刪除" src="https://img.icons8.com/material-rounded/24/000000/delete-trash.png"/>
 				<img  class="smbtn msgbtnEdit" title="編輯" src="https://img.icons8.com/material-outlined/24/000000/edit.png"/>
@@ -80,14 +80,14 @@
 	</c:if>
 </div>
 <script type="text/javascript">
+	$(document).ready(function(){
 	var number = $("#num").val();
 	if(number == 0){
 		$("#textSpan").text("目前尚無活動");
 	}else{
 		console.log("else")
 	}
-	
-	$(".sendmsg").click(function(){ //新增留言
+	$(document).on("click",".sendmsg",function(){
 		var msgContent = $(".newmsg").val();
 		var activityNo = ${activityNo};
 		$.ajax({
@@ -105,6 +105,24 @@
 				}
 		})
 	})
+// 	$(".sendmsg").click(function(){ //新增留言
+// 		var msgContent = $(".newmsg").val();
+// 		var activityNo = ${activityNo};
+// 		$.ajax({
+			
+// 			  url:"<c:url value='/msgSend' />",
+// 			  type: "POST",
+// 			  dataType: "html", 
+// 			  data:  {
+// 				  msg: msgContent,
+// 				  activityNo: parseInt(activityNo),
+// 				  },
+// 			  success:function(data){
+// 				  $(".allmsg").empty();
+// 				  $(".allmsg").append(data);
+// 				}
+// 		})
+// 	})
 	
 	$(".msgbtnDelete").click(function(){ //刪除留言
 		var activityNo = ${activityNo};
@@ -180,7 +198,7 @@
 			textarea.val(originalText);
 		})
 	})
-	
+	})
 </script>
 </body>
 </html>
