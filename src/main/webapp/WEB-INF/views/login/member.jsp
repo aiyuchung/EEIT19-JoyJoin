@@ -19,7 +19,9 @@
 <!-- <link rel="stylesheet" type="text/css" -->
 <!-- 	href="path/to/css/bootstrap-directional-buttons.css"> -->
 
+
 <link rel="stylesheet" href="<c:url value='css/memberpage.css' />" />
+<link rel="stylesheet" href="<c:url value='css/default.css' />" />
 <!-- ====================Modal特效======================= -->
 <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
 <script src="https://code.jquery.com/jquery-3.5.1.js"	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="	crossorigin="anonymous"></script>
@@ -32,6 +34,10 @@
 <link rel="stylesheet" href="<c:url value='css/membercard.css' />" />
 
 <style>
+	body{
+		background-image: url(images/smoke_bg.jpg);
+		background-attachment:fixed;
+	}
   a.superBtn{
   	color:white;
   }
@@ -47,31 +53,117 @@
 	background-image: linear-gradient(#545454, #373738);
   }
   
-  body{
-		font-family: Microsoft JhengHei;
-		
-	}
-.homepage{
-	background-image: url(images/smoke_bg.jpg);
- 	background-size: 100%; 
-	background-repeat: no-repeat;
-	height: 1100px;
-	background-attachment:fixed; 
+#menu-bb {
+	background:	#003060;
+	height: 45px;
+	width:1600px;
 }
+
+#main{
+	width:1600px;
+	
+}
+
+
+#menu { 
+	width: 1400px;
+/* 	margin: 0 auto; */
+/* 	position: relative; */
+}
+
+#menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	position:absolute;
+	
+}
+
+#menu li {
+	display: inline;
+}
+
+
+
+ #menu a:hover { 
+ 	margin: 0 3px 0 0; 
+ 	background: #191E1A; 
+ 	border-bottom: 3px solid #DDBB04; 
+ 	color: #FFFFFF; 
+ } 
+ #menu>ul>li>a { 
+ 	display: block; 
+ 	float: left; */
+ 	margin: 0 0 0 70px; 
+ 	padding: 6px 15px 10px 15px; 
+ 	border: none; */
+ 	text-decoration: none; 
+ 	text-transform: uppercase; 
+ 	font-family: Arial, Helvetica, sans-serif; 
+/*  	font-size:11px;;  */
+/*  	color: #DDBB04;  */
+ } 
+
+
+
+
+#infoArea {
+/* 	margin:0 ; */
+/* 	width:100px; */
+	height:95vh;
+	padding:10px;
+	position:absolute;
+	background-color: transparent;
+    left:280px;
+    display:inline-block;
+	
+}
+
+#showAreaTop {
+/* 	background-color:transparent; */
+	margin:0 auto;
+	padding:5px;
+	width:900px;
+	position:relative;
+	display:inline-block;
+}
+
+#showArea {
+	background-color:transparent;
+	left:-200px;
+	width:100%;
+	height:145%;
+}
+
 </style>
 </head>
 <!-- Header -->
 <body>
 <div>
-	<jsp:include page="../header/header_guest.jsp" />
+<jsp:include page="../header/header_guest.jsp" /> 
 </div>
 
-	<div class="homepage" >
+	<div id="menu-bb">
+		<div id="menu" class="menu">
+			<ul id="main">
+				<li class="nav-item"><a href="#" class="activeType" id="memberInfo-btn">個人資料 </a></li>
+				<li class="nav-item"><a href="#" class="activeType" id="roleInfo-btn">用戶資料 </a></li>
+				<li class="nav-item"><a href="#" class="activeType" id="pair-btn">推薦好友 </a></li>
+				<li class="nav-item"><a href="#" class="activeType" id="update-btn">修改資料 </a></li>			
+				<li class="nav-item"><a href="#" class="activeType" id="trip-btn">活動資料</a></li>
+				<li class="nav-item"><a href="#" class="activeType" id="shop-btn">點數購買</a></li>
+				<li class="nav-item"><a href="#" class="activeType" id="orders-btn">購買紀錄</a></li>		
+			</ul>
+		</div>
+	</div>
+	
+	
+	<div class="homepage" style="background-color:blue">
+	
 		
-
 		<div id="infoArea">
 			<div id="info">
-				<div id="pictureArea">
+				<div id="pictureArea" class="fortext">
 					<img src="<c:url value='/getMemberPicture/${account}' />" class="imgRange" alt="圖片" style="width:100%" />
 				</div>
 				<div id="nicknameArea" class="text-effect">
@@ -81,22 +173,29 @@
 					<p style="font-size:20px;text-shadow:2px 2px 2px #00FF00">${member.mail}</p>
 				</div>
 			</div>
-			<div id="btnArea">
-				<br><a href="#" class='superBtn' id='memberInfo-btn'>個人資料</a><br>
-				<br><a href="#" class='superBtn' id='roleInfo-btn'>用戶資料</a><br> 
+<!-- 			<div id="btnArea"> -->
+<!-- 				<br><a href="#" class='superBtn' id='memberInfo-btn'>個人資料</a><br> -->
+<!-- 				<br><a href="#" class='superBtn' id='roleInfo-btn'>用戶資料</a><br>  -->
 <!-- 				<br><a href="#" class='superBtn' id='showFriend-btn'>好友列表</a><br>  -->
-				<br><a href="#" class='superBtn' id='update-btn'>修改資料</a><br>
-				<br><a href="#" class='superBtn' id='trip-btn'>出遊資料</a><br>
-				<br><a href="#" class='superBtn' id='pair-btn'>推薦好友</a><br>
-				<br><a href="#"class='superBtn' id='shop-btn'>點數購買</a><br>
-				<br><a href="#"class='superBtn' id='orders-btn'>購買紀錄</a><br>
+<!-- 				<br><a href="#" class='superBtn' id='update-btn'>修改資料</a><br> -->
+<!-- 				<br><a href="#" class='superBtn' id='trip-btn'>出遊資料</a><br> -->
+<!-- 				<br><a href="#" class='superBtn' id='pair-btn'>推薦好友</a><br> -->
+<!-- 				<br><a href="#"class='superBtn' id='shop-btn'>點數購買</a><br> -->
+<!-- 				<br><a href="#"class='superBtn' id='orders-btn'>購買紀錄</a><br> -->
+<!-- 			</div> -->
 			</div>
-			<div id="showAreaTop" class="text-effect">
-				<div id="pushArea" class="text-effect">
-					<div id="showArea" class="text-effect"></div>
+		<div id="showAreaTop" class="text-effect" >
+			<div id="pushArea" class="text-effect" align="center">
+				<div id="showArea" class="text-effect">
+					<span>等級</span><br>${role.level}<br><br>
+					<span>經驗</span><br>${role.emp}<br><br>
+					<span>登入次數</span><br>${role.signTrip}<br><br>
+					<span>姓名</span><br>${member.fullName}<br><br>
+				
 				</div>
 			</div>
 		</div>
+	
 		
 <!-- 		Model UPDATE FORM     -->
 		<div class="modal fade" id="updateForm" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
@@ -298,22 +397,22 @@
 			$("#showArea").css("border", "0").addClass("animated").html(str);
 		})
 		
-		$('#trip-btn').on('click', function() {
-			str = '旅遊連結' ;
+// 		$('#trip-btn').on('click', function() {
+// 			str = '旅遊連結' ;
 			
-			$.ajax({
-				  url:"ajax_getFollowed",
-				  type: "GET",
-				  dataType: "html", //server送回
-				  contentType: 'application/json; charset=utf-8',
-				  data: {}, 
-				  success:function(data){
-					  $("#showArea").empty();
-					  $("#showArea").addClass("animated").html(str);
-					  $("#showArea").append(data);
-					}
-			})
-		})
+// 			$.ajax({
+// 				  url:"ajax_getFollowed",
+// 				  type: "GET",
+// 				  dataType: "html", //server送回
+// 				  contentType: 'application/json; charset=utf-8',
+// 				  data: {}, 
+// 				  success:function(data){
+// 					  $("#showArea").empty();
+// 					  $("#showArea").addClass("animated");
+// 					  $("#showArea").append(data);
+// 					}
+// 			})
+// 		})
 // 		 $("#shop-btn").click(function (){
 //         	var str = "購買點數";
 // 	        $.ajax({
@@ -406,7 +505,7 @@
 				  data: {}, 
 				  success:function(data){
 					  $("#showArea").empty();
-					  $("#showArea").css("position","relative").css("left","20px").css("width","160%").addClass("animated").html(str);
+					  $("#showArea").css("position","relative").css("left","20px").css("width","160%").addClass("animated");
 					  $("#showArea").append(data);
 					}
 			})
@@ -422,7 +521,7 @@
 	              data: {}, 
 	              success:function(data){
 	            	  $("#showArea").empty();
-	            	  $("#showArea").css("position","relative").css("left","20px").css("width","140%").addClass("animated").html(str);
+	            	  $("#showArea").css("position","relative").css("left","20px").css("width","140%").addClass("animated");
 	                  $("#showArea").append(data);
 	                }
 	        })
@@ -438,7 +537,7 @@
 	              data: {}, 
 	              success:function(data){
 	            	  $("#showArea").empty();
-	            	  $("#showArea").css("position","relative").css("left","20px").css("width","140%").addClass("animated").html(str);
+	            	  $("#showArea").css("position","relative").css("left","20px").css("width","140%").addClass("animated");
 	                  $("#showArea").append(data);
 	                }
 	        })

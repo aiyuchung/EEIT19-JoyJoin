@@ -292,7 +292,7 @@ h2{
 
 // ===================一鍵寫信=======================
 		
-	$("#delMsg-btn").on("click",function(){
+	$("#one-letter").on("click",function(){
 		$("#sub").attr("value","你好")
 		$("#msggg").text("這是一封信")
 	})
