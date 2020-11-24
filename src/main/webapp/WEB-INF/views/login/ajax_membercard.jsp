@@ -16,12 +16,12 @@
 	<c:when test="${mbcard.gender == 'F'}">
 		<figure class="snip0056 yellow"><span class="iconify" data-icon="ion:mail-sharp" data-inline="false"></span>
 			<figcaption>
-				<h4>${luckyguy.nickname} <span class='id'>${luckyguy.account}</span></h4>
+				<h4>${luckyguy.nickname} <span class='id' id="ida">${luckyguy.account}</span></h4>
 				<p>${luckyguy.gender}</p>
 				<p>${luckyguy.mail}</p>
 				<p>${luckyguy.signature}</p>
 				<div class="icons">
-					<a href="#"><i class="ion-ios-home"></i></a>
+					<a href="#"><i class="ion-ios-home" id="notice"></i></a>
 					<a href="#"><span class="iconify" data-icon="ion:mail-sharp" data-inline="false" id="msg"></span></a>
 				</div>
 			</figcaption>
@@ -32,12 +32,12 @@
 	<c:otherwise>
 		<figure class="snip0056 red">
 			<figcaption>
-				<h2>${luckyguy.nickname} <span class='id'>${luckyguy.account}</span></h2>
+				<h2>${luckyguy.nickname} <span class='id' id="ida">${luckyguy.account}</span></h2>
 				<p>${luckyguy.gender}<br>
 					${luckyguy.mail}<br>
 					${luckyguy.signature}</p>
 				<div class="icons">
-					<a href="#"><i class="ion-ios-home"></i></a>
+					<a href="#"><i class="ion-ios-home" id="notice"></i></a>
 					<a href="#"><span class="iconify" data-icon="ion:mail-sharp" data-inline="false" id="msg"></span></a>
 				</div>
 			</figcaption>
@@ -47,8 +47,16 @@
 	</c:otherwise>
 </c:choose>
  <script>
- 	
-	("#msg").on("click",function(){
+ 	$("#notice").on("click",function(){
+ 		var id = "${luckyguy.account}"
+ 		console.log('========>'+id)
+ 		location.herf = "http://localhost:8080/JoyJoin/notice/"+id;
+ 		console.log("http://localhost:8080/JoyJoin/notice/"+id)
+ 		alert("您關注了"+id)
+ 	})
+	
+ 
+ 	$("#msg").on("click",function(){
 		if(confirm("請輸入訊息")){
 				
 		}else{

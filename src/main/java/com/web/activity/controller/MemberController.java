@@ -131,6 +131,7 @@ public class MemberController {
 					System.out.println("======================>"+"註冊成功");
 					send2open(account, email);
 					System.out.println("======================>"+"信件已發送");
+					send2mailBox(account);
 					return "redirect:/index";					
 				}else {			//帳號或信箱有重複
 					if(!checkEmail) {
@@ -335,7 +336,8 @@ public class MemberController {
 					System.out.println("GET ONE GUY=======>"+luckyguy);
 				}while(luckyguy.getAccount()==account);
 				System.out.println("======抓成功了======");
-				double score = memberService.getPersonalScore(account);
+				double dou = memberService.getPersonalScore(account);
+				String score = "評價"+String.valueOf(dou)+"分";
 				model.addAttribute("score",score);
 				model.addAttribute("luckyguy", luckyguy);
 				return "login/ajax_membercard";
@@ -647,6 +649,26 @@ public class MemberController {
          		 	mb.setMsg("與您已經是好友或正在申請中");
          		 	memberService.sendMsg(mb);
       		}
+      		
+//      		--------------
+      		
+      		@GetMapping("/notice/{account}")
+      		public void send2notice(@PathVariable String account, HttpSession session) {
+      			System.out.println("有進來,account===>"+account);
+      			String fromAccount = (String) session.getAttribute("account");
+      			MessageBean mb = new MessageBean();
+      			mb.setfromAccount(fromAccount);
+      			mb.setAccount(account);
+      			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+         		 	String time = dateFormat.format(new Date());
+         		 	mb.setTime(time);
+         		 	mb.setReadStatus(0);
+         		 	mb.setSubject("系統訊息:您獲得一則關注");
+         		 	mb.setMsg(fromAccount+"正在關注您 \r\n點選下面連結以關注對方 \r\n http://localhost:8080/JoyJoin/notice/"+fromAccount);
+         		 	memberService.sendMsg(mb);
+      		}
+      		
+      		
       		
       		
       		
