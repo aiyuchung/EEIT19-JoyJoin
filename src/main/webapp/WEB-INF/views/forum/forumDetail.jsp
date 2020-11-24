@@ -73,10 +73,10 @@ body{
 								style="width:100%" /></td>
 						</tr>
 						<tr>
-							<td>暱稱 ${forum.memberBean.nickname}<br /> 帳號
-								${forum.memberBean.account}<br /> 等級
-								${forum.memberBean.rolebean.level} <br /> 經驗
-								${forum.memberBean.rolebean.emp}<br />
+							<td>暱稱 ${forum.memberBean.nickname}<br /> 
+								帳號${forum.memberBean.account}<br /> 
+								等級${forum.memberBean.rolebean.level} <br /> 
+								經驗${forum.memberBean.rolebean.emp}<br />
 							</td>
 						</tr>
 					</table>

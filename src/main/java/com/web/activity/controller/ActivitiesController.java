@@ -116,7 +116,8 @@ public class ActivitiesController {
 		boolean isFollowed = false;
 		for(ActivityFollowedBean afb:followed) {
 			String followedAccount = afb.getMemberBean().getAccount();
-			if (followedAccount.equals(account)) {  //如果使用者在參加名單內回傳true
+			int followedNo = afb.getActivityBean().getActivityNo();
+			if (followedAccount.equals(account) && followedNo==activityNo) {  //如果使用者在參加名單內回傳true
 				isFollowed = true;
 				break;
 			}

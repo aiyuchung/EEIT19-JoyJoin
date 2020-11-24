@@ -352,7 +352,7 @@ body{
 				暱稱 ${forumBean.memberBean.nickname}<br />
 		  		帳號 ${forumBean.memberBean.account}<br /> 
 		 		等級 ${level} <br />
-<%-- 		  		經驗 ${forumBean.memberBean.rolebean.emp}<br /> --%>
+ 		  		經驗 ${forumBean.memberBean.rolebean.emp}<br />
 			</td>
 			<td width="60%"  height="100px" style="border-left: 0px;">
 			<!---------- 抓照片 ------------>

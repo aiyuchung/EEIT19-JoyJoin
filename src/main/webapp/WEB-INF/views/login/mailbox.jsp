@@ -13,7 +13,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="	crossorigin="anonymous"></script>
 <!-- ====================信箱樣式======================= -->
-<%-- <link rel="stylesheet" href="<c:url value='css/mailbox.css' />" /> --%>
+<link rel="stylesheet" href="<c:url value='css/mailbox.css' />" />
 <!-- ====================icon樣式======================= -->
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 <style>
@@ -33,12 +33,13 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
 body, html { font-size: 100%; 	padding: 0; margin: 0; color: white;}
 
 .homepage {
-  overflow-y: auto;
-  font-family: 'Roboto Condensed', sans-serif;
-  background-size:100% ;
-  background-repeat: no-repeat;
-  background-image: url(images/ogspot_bg.jpg);  
-  background-attachment: fixed;
+	/*   overflow-y: auto; */
+	  font-family: 'Roboto Condensed', sans-serif;
+	/*   background-size:100% ; */
+	  background-repeat: no-repeat;
+	  background-image: url(images/ogspot_bg.jpg);  
+	  background-attachment: fixed;
+	  height:100vh;
 }
 #keepread{
 	color:	#46A3FF;
@@ -50,7 +51,7 @@ body, html { font-size: 100%; 	padding: 0; margin: 0; color: white;}
 }
 #mailFeatures{
 	width:50px;
-	position:relative;
+/* 	position:relative; */
 	top:20px;
 	left:120px;
 	

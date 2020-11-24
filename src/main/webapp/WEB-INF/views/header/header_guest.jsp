@@ -148,8 +148,7 @@ body{
 			  success:function(data){
 				  console.log(data)
 				  if(data=="yes"){
-					  $("#mailbox").addClass("neverRead").addClass("iconify").attr("data-icon","ion:mail-unread").attr("data-inline","false")
-// 					  .text("你有未讀信件");
+					  $("#mailbox").addClass("neverRead").text("你有未讀信件");
 				  }else{
 					  $("#mailbox").removeClass("neverRead").text("信箱");
 				  }

@@ -304,7 +304,7 @@
 									<c:if test="${isJoined}">
 										<h5>參加人員:</h5>
 											<c:forEach var="joined" items="${joined}">
-											<span><a href="">${joined.memberBean.nickname}</a></span>
+											<span><a href="Javascript:;" class="memberDetail" id="${joined.memberBean.account}">${joined.memberBean.nickname}</a></span>
 											<span>&nbsp;&nbsp;</span>
 											</c:forEach>
 									</c:if>
@@ -473,6 +473,10 @@
 
 <script>
 	$(document).ready(function(){ //幾人參加的長條顯示%
+		var follow = ${isFollowed}
+	var join = ${isJoined}
+		console.log("isfollow:"+follow)
+		console.log("isjoin:"+join)
 		var persentage= ${one.joinedNum/one.minLimit*100};
 		$(".progress-bar").css("width", persentage+"%");
 		var frombtn = ${frombtn};
@@ -649,6 +653,24 @@
 		})
 	})
 	
+	$(".memberDetail").click(function(){
+		var account = $(this).attr("id");
+		console.log(account);
+		var controllerUrl = "detailCard/"+account;
+		$.ajax({
+			  url:controllerUrl,
+			  type: "GET",
+			  dataType: "html", //server送回
+			  contentType: 'application/json; charset=utf-8',
+			  data: {},
+			  success:function(data){
+				  $("#msgArea").empty();
+				  $("#msgArea").append(data);
+				  console.log("ajax ok")
+				}
+		})
+		$('#showMsgArea').modal('show');
+	})
 	
 </script>
 </body>
