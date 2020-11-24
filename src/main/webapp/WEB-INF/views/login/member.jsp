@@ -459,8 +459,8 @@
 			$("#one-school").attr("value","台灣大學")
 			$("#one-company").attr("value","資訊工程策進會")
 			$("#one-job").attr("value","清潔工")
-			$("#one-sign").attr("value","我是鶖鶖鶖鶖鶖")
-			$("#one-intro").attr("value","我叫鶖鶖,喜歡運動,希望可以找到志同道合的朋友")
+			$("#one-sign").text("我是鶖鶖鶖鶖鶖")
+			$("#one-intro").text("我叫鶖鶖,喜歡運動,希望可以找到志同道合的朋友")
 
 			
 		})

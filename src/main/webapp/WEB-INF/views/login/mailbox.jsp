@@ -39,7 +39,7 @@ body, html { font-size: 100%; 	padding: 0; margin: 0; color: white;}
 	  background-repeat: no-repeat;
 	  background-image: url(images/ogspot_bg.jpg);  
 	  background-attachment: fixed;
-	  height:100vh;
+	  height:1000vh;
 }
 #keepread{
 	color:	#46A3FF;
@@ -204,10 +204,11 @@ h2{
 	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button> 
 	            </div>
 	            <div class="modal-body">
-	            	<h4>主旨: <form:input path="subject" type="text" class="write-h4"/></h4>
-	            	<form:textarea path="msg" style="resize: none" rows="3" cols="29"/>	        
+	            	<h4>主旨: <form:input path="subject" type="text" class="write-h4" id="sub"/></h4>
+	            	<form:textarea path="msg" style="resize: none" rows="3" cols="29" id="msggg"/>	        
 	            </div>
 	            <div class="modal-footer">
+	            	<input type="button" class="btn btn-secondary" id="one-letter" value="輸入">
 	                <input type="button" class="btn btn-secondary" data-dismiss="modal" value="返回">
 	                <input type="submit" class="btn btn-primary" value="發送">
 	            </div>
@@ -288,7 +289,13 @@ h2{
 			console.log("number==========>"+number)
 			location.href = "<c:url value='/delMsg/"+number+"'/>";
 		})
+
+// ===================一鍵寫信=======================
 		
+	$("#delMsg-btn").on("click",function(){
+		$("#sub").attr("value","你好")
+		$("#msggg").text("這是一封信")
+	})
 	
 // 	$(document).ready(function(){
 // 		$('#msg-btn').on('click',function(){

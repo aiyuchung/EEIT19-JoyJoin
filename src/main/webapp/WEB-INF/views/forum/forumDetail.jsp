@@ -61,7 +61,7 @@ body{
  <c:import url="forumHeader.jsp"></c:import> 
  <div class="firstdiv"></div>
  
- <table width="70%" border="1" align="center" class="tbdetail" >
+ <table style="color:white;width:70%"  border="1" align="center" class="tbdetail" >
 		<c:forEach var="forum" items="${forumDetailList}">
 			<tr>
 				<td rowspan="4" valign="top" style="width: 20%" class="userInfoTd"

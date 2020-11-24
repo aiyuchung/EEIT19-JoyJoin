@@ -160,10 +160,11 @@ h3:hover {
 	  <div class="modal-dialog">
 	    <div class="modal-content" style="border-radius:99em;height:380px;width:380px;left:55px;background-color:	#F0F0F0"">
 	      <div class="modal-body" id="oneArea" style="height:380px;width:380px;position:relative;left:130px;top:80px">
-	      	<h3 id="h5-01">阿志</h5>
-	      	<h3 id="h5-02">小花</h5>
-	      	<h3 id="h5-03">老闆</h5>
-	      	<h3 id="h5-04">工讀生</h5>
+	      	<h3 id="h5-01">美美</h3>
+	      	<h3 id="h5-02">小花</h3>
+	      	<h3 id="h5-03">老闆</h3>
+	      	<h3 id="h5-04">工讀生</h3>
+	      	<h3 id="h5-05">阿志</h3>
 	      </div>
 	    </div>
 	  </div>
@@ -269,7 +270,7 @@ h3:hover {
 		$('#one-area').modal('show');
 	})
 
-	$("#h5-01").on("click",function(){
+	$("#h5-01").on("click",function(){ 
 		$("#login-id").attr("value","user002")
 		$("#login-pwd").attr("value","2222")
 		$('#one-area').modal('hide');
@@ -277,19 +278,25 @@ h3:hover {
 	
 	$("#h5-02").on("click",function(){
 		$("#login-id").attr("value","A123456")
-		$("#login-pwd").attr("value","123456")
+		$("#login-pwd").attr("value","dbflower")
 		$('#one-area').modal('hide');
 	})
 	
 	$("#h5-03").on("click",function(){
 		$("#login-id").attr("value","admin01")
-		$("#login-pwd").attr("value","123456")
+		$("#login-pwd").attr("value","bossno1")
 		$('#one-area').modal('hide');
 	})
 	
 	$("#h5-04").on("click",function(){
 		$("#login-id").attr("value","zzz123")
-		$("#login-pwd").attr("value","123456")
+		$("#login-pwd").attr("value","parttime123")
+		$('#one-area').modal('hide');
+	})
+	
+	$("#h5-05").on("click",function(){
+		$("#login-id").attr("value","zxc1230")
+		$("#login-pwd").attr("value","achi1230")
 		$('#one-area').modal('hide');
 	})
 	

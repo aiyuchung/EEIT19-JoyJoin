@@ -337,6 +337,7 @@ public class MemberController {
 				}while(luckyguy.getAccount()==account);
 				System.out.println("======抓成功了======");
 				double dou = memberService.getPersonalScore(account);
+				System.out.println(dou+"----------");
 				String score = "評價"+String.valueOf(dou)+"分";
 				model.addAttribute("score",score);
 				model.addAttribute("luckyguy", luckyguy);
