@@ -42,10 +42,15 @@
   background: rgba(0,0,0,0.7);
   z-index: -1;
 }
+
+h3:hover {
+	color:red;
+}
 </style>
 </head>
 
 <body>
+<!-- ============================================================================================================	 -->
 
 	<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true" style="top:100px">
 	  <div class="modal-dialog">
@@ -63,6 +68,7 @@
 	    </div>
 	  </div>
 	</div>
+<!-- ==============================================MODAL 註冊==============================================================	 -->
 	
 		<div class="modal fade" id="signupArea" tabindex="-1" aria-labelledby="signupLabel" aria-hidden="true" style="top:100px">
 	  <div class="modal-dialog">
@@ -99,7 +105,7 @@
 	  </div>
 	</div>
 		
-	
+<!-- ===========================================LOGIN=================================================================	 -->
 	
 	<form:form class="login-form" method="POST"  modelAttribute="formBean">
 		<p class="login-text">
@@ -108,21 +114,22 @@
 				<i class="fa fa-lock fa-stack-1x"></i>
 			</span>
 		</p>
-		<form:input type="text" class="login-username" autofocus="true" placeholder="Account"  id="account" path="account"/> 
-		<form:input type="password"	class="login-password" placeholder="Password" path="password"/> 
+		<form:input type="text" class="login-username" autofocus="true" placeholder="Account"  id="login-id" path="account"/> 
+		<form:input type="password"	class="login-password" placeholder="Password" id="login-pwd" path="password"/> 
 		<table align='center'>
 			<tr>
 				<td><input type="submit" value="登入" name="Login" class="login-submit" id="login-btn" style="margin-right:10px"/></td>
 				<td><input type="button" value="返回" class="login-submit" id="back-btn" style="margin-left:10px"/></td>
 			</tr>
 		</table>
-		
+		<span class="login-forgot-pass" style="bottom:75px" id="one-btn">一鍵輸入</span>
 		<span class="login-forgot-pass" style="bottom:55px" onclick="FBLogin();" >FB登入</span>
 		<span class="login-forgot-pass" style="bottom:35px" id="signup-btn">現在註冊</span><br>
 		<span class="login-forgot-pass" style="bottom:15px" id="missPwd-btn">忘記密碼</span>
 <!-- 		<input type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" value="GO" /> -->
 
 	</form:form>
+<!-- =============================================MODEL MSG===============================================================	 -->
 	
 <!-- 	忘記密碼 -->
 	<div class="modal fade" id="missPwd" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true" style="top:100px">
@@ -143,6 +150,20 @@
 				</form:form>
 	      </div>
 	      <div class="modal-footer1">
+	      </div>
+	    </div>
+	  </div>
+	</div>
+<!-- ==================================================MODAL 一鍵輸入==========================================================	 -->
+	
+	<div class="modal fade" id="one-area" tabindex="-1" aria-labelledby="OneTouchModalLabel" aria-hidden="true" style="top:100px">
+	  <div class="modal-dialog">
+	    <div class="modal-content" style="border-radius:99em;height:380px;width:380px;left:55px;background-color:	#F0F0F0"">
+	      <div class="modal-body" id="oneArea" style="height:380px;width:380px;position:relative;left:130px;top:80px">
+	      	<h3 id="h5-01">阿志</h5>
+	      	<h3 id="h5-02">小花</h5>
+	      	<h3 id="h5-03">老闆</h5>
+	      	<h3 id="h5-04">工讀生</h5>
 	      </div>
 	    </div>
 	  </div>
@@ -244,7 +265,33 @@
 		$("#signUpnow-btn").attr("type","submit").css("color","#33FFFF").css("box-shadow","#33FFFF 0px 0px 15px")
 	})
 	
+	$("#one-btn").on("click",function(){
+		$('#one-area').modal('show');
+	})
+
+	$("#h5-01").on("click",function(){
+		$("#login-id").attr("value","user002")
+		$("#login-pwd").attr("value","2222")
+		$('#one-area').modal('hide');
+	})
 	
+	$("#h5-02").on("click",function(){
+		$("#login-id").attr("value","A123456")
+		$("#login-pwd").attr("value","123456")
+		$('#one-area').modal('hide');
+	})
+	
+	$("#h5-03").on("click",function(){
+		$("#login-id").attr("value","admin01")
+		$("#login-pwd").attr("value","123456")
+		$('#one-area').modal('hide');
+	})
+	
+	$("#h5-04").on("click",function(){
+		$("#login-id").attr("value","zzz123")
+		$("#login-pwd").attr("value","123456")
+		$('#one-area').modal('hide');
+	})
 	
 	
 	
@@ -337,7 +384,7 @@
             });
         }
   
-//----------------------------------一鍵輸入-----------------------------------------------------------
+
 
 </script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&autoLogAppEvents=1&version=v9.0&appId=389574248905554" nonce="Ygm7YWIX"></script>

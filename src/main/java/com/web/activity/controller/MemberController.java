@@ -170,7 +170,7 @@ public class MemberController {
 				}else {
 					switch(flag) {
 					case 2: model.addAttribute("errMsg", "此帳號沒有資料");break;
-					case 3: model.addAttribute("errMsg", "密碼錯誤請重新輸入");break;
+					case 3: model.addAttribute("errMsg", "密碼輸入錯誤!!");break;
 					case 4: model.addAttribute("errMsg", "此帳號尚未開通");break;
 						default: model.addAttribute("errMsg", "登入失敗!!");break;
 					}
