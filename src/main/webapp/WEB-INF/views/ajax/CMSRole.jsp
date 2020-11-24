@@ -45,19 +45,21 @@
 
 							<td><select name="updateRole" id="level_op${CMS.roleNo}"
 								onchange="update1(this)">
-									<option value="" selected="selected" style="display: none;">最高管理者</option>
-									<option value="1" ${CMS.level == "1"  ? 'selected' : ''}>1</option>
-									<option value="2" ${CMS.level == "2"  ? 'selected' : ''}>2</option>
-									<option value="3" ${CMS.level == "3"  ? 'selected' : ''}>3</option>
-									<option value="4" ${CMS.level == "4"  ? 'selected' : ''}>4</option>
-									<option value="5" ${CMS.level == "5"  ? 'selected' : ''}>5</option>
+									<option value="" selected="selected" style="display: none;">一般會員</option>
+									<option value="1" ${CMS.level == "1"  ? 'selected' : ''}>會員等級1</option>
+									<option value="2" ${CMS.level == "2"  ? 'selected' : ''}>會員等級2</option>
+									<option value="3" ${CMS.level == "3"  ? 'selected' : ''}>會員等級3</option>
+									<option value="4" ${CMS.level == "4"  ? 'selected' : ''}>工讀生</option>							
+									<option value="5" ${CMS.level == "5"  ? 'selected' : ''}>管理者</option>
+									<option value="6" ${CMS.level == "6"  ? 'selected' : ''}>最高管理者</option>
+									
 							</select></td>
 							
 							<td><select name="updateRole"
 								id="accountType_op${CMS.roleNo}" onchange="update2(this)">
 									<option value="" selected="selected" style="display: none;">帳號狀態</option>
 									<option value="1" ${CMS.accountType == "1"  ? 'selected' : ''}>1</option>
-									<option value="2" ${CMS.accountType == "2"  ? 'selected' : ''}>2</option>
+									<option value="2" ${CMS.accountType == "2"  ? 'selected' : ''}>黑名單</option>
 
 							</select></td>
 
