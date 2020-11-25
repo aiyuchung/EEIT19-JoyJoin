@@ -509,7 +509,7 @@ img {
 									option = null;
 									option = {
 										title : {
-											text : 'JoyJoin註冊性別比',
+											text : '會員註冊性別比',
 											subtext : '性別比例',
 											left : 'center'
 										},
