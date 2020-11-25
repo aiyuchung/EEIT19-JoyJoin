@@ -121,8 +121,15 @@ public class MemberServieImpl implements MemberService {
 
 		
 		@Override
-		public List<MemberBean> getPair(String pair, String account) {
-			return memberDao.getPair(pair, account);
+		public List<MemberBean> getPair(String account) {
+			MemberBean mb = memberDao.getMember(account);
+			List<MemberBean> list = memberDao.getPair();
+//			for(MemberBean m : list) {
+//				if(m==mb) {
+//					list.remove(m);
+//				}
+//			}
+			return list;
 		}
 		
 		

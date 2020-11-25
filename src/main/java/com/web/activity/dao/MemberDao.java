@@ -68,7 +68,7 @@ public interface MemberDao {
 		
 //---------------------------------------------▼配對系統▼---------------------------------------------//			
 
-		public List<MemberBean> getPair(String pair,String account);
+		public List<MemberBean> getPair();
 
 		
 		

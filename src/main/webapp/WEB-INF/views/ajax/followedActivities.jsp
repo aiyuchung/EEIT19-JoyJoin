@@ -44,7 +44,7 @@
 		float:left;
 		width:170px;
 		display:inline;
- 		padding:7px 0;
+ 		padding:4px 0;
 		list-style-type: none;
 		vertical-align:bottom;
 	}

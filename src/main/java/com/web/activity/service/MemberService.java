@@ -1,6 +1,5 @@
 package com.web.activity.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import com.web.activity.model.ActivityFollowedBean;
@@ -43,7 +42,7 @@ public interface MemberService {
 			//更新貼文次數
 		public void updateFinish(String account);
 			//更新成行次數
-		public List<MemberBean> getPair(String pair, String account);
+		public List<MemberBean> getPair(String account);
 			//取得配對成員
 		public List<ActivityFollowedBean> getFollowedActivity(Integer memberNo);
 			//取得會員關注活動連結

@@ -353,30 +353,36 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<MemberBean> getPair(String pair, String account) {
-		String hql1 = "SELECT "+pair+" FROM MemberBean WHERE account = :id";
+	public List<MemberBean> getPair() {
+		String hql = "FROM MemberBean";
 		Session session = factory.getCurrentSession();
-		String val = "";
-		try {
-			val = (String) session.createQuery(hql1).setParameter("id", account).getSingleResult();
-		}catch(Exception e) {
-			;
-		}
+		List<MemberBean> list = session.createQuery(hql).getResultList();
+		return list;
 		
-		String hql2 = "";
-		List<MemberBean> mbl = null;
-		if(!pair.equals("all")) {
-			hql2 = "FROM MemberBean WHERE "+pair+" = :p";
-			mbl = session.createQuery(hql2).setParameter("p", val).getResultList();
-		}else {
-			hql2 = "FROM MemberBean";
-			mbl = session.createQuery(hql2).getResultList();
-		}
-		if(mbl!=null) {
-			return mbl;
-		}else {
-			return null;
-		}
+		
+//		String hql1 = "SELECT "+pair+" FROM MemberBean WHERE account = :id";
+//		Session session = factory.getCurrentSession();
+//		String val = "";
+//		try {
+//			val = (String) session.createQuery(hql1).setParameter("id", account).getSingleResult();
+//		}catch(Exception e) {
+//			;
+//		}
+//		
+//		String hql2 = "";
+//		List<MemberBean> mbl = null;
+//		if(!pair.equals("all")) {
+//			hql2 = "FROM MemberBean WHERE "+pair+" = :p";
+//			mbl = session.createQuery(hql2).setParameter("p", val).getResultList();
+//		}else {
+//			hql2 = "FROM MemberBean";
+//			mbl = session.createQuery(hql2).getResultList();
+//		}
+//		if(mbl!=null) {
+//			return mbl;
+//		}else {
+//			return null;
+//		}
 	}
 
 

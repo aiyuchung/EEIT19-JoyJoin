@@ -325,7 +325,7 @@ public class MemberController {
 		  public String getPair(Model model, HttpSession session) {
 				String account = (String) session.getAttribute("account");
 				System.out.println("START OK=======>");
-				List<MemberBean> mbl = getList(account);
+				List<MemberBean> mbl = memberService.getPair(account);
 				System.out.println("GET LIST OK=======>"+mbl);
 				int max = mbl.size();
 				MemberBean luckyguy = null;
@@ -339,30 +339,30 @@ public class MemberController {
 				double dou = memberService.getPersonalScore(account);
 				System.out.println(dou+"----------");
 				String score = "評價"+String.valueOf(dou)+"分";
-				model.addAttribute("score",score);
+//				model.addAttribute("score",score);
 				model.addAttribute("luckyguy", luckyguy);
 				return "login/ajax_membercard";
 			}
 
-		  private List<MemberBean> getList(String account){			
-			  List<MemberBean> list = new ArrayList<>();
-			  do {
-				  String pair = "";
-			  			while(pair == "") {				
-			  				int digit = (int) ((Math.random()*4.9)+1);
-			  				switch(digit) {
-			  				case 1:pair = "starSign";break;
-			  				case 2:pair = "bloodType";break;
-			  				case 3:pair = "school";break;
-			  				case 4:pair = "hobby";break;
-			  				default:pair = "all";break;
-			  				}
-						list = memberService.getPair(pair, account);	
-					}						
-			  	}while(list==null);
-			  System.out.println("FINISH LIST=======>"+list);
-			  return list;
-		  }
+//		  private List<MemberBean> getList(String account){			
+//			  List<MemberBean> list = new ArrayList<>();
+//			  do {
+//				  String pair = "";
+//			  			while(pair == "") {				
+//			  				int digit = (int) ((Math.random()*4.9)+1);
+//			  				switch(digit) {
+//			  				case 1:pair = "starSign";break;
+//			  				case 2:pair = "bloodType";break;
+//			  				case 3:pair = "school";break;
+//			  				case 4:pair = "hobby";break;
+//			  				default:pair = "all";break;
+//			  				}
+//						list = memberService.getPair(pair, account);	
+//					}						
+//			  	}while(list==null);
+//			  System.out.println("FINISH LIST=======>"+list);
+//			  return list;
+//		  }
 		  
 		  
 		  
